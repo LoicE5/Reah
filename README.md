@@ -1,2 +1,1 @@
-# Reah
- A short movies sharing platform and modern social network
+# reah-web

@@ -1,0 +1,7 @@
+.form_container{
+    min-height: 200px;
+    position: relative;
+}
+p{
+    margin: 0;
+}
