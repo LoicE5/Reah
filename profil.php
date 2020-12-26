@@ -1,3 +1,8 @@
+<?php
+    require("header.php");
+?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -119,7 +124,8 @@
                     <p class="profile_name">Minal Lad</p>
                     <p class="profile_bio">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse exercitationem
                         <br>
-                        laudantium nihil voluptas itaque odit cumque nesciunt numquam, sunt d <br><br><br> olor, voluptatem recusandae
+                        laudantium nihil voluptas itaque odit cumque nesciunt numquam, sunt d <br><br><br> olor,
+                        voluptatem recusandae
                         <br>
                         assumenda rerum facereeee</p>
 
@@ -148,8 +154,6 @@
             <div class="realisation_container">
 
                 <?php
-                $db = new PDO('mysql:host=localhost;dbname=reah', 'root', '');
-
                 $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
                 $stmt=$db->query($requete);
                 $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
@@ -216,12 +220,10 @@
                 ?>
             </div>
 
-         <!-- Identified's videos -->
-         <div class="identified_container">
+            <!-- Identified's videos -->
+            <div class="identified_container">
 
-            <?php
-            $db = new PDO('mysql:host=localhost;dbname=reah', 'root', '');
-
+                <?php
             $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
             $stmt=$db->query($requete);
             $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
@@ -293,15 +295,15 @@
             }
 
             ?>
-        </div>
+            </div>
         </div>
     </main>
 
 
-        <!-- Films'informations -->
+    <!-- Films'informations -->
 
-        <div class='dark_filter'></div>
-        <?php
+    <div class='dark_filter'></div>
+    <?php
 
                     $requete="SELECT re_films.title as title, re_challenges.title AS challenge, GROUP_CONCAT(username SEPARATOR ', ') AS distribution, url, DATE_FORMAT(duration, '%imin %s' ) AS duration, synopsis, poster, DATE_FORMAT(re_films.date, '%d/%m/%Y') AS date, GROUP_CONCAT(name SEPARATOR ', ') AS genre FROM re_films, re_users, re_a_realise, re_possede, re_genres, re_challenges WHERE id_films=realise_ext_films AND id_users=realise_ext_users AND possede_ext_films=id_films AND possede_ext_genres=id_genres AND id_films='1'";
                     $stmt=$db->query($requete);
@@ -369,20 +371,20 @@
                     };
                     ?>
 
-        <!-- Comment -->
-        <div class='comment_space_container'>
+    <!-- Comment -->
+    <div class='comment_space_container'>
 
-            <!-- Write a comment -->
-            <form>
-                <div class='write_comment'>
-                    <img src='public/sources/img/profile_photo/jstm.jpg' class='pp_profile' alt=''>
-                    <textarea name='comment' class='comment_textarea' placeholder='Écrire un commentaire...'></textarea>
-                    <input type='submit' class='send_comment' value=''>
-                </div>
-            </form>
+        <!-- Write a comment -->
+        <form>
+            <div class='write_comment'>
+                <img src='public/sources/img/profile_photo/jstm.jpg' class='pp_profile' alt=''>
+                <textarea name='comment' class='comment_textarea' placeholder='Écrire un commentaire...'></textarea>
+                <input type='submit' class='send_comment' value=''>
+            </div>
+        </form>
 
-            <!-- All the comments -->
-            <?php
+        <!-- All the comments -->
+        <?php
 
                          $requete="SELECT comment, re_comments.date AS date, username,photo FROM re_comments, re_users, re_films WHERE comments_ext_users=id_users AND comments_ext_films=id_films ORDER BY date DESC";
                         $stmt=$db->query($requete);
@@ -428,7 +430,7 @@
                         }
                         
                         ?>
-        </div>
+    </div>
 
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>

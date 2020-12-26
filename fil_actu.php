@@ -1,3 +1,7 @@
+<?php
+    require("header.php");
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -103,8 +107,6 @@
                 <div class="all_video_container">
 
                     <?php
-                    $db = new PDO('mysql:host=localhost;dbname=reah', 'root', '');
-
                     $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
                     $stmt=$db->query($requete);
                     $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
@@ -201,8 +203,6 @@
                 <div class="all_video_container">
 
                     <?php
-                    $db = new PDO('mysql:host=localhost;dbname=reah', 'root', '');
-
                     $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
                     $stmt=$db->query($requete);
                     $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
@@ -287,8 +287,6 @@
                 <div class="all_video_container">
 
                     <?php
-                    $db = new PDO('mysql:host=localhost;dbname=reah', 'root', '');
-
                     $requete="SELECT title,username,url,duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
                     $stmt=$db->query($requete);
                     $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
