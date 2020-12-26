@@ -22,7 +22,7 @@
         <nav class="menu_nav">
 
             <!-- Logo Réah -->
-            <a class="reah_logo" href="fil_actu.php"> <img src="public/img/logo_reah.svg" alt=""></a>
+            <a class="reah_logo" href="fil_actu.php"> <img src="public/sources/img/logo_reah.svg" alt=""></a>
 
             <!-- Categories's title -->
             <div class="menu_category">
@@ -43,11 +43,11 @@
 
             <div class="menu_profile">
                 <!-- Home icon -->
-                <a href="fil_actu.php"> <img src="public/img/fil_actu_icon.svg" class="defi_icon" alt=""></a>
+                <a href="fil_actu.php"> <img src="public/sources/img/fil_actu_icon.svg" class="defi_icon" alt=""></a>
                 <!-- Profile photo -->
                 <!-- Defi icon -->
-                <a href="defis.php"> <img src="public/img/defi_icon.svg" class="defi_icon" alt=""></a>
-                <img src="public/img/pdp.jpg" class="menu_pp" alt="">
+                <a href="defis.php"> <img src="public/sources/img/defi_icon.svg" class="defi_icon" alt=""></a>
+                <img src="public/sources/img/pdp.jpg" class="menu_pp" alt="">
             </div>
         </nav>
 
@@ -66,26 +66,26 @@
 
             <!-- Profile -->
             <a href="profil.php" class="menu_option profil">
-                <img src="public/img/profile_icon.svg" alt="">
+                <img src="public/sources/img/profile_icon.svg" alt="">
                 <p class="menu_option_title">Profil</p>
             </a>
 
             <!-- Notifications -->
             <a href="" class="menu_option notifications">
-                <img src="public/img/notifications_icon.svg" alt="">
+                <img src="public/sources/img/notifications_icon.svg" alt="">
                 <p class="menu_option_title">Notifications</p>
             </a>
 
             <a href="" class="registered menu_option">
-                 <img src="public/img/saved_icon.svg" alt="">
+                 <img src="public/sources/img/saved_icon.svg" alt="">
                 <p class="menu_option_title">Enregistrés</p>
             </a>
             <a href="" class="settings menu_option">
-                <img src="public/img/settings_icon.svg" alt="">
+                <img src="public/sources/img/settings_icon.svg" alt="">
                 <p class="menu_option_title">Paramètres</p>
             </a>
             <a href="" class="disconnection menu_option">
-                <img src="public/img/disconnection_icon.svg" alt="">
+                <img src="public/sources/img/disconnection_icon.svg" alt="">
                 <p class="menu_option_title">Déconnexion</p>
             </a>
         </div>
@@ -113,7 +113,7 @@
             <!-- prev arrow -->
             <div class="arrow_prev_container">
                 <!-- Arrow -->
-                <img src="public/img/prev_arrow.svg" class="prev_arrow" alt="">
+                <img src="public/sources/img/prev_arrow.svg" class="prev_arrow" alt="">
             </div>
 
             <!-- Category content  -->
@@ -135,7 +135,7 @@
                             </video>
                             <!-- Name + pp -->
                             <div class="profile_container">
-                                <img src="public/img/pdp.jpg" class="pp_profile" alt="">
+                                <img src="public/sources/img/pdp.jpg" class="pp_profile" alt="">
                                 <p class="pseudo">Lecréateur123</p>
                             </div>
 
@@ -149,7 +149,7 @@
                                 <div class="synopsis_title_container">
                                     <h3 class="synopsis_title">Dernière rencokkkk dqzd dqzd </h3>
                                     <p class="see_more">Voir plus
-                                        <img src="public/img/see_more_arrow.svg" class="see_more_arrow" alt="">
+                                        <img src="public/sources/img/see_more_arrow.svg" class="see_more_arrow" alt="">
                                 </div>
                                 </p>
                                 <div class="reaction_container">
@@ -157,13 +157,13 @@
                                         <!-- Like's number -->
                                         <p class="pop_corn_number">515</p>
                                         <!-- Pop corn image -->
-                                        <img class="pop_corn_logo" src="public/img/pop_corn.png" alt="">
+                                        <img class="pop_corn_logo" src="public/sources/img/pop_corn.png" alt="">
                                     </div>
                                     <!-- Comment icon -->
-                                    <img src="public/img/comment_icon.svg" class="reaction_icons" alt="">
+                                    <img src="public/sources/img/comment_icon.svg" class="reaction_icons" alt="">
 
                                     <!-- Share icon -->
-                                    <img src="public/img/share_icon.svg" class="reaction_icons" alt="">
+                                    <img src="public/sources/img/share_icon.svg" class="reaction_icons" alt="">
 
                                 </div>
                             </div>
@@ -184,7 +184,7 @@
                             </video>
                             <!-- Name + pp -->
                             <div class="profile_container">
-                                <img src="public/img/pdp.jpg" class="pp_profile" alt="">
+                                <img src="public/sources/img/pdp.jpg" class="pp_profile" alt="">
                                 <p class="pseudo">Lecréateur123</p>
                             </div>
 
@@ -198,7 +198,7 @@
                                 <div class="synopsis_title_container">
                                     <h3 class="synopsis_title">Dernière rencokkkk dqzd dqzd </h3>
                                     <p class="see_more">Voir plus
-                                        <img src="public/img/see_more_arrow.svg" class="see_more_arrow" alt="">
+                                        <img src="public/sources/img/see_more_arrow.svg" class="see_more_arrow" alt="">
                                 </div>
                                 </p>
                                 <div class="reaction_container">
@@ -206,13 +206,13 @@
                                         <!-- Like's number -->
                                         <p class="pop_corn_number">515</p>
                                         <!-- Pop corn image -->
-                                        <img class="pop_corn_logo" src="public/img/pop_corn.png" alt="">
+                                        <img class="pop_corn_logo" src="public/sources/img/pop_corn.png" alt="">
                                     </div>
                                     <!-- Comment icon -->
-                                    <img src="public/img/comment_icon.svg" class="reaction_icons" alt="">
+                                    <img src="public/sources/img/comment_icon.svg" class="reaction_icons" alt="">
 
                                     <!-- Share icon -->
-                                    <img src="public/img/share_icon.svg" class="reaction_icons" alt="">
+                                    <img src="public/sources/img/share_icon.svg" class="reaction_icons" alt="">
 
                                 </div>
                             </div>
@@ -235,7 +235,7 @@
                             </video>
                             <!-- Name + pp -->
                             <div class="profile_container">
-                                <img src="public/img/pdp.jpg" class="pp_profile" alt="">
+                                <img src="public/sources/img/pdp.jpg" class="pp_profile" alt="">
                                 <p class="pseudo">Lecréateur123</p>
                             </div>
 
@@ -249,7 +249,7 @@
                                 <div class="synopsis_title_container">
                                     <h3 class="synopsis_title">Dernière rencokkkk dqzd dqzd </h3>
                                     <p class="see_more">Voir plus
-                                        <img src="public/img/see_more_arrow.svg" class="see_more_arrow" alt="">
+                                        <img src="public/sources/img/see_more_arrow.svg" class="see_more_arrow" alt="">
                                 </div>
                                 </p>
                                 <div class="reaction_container">
@@ -257,13 +257,13 @@
                                         <!-- Like's number -->
                                         <p class="pop_corn_number">515</p>
                                         <!-- Pop corn image -->
-                                        <img class="pop_corn_logo" src="public/img/pop_corn.png" alt="">
+                                        <img class="pop_corn_logo" src="public/sources/img/pop_corn.png" alt="">
                                     </div>
                                     <!-- Comment icon -->
-                                    <img src="public/img/comment_icon.svg" class="reaction_icons" alt="">
+                                    <img src="public/sources/img/comment_icon.svg" class="reaction_icons" alt="">
 
                                     <!-- Share icon -->
-                                    <img src="public/img/share_icon.svg" class="reaction_icons" alt="">
+                                    <img src="public/sources/img/share_icon.svg" class="reaction_icons" alt="">
 
                                 </div>
                             </div>
@@ -280,7 +280,7 @@
             <!-- next arrow -->
             <div class="arrow_next_container fp-controlArrow fp-next">
                 <!-- Arrow -->
-                <img src="public/img/next_arrow.svg" class="next_arrow" alt="">
+                <img src="public/sources/img/next_arrow.svg" class="next_arrow" alt="">
             </div>
         </div>
 
@@ -300,7 +300,7 @@
                         </video>
                         <!-- Name + pp -->
                         <div class="profile_container">
-                            <img src="public/img/pdp.jpg" class="pp_profile" alt="">
+                            <img src="public/sources/img/pdp.jpg" class="pp_profile" alt="">
                             <p class="pseudo">Lecréateur123</p>
                         </div>
 
@@ -314,7 +314,7 @@
                         </video>
                         <!-- Name + pp -->
                         <div class="profile_container">
-                            <img src="public/img/pdp.jpg" class="pp_profile" alt="">
+                            <img src="public/sources/img/pdp.jpg" class="pp_profile" alt="">
                             <p class="pseudo">Lecréateur123</p>
                         </div>
 
@@ -328,7 +328,7 @@
                         </video>
                         <!-- Name + pp -->
                         <div class="profile_container">
-                            <img src="public/img/pdp.jpg" class="pp_profile" alt="">
+                            <img src="public/sources/img/pdp.jpg" class="pp_profile" alt="">
                             <p class="pseudo">Lecréateur123</p>
                         </div>
 
@@ -340,7 +340,7 @@
                 </div>
 
                 <!-- Podium img -->
-                <img src="public/img/podium.svg" class="podium_img" alt="">
+                <img src="public/sources/img/podium.svg" class="podium_img" alt="">
             </div>
 
         </div>

@@ -22,7 +22,7 @@
         <nav class="menu_nav">
 
             <!-- Logo Réah -->
-            <a class="reah_logo" href="fil_actu.php"> <img src="public/img/logo_reah.svg" alt=""></a>
+            <a class="reah_logo" href="fil_actu.php"> <img src="public/sources/img/logo_reah.svg" alt=""></a>
             <!-- Categories's title -->
             <div class="menu_category">
                 <p class="category_title category_title1" number="1" number1="2" number2="3">Ajouts récents</p>
@@ -43,9 +43,9 @@
 
             <div class="menu_profile">
                 <!-- Defi icon -->
-                <a href="defis.php"> <img src="public/img/defi_icon.svg" class="defi_icon" alt=""></a>
+                <a href="defis.php"> <img src="public/sources/img/defi_icon.svg" class="defi_icon" alt=""></a>
                 <!-- Profile photo -->
-                <img src="public/img/pdp.jpg" class="menu_pp" alt="">
+                <img src="public/sources/img/pdp.jpg" class="menu_pp" alt="">
             </div>
         </nav>
 
@@ -63,26 +63,26 @@
 
             <!-- Profile -->
             <a href="profil.php" class="menu_option profil">
-                <img src="public/img/profile_icon.svg" alt="">
+                <img src="public/sources/img/profile_icon.svg" alt="">
                 <p class="menu_option_title">Profil</p>
             </a>
 
             <!-- Notifications -->
             <a href="" class="menu_option notifications">
-                <img src="public/img/notifications_icon.svg" alt="">
+                <img src="public/sources/img/notifications_icon.svg" alt="">
                 <p class="menu_option_title">Notifications</p>
             </a>
 
             <a href="" class="registered menu_option">
-                <img src="public/img/saved_icon.svg" alt="">
+                <img src="public/sources/img/saved_icon.svg" alt="">
                 <p class="menu_option_title">Enregistrés</p>
             </a>
             <a href="" class="settings menu_option">
-                <img src="public/img/settings_icon.svg" alt="">
+                <img src="public/sources/img/settings_icon.svg" alt="">
                 <p class="menu_option_title">Paramètres</p>
             </a>
             <a href="" class="disconnection menu_option">
-                <img src="public/img/disconnection_icon.svg" alt="">
+                <img src="public/sources/img/disconnection_icon.svg" alt="">
                 <p class="menu_option_title">Déconnexion</p>
             </a>
         </div>
@@ -94,7 +94,7 @@
             <!-- prev arrow -->
             <div class="arrow_prev_container fp-controlArrow fp-prev">
                 <!-- Arrow -->
-                <img src="public/img/prev_arrow.svg" class="prev_arrow" alt="">
+                <img src="public/sources/img/prev_arrow.svg" class="prev_arrow" alt="">
             </div>
 
             <!-- Category content  -->
@@ -138,24 +138,24 @@
                                 <div class='synopsis_title_container' >
                                     <h3 class='synopsis_title'>{$films["title"]}</h3>
                                     <p class='see_more'>Voir plus
-                                        <img src='public/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        <img src='public/sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                         </p>
                                 </div>
                                 <div class='reaction_container'>
                                     <div class='fb_jsb'>
                                         <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='public/img/pop_corn.png' alt=''>
+                                        <img class='pop_corn_icon' src='public/sources/img/pop_corn.png' alt=''>
                                         <!-- Like\'s number -->
                                         <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c'>
-                                        <img src='public/img/comment_icon.svg' class='comment_icon' alt=''>
+                                        <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
                                         <p class='profile_comment_title'>1 925 commentaires</p>
                                     </div>
 
                                     <!-- Share icon -->
-                                    <img src='public/img/share_icon.svg' class='share_icon' alt=''>
+                                    <img src='public/sources/img/share_icon.svg' class='share_icon' alt=''>
 
                                 </div>
                             </div>
@@ -179,7 +179,7 @@
             <!-- next arrow -->
             <div class="arrow_next_container fp-controlArrow fp-next">
                 <!-- Arrow -->
-                <img src="public/img/next_arrow.svg" class="next_arrow" alt="">
+                <img src="public/sources/img/next_arrow.svg" class="next_arrow" alt="">
             </div>
 
         </div>
@@ -190,7 +190,7 @@
             <!-- prev arrow -->
             <div class="arrow_prev_container">
                 <!-- Arrow -->
-                <img src="public/img/prev_arrow.svg" class="prev_arrow" alt="">
+                <img src="public/sources/img/prev_arrow.svg" class="prev_arrow" alt="">
             </div>
 
             <!-- Category content  -->
@@ -233,7 +233,7 @@
                                 <div class='synopsis_title_container'>
                                     <h3 class='synopsis_title'>{$films["title"]}</h3>
                                     <p class='see_more'>Voir plus
-                                        <img src='public/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        <img src='public/sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                 </div>
                                 </p>
                                 <div class='reaction_container'>
@@ -241,13 +241,13 @@
                                         <!-- Like\'s number -->
                                         <p class='pop_corn_number'>515</p>
                                         <!-- Pop corn image -->
-                                        <img class='pop_corn_logo' src='public/img/pop_corn.png' alt=''>
+                                        <img class='pop_corn_logo' src='public/sources/img/pop_corn.png' alt=''>
                                     </div>
                                     <!-- Comment icon -->
-                                    <img src='public/img/comment_icon.svg' class='reaction_icons' alt=''>
+                                    <img src='public/sources/img/comment_icon.svg' class='reaction_icons' alt=''>
 
                                     <!-- Share icon -->
-                                    <img src='public/img/share_icon.svg' class='reaction_icons' alt=''>
+                                    <img src='public/sources/img/share_icon.svg' class='reaction_icons' alt=''>
 
                                 </div>
                             </div>
@@ -265,7 +265,7 @@
             <!-- next arrow -->
             <div class="arrow_next_container">
                 <!-- Arrow -->
-                <img src="public/img/next_arrow.svg" class="next_arrow" alt="">
+                <img src="public/sources/img/next_arrow.svg" class="next_arrow" alt="">
             </div>
         </div>
 
@@ -274,7 +274,7 @@
             <!-- prev arrow -->
             <div class="arrow_prev_container">
                 <!-- Arrow -->
-                <img src="public/img/prev_arrow.svg" class="prev_arrow" alt="">
+                <img src="public/sources/img/prev_arrow.svg" class="prev_arrow" alt="">
             </div>
 
             <!-- Category content  -->
@@ -317,7 +317,7 @@
                                 <div class='synopsis_title_container'>
                                     <h3 class='synopsis_title'>{$films["title"]}</h3>
                                     <p class='see_more'>Voir plus
-                                        <img src='public/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        <img src='public/sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                 </div>
                                 </p>
                                 <div class='reaction_container'>
@@ -325,13 +325,13 @@
                                         <!-- Like\'s number -->
                                         <p class='pop_corn_number'>515</p>
                                         <!-- Pop corn image -->
-                                        <img class='pop_corn_logo' src='public/img/pop_corn.png' alt=''>
+                                        <img class='pop_corn_logo' src='public/sources/img/pop_corn.png' alt=''>
                                     </div>
                                     <!-- Comment icon -->
-                                    <img src='public/img/comment_icon.svg' class='reaction_icons' alt=''>
+                                    <img src='public/sources/img/comment_icon.svg' class='reaction_icons' alt=''>
 
                                     <!-- Share icon -->
-                                    <img src='public/img/share_icon.svg' class='reaction_icons' alt=''>
+                                    <img src='public/sources/img/share_icon.svg' class='reaction_icons' alt=''>
 
                                 </div>
                             </div>
@@ -348,7 +348,7 @@
             <!-- next arrow -->
             <div class="arrow_next_container">
                 <!-- Arrow -->
-                <img src="public/img/next_arrow.svg" class="next_arrow" alt="">
+                <img src="public/sources/img/next_arrow.svg" class="next_arrow" alt="">
             </div>
         </div>
     </main>
@@ -368,7 +368,7 @@
                         <div class='fb_c'>
                             <div class='film_header'>
                                 <p class='film_title'>{$films["title"]}</p>
-                                <img src='public/img/close_icon.svg' class='close_icon' alt=''>
+                                <img src='public/sources/img/close_icon.svg' class='close_icon' alt=''>
                             </div>
                     
                             <!-- Film -->
@@ -384,7 +384,7 @@
                     
                                         <!-- Challenge section -->
                                         <div class='fb challenge_container'>
-                                            <img src='public/img/defi_icon.svg' class='challenge_defi_icon' alt=''>
+                                            <img src='public/sources/img/defi_icon.svg' class='challenge_defi_icon' alt=''>
                                             <a href='defi1.php' class='challenge_title'>{$films["challenge"]}</a>
                                         </div>
                                         <p class='film_time'>{$films["duration"]}</p>
@@ -395,13 +395,13 @@
                     
                                         <!-- Like section -->
                                         <div class='fb_jsb'>
-                                            <img class='pop_corn_icon' src='public/img/pop_corn_icon.svg' alt=''>
+                                            <img class='pop_corn_icon' src='public/sources/img/pop_corn_icon.svg' alt=''>
                                             <p class='film_pop_corn_number'>515 J'aime</p>
                                         </div>
                     
                                         <!-- Share section -->
                                         <div class='fb_jsb share_container'>
-                                            <img src='public/img/share_icon.svg' class='share_icon' alt=''>
+                                            <img src='public/sources/img/share_icon.svg' class='share_icon' alt=''>
                                             <p class='share_title'>Partager</p>
                                         </div>
                                     </div>
@@ -416,9 +416,9 @@
                     
                             </div>
                             <div class='fb_jc ai-c comment_title_container'>
-                                <img src='public/img/comment_icon.svg' class='reaction_icons' alt=''>
+                                <img src='public/sources/img/comment_icon.svg' class='reaction_icons' alt=''>
                                 <p class='comment_title'>25 commentaires</p>
-                                <img src='public/img/bottom_arrow.svg' class='comment_arrow' alt=''>
+                                <img src='public/sources/img/bottom_arrow.svg' class='comment_arrow' alt=''>
                             </div>
                         </div>";
                     };
@@ -465,15 +465,15 @@
                     
                                 <div class='fb_jsa'>
                                     <div class='fb_jsb'>
-                                        <img class='pop_corn_icon' src='public/img/pop_corn_icon.svg' alt=''>
+                                        <img class='pop_corn_icon' src='public/sources/img/pop_corn_icon.svg' alt=''>
                                         <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
                                     <div class='fb_jsb comment_container'>
-                                        <img class='comment_icon' src='public/img/comment_icon.svg' alt=''>
+                                        <img class='comment_icon' src='public/sources/img/comment_icon.svg' alt=''>
                                         <p class='comment_number'>8 réponses</p>
                                     </div>
                                     <div class='fb_jsb share_container'>
-                                        <img class='share_icon' src='public/img/share_icon.svg' alt=''>
+                                        <img class='share_icon' src='public/sources/img/share_icon.svg' alt=''>
                                         <p class='share_title'>Partager</p>
                                     </div>
                                 </div>
