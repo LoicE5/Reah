@@ -40,7 +40,7 @@
             </div>
 
             <!-- Search bar -->
-            <form action="">
+            <form action="" class="form_search_bar">
                 <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
             </form>
 

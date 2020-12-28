@@ -37,7 +37,7 @@
 
 
             <!-- Search bar -->
-            <form action="">
+            <form action="" class="form_search_bar">
                 <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
             </form>
 
@@ -379,7 +379,7 @@
                     
                             <div class='film_informations'>
                     
-                                <div class='fb_jsb'>
+                                <div class='fb_jsb film_informations_header'>
                                     <div class='fb_jsb'>
                     
                                         <!-- Challenge section -->
@@ -387,6 +387,8 @@
                                             <img src='public/sources/img/defi_icon.svg' class='challenge_defi_icon' alt=''>
                                             <a href='defi1.php' class='challenge_title'>{$films["challenge"]}</a>
                                         </div>
+
+                                        <!-- Date + duration section -->
                                         <p class='film_time'>{$films["duration"]}</p>
                                         <p class='film_date'>{$films["date"]}</p>
                                     </div>
@@ -409,7 +411,7 @@
                     
                                 <p class='film_description'>{$films["synopsis"]}</p>
                     
-                                <div class='fb_jsa'>
+                                <div class='fb_jsa genre_distribution_container'>
                                     <p class='genre_container'><span>Genres</span> <br> {$films["genre"]}</p>
                                     <p class='distribution_container'><span>Distribution</span> <br> {$films["distribution"]}</p>
                                 </div>

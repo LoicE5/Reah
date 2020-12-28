@@ -8,8 +8,8 @@
 
 .banner {
     width: 100%;
-    background: url(../../sources/img/profile_photo/minmin.jpg) no-repeat center/100%;
-    height: 250px;
+    background: url(../../../database/profile_picture/minmin.jpg) no-repeat center/100%;
+    /* height: 250px; */
 }
 
 .banner_flou_left,
@@ -29,6 +29,7 @@
     display: flex;
     position: relative;
     width: 90%;
+    height: 330px;
 }
 
 .main_content {
@@ -87,7 +88,7 @@
 
 .profile_subscription_line {
     background-color: #d60036;
-    height: 1.5px;
+    height: 2px;
     width: 40px;
     border-radius: 100px;
     position: relative;
@@ -521,9 +522,7 @@
         width: 426px;
     }
 
-    .reaction_container {
-        min-width: 426px;
-    }
+ 
 
     .share_title {
         display: none;

@@ -12,6 +12,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     font-size: 1em;
     font-weight: 500;
+    overflow-x: hidden;
 }
 
 .fb {
@@ -555,7 +556,7 @@ select {
         transition: 0.5s ease;
     }
 
-    form {
+    .form_search_bar {
         width: 25px;
     }
 

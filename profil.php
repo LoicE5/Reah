@@ -29,7 +29,7 @@
             <a class="reah_logo" href="fil_actu.php"> <img src="public/sources/img/logo_reah.svg" alt=""></a>
            
             <!-- Search bar -->
-            <form action="">
+            <form action="" class="form_search_bar">
                 <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
             </form>
 
@@ -39,7 +39,7 @@
                 <!-- Challenge icon -->
                 <a href="defis.php"> <img src="public/sources/img/defi_icon.svg" class="defi_icon" alt=""></a>
                 <!-- Profile photo -->
-                <img src="public/sources/img/pdp.jpg" class="menu_pp" alt="">
+                <img src="public/sources/img/profil_icon.svg" class="defi_icon menu_pp" alt="">
             </div>
         </nav>
 
@@ -107,7 +107,7 @@
                     </div>
                 </div>
                 <!-- Profile photo + username -->
-                <img src="public/sources/img/profile_photo/minmin.jpg" alt="" class="profile_photo">
+                <img src="database/profile_picture/minmin.jpg" alt="" class="profile_photo">
             </div>
 
             <div class="fb_jsb profile_content2">
@@ -180,7 +180,7 @@
                             <!-- Comment icon -->
                             <div class='fb_jc ai-c'>
                                 <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                <p class='profile_comment_title'>1 925 commentaires</p>
+                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                             </div>
 
                             <!-- Share icon -->
@@ -257,7 +257,7 @@
                         <!-- Comment icon -->
                         <div class='fb_jc ai-c'>
                             <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                            <p class='profile_comment_title'>1 925 commentaires</p>
+                            <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                         </div>
 
                         <!-- Share icon -->
@@ -349,7 +349,7 @@
                     
                                 <p class='film_description'>{$films["synopsis"]}</p>
                     
-                                <div class='fb_jsa'>
+                                <div class='fb_jsa genre_distribution_container'>
                                     <p class='genre_container'><span>Genres</span> <br> {$films["genre"]}</p>
                                     <p class='distribution_container'><span>Distribution</span> <br> {$films["distribution"]}</p>
                                 </div>
