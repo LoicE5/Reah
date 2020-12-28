@@ -221,6 +221,8 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script src="public/assets/js/app.js"></script>
     <script src="public/assets/js/register.js"></script>
+    <script src="public/assets/js/fil_actu.js"></script>
+    <script src="public/assets/js/defis.js"></script>
 </body>
 
 </html>

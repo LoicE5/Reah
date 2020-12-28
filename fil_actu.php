@@ -358,7 +358,7 @@
     <div class='dark_filter'></div>
     <?php
 
-                    $requete="SELECT re_films.title as title, re_challenges.title AS challenge, GROUP_CONCAT(username SEPARATOR ', ') AS distribution, url, DATE_FORMAT(duration, '%imin %s' ) AS duration, synopsis, poster, DATE_FORMAT(re_films.date, '%d/%m/%Y') AS date, GROUP_CONCAT(name SEPARATOR ', ') AS genre FROM re_films, re_users, re_a_realise, re_possede, re_genres, re_challenges WHERE id_films=realise_ext_films AND id_users=realise_ext_users AND possede_ext_films=id_films AND possede_ext_genres=id_genres AND id_films='1'";
+                    $requete="SELECT re_films.title as title, re_challenges.title AS challenge, GROUP_CONCAT(username SEPARATOR ', ') AS distribution, url, DATE_FORMAT(duration, '%imin %s' ) AS duration, synopsis, poster, DATE_FORMAT(re_films.date, '%d/%m/%Y') AS date, GROUP_CONCAT(name SEPARATOR ', ') AS genre FROM re_films, re_users, re_a_realise, re_possede, re_genres, re_challenges WHERE id_films=realise_ext_films AND id_users=realise_ext_users AND possede_ext_films=id_films AND possede_ext_genres=id_genres AND re_films.ext_challenges=id_challenges AND id_films='1'";
                     $stmt=$db->query($requete);
                     $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
                     foreach($resultat as $films){
@@ -463,14 +463,14 @@
                     
                                 <p class='comment_text'>{$comments["comment"]}</p>
                     
-                                <div class='fb_jsa'>
+                                <div class='fb_jsa ai-c'>
                                     <div class='fb_jsb'>
                                         <img class='pop_corn_icon' src='public/sources/img/pop_corn_icon.svg' alt=''>
                                         <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
                                     <div class='fb_jsb comment_container'>
                                         <img class='comment_icon' src='public/sources/img/comment_icon.svg' alt=''>
-                                        <p class='comment_number'>8 réponses</p>
+                                        <p class='comment_number'><nobr>8 réponses</nobr></p>
                                     </div>
                                     <div class='fb_jsb share_container'>
                                         <img class='share_icon' src='public/sources/img/share_icon.svg' alt=''>
@@ -480,17 +480,17 @@
                             </div>";
 
                             
-                        }
+                        };
                         
                         ?>
     </div>
 
     </div>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script src="public/assets/js/app.js"></script>
-    <script src="public/assets/js/register.js"></script>
-    <script src="public/assets/js/register_film.js"></script>
+    <!-- <script src="public/assets/js/register.js"></script> -->
+    <script src="public/assets/js/fil_actu.js"></script>
 </body>
 
 </html>

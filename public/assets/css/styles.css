@@ -374,7 +374,7 @@ select {
     font-size: 1em;
     padding: 5px;
     padding-left: 40px;
-    background: url(../../img/loupe_icon.svg) no-repeat 3%;
+    background: url(../../sources/img/loupe_icon.svg) no-repeat 3%;
     background-color: #d600354f;
     /* background-color: #d60036; */
 }

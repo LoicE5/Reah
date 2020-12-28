@@ -1,3 +1,7 @@
+.reah_logo {
+    position: initial;
+}
+
 .menu_profile {
     min-width: 200px;
 }
@@ -164,6 +168,7 @@
     background-size: 100% 20px;
     background-repeat: no-repeat;
     margin-top: 50px;
+    min-height: 57px;
 }
 
 .realisation_number_content {
@@ -233,9 +238,6 @@
     margin-top: 30px;
 }
 
-.identified_container{
-    /* transform: translateX(1000px); */
-}
 
 .video_container {
     margin-right: 0;
@@ -262,6 +264,7 @@
 }
 .synopsis_title_container {
     justify-content: start;
+    align-items: center;
 }
 
 .synopsis_title,
@@ -487,6 +490,7 @@
 
     form {
         width: 25px;
+        margin-left: 170px;
     }
 
     .menu_category {
@@ -541,10 +545,10 @@
         }
 
     }
-
+/* 
     @media screen and (max-width:570px) {
         .search_bar {
             margin-left: 100%;
-        }
-    }
+        } */
+    /* } */
 }
