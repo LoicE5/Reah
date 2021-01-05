@@ -27,7 +27,7 @@
 
             <!-- Logo Réah -->
             <a class="reah_logo" href="fil_actu.php"> <img src="public/sources/img/logo_reah.svg" alt=""></a>
-           
+
             <!-- Search bar -->
             <form action="" class="form_search_bar">
                 <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
@@ -293,9 +293,9 @@
     </main>
 
 
-  <!-- Films'informations -->
+    <!-- Films'informations -->
 
-  <div class='dark_filter'></div>
+    <div class='dark_filter'></div>
     <?php
 
                     $requete="SELECT re_films.title as title, re_challenges.title AS challenge, GROUP_CONCAT(username SEPARATOR ', ') AS distribution, url, DATE_FORMAT(duration, '%imin %s' ) AS duration, synopsis, poster, DATE_FORMAT(re_films.date, '%d/%m/%Y') AS date, GROUP_CONCAT(name SEPARATOR ', ') AS genre FROM re_films, re_users, re_a_realise, re_possede, re_genres, re_challenges WHERE id_films=realise_ext_films AND id_users=realise_ext_users AND possede_ext_films=id_films AND possede_ext_genres=id_genres AND re_films.ext_challenges=id_challenges AND id_films='1'";
@@ -423,7 +423,65 @@
                         
                         ?>
     </div>
+    </div>
+    <div class="modify_container">
+        <form action="oui.php" method="get">
+            <!-- Close icon -->
+            <img src='public/sources/img/close_icon.svg' class='modify_close_icon' alt=''>
 
+            <!-- Banner -->
+            <div class="modify_banner"></div>
+
+            <div class="modify_profile_photo_container">
+                <!-- Profile photo -->
+                <img src="database/profile_picture/minmin.jpg" alt="" class="modify_profile_photo">
+
+                <div class="modify_file_container">
+                    <!-- Input banner -->
+                    <div class="modify_file_banner">
+                        <button class="modify_btn_banner">Modifier la bannière</button>
+                        <input type="file" class="">
+                    </div>
+                    <!-- Input profile photo -->
+                    <div class="modify_file_profile_photo">
+                        <button class="modify_btn_profile_photo">Modifier la photo de profil</button>
+                        <input type="file" class="">
+                    </div>
+
+                </div>
+            </div>
+            <!-- Inputs username, name, bio.. -->
+            <div class="modify_input_container">
+                <div class="input_container">
+                    <label for="username">
+                        <span>Nom d'utilisateur</span>
+                        <input type="text" class="input_connexion" id="username" name="username">
+                    </label>
+                </div>
+                <div class="input_container">
+                    <label for="name">
+                        <span>Nom</span>
+                        <input type="text" class="input_connexion" id="name" name="name">
+                    </label>
+                </div>
+                <div class="input_container">
+                    <label for="website">
+                        <span>Site web</span>
+                        <input type="text" class="input_connexion" id="website" name="website">
+                    </label>
+                </div>
+                <div class="input_container">
+                    <label for="bio">
+                        <span>Bio</span>
+                        <textarea class="input_connexion input_bio" id="bio" name="bio" cols="30" rows="10"></textarea>
+                    </label>
+                </div>
+
+                <input type="submit" class="modify_btn" value="Modifier">
+            </div>
+        </form>
+
+    </div>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script src="public/assets/js/app.js"></script>

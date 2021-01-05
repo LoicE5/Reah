@@ -221,6 +221,7 @@
                             <div class='user_container'>
                                 <img src='{$films["photo"]}' class='pp_profile' alt=''>
                                 <p class='pseudo'>{$films["username"]}</p>
+                                <div class='flou'></div>
                             </div>
 
                             <!-- Time -->
@@ -230,30 +231,36 @@
                         <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='fb_jsb'>
-                                <div class='synopsis_title_container'>
+                                <div class='synopsis_title_container' >
                                     <h3 class='synopsis_title'>{$films["title"]}</h3>
                                     <p class='see_more'>Voir plus
                                         <img src='public/sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        </p>
                                 </div>
-                                </p>
                                 <div class='reaction_container'>
                                     <div class='fb_jsb'>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515</p>
                                         <!-- Pop corn image -->
-                                        <img class='pop_corn_logo' src='public/sources/img/pop_corn.png' alt=''>
+                                        <img class='pop_corn_icon' src='public/sources/img/pop_corn.png' alt=''>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
-                                    <img src='public/sources/img/comment_icon.svg' class='reaction_icons' alt=''>
+                                    <div class='fb_jc ai-c'>
+                                        <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                        <p class='profile_comment_title'>1 925 commentaires</p>
+                                    </div>
 
                                     <!-- Share icon -->
-                                    <img src='public/sources/img/share_icon.svg' class='reaction_icons' alt=''>
+                                    <img src='public/sources/img/share_icon.svg' class='share_icon' alt=''>
 
                                 </div>
                             </div>
                             <p>{$films["synopsis"]}</p>
                         </div>
+
+
                     </div>
+                    
                     ";
                 }
 
@@ -287,7 +294,7 @@
                 <div class="all_video_container">
 
                     <?php
-                    $requete="SELECT title,username,url,duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
+                    $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
                     $stmt=$db->query($requete);
                     $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
                     foreach($resultat as $films){
@@ -305,6 +312,7 @@
                             <div class='user_container'>
                                 <img src='{$films["photo"]}' class='pp_profile' alt=''>
                                 <p class='pseudo'>{$films["username"]}</p>
+                                <div class='flou'></div>
                             </div>
 
                             <!-- Time -->
@@ -314,30 +322,36 @@
                         <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='fb_jsb'>
-                                <div class='synopsis_title_container'>
+                                <div class='synopsis_title_container' >
                                     <h3 class='synopsis_title'>{$films["title"]}</h3>
                                     <p class='see_more'>Voir plus
                                         <img src='public/sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        </p>
                                 </div>
-                                </p>
                                 <div class='reaction_container'>
                                     <div class='fb_jsb'>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515</p>
                                         <!-- Pop corn image -->
-                                        <img class='pop_corn_logo' src='public/sources/img/pop_corn.png' alt=''>
+                                        <img class='pop_corn_icon' src='public/sources/img/pop_corn.png' alt=''>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
-                                    <img src='public/sources/img/comment_icon.svg' class='reaction_icons' alt=''>
+                                    <div class='fb_jc ai-c'>
+                                        <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                        <p class='profile_comment_title'>1 925 commentaires</p>
+                                    </div>
 
                                     <!-- Share icon -->
-                                    <img src='public/sources/img/share_icon.svg' class='reaction_icons' alt=''>
+                                    <img src='public/sources/img/share_icon.svg' class='share_icon' alt=''>
 
                                 </div>
                             </div>
                             <p>{$films["synopsis"]}</p>
                         </div>
+
+
                     </div>
+                    
                     ";
                 }
 

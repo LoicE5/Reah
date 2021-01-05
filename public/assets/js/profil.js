@@ -69,4 +69,26 @@ $(document).ready(function () {
             //       }, "1s");
         }
     })
+
+    // Pop up to modify profile
+    $(".modify_icon").click(function () {
+        $(".modify_container").fadeIn(500);
+        $(".modify_container").addClass("film_container_open").removeClass("film_container_close");
+        $(".dark_filter").addClass("show fixed");
+        $(".main_content").addClass("scroll_none")
+    })
+    $(".dark_filter,.modify_close_icon").click(function () {
+        $(".modify_container").fadeOut();
+        $(".modify_container").addClass("film_container_close").removeClass("film_container_open");
+        $(".dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none")
+    })
+
+    // Close icon animation hover
+    $(".modify_close_icon").hover(function () {
+        $(this).attr('src', 'public/sources/img/close_icon_hover.svg');
+    })
+    $(".modify_close_icon").mouseout(function () {
+        $(this).attr('src', 'public/sources/img/close_icon.svg');
+    })
 })

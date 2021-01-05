@@ -22,7 +22,7 @@
         <!-- Form -->
         <form class="form_container">
 
-<!-- Input Pseudo/E-mail -->
+        <!-- Input Pseudo/E-mail -->
             <div class="input_container">
                 <label for="pseudo">
                     <span>Pseudo/E-mail</span>
