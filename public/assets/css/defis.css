@@ -13,13 +13,13 @@
 }
 
 .underline2 {
-    transform: translateX(214px);
+    transform: translateX(190px);
     width: 130px;
     transition: ease 0.5s;
 }
 
 .underline3 {
-    transform: translateX(415px);
+    transform: translateX(365px);
     width: 135.5px;
     transition: ease 0.5s;
 
@@ -33,10 +33,19 @@
     align-items: flex-start;
     width: 90%;
     overflow: hidden;
+    height: 15%;
+    min-height: 400px;
+    justify-content: center;
 }
 
+.second_category,
+.third_category {
+    min-height: 400px;
+    height: 15%;
+    margin-top: 0px;
+}
 
-.defi_container{
+.defi_container {
     display: flex;
     width: 100%;
     justify-content: space-between;
@@ -44,7 +53,8 @@
     min-height: 25vw;
     overflow: hidden;
 }
-.defi_content{
+
+.defi_content {
     width: 45%;
     position: relative;
     display: flex;
@@ -53,14 +63,14 @@
     height: 100%;
 }
 
-.defi_img{
-width: 100%;
-height: 100%;
+.defi_img {
+    width: 100%;
+    height: 100%;
 }
 
-.defi_title{
+.defi_title {
     font-size: 3vw;
-    font-weight: 900;
+    font-weight: bold;
     text-align: center;
     color: white;
     text-decoration: none !important;
@@ -70,17 +80,19 @@ height: 100%;
     text-shadow: black 0px 0px 15px;
 }
 
-.defi_title_hover{
+.defi_title_hover {
     transform: scale(1.1);
     transition: 0.3s ease;
 }
-.defi_title_mouseout{
+
+.defi_title_mouseout {
     transform: scale(1);
     transition: 0.3s ease;
 }
-.defi_time{
-    font-size: 1vw;
-    font-weight: 900;
+
+.defi_time {
+    font-size: 1rem;
+    font-weight: bold;
     text-align: center;
     color: white;
     text-decoration: none !important;
@@ -89,14 +101,16 @@ height: 100%;
     width: 100%;
     text-shadow: black 0px 0px 15px;
 }
-.defi_pop_container{
+
+.defi_pop_container {
     display: flex;
     align-items: center;
     overflow-x: auto;
-    position: relative  ;
+    position: relative;
     padding: 40px;
 }
-.defi_pop_content{
+
+.defi_pop_content {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -105,67 +119,88 @@ height: 100%;
     height: 360px;
     width: 640px;
 }
-.defi_pop_img{
+
+.defi_pop_img {
     width: auto;
 }
-.defi_pop_title{
-    font-size: 2vw;
-    font-weight: 900;
+
+.defi_pop_title {
+    font-size: 2rem;
+    font-weight: bold;
     text-align: center;
     color: white;
     text-decoration: none !important;
     position: absolute;
-    top: 35%;
+    top: 30%;
     width: 100%;
     text-shadow: black 0px 0px 15px;
 }
 
-@keyframes defi_img_hover{
-    0%{
+@keyframes defi_img_hover {
+    0% {
         filter: brightness(100%);
-         width: 100%;
-         height: 100%;
+        width: 100%;
+        height: 100%;
     }
-    100%{
+
+    100% {
         filter: brightness(50%);
-         height: 95%;
-         width: 95%;
+        height: 95%;
+        width: 95%;
     }
 }
 
-.defi_img_hover{
+.defi_img_hover {
     animation: defi_img_hover 0.3s ease forwards;
 }
 
-@keyframes defi_img_mouseout{
-    100%{
+@keyframes defi_img_mouseout {
+    100% {
         filter: brightness(100%);
-         width: 100%;
-         height: 100%;
+        width: 100%;
+        height: 100%;
     }
-    0%{
+
+    0% {
         filter: brightness(50%);
         width: 95%;
         height: 95%;
     }
 }
 
-.defi_img_mouseout{
+.defi_img_mouseout {
     animation: defi_img_mouseout 0.3s ease forwards;
 }
 
 @media screen and (max-width:1615px) {
-    .defi_pop_content{
+    .defi_pop_content {
         height: 240px;
         width: 426px;
         min-width: 426px;
     }
+
 }
+
 @media screen and (max-width:1140px) {
-    .defi_pop_content{
+    .defi_pop_content {
         height: 125px;
         width: 200px;
         min-width: 220px;
+    }
+
+    .first_category,
+    .second_category,
+    .third_category {
+        height: 10%;
+        min-height: 300px;
+    }
+
+    .defi_pop_title {
+        font-size: 1rem;
+    }
+
+    .defi_time {
+        font-size: 0.8rem;
     }
 }
 
@@ -194,6 +229,7 @@ height: 100%;
     .menu_profile {
         min-width: 100px;
     }
+
     .search_bar_focus {
         width: 250px;
         border-radius: 100px;
@@ -218,7 +254,31 @@ height: 100%;
     .category_list_container {
         left: 15%;
     }
+
     .menu_profile {
         min-width: 100px;
+    }
+}
+
+@media screen and (max-width:650px) {
+    .defi_container {
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .defi_content {
+        width: 100%;
+        height: auto;
+    }
+
+    .first_category {
+        height: 25%;
+    }
+
+    .defi_time {
+        font-size: 1rem;
+    }
+    .defi_title{
+        font-size: 6vw;
     }
 }

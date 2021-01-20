@@ -11,7 +11,8 @@
     <title>>REAH | Fil d'actu</title>
     <link rel="stylesheet" href="public/assets/css/styles.css">
     <link rel="stylesheet" href="public/assets/css/fil_actu.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -151,7 +152,7 @@
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c'>
                                         <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                        <p class='profile_comment_title'>1 925 commentaires</p>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                     </div>
 
                                     <!-- Share icon -->

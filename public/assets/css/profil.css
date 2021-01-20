@@ -1,3 +1,8 @@
+.main_content {
+    min-height: 400vh;
+    height: 100%;
+}
+
 .reah_logo {
     position: initial;
 }
@@ -117,7 +122,7 @@
 }
 
 .profile_subscription_number {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: bold;
     text-align: center;
 }
@@ -621,8 +626,6 @@
     .description_container {
         width: 426px;
     }
-
- 
 
     .share_title {
         display: none;

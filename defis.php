@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="public/assets/css/styles.css">
     <link rel="stylesheet" href="public/assets/css/fil_actu.css">
     <link rel="stylesheet" href="public/assets/css/defis.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="public/assets/css/fullpage.css" />
 
 </head>
@@ -134,25 +135,25 @@
                 <div class="defi_pop_container ">
 
                     <!-- Challenge n°1-->
-                    <a href="defi1.php" class="defi_pop_content" defi="1">
+                    <a href="defi_details.php" class="defi_pop_content" defi="1">
                         <img class="defi_img defi_pop_img" src="public/sources/img/defi1.jpg" alt="">
                         <p class="defi_pop_title">SAINT-VALENTIN</p>
                     </a>
 
                     <!-- Challenge n°2-->
-                    <a href="defi2.php" class="defi_pop_content" defi="2">
+                    <a href="defi_details.php" class="defi_pop_content" defi="2">
                         <img class="defi_img defi_pop_img" src="public/sources/img/avion.jpg" alt="">
                         <p class="defi_pop_title">AVION</p>
                     </a>
 
                     <!-- Challenge n°1-->
-                    <a href="defi1.php" class="defi_pop_content" defi="1">
+                    <a href="defi_details.php" class="defi_pop_content" defi="1">
                         <img class="defi_img defi_pop_img" src="public/sources/img/defi1.jpg" alt="">
                         <p class="defi_pop_title">SAINT-VALENTIN</p>
                     </a>
 
                     <!-- Challenge n°2-->
-                    <a href="defi2.php" class="defi_pop_content" defi="2">
+                    <a href="defi_details.php" class="defi_pop_content" defi="2">
                         <img class="defi_img defi_pop_img" src="public/sources/img/avion.jpg" alt="">
                         <p class="defi_pop_title">AVION</p>
                     </a>
@@ -221,8 +222,8 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script src="public/assets/js/app.js"></script>
     <script src="public/assets/js/register.js"></script>
-    <script src="public/assets/js/fil_actu.js"></script>
     <script src="public/assets/js/defis.js"></script>
+    <script src="public/assets/js/fil_actu.js"></script>
 </body>
 
 </html>

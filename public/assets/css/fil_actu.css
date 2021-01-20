@@ -1,4 +1,4 @@
-body{
+body {
     position: relative;
     width: 100%;
     height: 100vh;
@@ -10,7 +10,8 @@ body{
     flex-direction: column;
     justify-content: start;
     overflow-x: hidden;
-    min-height: 400vh;
+    /* min-height: 400vh;
+    height: 100%; */
     position: relative;
 }
 
@@ -52,7 +53,8 @@ body{
     overflow-y: hidden;
     position: relative;
     margin-top: 10vh;
-    height: 20%;
+    height: 100%;
+    min-height: 600px;
 }
 
 
@@ -201,9 +203,11 @@ video:focus {
 .description_container>p {
     margin: 0;
 }
-.description_container>.fb_jsb{
+
+.description_container>.fb_jsb {
     width: 100%;
 }
+
 .synopsis_title_container {
     display: flex;
 }
@@ -272,9 +276,11 @@ video:focus {
     height: 25px;
     cursor: pointer;
 }
-.profile_comment_title{
+
+.profile_comment_title {
     display: none;
 }
+
 .video_content_click {
     transform: translate(-500px);
     transition: ease 2s;
@@ -312,7 +318,8 @@ video:focus {
     }
 }
 
-.dark_filter {
+.dark_filter,
+.upload_dark_filter {
     /* position: absolute; */
     top: 0;
     bottom: 0;
@@ -390,9 +397,11 @@ video:focus {
     margin-right: 40px;
     align-self: flex-end;
 }
-.challenge_defi_icon{
+
+.challenge_defi_icon {
     height: 25px;
 }
+
 .challenge_title {
     color: #d60035;
     font-weight: bold;
@@ -433,13 +442,14 @@ video:focus {
 .comment_title_container:hover {
     background: radial-gradient(circle, #d6003556 0%, #141414 100%);
 }
-.scroll_none{
+
+.scroll_none {
     position: fixed;
     right: 0;
     left: 0;
 }
 
-.comment_space_container{
+.comment_space_container {
     background-color: #0a0a0a;
     padding-top: 20px;
     height: 90vh;
@@ -447,6 +457,7 @@ video:focus {
     transform: translateY(-200px);
     overflow: auto;
 }
+
 .comment_space_container::-webkit-scrollbar {
     background: transparent;
     width: 5px;
@@ -466,20 +477,22 @@ video:focus {
     background: #d6003570;
 }
 
-.comment_space_container_open{
-    animation:  comment_space_container_open ease forwards 0.5s;
-}
-.comment_space_container_close{
-    animation:  comment_space_container_close ease forwards 0.5s;
+.comment_space_container_open {
+    animation: comment_space_container_open ease forwards 0.5s;
 }
 
-.write_comment{
+.comment_space_container_close {
+    animation: comment_space_container_close ease forwards 0.5s;
+}
+
+.write_comment {
     background-color: #141414;
     padding: 10px;
     display: flex;
     padding-left: 50px;
     padding-right: 50px;
 }
+
 .write_comment>textarea {
     border: none;
     background: none;
@@ -491,7 +504,8 @@ video:focus {
     padding-top: 10px;
     height: 30px;
 }
-.send_comment{
+
+.send_comment {
     background: none;
     border: none;
     height: 40px;
@@ -503,14 +517,15 @@ video:focus {
     cursor: pointer;
     padding: 0;
 }
-.send_comment:hover{
+
+.send_comment:hover {
     background: url(../../img/send_icon_hover.svg) no-repeat;
     background-position: center;
     background-size: 100%;
 }
 
 .comment_content {
-     margin-top: 20px;
+    margin-top: 20px;
     background-color: #141414;
     padding: 20px;
     display: flex;
@@ -518,19 +533,24 @@ video:focus {
     padding-right: 50px;
     flex-direction: column;
 }
-.pseudo,.comment_date,.comment_number{
+
+.pseudo,
+.comment_date,
+.comment_number {
     margin: 0;
 }
-.comment_date{
+
+.comment_date {
     color: #afafaf;
     font-size: 0.8rem;
 }
-.comment_number{
+
+.comment_number {
     margin-left: 10px;
     align-self: flex-end;
 }
 
-.comment_param_container{
+.comment_param_container {
     display: flex;
     justify-content: space-between;
     width: 25px;
@@ -538,62 +558,70 @@ video:focus {
     align-self: center;
 }
 
-.comment_param_container>div{
+.comment_param_container>div {
     height: 5px;
     width: 5px;
     background-color: #afafaf;
     border-radius: 100px;
 }
 
-.comment_text{
+.comment_text {
     margin-top: 30px;
     margin-bottom: 30px;
 }
 
-.comment_container{
+.comment_container {
     cursor: pointer;
 }
-.pseudo_date_comment{
+
+.pseudo_date_comment {
     height: 40px;
 }
-.film_container_open{
+
+.film_container_open {
     animation: film_container_open ease 0.5s forwards;
 }
-.film_container_close{
+
+.film_container_close {
     animation: film_container_close ease 0.5s forwards;
 }
-@keyframes comment_space_container_open{
-    0%{
+
+@keyframes comment_space_container_open {
+    0% {
         transform: translateY(-200px);
     }
-    100%{
+
+    100% {
         transform: translateY(0px);
     }
 }
 
-@keyframes comment_space_container_close{
-    0%{
+@keyframes comment_space_container_close {
+    0% {
         transform: translateY(0px);
     }
-    100%{
+
+    100% {
         transform: translateY(-100px);
     }
 }
 
-@keyframes film_container_open{
-    0%{
+@keyframes film_container_open {
+    0% {
         transform: translateY(-100px);
     }
-    100%{
+
+    100% {
         transform: translateY(0px);
     }
 }
 
-@keyframes film_container_close{
-    0%{
+@keyframes film_container_close {
+    0% {
         transform: translateY(0px);
     }
-    100%{
+
+    100% {
         transform: translateY(-100px);
     }
 }
@@ -604,46 +632,50 @@ video:focus {
         width: 426px;
         min-width: 426px;
     }
-    
+
     .video_container {
         min-width: 426px;
     }
-    .all_video_container{
+
+    .all_video_container {
         padding-left: 10px;
     }
-    .description_container>.fb_jsb{
+
+    .description_container>.fb_jsb {
         flex-direction: column-reverse;
     }
-    .synopsis_title,.see_more{
+
+    .synopsis_title,
+    .see_more {
         align-self: center;
         margin-top: 5px;
     }
-    .profile_comment_title{
+
+    .profile_comment_title {
         display: block;
         margin-left: 10px;
     }
+
 }
 
 @media screen and (max-width:900px) {
 
-    .film_container{
+    .film_container {
         width: 95%;
     }
+
     /* .share_title{
         display: none;
     } */
-    .film_informations_header{
+    .film_informations_header {
         flex-direction: column-reverse;
         align-items: flex-start;
         height: 80px;
     }
 }
 
-@media screen and (max-width:800px) {
-}
-
 @media screen and (max-width:700px) {
-    .genre_distribution_container{
+    .genre_distribution_container {
         flex-direction: column;
     }
 }

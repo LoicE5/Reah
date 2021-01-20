@@ -13,7 +13,8 @@
     <link rel="stylesheet" href="public/assets/css/styles.css">
     <link rel="stylesheet" href="public/assets/css/fil_actu.css">
     <link rel="stylesheet" href="public/assets/css/profil.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="public/assets/css/fullpage.css" />
 
 </head>

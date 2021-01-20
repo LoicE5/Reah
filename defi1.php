@@ -1,3 +1,7 @@
+<?php
+    require("header.php");
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -7,9 +11,9 @@
     <title>>REAH | Fil d'actu</title>
     <link rel="stylesheet" href="public/assets/css/styles.css">
     <link rel="stylesheet" href="public/assets/css/fil_actu.css">
-    <link rel="stylesheet" href="public/assets/css/defis.css">
     <link rel="stylesheet" href="public/assets/css/defi1.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="public/assets/css/fullpage.css" />
 
 </head>
@@ -36,8 +40,8 @@
                 </div>
             </div>
 
-             <!-- Search bar -->
-             <form action="" class="form_search_bar">
+            <!-- Search bar -->
+            <form action="" class="form_search_bar">
                 <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
             </form>
 
@@ -53,14 +57,14 @@
 
         <!-- Category list  -->
         <div class="category_list_container">
-        
-            <p class="category_list_category" number="1" number1="2" number2="3">Défi</p>
-                        <p class="category_list_category" number="2" number1="1" number2="3">Couts-métrages</p>
-                        <p class="category_list_category" number="3" number1="1" number2="2">Classement</p>
-                </div>
 
-         <!-- Menu -->
-         <div class="menu_container">
+            <p class="category_list_category" number="1" number1="2" number2="3">Défi</p>
+            <p class="category_list_category" number="2" number1="1" number2="3">Couts-métrages</p>
+            <p class="category_list_category" number="3" number1="1" number2="2">Classement</p>
+        </div>
+
+        <!-- Menu -->
+        <div class="menu_container">
             <a href="connexion.php" class="menu_option sign_in">Se connecter</a>
             <a href="public/index.php" class="menu_option sign_up">S'inscrire</a>
 
@@ -77,7 +81,7 @@
             </a>
 
             <a href="" class="registered menu_option">
-                 <img src="public/sources/img/saved_icon.svg" alt="">
+                <img src="public/sources/img/saved_icon.svg" alt="">
                 <p class="menu_option_title">Enregistrés</p>
             </a>
             <a href="" class="settings menu_option">
@@ -91,19 +95,24 @@
         </div>
 
         <!-- "Ajout récent" catégory -->
-        <div class="first_category">
+        <div class="defi_category">
 
             <!-- Category title -->
             <h1>SAINT-VALENTIN</h1>
 
             <!-- Challenges container -->
-            <div class="defi_container ">
-
-                <p>Défi : <br> Faire un court-métrage sur le thème de la Saint-Valentin.</p>
+            <div class="defi_container">
+                <div class="defi_constraints">
+                    <p><b>Contraintes</b></p>
+                    <ul>
+                        <li>Faire un court-métrage sur le thème de la Saint-Valentin</li>
+                    </ul>
+                </div>
 
                 <div class="defi_information">
-                    <p>Temps restant : 14 heures et 30 minutes</p>
-                    <p>Nombre de courts-métrages déposés : 27</p>
+                    <div href="depot.php" class="depot_btn">Déposer un court-métrage</div>
+                    <p><span>Temps restant</span> 14 heures et 30 minutes</p>
+                    <p><span>Nombre de courts-métrages déposés</span> 27</p>
                 </div>
             </div>
         </div>
@@ -125,154 +134,70 @@
                 <!-- All videos -->
                 <div class="all_video_container">
 
+                    <?php
+                    $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
+                    $stmt=$db->query($requete);
+                    $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
+                    foreach($resultat as $films){
+                        echo "
+
                     <!-- Video container -->
-                    <div class="video_container ">
+                    <div class='video_container'>
 
                         <!-- Short film -->
-                        <div class="video_content">
-                            <video class="video_content" poster="" muted>
-                                <source src="public/sources/video/videobackPT.mp4" type="video/mp4">
+                        <div class='video_content'>
+                            <video class='video' poster='{$films["poster"]}' muted>
+                                <source src='{$films["url"]}' type='video/mp4'>
                             </video>
                             <!-- Name + pp -->
-                            <div class="profile_container">
-                                <img src="public/sources/img/pdp.jpg" class="pp_profile" alt="">
-                                <p class="pseudo">Lecréateur123</p>
+                            <div class='user_container'>
+                                <img src='{$films["photo"]}' class='pp_profile' alt=''>
+                                <p class='pseudo'>{$films["username"]}</p>
+                                <div class='flou'></div>
                             </div>
 
                             <!-- Time -->
-                            <p class="time">4min 40</p>
+                            <p class='time'>{$films["duration"]}</p>
                         </div>
 
-                        <!-- Short film's informations -->
-                        <div class="description_container">
-                            <div class="flex_box">
-                                <div class="synopsis_title_container">
-                                    <h3 class="synopsis_title">Dernière rencokkkk dqzd dqzd </h3>
-                                    <p class="see_more">Voir plus
-                                        <img src="public/sources/img/see_more_arrow.svg" class="see_more_arrow" alt="">
+                        <!-- Short film\'s informations -->
+                        <div class='description_container'>
+                            <div class='fb_jsb'>
+                                <div class='synopsis_title_container' >
+                                    <h3 class='synopsis_title'>{$films["title"]}</h3>
+                                    <p class='see_more'>Voir plus
+                                        <img src='public/sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        </p>
                                 </div>
-                                </p>
-                                <div class="reaction_container">
-                                    <div class="flex_box">
-                                        <!-- Like's number -->
-                                        <p class="pop_corn_number">515</p>
+                                <div class='reaction_container'>
+                                    <div class='fb_jsb'>
                                         <!-- Pop corn image -->
-                                        <img class="pop_corn_logo" src="public/sources/img/pop_corn.png" alt="">
+                                        <img class='pop_corn_icon' src='public/sources/img/pop_corn.png' alt=''>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
-                                    <img src="public/sources/img/comment_icon.svg" class="reaction_icons" alt="">
-
-                                    <!-- Share icon -->
-                                    <img src="public/sources/img/share_icon.svg" class="reaction_icons" alt="">
-
-                                </div>
-                            </div>
-                            <p>Un homme se fait poursuivre dans les rues de Paris, il essaye d'échapper à ses démons
-                                bien motivés à ne pas le lâcher. Un homme se fait poursuivre dans les rues de Paris, il
-                                essaye d'échapper à ses démons
-                                bien motivés à ne pas le lâcher.</p>
-                        </div>
-                    </div>
-
-                    <!-- Video container -->
-                    <div class="video_container ">
-
-                        <!-- Short film -->
-                        <div class="video_content">
-                            <video class="video_content" poster="" muted>
-                                <source src="public/sources/video/videobackPT.mp4" type="video/mp4">
-                            </video>
-                            <!-- Name + pp -->
-                            <div class="profile_container">
-                                <img src="public/sources/img/pdp.jpg" class="pp_profile" alt="">
-                                <p class="pseudo">Lecréateur123</p>
-                            </div>
-
-                            <!-- Time -->
-                            <p class="time">4min 40</p>
-                        </div>
-
-                        <!-- Short film's informations -->
-                        <div class="description_container">
-                            <div class="flex_box">
-                                <div class="synopsis_title_container">
-                                    <h3 class="synopsis_title">Dernière rencokkkk dqzd dqzd </h3>
-                                    <p class="see_more">Voir plus
-                                        <img src="public/sources/img/see_more_arrow.svg" class="see_more_arrow" alt="">
-                                </div>
-                                </p>
-                                <div class="reaction_container">
-                                    <div class="flex_box">
-                                        <!-- Like's number -->
-                                        <p class="pop_corn_number">515</p>
-                                        <!-- Pop corn image -->
-                                        <img class="pop_corn_logo" src="public/sources/img/pop_corn.png" alt="">
+                                    <div class='fb_jc ai-c'>
+                                        <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                     </div>
-                                    <!-- Comment icon -->
-                                    <img src="public/sources/img/comment_icon.svg" class="reaction_icons" alt="">
 
                                     <!-- Share icon -->
-                                    <img src="public/sources/img/share_icon.svg" class="reaction_icons" alt="">
+                                    <img src='public/sources/img/share_icon.svg' class='share_icon' alt=''>
 
                                 </div>
                             </div>
-                            <p>Un homme se fait poursuivre dans les rues de Paris, il essaye d'échapper à ses démons
-                                bien motivés à ne pas le lâcher. Un homme se fait poursuivre dans les rues de Paris,
-                                il
-                                essaye d'échapper à ses démons
-                                bien motivés à ne pas le lâcher.</p>
+                            <p>{$films["synopsis"]}</p>
                         </div>
+
+
                     </div>
+                    
+                    ";
+                }
 
+                ?>
 
-                    <!-- Video container -->
-                    <div class="video_container ">
-
-                        <!-- Short film -->
-                        <div class="video_content">
-                            <video class="video_content" poster="" muted>
-                                <source src="public/sources/video/videobackPT.mp4" type="video/mp4">
-                            </video>
-                            <!-- Name + pp -->
-                            <div class="profile_container">
-                                <img src="public/sources/img/pdp.jpg" class="pp_profile" alt="">
-                                <p class="pseudo">Lecréateur123</p>
-                            </div>
-
-                            <!-- Time -->
-                            <p class="time">4min 40</p>
-                        </div>
-
-                        <!-- Short film's informations -->
-                        <div class="description_container">
-                            <div class="flex_box">
-                                <div class="synopsis_title_container">
-                                    <h3 class="synopsis_title">Dernière rencokkkk dqzd dqzd </h3>
-                                    <p class="see_more">Voir plus
-                                        <img src="public/sources/img/see_more_arrow.svg" class="see_more_arrow" alt="">
-                                </div>
-                                </p>
-                                <div class="reaction_container">
-                                    <div class="flex_box">
-                                        <!-- Like's number -->
-                                        <p class="pop_corn_number">515</p>
-                                        <!-- Pop corn image -->
-                                        <img class="pop_corn_logo" src="public/sources/img/pop_corn.png" alt="">
-                                    </div>
-                                    <!-- Comment icon -->
-                                    <img src="public/sources/img/comment_icon.svg" class="reaction_icons" alt="">
-
-                                    <!-- Share icon -->
-                                    <img src="public/sources/img/share_icon.svg" class="reaction_icons" alt="">
-
-                                </div>
-                            </div>
-                            <p>Un homme se fait poursuivre dans les rues de Paris, il essaye d'échapper à ses démons
-                                bien motivés à ne pas le lâcher. Un homme se fait poursuivre dans les rues de Paris, il
-                                essaye d'échapper à ses démons
-                                bien motivés à ne pas le lâcher.</p>
-                        </div>
-                    </div>
 
                 </div>
             </div>
@@ -292,61 +217,282 @@
                 <!-- Category title -->
                 <h1>CLASSEMENT</h1>
 
-                <div class="classement_container">
 
-                    <div class="classement_video video1">
-                        <video class="video" poster="" muted>
-                            <source src="public/sources/video/videobackPT.mp4" type="video/mp4">
-                        </video>
-                        <!-- Name + pp -->
-                        <div class="profile_container">
-                            <img src="public/sources/img/pdp.jpg" class="pp_profile" alt="">
-                            <p class="pseudo">Lecréateur123</p>
+                <!-- Gold section -->
+                <div class="gold_container">
+
+                    <img src="public/sources/img/gold_medal.png" class="gold_medal" alt="">
+                    <!-- Video container -->
+                    <div class='video_container'>
+
+
+                        <!-- Short film -->
+                        <div class='video_content'>
+                            <video class='video' poster='{$films["poster"]}' muted>
+                                <source src='{$films["url"]}' type='video/mp4'>
+                            </video>
+
+                            <!-- Name + pp -->
+                            <div class='user_container'>
+                                <img src='{$films["photo"]}' class='pp_profile' alt=''>
+                                <p class='pseudo'>{$films["username"]}</p>
+                                <div class='flou'></div>
+                            </div>
+
+                            <!-- Time -->
+                            <p class='time'>{$films["duration"]}</p>
                         </div>
 
-                        <!-- Time -->
-                        <p class="time">4min 40</p>
-                    </div>
+                        <!-- Short film\'s informations -->
+                        <div class='description_container'>
+                            <div class='fb_jsb'>
+                                <div class='synopsis_title_container'>
+                                    <h3 class='synopsis_title'>{$films["title"]}</h3>
+                                    <p class='see_more'>Voir plus
+                                        <img src='public/sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                    </p>
+                                </div>
+                                <div class='reaction_container'>
+                                    <div class='fb_jsb'>
+                                        <!-- Pop corn image -->
+                                        <img class='pop_corn_icon' src='public/sources/img/pop_corn.png' alt=''>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
+                                    </div>
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c'>
+                                        <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
 
-                    <div class="classement_video video2">
-                        <video class="video" poster="" muted>
-                            <source src="public/sources/video/videobackPT.mp4" type="video/mp4">
-                        </video>
-                        <!-- Name + pp -->
-                        <div class="profile_container">
-                            <img src="public/sources/img/pdp.jpg" class="pp_profile" alt="">
-                            <p class="pseudo">Lecréateur123</p>
+                                    <!-- Share icon -->
+                                    <img src='public/sources/img/share_icon.svg' class='share_icon' alt=''>
+
+                                </div>
+                            </div>
+                            <p>{$films["synopsis"]}Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel iusto, consequatur obcaecati quibusdam saepe itaque praesentium, hic fugiat vero nam quisquam porro doloribus natus atque earum fugit ab totam consectetur! </p>
                         </div>
 
-                        <!-- Time -->
-                        <p class="time">4min 40</p>
+
                     </div>
-
-                    <div class="classement_video video3">
-                        <video class="video" poster="" muted>
-                            <source src="public/sources/video/videobackPT.mp4" type="video/mp4">
-                        </video>
-                        <!-- Name + pp -->
-                        <div class="profile_container">
-                            <img src="public/sources/img/pdp.jpg" class="pp_profile" alt="">
-                            <p class="pseudo">Lecréateur123</p>
-                        </div>
-
-                        <!-- Time -->
-                        <p class="time">4min 40</p>
-                    </div>
-
 
                 </div>
 
-                <!-- Podium img -->
-                <img src="public/sources/img/podium.svg" class="podium_img" alt="">
-            </div>
 
+                <!-- Silver container -->
+                <div class="gold_container">
+
+                    <img src="public/sources/img/silver_medal.png" class="gold_medal" alt="">
+                    <!-- Video container -->
+                    <div class='video_container'>
+
+
+                        <!-- Short film -->
+                        <div class='video_content'>
+                            <video class='video' poster='{$films["poster"]}' muted>
+                                <source src='{$films["url"]}' type='video/mp4'>
+                            </video>
+
+                            <!-- Name + pp -->
+                            <div class='user_container'>
+                                <img src='{$films["photo"]}' class='pp_profile' alt=''>
+                                <p class='pseudo'>{$films["username"]}</p>
+                                <div class='flou'></div>
+                            </div>
+
+                            <!-- Time -->
+                            <p class='time'>{$films["duration"]}</p>
+                        </div>
+
+                        <!-- Short film\'s informations -->
+                        <div class='description_container'>
+                            <div class='fb_jsb'>
+                                <div class='synopsis_title_container'>
+                                    <h3 class='synopsis_title'>{$films["title"]}</h3>
+                                    <p class='see_more'>Voir plus
+                                        <img src='public/sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                    </p>
+                                </div>
+                                <div class='reaction_container'>
+                                    <div class='fb_jsb'>
+                                        <!-- Pop corn image -->
+                                        <img class='pop_corn_icon' src='public/sources/img/pop_corn.png' alt=''>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
+                                    </div>
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c'>
+                                        <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
+
+                                    <!-- Share icon -->
+                                    <img src='public/sources/img/share_icon.svg' class='share_icon' alt=''>
+
+                                </div>
+                            </div>
+                            <p>{$films["synopsis"]}</p>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <!-- Bronze section -->
+                <div class="gold_container">
+
+                    <img src="public/sources/img/bronze_medal.png" class="gold_medal" alt="">
+                    <!-- Video container -->
+                    <div class='video_container'>
+
+
+                        <!-- Short film -->
+                        <div class='video_content'>
+                            <video class='video' poster='{$films["poster"]}' muted>
+                                <source src='{$films["url"]}' type='video/mp4'>
+                            </video>
+
+                            <!-- Name + pp -->
+                            <div class='user_container'>
+                                <img src='{$films["photo"]}' class='pp_profile' alt=''>
+                                <p class='pseudo'>{$films["username"]}</p>
+                                <div class='flou'></div>
+                            </div>
+
+                            <!-- Time -->
+                            <p class='time'>{$films["duration"]}</p>
+                        </div>
+
+                        <!-- Short film\'s informations -->
+                        <div class='description_container'>
+                            <div class='fb_jsb'>
+                                <div class='synopsis_title_container'>
+                                    <h3 class='synopsis_title'>{$films["title"]}</h3>
+                                    <p class='see_more'>Voir plus
+                                        <img src='public/sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                    </p>
+                                </div>
+                                <div class='reaction_container'>
+                                    <div class='fb_jsb'>
+                                        <!-- Pop corn image -->
+                                        <img class='pop_corn_icon' src='public/sources/img/pop_corn.png' alt=''>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
+                                    </div>
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c'>
+                                        <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
+
+                                    <!-- Share icon -->
+                                    <img src='public/sources/img/share_icon.svg' class='share_icon' alt=''>
+
+                                </div>
+                            </div>
+                            <p>{$films["synopsis"]}</p>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+            </div>
         </div>
     </main>
 
+
+    <!-- Dark filter -->
+    <div class='upload_dark_filter'></div>
+
+    <!-- Pop up upload films -->
+    <div class="upload_container">
+        <form action="">
+
+            <div class="upload_header">
+                <p>Déposer un court-métrage</p>
+                <img src='public/sources/img/close_icon.svg' class='close_icon' alt=''>
+            </div>
+
+            <!-- Challenge's name -->
+            <p class="defi_title">Défi : Saint-Valentin</p>
+
+            <div class="upload_content">
+
+                <!-- Inputs -->
+                <div class="upload_input">
+                    <div class="input_container">
+                        <label for="title">
+                            <span>Titre</span>
+                            <input type="text" class="input_connexion" id="title" name="title">
+                        </label>
+                    </div>
+                    <div class="input_container input_synopsis">
+                        <label for="synopsis">
+                            <span>Synopsis</span>
+                            <textarea class="input_connexion input_synopsis" id="synopsis" name="synopsis" cols="30"
+                                rows="10"></textarea>
+                        </label>
+                    </div>
+                    <div class="input_container">
+                        <label for="website">
+                            <span>Genres</span>
+                            <div class="input_tag_container">
+                                <p class="input_tag">Action X</p>
+                                <p class="input_tag">Thriller X</p>
+
+                            </div>
+                            <input type="text" class="input_connexion" id="website" name="website">
+                        </label>
+                    </div>
+                    <div class="input_container">
+                        <label for="collab">
+                            <span>Collaborateurs</span>
+                            <input type="text" class="input_connexion" id="collab" name="collab">
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Video -->
+                <div class="upload_video">
+                    <!-- Input upload video -->
+                    <div class="file_video">
+                        <button class="file_video_btn">Sélectionner un fichier</button>
+                        <input type="file" class="">
+                    </div>
+
+                    <!-- Video preview -->
+                    <div class="preview_video"></div>
+
+                    <!-- Input upload poster -->
+                    <div class="file_poster">
+                        <button class="file_poster_btn">Sélectionner une miniature</button>
+                        <input type="file" class="">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="upload_footer">
+                <p>
+                    En mettant en ligne des vidéos sur REAH, vous reconnaissez accepter les Conditions d’utilisation et
+                    le
+                    Règlement de la communauté de REAH. <br>
+                    Veillez à ne pas enfreindre les droits d’auteur ni les droits à la vie privée d’autrui.
+                </p>
+
+                <button class="btn_send">Valider</button>
+
+            </div>
+        </form>
+    </div>
+
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <script src="public/assets/js/defi_details.js"></script>
     <script src="public/assets/js/app.js"></script>
     <script src="public/assets/js/register.js"></script>
     <script src="public/assets/js/fil_actu.js"></script>
