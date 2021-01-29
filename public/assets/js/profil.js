@@ -11,6 +11,15 @@ $(document).ready(function () {
     })
 
 
+    // Subcribe button
+    $(".subscribe_btn").click(function () {
+        if ($(this).text() == "S'abonner") {
+            $(this).text("Se désabonner")
+        } else {
+            $(this).text("S'abonner")
+        }
+    })
+
 
     // Profil page -> switch identified and realisation container
     $(".realisation_number_content_title2").click(function () {
@@ -26,6 +35,17 @@ $(document).ready(function () {
             scrollLeft: 0
         }, "1s");
     })
+
+
+    // Line position left and width
+    let realisationLenght = $(".realisation_number_content_title1").width();
+    let realisationLeft = $(".realisation_number_content_title1").position();
+    $(".realisation_number_content_line").css({
+
+        "width": `${realisationLenght}px`,
+        "transform": `translate(${realisationLeft.left}px)`,
+        "transition": "0.5s ease",
+    });
 
     // Realisations number title + underline animation hover + click
     $(".realisation_number_content_title1").addClass("category_title_click");
@@ -58,16 +78,30 @@ $(document).ready(function () {
 
         $(this).addClass("category_title_click");
 
+        let realisationLenght = $(".realisation_number_content_title1").width();
+        let identifiedLenght = $(".realisation_number_content_title2").width();
+        let realisationLeft = $(".realisation_number_content_title1").position();
+        let identifiedLeft = $(".realisation_number_content_title2").position();
+
         if (number == "1") {
-            $(".realisation_number_content_line").removeClass("realisation_number_content_line1").addClass("realisation_number_content_line2  ");
+
+            $(".realisation_number_content_line").css({
+
+                "width": `${identifiedLenght}px`,
+                "transform": `translate(${identifiedLeft.left}px)`,
+                "transition": "0.5s ease",
+            });
+            console.log($(".subscription_line").width());
+
         } else if (number == "2") {
-            $(".realisation_number_content_line").removeClass("realisation_number_content_line2").addClass("realisation_number_content_line1");
-            //   } else if (number == "3") {
-            //       $(".underline").addClass("underline3");
-            //       $("html, body").animate({
-            //           scrollTop: 1400
-            //       }, "1s");
+            $(".realisation_number_content_line").css({
+
+                "width": `${realisationLenght}px`,
+                "transform": `translate(${realisationLeft.left}px)`,
+                "transition": "0.5s ease",
+            });
         }
+
     })
 
     // Pop up to modify profile
@@ -90,5 +124,114 @@ $(document).ready(function () {
     })
     $(".modify_close_icon").mouseout(function () {
         $(this).attr('src', 'public/sources/img/close_icon.svg');
+    })
+
+
+    // Subscription pop up
+
+    $(".profile_subscription_content").click(function () {
+        $(".subscription_container").fadeIn(500);
+        $(".subscription_container").addClass("film_container_open").removeClass("film_container_close");
+        $(".dark_filter").addClass("show fixed");
+        $(".main_content").addClass("scroll_none")
+
+        if ($(this).attr("number") == "1") {
+
+            // Subscriber section translate
+            $(".subscriber_section,.subscription_section").addClass("subscriber_click2");
+            $(".subscriber_section,.subscription_section").removeClass("subscriber_click");
+            // Line position and width
+            let subscriberLeft = $(".subscriber_title").position();
+            let subscriberLenght = $(".subscriber_title").width();
+            $(".subscription_line").css({
+                "width": `${subscriberLenght}px`,
+                "transform": `translate(${subscriberLeft.left}px)`
+            })
+        } else {
+            // Subscription section translate
+            $(".subscriber_section,.subscription_section").addClass("subscriber_click");
+            $(".subscriber_section,.subscription_section").removeClass("subscriber_click2");
+            // Line position and width
+            let subscriptionLeft = $(".subscription_title").position();
+            let subscriptionLenght = $(".subscription_title").width();
+            $(".subscription_line").css({
+                "width": `${subscriptionLenght}px`,
+                "transform": `translate(${subscriptionLeft.left}px)`
+            })
+        }
+    })
+    $(".dark_filter,.close_icon").click(function () {
+        $(".subscription_container").fadeOut();
+        $(".subscription_container").addClass("film_container_close").removeClass("film_container_open");
+        $(".dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none")
+    })
+
+    // Subscription / subscriber translate
+    $(".subscription_title").click(function () {
+        $(".subscriber_section,.subscription_section").addClass("subscriber_click");
+        $(".subscriber_section,.subscription_section").removeClass("subscriber_click2");
+    })
+
+    $(".subscriber_title").click(function () {
+        $(".subscriber_section,.subscription_section").addClass("subscriber_click2");
+        $(".subscriber_section,.subscription_section").removeClass("subscriber_click");
+    })
+
+    // Subscription title color
+    $(".subscriber_title").addClass("category_title_click");
+
+    $(".subscriber_title,.subscription_title").hover(function () {
+        $(this).css({
+            "color": "white"
+        });
+
+        $(this).mouseout(function () {
+            if ($(this).hasClass("category_title_click")) {
+                $(this).css({
+                    "color": "white"
+                });
+            } else {
+                $(this).css({
+                    "color": "#bbbbbb"
+                });
+            }
+        })
+    })
+
+    // Subscription title click + line animation
+
+    $(".subscriber_title,.subscription_title").click(function () {
+        let number = $(this).attr("number");
+        $(".subscriber_title,.subscription_title").removeClass("category_title_click");
+        $(".subscriber_title,.subscription_title" + number).css({
+            "color": "#bbbbbb"
+        });
+
+        $(this).addClass("category_title_click");
+
+        let subscriptionLenght = $(".subscription_title").width();
+        let subscriberLenght = $(".subscriber_title").width();
+        let subscriptionLeft = $(".subscription_title").position();
+        let subscriberLeft = $(".subscriber_title").position();
+
+        if (number == "1") {
+
+            $(".subscription_line").css({
+
+                "width": `${subscriptionLenght}px`,
+                "transform": `translate(${subscriptionLeft.left}px)`,
+                "transition": "0.4s ease",
+            });
+            console.log($(".subscription_line").width());
+
+        } else if (number == "2") {
+            $(".subscription_line").css({
+
+                "width": `${subscriberLenght}px`,
+                "transform": `translate(${subscriberLeft.left}px)`,
+                "transition": "0.4s ease",
+            });
+        }
     })
 })

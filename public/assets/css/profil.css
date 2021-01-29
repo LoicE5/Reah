@@ -1,10 +1,6 @@
-.main_content {
-    min-height: 400vh;
-    height: 100%;
-}
-
-.reah_logo {
-    position: initial;
+.form_search_bar{
+    margin: auto;
+    margin-right: 50px;
 }
 
 .menu_profile {
@@ -41,6 +37,11 @@
     width: 100%;
 }
 
+.menu_nav{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .profile_container {
     display: flex;
     background: none;
@@ -50,6 +51,7 @@
     justify-content: space-between;
     cursor: default;
     align-items: flex-start;
+    margin: auto;
     margin-top: 10px;
 }
 
@@ -110,6 +112,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
 }
 
 .profile_subscription_content>p {
@@ -127,6 +130,19 @@
     text-align: center;
 }
 
+.subscribe_btn{
+    height: 35px;
+    width: 150px;
+    background-color: #d60036;
+    line-height: 35px;
+    text-align: center;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.subscribe_btn:hover{
+    background-color: #d60035b4;
+}
 .profile_bio_container {
     width: 100%;
     align-self: flex-start;
@@ -134,19 +150,6 @@
     min-width: 480px;
 }
 
-/* 
-.profile_bio_container>div{
-    width: 150px;
-    background-color: #D60036;
-    padding: 10px;
-    text-align: center;
-    cursor: pointer;
-    align-self: center;
-}
-
-.profile_bio_container>div:hover{
-    background-color: #d6003693;
-} */
 .profile_name {
     font-weight: bold;
     margin: 0;
@@ -235,7 +238,7 @@
     flex-direction: row;
     overflow: initial;
     height: none;
-    min-width: 94%;
+    min-width: 100%;
     justify-content: space-evenly;
     padding: 0;
     padding-left: 3%;
@@ -406,6 +409,131 @@
     cursor: pointer;
     font-family: 'Montserrat', sans-serif;
 }
+
+.subscription_container{
+    position: absolute;
+    width: 500px;
+    height: 800px;
+    box-shadow: black 0px 0px 20px;
+    background-color: #141414;
+    z-index: 200;
+    margin: auto;
+    margin-top: 2vh;
+    display: none;
+}
+
+.subscription_header{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.subscription_header>h2{
+    text-align: center;
+    width: 100%;
+    margin: 0;
+}
+
+.subscriber_title,.subscription_title{
+    cursor: pointer;
+    color: #bbbbbb;
+}
+.subscription_content{
+    padding: 50px;
+    display: flex;
+    padding-top: 20px;
+    overflow: hidden;
+}
+.subsciption_title_container{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    align-items: center;
+    position: relative;
+    background:
+        radial-gradient(at 50% 0px, black 0%, transparent 70%) bottom;
+    background-size: 100% 20px;
+    background-repeat: no-repeat;
+    padding-bottom: 30px;
+}
+
+.subscription_line{
+    /* width: 72px; */
+    height: 2px;
+    background-color: #d60036;
+    box-shadow: 0px 2px 8px #d60036;
+    border-radius: 100px;
+    position: absolute;
+    top: 33px;
+    left: 0px;
+
+}
+
+.subscription_section,.subscriber_section{
+    min-width: 100%;
+}
+
+.subscriber_click{
+    animation: subscriber_click 0.4s ease forwards;
+}
+
+.subscriber_click2{
+    animation: subscriber_click2 0.4s ease forwards;
+}
+.subscriber_section{
+    margin-right: 50px;
+}
+.subscription_user{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.subcription_pp{
+    height: 50px;
+    width: 50px;
+    background-color: #d60036;
+    border-radius: 100px;
+}
+
+.subscription_username_container{
+    min-width: 200px;
+}
+.subscription_name{
+    font-size: 0.8em;
+    color:#bbbbbb;
+}
+.subscription_user_btn{
+    height: 30px;
+    width: 100px;
+    background-color: #d60036;
+    line-height: 30px;
+    text-align: center;
+}
+
+
+
+@keyframes subscriber_click{
+    0%{
+        transform: translateX(0px);
+        }
+        100%{
+        transform: translateX(-450px);
+    
+        }
+}
+
+@keyframes subscriber_click2{
+    0%{
+        transform: translateX(-450px);
+        }
+        100%{
+        transform: translateX(0);
+    
+        }
+}
 @keyframes realisation_container_click{
     0%{
     transform: translateX(0px);
@@ -505,6 +633,7 @@
         align-items: center;
         justify-content: center;
         flex-direction: column;
+        min-height: 366;
     }
 
     .profile_subscription_container {
@@ -512,9 +641,17 @@
         min-width: 240px;
         width: 15vw;
         align-self: flex-start;
+        min-height: 85px;
+    }
+    
+    .profile_content1>.fb_c{
         order: 2;
+        
     }
 
+    .subscribe_btn{
+        margin: 20px;
+    }
     .profile_subscription_content {
         display: flex;
         flex-direction: column;
@@ -541,6 +678,7 @@
 
     .profile_content2 {
         min-width: 550px;
+        margin-top: 20px;
     }
 
     .modify_icon {
@@ -581,7 +719,7 @@
 
 @media screen and (max-width:750px) {
 
-    .search_bar:focus {
+    .search_bar_focus {
         width: 250px;
         border-radius: 100px;
         box-shadow: 0px 0px 15px #000000;
@@ -596,7 +734,7 @@
 
     .form_search_bar {
         width: 25px;
-        margin-left: 170px;
+        margin-right: 80px;
     }
 
     .menu_category {
@@ -629,6 +767,9 @@
 
     .share_title {
         display: none;
+    }
+    .reaction_container{
+        min-width: unset;
     }
 
     @media screen and (max-width:600px) {

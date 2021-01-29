@@ -9,7 +9,7 @@ form {
 
 /* Forms */
 .form_container {
-    min-height: 250px;
+    min-height: 480px;
 }
 
 .form_container2 {
@@ -19,7 +19,7 @@ form {
 
 .form_container3 {
     display: none;
-    min-height: 200px;
+    min-height: 250px;
 }
 
 /* Animations translate forms */
@@ -160,6 +160,12 @@ input:focus {
     font-size: 0.7em;
     width: 210px;
 
+}
+
+.google_btn {
+    background: no-repeat url(../../sources/img/google_logo.png) 6%/8%;
+    padding-right: 14%;
+    background-color: white;
 }
 
 /* Animations keyframes */

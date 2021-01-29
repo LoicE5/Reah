@@ -5,6 +5,10 @@ textarea:focus {
     outline: none;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     background-color: #141414;
@@ -143,9 +147,9 @@ body {
 .form_container3 {
     display: flex;
     flex-direction: column;
-    width: 280px;
+    width: 320px;
     text-align: center;
-    min-height: 350px;
+    min-height: 480px;
     justify-content: space-between;
     background: #141414;
     padding: 20px;
@@ -163,6 +167,11 @@ body {
     border: none;
     cursor: pointer;
     background-color: #D60036;
+    width: 100%;
+}
+
+.btn_connexion:hover{
+    background-color: #d60035b4;
 }
 
 .cannot_click {
@@ -219,8 +228,7 @@ body {
     font-family: 'Montserrat', sans-serif;
     text-align: center;
     padding: 4px;
-    height: 15px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 .input_connexion::-webkit-input-placeholder {
@@ -308,7 +316,7 @@ select {
 }
 
 .category_title_click {
-    color: white;
+    color: white !important;
 }
 
 .category_list {
@@ -364,7 +372,7 @@ select {
 }
 
 .search_bar {
-    width: 270px;
+    min-width: 300px;
     border: none;
     /* border: solid 1px white; */
     border-radius: 100px;
@@ -394,7 +402,7 @@ select {
 .menu_profile {
     display: flex;
     min-width: 120px;
-    justify-content: space-between ;
+    justify-content: space-between;
 }
 
 .defi_icon {
@@ -448,6 +456,7 @@ select {
     transform: translatey(-200px);
     transition: ease 0.5s;
 }
+
 .category_list_container_click3 {
     transform: translatey(-200px);
     transition: ease 0.5s;
@@ -488,12 +497,155 @@ select {
 }
 
 .disconnection {
-    border-top: #141414 solid 3px;
+    border-top: #141414 solid 2px;
 }
 
 .menu_option_title {
     margin-left: 10px;
 }
+
+.form_search_bar {
+    margin: 0;
+}
+
+
+.google_btn {
+    height: 35px;
+    width: 100%;
+    background: no-repeat url(../../sources/img/google_logo.png) 6%/8%;
+    background-color: white;
+    color: black;
+    line-height: 35px;
+    text-align: right;
+    padding-left: 5px;
+    padding-right: 6%;
+    cursor: pointer;
+}
+
+.ou_section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #D60036;
+    font-weight: 600;
+}
+
+.line {
+    height: 1px;
+    width: 110px;
+    background-color: #D60036;
+}
+
+.connexion_container {
+    position: absolute;
+    z-index: 200;
+    margin-top: 10vh;
+    display: none;
+    min-height: 400px;
+    flex-direction: column;
+    width: 630px;
+    box-shadow: black 0px 0px 20px;
+    align-self: center;
+    top: 0;
+    background-color: #141414;
+}
+
+.connexion_container>div:nth-child(2) {
+    padding: 50px;
+    padding-top: 20px;
+    text-align: center;
+}
+
+.connexion_header,
+.btn_container {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+.connexion_header>h2 {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.connexion_close_icon,.delete_close_icon {
+    height: 40px;
+    cursor: pointer;
+}
+
+.connexion_list>li {
+    margin-bottom: 10px;
+    text-align: start;
+}
+
+.btn_container {
+    padding: 50px;
+    padding-top: 0px;
+    padding-bottom: 30px;
+}
+
+.btn_container>a {
+    height: 35px;
+    width: 45%;
+    text-decoration: none;
+    display: block;
+    line-height: 35px;
+    text-align: center;
+}
+
+.delete_warning {
+    position: absolute;
+    margin: auto;
+    width: 400px;
+    align-self: center;
+    z-index: 400;
+    text-align: center;
+    line-height: 25px;
+    background-color: #141414;
+    box-shadow: black 0px 0px 10p;
+    display: none;
+}
+
+.delete_warning>p {
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-top: 0;
+}
+
+.delete_warning_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+}
+
+.delete_warning_header>h2 {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+}
+
+.delete_btn {
+    height: 35px;
+    line-height: 35px;
+    width: 150px;
+    background-color: #D60036;
+    margin: auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    cursor: pointer;
+
+}
+
+.delete_btn:hover{
+    background-color: #d60035b4;
+}
+
+
 
 @keyframes menu_nav_scroll {
     0% {
@@ -538,13 +690,15 @@ select {
     .search_bar {
         background-color: transparent;
         box-shadow: none;
+        min-width: 0px;
         width: 0px;
         cursor: pointer;
         margin-left: 200%;
     }
 
     .search_bar_focus {
-        width: 250px;
+        width: 300px;
+        min-width: 300px;
         border-radius: 100px;
         box-shadow: 0px 0px 15px #000000;
         color: white;
@@ -558,6 +712,7 @@ select {
 
     .form_search_bar {
         width: 25px;
+        margin: 0;
     }
 
     .menu_category {
@@ -567,6 +722,7 @@ select {
     .category_list_container {
         left: 15%;
     }
+
     .menu_profile {
         min-width: 100px;
     }

@@ -28,7 +28,15 @@
         <form id="form1">
             <div class="form_container">
 
-                <a href="../connexion.php" class="link">J'ai déjà un compte !</a>
+                <!-- Google button -->
+                <div class="google_btn">S'inscrire avec Google</div>
+
+                <!-- "Or" section -->
+                <div class="ou_section">
+                    <div class="line"></div>
+                    <p>OU</p>
+                    <div class="line"></div>
+                </div>
 
                 <!-- Input last name -->
                 <div class="input_container">
@@ -50,7 +58,7 @@
                 <!-- Select birth day -->
                 <div class="select_container">
 
-                <!-- Day -->
+                    <!-- Day -->
                     <select name="birth_day" class="first_form" required>
                         <option value="" selected="selected" disabled>JJ</option>
 
@@ -59,9 +67,9 @@
                             for($i = 1; $i < 32; $i++)
                             
                             {
-
-                            echo "<option value=\"$i\">". str_pad($i, 2, '0', STR_PAD_LEFT) ."</option>";
-
+                                
+                                echo "<option value=\"$i\">". str_pad($i, 2, '0', STR_PAD_LEFT) ."</option>";
+                                
                             }
 
                             ?>
@@ -77,11 +85,11 @@
                             for($i = 1; $i < 13; $i++)
                             
                             {
-
-                            echo "<option value=\"$i\">". str_pad($i, 2, '0', STR_PAD_LEFT) ."</option>";
-
+                                
+                                echo "<option value=\"$i\">". str_pad($i, 2, '0', STR_PAD_LEFT) ."</option>";
+                                
                             }
-
+                            
                             ?>
 
                     </select>
@@ -95,9 +103,9 @@
                             for($i = date('Y') - 16; $i > 1899; $i--)
                             
                             {
-
-                            echo "<option value=\"$i\">$i</option>";
-
+                                
+                                echo "<option value=\"$i\">$i</option>";
+                                
                             }
                             
                             ?>
@@ -107,6 +115,8 @@
 
                 <!-- Button next -->
                 <div class="btn_next cannot_click">Suivant <span class="btn_next_remplissage"></span></div>
+
+                <a href="../connexion.php" class="link">J'ai déjà un compte !</a>
             </div>
 
             <!-- Form part 2 -->
@@ -148,8 +158,8 @@
                 <div class="input_container">
                     <label for="pswd">
                         <span>Mot de passe</span>
-                        <input type="password" id="input_mdp" class="input_connexion input_mdp second_form" name="pswd" id="psdw"
-                            required autocomplete="off">
+                        <input type="password" id="input_mdp" class="input_connexion input_mdp second_form" name="pswd"
+                            id="psdw" required autocomplete="off">
                     </label>
                 </div>
 
@@ -170,21 +180,25 @@
                 <div class="input_container">
                     <label for="pswd">
                         <span>Confirmation du mot de passe</span>
-                        <input type="password" id="input_mdp_validation" class="input_connexion second_form input_mdp_verif" name="pswd_confirm"
-                            required autocomplete="off">
+                        <input type="password" id="input_mdp_validation"
+                            class="input_connexion second_form input_mdp_verif" name="pswd_confirm" required
+                            autocomplete="off">
                     </label>
                 </div>
 
                 <!-- Accept CGU -->
                 <div class="checkbox_container">
-                    <input id="CGU" type="checkbox" class="CGU_checkbox second_form" value="accepted" name="cgu" required>
+                    <input id="CGU" type="checkbox" class="CGU_checkbox second_form" value="accepted" name="cgu"
+                        required>
                     <label for="CGU" class="CGU_label">J'ai lu et j'accepte les <a href="" class="link"> conditions
                             générales d'utilisation</a></label>
                 </div>
 
                 <!-- Inscription button -->
                 <button class="btn_inscription cannot_click">S'inscrire</button>
+
             </div>
+
         </form>
 
 
@@ -211,12 +225,18 @@
                 <!-- Input validation code -->
                 <p id="mail">Entre le code de validation envoyé à : <span class="mailcontainer"></span> </p>
                 <div class="input_confirm_container">
-                    <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code1" required>
-                    <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code2" required>
-                    <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code3" required>
-                    <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code4" required>
-                    <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code5" required>
-                    <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code6" required>
+                    <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code1"
+                        required>
+                    <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code2"
+                        required>
+                    <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code3"
+                        required>
+                    <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code4"
+                        required>
+                    <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code5"
+                        required>
+                    <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code6"
+                        required>
                 </div>
 
                 <!-- Link haven't received the code.  -->

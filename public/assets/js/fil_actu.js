@@ -1,12 +1,25 @@
-$(document).ready(function(){
-    
-
-// Synopsis title
-$(".synopsis_title_container").hover(function () {
-    $(this).find(".see_more").toggleClass("see_more_hover");
-})
+$(document).ready(function () {
 
 
+
+    // Delete warning pop up 
+
+    $(".delete_option").click(function () {
+        $(".delete_warning").fadeIn(500);
+        $(".delete_warning").addClass("film_container_open").removeClass("film_container_close");
+        $(".delete_dark_filter").addClass("show fixed");
+        $(".main_content").addClass("scroll_none")
+    })
+    $(".delete_dark_filter,.delete_close_icon").click(function () {
+        $(".delete_warning").fadeOut();
+        $(".delete_warning").addClass("film_container_close").removeClass("film_container_open");
+        $(".delete_dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none")
+    })
+    // Synopsis title
+    $(".synopsis_title_container").hover(function () {
+        $(this).find(".see_more").toggleClass("see_more_hover");
+    })
 
     // Pop up information films
     $(".synopsis_title_container").click(function () {
@@ -23,12 +36,47 @@ $(".synopsis_title_container").hover(function () {
     })
 
     // Close icon animation hover
-    $(".close_icon").hover(function () {
+    $(".close_icon,.connexion_close_icon,.delete_close_icon").hover(function () {
         $(this).attr('src', 'public/sources/img/close_icon_hover.svg');
     })
-    $(".close_icon").mouseout(function () {
+    $(".close_icon,.connexion_close_icon,.delete_close_icon").mouseout(function () {
         $(this).attr('src', 'public/sources/img/close_icon.svg');
     })
+
+
+    // Pop up connexion
+    $(".share_icon").click(function () {
+        $(".connexion_container").fadeIn(500);
+        $(".connexion_container").addClass("film_container_open").removeClass("film_container_close");
+        $(".dark_filter").addClass("show fixed");
+        $(".main_content").addClass("scroll_none")
+    })
+    $(".dark_filter,.connexion_close_icon").click(function () {
+        $(".connexion_container").fadeOut();
+        $(".connexion_container").addClass("film_container_close").removeClass("film_container_open");
+        $(".dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none")
+    })
+
+     // Saved icon animation click
+     $(".film_saved_icon").click(function () {
+         if($(this).attr('src') == 'public/sources/img/film_saved_icon_click.svg'){
+            $(this).attr('src', 'public/sources/img/film_saved_icon.svg');
+        } else {
+             $(this).attr('src', 'public/sources/img/film_saved_icon_click.svg');
+
+         }
+    })
+    
+
+    // Pop up film informations settings
+    $(".film_settings_icon").click(function () {
+        if ($(".film_settings_container").hasClass("show")) {
+            $('.film_settings_container').removeClass("show").addClass("hide"); //Adds 'b', removes 'a'
+        } else {
+            $('.film_settings_container').removeClass("hide").addClass("show"); //Adds 'a', removes 'b'
+        }
+    });
 
 
 
@@ -56,7 +104,7 @@ $(".synopsis_title_container").hover(function () {
         }
     })
 
-   
+
 
     // Burger menu
     $(".menu_pp").click(function () {
@@ -195,7 +243,7 @@ $(".synopsis_title_container").hover(function () {
             }
         }
     })
-    
+
     // Video hover
     $(".video").hover(function toggleControls() {
         let videoParent = $(this).parent();
@@ -207,23 +255,23 @@ $(".synopsis_title_container").hover(function () {
         this.setAttribute("controls", "controls");
 
     })
-        // Video mouseout
-        $(".video").mouseout(function () {
-            let videoParent = $(this).parent();
-            const video = document.querySelector('.video');
-            let user_container = $(videoParent).find(".user_container");
-            // If the mouse is over the user_container
-            if ($(videoParent).find('.user_container:hover').length != 0) {
-                $(user_container).addClass("user_container_hover").removeClass("user_container_mouseout");
-                video.setAttribute("controls", "controls");
-                $(videoParent).find(".time").fadeOut();
+    // Video mouseout
+    $(".video").mouseout(function () {
+        let videoParent = $(this).parent();
+        const video = document.querySelector('.video');
+        let user_container = $(videoParent).find(".user_container");
+        // If the mouse is over the user_container
+        if ($(videoParent).find('.user_container:hover').length != 0) {
+            $(user_container).addClass("user_container_hover").removeClass("user_container_mouseout");
+            video.setAttribute("controls", "controls");
+            $(videoParent).find(".time").fadeOut();
 
-                // If the mouse isn't over the user_container
-            } else {
-                $(user_container).addClass("user_container_hover").removeClass("user_container_mouseout");
-                $(videoParent).find(".time").fadeIn();
-                this.removeAttribute("controls", "controls");
-            }
+            // If the mouse isn't over the user_container
+        } else {
+            $(user_container).addClass("user_container_hover").removeClass("user_container_mouseout");
+            $(videoParent).find(".time").fadeIn();
+            this.removeAttribute("controls", "controls");
+        }
     })
 
     // Film hover
@@ -279,7 +327,8 @@ $(".synopsis_title_container").hover(function () {
     })
 
 
+    
 
 
-  
+
 })

@@ -5,3 +5,8 @@ p{
 input:focus {
     background-color: #d600359c;
 }
+
+.form_container{
+    min-height: 480px;
+}
+

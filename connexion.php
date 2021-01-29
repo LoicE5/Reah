@@ -22,7 +22,17 @@
         <!-- Form -->
         <form class="form_container">
 
-        <!-- Input Pseudo/E-mail -->
+            <!-- Google button -->
+            <div class="google_btn">Se connecter avec Google</div>
+
+            <!-- "Or" section -->
+            <div class="ou_section">
+                <div class="line"></div>
+                <p>OU</p>
+                <div class="line"></div>
+            </div>
+
+            <!-- Input Pseudo/E-mail -->
             <div class="input_container">
                 <label for="pseudo">
                     <span>Pseudo/E-mail</span>
