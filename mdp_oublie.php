@@ -104,7 +104,7 @@ if(!empty($_POST) && isset($_POST) &&  !empty($_POST['email']))
             </div>
 
             <!-- Button to send -->
-            <button class="btn_connexion cannot_click">Envoyer</button>
+            <button class="btn btn_connexion cannot_click">Envoyer</button>
 
         </form>
     </main>

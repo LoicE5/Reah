@@ -10,7 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>REAH | Fil d'actu</title>
+    <title>>REAH | Profil</title>
     <link rel="stylesheet" href="public/assets/css/styles.css">
     <link rel="stylesheet" href="public/assets/css/fil_actu.css">
     <link rel="stylesheet" href="public/assets/css/profil.css">
@@ -22,7 +22,6 @@
 
 <body>
     <main class="main_content">
-
 
         <!-- Navigation menu -->
         <nav class="menu_nav">
@@ -45,45 +44,11 @@
             </div>
         </nav>
 
-
-        <!-- Category list  -->
-        <div class="category_list_container">
-
-            <p class="category_list_category" number="1" number1="2" number2="3">Ajouts récents</p>
-            <p class="category_list_category" number="2" number1="1" number2="3">Défis du moment</p>
-            <p class="category_list_category" number="3" number1="1" number2="2">À découvrir</p>
-        </div>
-
         <!-- Menu -->
-        <div class="menu_container">
-            <a href="connexion.php" class="menu_option sign_in">Se connecter</a>
-            <a href="public/index.php" class="menu_option sign_up">S'inscrire</a>
+        <?php
+        require("menu.php");
+        ?>
 
-            <!-- Profile -->
-            <a href="profil.php" class="menu_option profil">
-                <img src="public/sources/img/profile_icon.svg" alt="">
-                <p class="menu_option_title">Profil</p>
-            </a>
-
-            <!-- Notifications -->
-            <a href="" class="menu_option notifications">
-                <img src="public/sources/img/notifications_icon.svg" alt="">
-                <p class="menu_option_title">Notifications</p>
-            </a>
-
-            <a href="" class="registered menu_option">
-                <img src="public/sources/img/saved_icon.svg" alt="">
-                <p class="menu_option_title">Enregistrés</p>
-            </a>
-            <a href="" class="settings menu_option">
-                <img src="public/sources/img/settings_icon.svg" alt="">
-                <p class="menu_option_title">Paramètres</p>
-            </a>
-            <a href="" class="disconnection menu_option">
-                <img src="public/sources/img/disconnection_icon.svg" alt="">
-                <p class="menu_option_title">Déconnexion</p>
-            </a>
-        </div>
 
         <div class="banner_container">
             <div class="banner_flou_left"></div>
@@ -99,18 +64,18 @@
                     <div class="fb_jsb profile_subscription_container">
                         <div class="profile_subscription_content" number="1">
                             <p class="fb profile_subscription_number">1213</p>
-                            <div class="profile_subscription_line"></div>
+                            <div class="red_line profile_subscription_line"></div>
                             <p class="profile_subscription_title">Abonnés</p>
                         </div>
 
                         <div class="profile_subscription_content" number="2">
                             <p class="fb profile_subscription_number">2000</p>
-                            <div class="profile_subscription_line"></div>
+                            <div class="red_line profile_subscription_line"></div>
                             <p class="profile_subscription_title">Abonnements</p>
                         </div>
                     </div>
 
-                    <div class="subscribe_btn">S'abonner</div>
+                    <div class="btn subscribe_btn">S'abonner</div>
                 </div>
                 <!-- Profile photo + username -->
                 <img src="database/profile_picture/minmin.jpg" alt="" class="profile_photo">
@@ -119,7 +84,7 @@
             <div class="fb_jsb profile_content2">
                 <div class="fb profile_bio_container">
                     <p class="profile_username">MinminDddddddddddddddd</p>
-                    <div class="profile_line"></div>
+                    <div class="red_line profile_line"></div>
                     <p class="profile_name">Minal Lad</p>
                     <p class="profile_bio">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Esse exercitationem
                         <br>
@@ -129,7 +94,9 @@
                         assumenda rerum facereeee</p>
 
                 </div>
-                <img src="public/sources/img/modify_icon.svg" class="modify_icon" alt="">
+                <div class="fb_c">
+                    <img src="public/sources/img/modify_icon.svg" class="modify_icon" alt="">
+                </div>
             </div>
         </div>
 
@@ -141,7 +108,7 @@
                         class="realisation_number_content_number ">20</span> réalisations </p>
                 <p class="realisation_number_content_title realisation_number_content_title2" number="1"><span
                         class="realisation_number_content_number">80</span> identifiés </p>
-                <div class="realisation_number_content_line"></div>
+                <div class="red_line realisation_number_content_line"></div>
             </div>
         </div>
 
@@ -314,12 +281,12 @@
                 <div class="modify_file_container">
                     <!-- Input banner -->
                     <div class="modify_file_banner">
-                        <button class="modify_btn_banner">Modifier la bannière</button>
+                        <button class="btn modify_btn_banner">Modifier la bannière</button>
                         <input type="file" class="">
                     </div>
                     <!-- Input profile photo -->
                     <div class="modify_file_profile_photo">
-                        <button class="modify_btn_profile_photo">Modifier la photo de profil</button>
+                        <button class="btn modify_btn_profile_photo">Modifier la photo de profil</button>
                         <input type="file" class="">
                     </div>
 
@@ -352,14 +319,14 @@
                     </label>
                 </div>
 
-                <input type="submit" class="modify_btn" value="Modifier">
+                <input type="submit" class="btn modify_btn" value="Modifier">
             </div>
         </form>
     </div>
 
     <!-- Subscribers and subsciptions page -->
-    <div class="subscription_container">
-        <div class="subscription_header">
+    <div class="pop_up_container subscription_container">
+        <div class="pop_up_header subscription_header">
             <!-- Username -->
             <h2>MinminDddddddddddddddd</h2>
             <!-- Close icon -->
@@ -369,63 +336,76 @@
         <!-- Title -->
         <div class="subsciption_title_container">
             <div class="subscription_title1 subscriber_title" number="2"><span
-                        class="realisation_number_content_number ">1213 </span> Abonnés</div>
+                    class="realisation_number_content_number ">1213 </span> Abonnés</div>
             <div class="subscription_title2 subscription_title" number="1"><span
-                        class="realisation_number_content_number ">2000 </span> Abonnements</div>
-            <div class="subscription_line"></div>
+                    class="realisation_number_content_number ">2000 </span> Abonnements</div>
+            <div class="red_line subscription_line"></div>
         </div>
 
-        <div class="subscription_content">
-        <!-- All subscribers -->
-        <div class="subscriber_section">
+        <div class="pop_up_text subscription_content">
+            <!-- All subscribers -->
+            <div class="subscriber_section">
 
-            <!-- User -->
-            <div class="subscription_user">
-                <div class="subcription_pp"></div>
-                <div class="subscription_username_container">
-                    <div class="subscription_username">Jstm</div>
-                    <div class="subscription_name">Julie Saint Martin</div>
+                <!-- User -->
+                <div class="subscription_user">
+                    <div class="subcription_pp"></div>
+                    <div class="subscription_username_container">
+                        <div class="subscription_username">Jstm</div>
+                        <div class="subscription_name">Julie Saint Martin</div>
+                    </div>
+                    <div class="btn subscriber_user_btn">Supprimer</div>
                 </div>
-                <div class="subscription_user_btn">Supprimer</div>
+
+                <!-- User -->
+                <div class="subscription_user">
+                    <div class="subcription_pp"></div>
+                    <div class="subscription_username_container">
+                        <div class="subscription_username">Jstm</div>
+                        <div class="subscription_name">Julie Saint Martin</div>
+                    </div>
+                    <div class="btn subscriber_user_btn">Supprimer</div>
+                </div>
+
             </div>
 
-            <!-- User -->
-            <div class="subscription_user">
-                <div class="subcription_pp"></div>
-                <div class="subscription_username_container">
-                    <div class="subscription_username">Jstm</div>
-                    <div class="subscription_name">Julie Saint Martin</div>
-                </div>
-                <div class="subscription_user_btn">Supprimer</div>
-            </div>
+            <!-- All subscriptions -->
+            <div class="subscription_section">
 
+                <!-- User -->
+                <div class="subscription_user">
+                    <div class="subcription_pp"></div>
+                    <div class="subscription_username_container">
+                        <div class="subscription_username">Jstm</div>
+                        <div class="subscription_name">Julie Saint Martin</div>
+                    </div>
+                    <div class="btn subscription_user_btn subcribe_btn_click">Abonné(e)</div>
+                </div>
+
+                <!-- User -->
+                <div class="subscription_user">
+                    <div class="subcription_pp"></div>
+                    <div class="subscription_username_container">
+                        <div class="subscription_username">Jstm</div>
+                        <div class="subscription_name">Julie Saint Martin</div>
+                    </div>
+                    <div class="btn subscription_user_btn subcribe_btn_click">Abonné(e)</div>
+                </div>
+            </div>
         </div>
 
-        <!-- All subscriptions -->
-        <div class="subscription_section">
-
-            <!-- User -->
-            <div class="subscription_user">
-                <div class="subcription_pp"></div>
-                <div class="subscription_username_container">
-                    <div class="subscription_username">Jstm</div>
-                    <div class="subscription_name">Julie Saint Martin</div>
-                </div>
-                <div class="subscription_user_btn">Abonné(e)</div>
-            </div>
-
-            <!-- User -->
-            <div class="subscription_user">
-                <div class="subcription_pp"></div>
-                <div class="subscription_username_container">
-                    <div class="subscription_username">Jstm</div>
-                    <div class="subscription_name">Julie Saint Martin</div>
-                </div>
-                <div class="subscription_user_btn">Abonné(e)</div>
-            </div>
-            </div>
     </div>
 
+    <div class="unfollow_dark_filter"></div>
+
+    <!-- Unfollow pop up-->
+    <div class="pop_up_container unfollow_container">
+        <div class="pop_up_header">
+            <h2>Se désabonner</h2>
+            <img src='public/sources/img/close_icon.svg' class='unfollow_close_icon' alt=''>
+        </div>
+        <p class="pop_up_text">Se désabonner de MinminDddddddddddddddd ?</p>
+        <div class="btn pop_up_btn unfollow_btn">Se désabonner</div>
+    </div>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script src="public/assets/js/app.js"></script>

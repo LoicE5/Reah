@@ -12,4 +12,15 @@ $(document).ready(function(){
         }
         
     })
+
+    $(".add_defi_btn").click(function () {
+        $(".add_defi_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+        $(".dark_filter").addClass("show fixed");
+        $(".main_content").addClass("scroll_none")
+    })
+    $(".dark_filter,.close_icon").click(function () {
+        $(".add_defi_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+        $(".delete_dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none")
+    })
 })

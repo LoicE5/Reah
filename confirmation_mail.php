@@ -28,7 +28,7 @@
                     <input class="input_connexion" type="text" pattern="[a-zA-Z0-9]{1}" name="code6" required>
                 </div>
                 <a href="" class="link">Je n'ai pas reçu de code</a>
-                <button class="btn_connexion">Valider</button>
+                <button class="btn btn_connexion">Valider</button>
             </div>
         </form>
     </main>

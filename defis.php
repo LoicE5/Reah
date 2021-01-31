@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>REAH | Fil d'actu</title>
+    <title>>REAH | Défis</title>
     <link rel="stylesheet" href="public/assets/css/styles.css">
     <link rel="stylesheet" href="public/assets/css/fil_actu.css">
     <link rel="stylesheet" href="public/assets/css/defis.css">
@@ -33,7 +33,7 @@
                 <p class="category_title category_title1" number="1" number1="2" number2="3">Défis du moment</p>
                 <p class="category_title" number="2" number1="1" number2="3">Défis populaires</p>
                 <p class="category_title" number="3" number1="1" number2="2">Défis à découvrir</p>
-                <div class="underline"></div>
+                <div class="red_line underline"></div>
                 <div class="fb_jsb ai-c category_list">
                     <p class="category_list_title">Catégories</p>
                     <div class="category_triangle"></div>
@@ -94,8 +94,17 @@
         <!-- "Ajout récent" catégory -->
         <div class="first_category">
 
-            <!-- Category title -->
-            <h1>DÉFIS DU MOMENT</h1>
+
+            <div class="add_defi_btn_container">
+                <!-- Category title -->
+                <h1>DÉFIS DU MOMENT</h1>
+
+                <!-- Add defi btn -->
+                <div class="btn add_defi_btn">
+                    <img class="add_defi_icon" src="public/sources/img/add_defi_icon.svg" alt="">
+                    Proposer un défi
+                </div>
+            </div>
 
             <!-- Challenges container -->
             <div class="defi_container ">
@@ -219,9 +228,47 @@
         </div>
     </main>
 
+
+
+
+    <!-- Pop up add defi -->
+
+    <div class="dark_filter"></div>
+
+    <div class="pop_up_container add_defi_container">
+        <form action="">
+        <div class="pop_up_header">
+            <h2>Proposer un défi</h2>
+            <img src='public/sources/img/close_icon.svg' class='close_icon' alt=''>
+        </div>
+        <div class="pop_up_text">
+
+            <!-- Inputs -->
+            <div class="add_defi_input">
+                <div class="input_container">
+                    <label for="title">
+                        <span>Titre</span>
+                        <input type="text" class="input_connexion" id="title" name="title">
+                    </label>
+                </div>
+                <div class="input_container input_constraints_container">
+                    <label for="constraints">
+                        <span>Contraintes</span>
+                        <textarea class="input_connexion input_constraints" id="constraints" name="constraints" cols="30"
+                            rows="10"></textarea>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+
+        <input type="submit" class="pop_up_btn btn add_defi_btn" value="Envoyer"></input>
+        </form>
+    </div>
+
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-    <script src="public/assets/js/app.js"></script>
-    <script src="public/assets/js/register.js"></script>
+    <!-- <script src="public/assets/js/app.js"></script> -->
+    <!-- <script src="public/assets/js/register.js"></script> -->
     <script src="public/assets/js/defis.js"></script>
     <script src="public/assets/js/fil_actu.js"></script>
 </body>

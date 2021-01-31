@@ -124,7 +124,7 @@
             </div>
 
             <!-- Button to send -->
-            <button class="btn_connexion cannot_click">Valider</button>
+            <button class="btn btn_connexion cannot_click">Valider</button>
 
         </form>
     </main>

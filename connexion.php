@@ -23,7 +23,7 @@
         <form class="form_container">
 
             <!-- Google button -->
-            <div class="google_btn">Se connecter avec Google</div>
+            <div class="btn google_btn">Se connecter avec Google</div>
 
             <!-- "Or" section -->
             <div class="ou_section">
@@ -58,7 +58,7 @@
             <a href="mdp_oublie.php" class="link">Mot de passe oublié ?</a>
 
             <!-- Button get logged -->
-            <button class="btn_connexion">Se connecter</button>
+            <button class="btn btn_connexion">Se connecter</button>
 
             <!-- Link to register  -->
             <a href="public/index.php" class="link">S'inscrire</a>

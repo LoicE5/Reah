@@ -77,13 +77,19 @@
 }
 
 .depot_btn {
-    background-color: #D60036;
     text-decoration: none;
-    color: white;
     padding: 10px;
     align-self: center;
     margin-bottom: 20px;
-    cursor: pointer;
+    width: 300px;
+    line-height: unset;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.depot_icon{
+    height: 20px;
 }
 
 .depot_btn:hover,
@@ -154,27 +160,11 @@
 }
 
 .upload_container {
-    position: absolute;
+    top: 0;
     margin-top: 2vw;
-    background-color: #141414;
-    box-shadow: black 0px 0px 20px;
     z-index: 300;
     width: 900px;
     display: none;
-}
-
-.upload_header {
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.upload_header>p {
-    font-size: 2rem;
-    margin: 0;
-    text-align: center;
-    width: 100%;
-    font-weight: bold;
 }
 
 .defi_title {
@@ -186,7 +176,6 @@
 
 .upload_content {
     display: flex;
-    padding: 50px;
     justify-content: space-between;
 }
 
@@ -247,18 +236,10 @@
 .btn_send,
 .file_video_btn,
 .file_poster_btn {
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1em;
-    height: 35px;
-    border: none;
-    cursor: pointer;
     width: 200px;
-    text-align: center;
 }
 
 .btn_send {
-    background-color: #D60036;
     margin-top: 40px;
 }
 
@@ -401,9 +382,9 @@
         transition: 0.5s ease;
     }
 
-    form {
+    /* form {
         width: 25px;
-    }
+    } */
 
     .menu_category {
         margin-left: 20%;

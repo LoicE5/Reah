@@ -1,0 +1,58 @@
+.form_search_bar {
+    margin: auto;
+    margin-right: 50px;
+}
+
+.menu_profile {
+    min-width: 200px;
+}
+
+.main_content{
+    width: 100%;
+}
+
+.menu_nav {
+    padding-top: 10px;
+}
+
+.settings_menu{
+    width: 300px;
+    background-color: black;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 200px;
+    box-shadow: 10px 0px 20px #0a0a0a;
+
+}
+
+.settings_menu_option{
+    color: white;
+    height: 60px;
+    width: 100%;
+    text-align: center;
+    line-height: 60px;
+    cursor: pointer;
+}
+
+.settings_menu_option:hover{
+    background-color: #d600354f;
+
+}
+
+.settings_menu_line{
+    box-shadow: 2px 0px 20px #d60035;
+    border-radius: 0px;
+    width: 4px;
+    height: 60px;
+    transform: translate(296px);
+}
+
+.settings_menu_option_click{
+    font-weight: bold;
+}
+
+.settings_notification_container{
+    display: none;
+    margin-top: 60px;
+}

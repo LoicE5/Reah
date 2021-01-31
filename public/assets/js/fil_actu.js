@@ -1,18 +1,20 @@
 $(document).ready(function () {
 
-
+    // Pop up film informations settings icon animation hover
+$(".film_settings_icon").hover(function(){
+    $(".film_settings_icon>div").css({"background-color":"afafaf"})
+}, function(){
+    $(".film_settings_icon>div").css({"background-color":"white"})
+})
 
     // Delete warning pop up 
-
     $(".delete_option").click(function () {
-        $(".delete_warning").fadeIn(500);
-        $(".delete_warning").addClass("film_container_open").removeClass("film_container_close");
+        $(".delete_warning").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
         $(".delete_dark_filter").addClass("show fixed");
         $(".main_content").addClass("scroll_none")
     })
     $(".delete_dark_filter,.delete_close_icon").click(function () {
-        $(".delete_warning").fadeOut();
-        $(".delete_warning").addClass("film_container_close").removeClass("film_container_open");
+        $(".delete_warning").fadeOut().addClass("film_container_close").removeClass("film_container_open");
         $(".delete_dark_filter").removeClass("show");
         $(".main_content").removeClass("scroll_none")
     })
@@ -23,40 +25,50 @@ $(document).ready(function () {
 
     // Pop up information films
     $(".synopsis_title_container").click(function () {
-        $(".film_container").fadeIn(500);
-        $(".film_container").addClass("film_container_open").removeClass("film_container_close");
+        $(".film_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
         $(".dark_filter").addClass("show fixed");
         $(".main_content").addClass("scroll_none")
     })
     $(".dark_filter,.close_icon").click(function () {
-        $(".film_container").fadeOut();
-        $(".film_container").addClass("film_container_close").removeClass("film_container_open");
+        $(".film_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
         $(".dark_filter").removeClass("show");
         $(".main_content").removeClass("scroll_none")
     })
 
     // Close icon animation hover
-    $(".close_icon,.connexion_close_icon,.delete_close_icon").hover(function () {
+    $(".close_icon,.connexion_close_icon,.delete_close_icon,.share_close_icon").hover(function () {
         $(this).attr('src', 'public/sources/img/close_icon_hover.svg');
     })
-    $(".close_icon,.connexion_close_icon,.delete_close_icon").mouseout(function () {
+    $(".close_icon,.connexion_close_icon,.delete_close_icon,.share_close_icon").mouseout(function () {
         $(this).attr('src', 'public/sources/img/close_icon.svg');
     })
 
 
     // Pop up connexion
-    $(".share_icon").click(function () {
-        $(".connexion_container").fadeIn(500);
-        $(".connexion_container").addClass("film_container_open").removeClass("film_container_close");
+    $(".like_container").click(function () {
+        $(".connexion_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
         $(".dark_filter").addClass("show fixed");
         $(".main_content").addClass("scroll_none")
     })
     $(".dark_filter,.connexion_close_icon").click(function () {
-        $(".connexion_container").fadeOut();
-        $(".connexion_container").addClass("film_container_close").removeClass("film_container_open");
+        $(".connexion_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
         $(".dark_filter").removeClass("show");
         $(".main_content").removeClass("scroll_none")
     })
+
+
+     // Pop up share
+     $(".share_icon").click(function () {
+        $(".share_film_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+        $(".share_dark_filter").addClass("show fixed");
+        $(".main_content").addClass("scroll_none")
+    })
+    $(".share_dark_filter,.share_close_icon").click(function () {
+        $(".share_film_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+        $(".share_dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none")
+    })
+
 
      // Saved icon animation click
      $(".film_saved_icon").click(function () {
@@ -83,8 +95,7 @@ $(document).ready(function () {
     // Comment click animation
     $(".comment_title_container").click(function () {
         if ($(".comment_space_container").hasClass("comment_space_container_open")) {
-            $(".comment_space_container").fadeOut(500);
-            $(".comment_space_container").addClass("comment_space_container_close").removeClass("comment_space_container_open");
+            $(".comment_space_container").fadeOut(500).addClass("comment_space_container_close").removeClass("comment_space_container_open");
 
             $("html, body").animate({
                 scrollTop: 0
@@ -93,8 +104,7 @@ $(document).ready(function () {
             // Comment arrow animation
             $(".comment_arrow").attr('src', 'public/sources/img/bottom_arrow.svg');
         } else {
-            $(".comment_space_container").fadeIn(500);
-            $(".comment_space_container").addClass("comment_space_container_open").removeClass("comment_space_container_close");
+            $(".comment_space_container").fadeIn(500).addClass("comment_space_container_open").removeClass("comment_space_container_close");
             $("html, body").animate({
                 scrollTop: 800
             }, "1s");
@@ -180,9 +190,8 @@ $(document).ready(function () {
         console.log($(document).scrollTop())
 
         if ($(document).scrollTop() >= "0") {
-            $(".category_title").removeClass("category_title_click");
             $(".category_title1").addClass("category_title_click");
-            $(".category_title").css({
+            $(".category_title").removeClass("category_title_click").css({
                 "color": "#bbbbbb"
             });
             $(".category_title1").css({
@@ -191,9 +200,8 @@ $(document).ready(function () {
             $(".underline").removeClass("underline2 underline3").addClass("underline1");
         }
         if ($(document).scrollTop() >= "670") {
-            $(".category_title").removeClass("category_title_click");
             $(".category_title2").addClass("category_title_click");
-            $(".category_title").css({
+            $(".category_title").removeClass("category_title_click").css({
                 "color": "#bbbbbb"
             });
             $(".category_title2").css({
@@ -202,9 +210,8 @@ $(document).ready(function () {
             $(".underline").removeClass("underline1 underline3").addClass("underline2");
         }
         if ($(document).scrollTop() >= "1400") {
-            $(".category_title").removeClass("category_title_click");
             $(".category_title3").addClass("category_title_click");
-            $(".category_title").css({
+            $(".category_title").removeClass("category_title_click").css({
                 "color": "#bbbbbb"
             });
             $(".category_title3").css({
@@ -254,9 +261,7 @@ $(document).ready(function () {
         $(videoParent).find(".time").fadeOut();
         this.setAttribute("controls", "controls");
 
-    })
-    // Video mouseout
-    $(".video").mouseout(function () {
+    }, function () {
         let videoParent = $(this).parent();
         const video = document.querySelector('.video');
         let user_container = $(videoParent).find(".user_container");

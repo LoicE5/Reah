@@ -154,11 +154,11 @@
 
 <div class="delete_dark_filter"></div>
 
-<div class="delete_warning">
-    <div class="delete_warning_header">
+<div class="pop_up_container delete_warning">
+    <div class="pop_up_header">
         <h2>Supprimer</h2>
         <img src='public/sources/img/close_icon.svg' class=' delete_close_icon' alt=''>
     </div>
-    <p>Es-tu sûr de vouloir supprimer ton court-métrage Je t'haine ?</p>
-    <div class="delete_btn">Supprimer</div>
+    <p class="pop_up_text">Es-tu sûr de vouloir supprimer ton court-métrage Je t'haine ?</p>
+    <div class="btn pop_up_btn delete_btn">Supprimer</div>
 </div>

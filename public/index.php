@@ -29,7 +29,7 @@
             <div class="form_container">
 
                 <!-- Google button -->
-                <div class="google_btn">S'inscrire avec Google</div>
+                <div class="btn google_btn">S'inscrire avec Google</div>
 
                 <!-- "Or" section -->
                 <div class="ou_section">
@@ -114,7 +114,7 @@
                 </div>
 
                 <!-- Button next -->
-                <div class="btn_next cannot_click">Suivant <span class="btn_next_remplissage"></span></div>
+                <div class="btn btn_next cannot_click">Suivant <span class="btn_next_remplissage"></span></div>
 
                 <a href="../connexion.php" class="link">J'ai déjà un compte !</a>
             </div>
@@ -195,7 +195,7 @@
                 </div>
 
                 <!-- Inscription button -->
-                <button class="btn_inscription cannot_click">S'inscrire</button>
+                <button class="btn btn_inscription cannot_click">S'inscrire</button>
 
             </div>
 
@@ -243,7 +243,7 @@
                 <a href="" class="link">Je n'ai pas reçu de code</a>
 
                 <!-- Validation button -->
-                <button class="btn_connexion cannot_click">Valider</button>
+                <button class="btn btn_connexion cannot_click">Valider</button>
             </div>
         </form>
 

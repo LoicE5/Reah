@@ -2,6 +2,7 @@
     require("header.php");
     require("pop_up_film_information.php");
     require("pop_up_connexion.php");
+    require("pop_up_share.php");
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +11,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>REAH | Fil d'actu</title>
+    <title>>REAH | Fil d'actualité</title>
     <link rel="stylesheet" href="public/assets/css/styles.css">
     <link rel="stylesheet" href="public/assets/css/fil_actu.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
@@ -31,7 +32,7 @@
                 <p class="category_title category_title1" number="1" number1="2" number2="3">Ajouts récents</p>
                 <p class="category_title category_title2" number="2" number1="1" number2="3">Défis du moment</p>
                 <p class="category_title category_title3" number="3" number1="1" number2="2">À découvrir</p>
-                <div class="underline"></div>
+                <div class="red_line underline"></div>
                 <div class="fb_jsb ai-c category_list">
                     <p class="category_list_title">Catégories</p>
                     <div class="category_triangle"></div>
@@ -60,33 +61,9 @@
         </div>
 
         <!-- Menu -->
-        <div class="menu_container">
-
-            <!-- Profile -->
-            <a href="profil.php" class="menu_option profil">
-                <img src="public/sources/img/profile_icon.svg" alt="">
-                <p class="menu_option_title">Profil</p>
-            </a>
-
-            <!-- Notifications -->
-            <a href="" class="menu_option notifications">
-                <img src="public/sources/img/notifications_icon.svg" alt="">
-                <p class="menu_option_title">Notifications</p>
-            </a>
-
-            <a href="" class="registered menu_option">
-                <img src="public/sources/img/saved_icon.svg" alt="">
-                <p class="menu_option_title">Enregistrés</p>
-            </a>
-            <a href="" class="settings menu_option">
-                <img src="public/sources/img/settings_icon.svg" alt="">
-                <p class="menu_option_title">Paramètres</p>
-            </a>
-            <a href="connexion.php" class="disconnection menu_option">
-                <img src="public/sources/img/disconnection_icon.svg" alt="">
-                <p class="menu_option_title">Déconnexion</p>
-            </a>
-        </div>
+        <?php
+        require("menu.php");
+        ?>
 
 
         <!-- "Ajout récent" catégory -->
@@ -143,7 +120,7 @@
                                         </p>
                                 </div>
                                 <div class='reaction_container'>
-                                    <div class='fb_jsb'>
+                                    <div class='fb_jsb like_container'>
                                         <!-- Pop corn image -->
                                         <img class='pop_corn_icon' src='public/sources/img/pop_corn.png' alt=''>
                                         <!-- Like\'s number -->
@@ -367,6 +344,7 @@
             </div>
         </div>
     </main>
+
 
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>

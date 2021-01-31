@@ -157,21 +157,28 @@ body {
 
 
 /* Buttons */
+.btn{
+    background-color: #d60036;
+    cursor: pointer;
+    text-align: center;
+    width: 150px;
+    height: 35px;
+    line-height: 35px;
+    color: white;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1em;
+    border-radius: 1px;
+}
+.btn:hover{
+    background-color: #d60035b4;
+    transition: 0.1s ease;
+}
+
 .btn_connexion,
 .btn_next,
 .btn_inscription {
-    color: white;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1em;
-    height: 35px;
-    border: none;
-    cursor: pointer;
-    background-color: #D60036;
     width: 100%;
-}
-
-.btn_connexion:hover{
-    background-color: #d60035b4;
 }
 
 .cannot_click {
@@ -342,14 +349,17 @@ select {
     cursor: pointer;
 }
 
-.underline {
-    width: 115px;
+.red_line{
     height: 2px;
     background-color: #d60035;
     border-radius: 100px;
     position: absolute;
-    top: 40px;
     box-shadow: 0px 2px 8px #d60035;
+}
+
+.underline {
+    width: 115px;
+    top: 40px;
 }
 
 .underline1 {
@@ -510,16 +520,13 @@ select {
 
 
 .google_btn {
-    height: 35px;
     width: 100%;
     background: no-repeat url(../../sources/img/google_logo.png) 6%/8%;
     background-color: white;
     color: black;
-    line-height: 35px;
     text-align: right;
     padding-left: 5px;
     padding-right: 6%;
-    cursor: pointer;
 }
 
 .ou_section {
@@ -537,41 +544,49 @@ select {
     background-color: #D60036;
 }
 
-.connexion_container {
+.pop_up_container{
     position: absolute;
     z-index: 200;
-    margin-top: 10vh;
-    display: none;
-    min-height: 400px;
     flex-direction: column;
-    width: 630px;
     box-shadow: black 0px 0px 20px;
     align-self: center;
-    top: 0;
     background-color: #141414;
+    margin: auto;
 }
 
-.connexion_container>div:nth-child(2) {
-    padding: 50px;
-    padding-top: 20px;
-    text-align: center;
-}
-
-.connexion_header,
-.btn_container {
+.pop_up_header{
     display: flex;
     justify-content: space-between;
     padding: 20px;
     align-items: center;
 }
 
-.connexion_header>h2 {
+.pop_up_header>h2{
+    align-self: center;
     margin: 0;
     text-align: center;
     width: 100%;
 }
 
-.connexion_close_icon,.delete_close_icon {
+.pop_up_text{
+    padding: 50px;
+    padding-top: 20px;
+    text-align: center;
+    margin: 0;
+}
+
+.pop_up_btn{
+    margin: auto;
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+.connexion_container {
+    display: none;
+    min-height: 400px;
+    width: 630px;
+}
+
+.connexion_close_icon,.delete_close_icon,.share_close_icon {
     height: 40px;
     cursor: pointer;
 }
@@ -582,6 +597,9 @@ select {
 }
 
 .btn_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding: 50px;
     padding-top: 0px;
     padding-bottom: 30px;
@@ -596,57 +614,39 @@ select {
     text-align: center;
 }
 
-.delete_warning {
-    position: absolute;
-    margin: auto;
+.delete_warning,.unfollow_container {
     width: 400px;
-    align-self: center;
     z-index: 400;
-    text-align: center;
     line-height: 25px;
-    background-color: #141414;
-    box-shadow: black 0px 0px 10p;
     display: none;
 }
 
-.delete_warning>p {
-    padding-left: 40px;
-    padding-right: 40px;
-    margin-top: 0;
+.share_film_container{
+    width: 500px;
+    display: none;
+    z-index: 400;
 }
-
-.delete_warning_header {
+.logo_container{
     display: flex;
+    width: 100%;
     justify-content: space-between;
-    align-items: center;
-    padding: 20px;
-    width: 100%;
 }
 
-.delete_warning_header>h2 {
-    width: 100%;
-    text-align: center;
-    margin: 0;
-}
-
-.delete_btn {
-    height: 35px;
-    line-height: 35px;
-    width: 150px;
-    background-color: #D60036;
-    margin: auto;
-    margin-top: 30px;
-    margin-bottom: 20px;
+.logo_container>a{
     cursor: pointer;
-
 }
 
-.delete_btn:hover{
-    background-color: #d60035b4;
+.share_logo{
+    height: 60px;
+    width: 60px;
 }
 
-
-
+.share_link{
+    width: 100%;
+    border-bottom: white solid 2px;
+    padding-bottom: 5px;
+    margin-top: 40px;
+}
 @keyframes menu_nav_scroll {
     0% {
         opacity: 1;

@@ -14,12 +14,40 @@ $(document).ready(function () {
     // Subcribe button
     $(".subscribe_btn").click(function () {
         if ($(this).text() == "S'abonner") {
-            $(this).text("Se désabonner")
+            $(this).text("Abonné(e)")
+            $(this).addClass("subcribe_btn_click");
         } else {
-            $(this).text("S'abonner")
+            $(".unfollow_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+            $(".dark_filter").addClass("show fixed");
+            $(".main_content").addClass("scroll_none")
+        
+        $(".dark_filter,.unfollow_close_icon").click(function () {
+            $(".unfollow_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+            $(".dark_filter").removeClass("show");
+            $(".main_content").removeClass("scroll_none")
+        })
         }
     })
 
+    $(".unfollow_btn").click(function(){
+        $(".subscribe_btn").text("S'abonner").removeClass("subcribe_btn_click");
+        $(".unfollow_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+        $(".dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none")
+    })
+
+    // Pop up unfollow 
+    $(".subscription_user_btn").click(function(){
+        $(".unfollow_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+            $(".unfollow_dark_filter").addClass("show fixed");
+            $(".main_content").addClass("scroll_none")
+        
+        $(".unfollow_dark_filter,.unfollow_close_icon").click(function () {
+            $(".unfollow_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+            $(".unfollow_dark_filter").removeClass("show");
+            $(".main_content").removeClass("scroll_none")
+        })
+    })
 
     // Profil page -> switch identified and realisation container
     $(".realisation_number_content_title2").click(function () {
@@ -106,14 +134,12 @@ $(document).ready(function () {
 
     // Pop up to modify profile
     $(".modify_icon").click(function () {
-        $(".modify_container").fadeIn(500);
-        $(".modify_container").addClass("film_container_open").removeClass("film_container_close");
+        $(".modify_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
         $(".dark_filter").addClass("show fixed");
         $(".main_content").addClass("scroll_none")
     })
     $(".dark_filter,.modify_close_icon").click(function () {
-        $(".modify_container").fadeOut();
-        $(".modify_container").addClass("film_container_close").removeClass("film_container_open");
+        $(".modify_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
         $(".dark_filter").removeClass("show");
         $(".main_content").removeClass("scroll_none")
     })
@@ -130,16 +156,14 @@ $(document).ready(function () {
     // Subscription pop up
 
     $(".profile_subscription_content").click(function () {
-        $(".subscription_container").fadeIn(500);
-        $(".subscription_container").addClass("film_container_open").removeClass("film_container_close");
+        $(".subscription_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
         $(".dark_filter").addClass("show fixed");
         $(".main_content").addClass("scroll_none")
 
         if ($(this).attr("number") == "1") {
 
             // Subscriber section translate
-            $(".subscriber_section,.subscription_section").addClass("subscriber_click2");
-            $(".subscriber_section,.subscription_section").removeClass("subscriber_click");
+            $(".subscriber_section,.subscription_section").addClass("subscriber_click2").removeClass("subscriber_click");
             // Line position and width
             let subscriberLeft = $(".subscriber_title").position();
             let subscriberLenght = $(".subscriber_title").width();
@@ -149,8 +173,7 @@ $(document).ready(function () {
             })
         } else {
             // Subscription section translate
-            $(".subscriber_section,.subscription_section").addClass("subscriber_click");
-            $(".subscriber_section,.subscription_section").removeClass("subscriber_click2");
+            $(".subscriber_section,.subscription_section").addClass("subscriber_click").removeClass("subscriber_click2");
             // Line position and width
             let subscriptionLeft = $(".subscription_title").position();
             let subscriptionLenght = $(".subscription_title").width();
@@ -161,21 +184,18 @@ $(document).ready(function () {
         }
     })
     $(".dark_filter,.close_icon").click(function () {
-        $(".subscription_container").fadeOut();
-        $(".subscription_container").addClass("film_container_close").removeClass("film_container_open");
+        $(".subscription_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
         $(".dark_filter").removeClass("show");
         $(".main_content").removeClass("scroll_none")
     })
 
     // Subscription / subscriber translate
     $(".subscription_title").click(function () {
-        $(".subscriber_section,.subscription_section").addClass("subscriber_click");
-        $(".subscriber_section,.subscription_section").removeClass("subscriber_click2");
+        $(".subscriber_section,.subscription_section").addClass("subscriber_click").removeClass("subscriber_click2");
     })
 
     $(".subscriber_title").click(function () {
-        $(".subscriber_section,.subscription_section").addClass("subscriber_click2");
-        $(".subscriber_section,.subscription_section").removeClass("subscriber_click");
+        $(".subscriber_section,.subscription_section").addClass("subscriber_click2").removeClass("subscriber_click");
     })
 
     // Subscription title color

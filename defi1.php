@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>REAH | Fil d'actu</title>
+    <title>>REAH | Défi</title>
     <link rel="stylesheet" href="public/assets/css/styles.css">
     <link rel="stylesheet" href="public/assets/css/fil_actu.css">
     <link rel="stylesheet" href="public/assets/css/defi1.css">
@@ -33,7 +33,7 @@
                 <p class="category_title category_title1" number="1" number1="2" number2="3">Défi</p>
                 <p class="category_title category_title2" number="2" number1="1" number2="3">Courts-métrages</p>
                 <p class="category_title category_title3" number="3" number1="1" number2="2">Classement</p>
-                <div class="underline"></div>
+                <div class="red_line underline"></div>
                 <div class="fb_jsb ai-c category_list">
                     <p class="category_list_title">Catégories</p>
                     <div class="category_triangle"></div>
@@ -110,7 +110,10 @@
                 </div>
 
                 <div class="defi_information">
-                    <div href="depot.php" class="depot_btn">Déposer un court-métrage</div>
+                    <div href="depot.php" class="btn depot_btn">
+                        <img class="depot_icon" src="public/sources/img/depot_icon.svg" alt="">
+                        Déposer un court-métrage
+                    </div>
                     <p><span>Temps restant</span> 14 heures et 30 minutes</p>
                     <p><span>Nombre de courts-métrages déposés</span> 27</p>
                 </div>
@@ -410,18 +413,18 @@
     <div class='upload_dark_filter'></div>
 
     <!-- Pop up upload films -->
-    <div class="upload_container">
+    <div class="pop_up_container upload_container">
         <form action="">
 
-            <div class="upload_header">
-                <p>Déposer un court-métrage</p>
+            <div class="pop_up_header upload_header">
+                <h2>Déposer un court-métrage</h2>
                 <img src='public/sources/img/close_icon.svg' class='close_icon' alt=''>
             </div>
 
             <!-- Challenge's name -->
             <p class="defi_title">Défi : Saint-Valentin</p>
 
-            <div class="upload_content">
+            <div class="pop_up_text upload_content">
 
                 <!-- Inputs -->
                 <div class="upload_input">
@@ -461,7 +464,7 @@
                 <div class="upload_video">
                     <!-- Input upload video -->
                     <div class="file_video">
-                        <button class="file_video_btn">Sélectionner un fichier</button>
+                        <button class="btn file_video_btn">Sélectionner un fichier</button>
                         <input type="file" class="">
                     </div>
 
@@ -470,7 +473,7 @@
 
                     <!-- Input upload poster -->
                     <div class="file_poster">
-                        <button class="file_poster_btn">Sélectionner une miniature</button>
+                        <button class="btn file_poster_btn">Sélectionner une miniature</button>
                         <input type="file" class="">
                     </div>
                 </div>
@@ -485,7 +488,7 @@
                     Veillez à ne pas enfreindre les droits d’auteur ni les droits à la vie privée d’autrui.
                 </p>
 
-                <button class="btn_send">Valider</button>
+                <button class="btn btn_send">Valider</button>
 
             </div>
         </form>

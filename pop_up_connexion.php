@@ -8,12 +8,12 @@
 </head>
 
 <body>
-    <div class="connexion_container">
-        <div class="connexion_header">
+    <div class="pop_up_container connexion_container">
+        <div class="pop_up_header">
             <h2>Tu n'es pas connecté !</h2>
             <img src='public/sources/img/close_icon.svg' class='connexion_close_icon' alt=''>
         </div>
-        <div class="connexion_text">Connectes-toi afin de participer à la vie de REAH, tu pourras ainsi : <br>
+        <div class="pop_up_text">Connectes-toi afin de participer à la vie de REAH, tu pourras ainsi : <br>
             <ul class="connexion_list">
                 <li>
                     interagir avec les autres utilisateurs
@@ -31,8 +31,8 @@
             Tente ta chance de te faire connaître ou contribue au succès des autres !
         </div>
         <div class="btn_container">
-            <a href="connexion.php" class="btn_connexion">Se connecter</a>
-            <a href="public/index.php" class="btn_connexion">S'inscrire</a>
+            <a href="connexion.php" class="btn btn_connexion">Se connecter</a>
+            <a href="public/index.php" class="btn btn_connexion">S'inscrire</a>
 
         </div>
     </div>

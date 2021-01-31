@@ -34,6 +34,24 @@
 
 }
 
+.add_defi_btn_container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.add_defi_btn{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 200px;
+}
+
+.add_defi_icon{
+    height: 20px;
+}
+
 .first_category {
     display: flex;
     position: relative;
@@ -156,6 +174,29 @@
     top: 30%;
     width: 100%;
     text-shadow: black 0px 0px 15px;
+}
+
+.add_defi_container{
+    display: none;
+}
+.add_defi_input>.input_container{
+    margin-bottom: 25px;
+}
+
+.input_constraints_container {
+    min-height: 200px;
+    max-width: 300px;
+    width: 300px;
+}
+
+.input_constraints{
+    text-align: start;
+    min-height: 200px;
+    
+}
+
+.add_defi_btn{
+    line-height: 30px;
 }
 
 @keyframes defi_img_hover {
