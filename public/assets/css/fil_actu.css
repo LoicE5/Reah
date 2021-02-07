@@ -1,22 +1,16 @@
 body {
     position: relative;
     width: 100%;
-    height: 100vh;
+    /* height: 300vh; */
     display: flex;
     justify-content: center;
     flex-direction: column;
+    background-color: var(--background);
 }
 
-.menu_nav{
-    padding:0;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
 
 .main_content {
-    overflow-x: hidden;
     display: block;
-
 }
 
 ::-webkit-scrollbar {
@@ -38,12 +32,17 @@ body {
     background: transparent;
 }
 
-.reah_logo {
+.reah_logo_container {
     height: 45px;
     width: 45px;
-    margin-left: 15px;
     min-width: 45px;
 }
+.reah_logo{
+    margin-left: 15px;
+    height: 45px;
+    width: 45px;
+}
+
 
 .first_category,
 .second_category,
@@ -56,8 +55,11 @@ body {
     overflow-x: auto;
     overflow-y: hidden;
     position: relative;
-    margin-top: 60px;
+    margin-top: 50px;
     height: 80%;
+}
+.first_category{
+    margin-top: 80px;
 }
 
 .third_category{
@@ -67,24 +69,34 @@ body {
 
 .arrow_prev_container,
 .arrow_next_container {
-    width: 5%;
-    height: 100%;
-    box-shadow: 0px 0px 50px #000000, 0px 600px 50px #222222, 0px -600px 50px #222222;
+    width: 70px;
+    height: 70px;
+    box-shadow: 0px 5px 25px #000000;
+    background-color: var(--background);
     display: flex;
     align-items: center;
-    justify-content: center;
     cursor: pointer;
-    background: radial-gradient(circle, #d6003538 0%, #141414 100%);
+    border-radius: 100px;
+    position: absolute;
+    z-index: 1;
+    padding-left: 8px;
+}
+.arrow_prev_container{
+    left: 20px;
+}
+.arrow_next_container{
+    padding-left: 14px;
+    right: 20px;
 }
 
 .arrow_prev_container:hover,
 .arrow_next_container:hover {
-    background: radial-gradient(circle, #d600357a 0%, #141414 100%);
+    background: radial-gradient(circle, #d60035 0%, #141414 100%);
 }
 
 .next_arrow,
 .prev_arrow {
-    width: 5vw;
+    width: 50px;
 }
 
 .category_content {
@@ -92,12 +104,13 @@ body {
     overflow-x: auto;
     position: relative;
     flex-direction: column;
+    width: 100%;
 }
 
 h1 {
     text-shadow: 0px 0px 10px #000000;
     margin: 0;
-    margin-left: 20px;
+    margin-left: 50px;
     color: #d60035;
 }
 
@@ -106,7 +119,7 @@ h1 {
     align-items: flex-start;
     overflow-x: auto;
     position: relative;
-    padding-left: 40px;
+    padding-left: 110px;
     padding-top: 40px;
 }
 
@@ -351,7 +364,7 @@ video:focus {
     box-shadow: black 0px 0px 20px;
     align-self: center;
     top: 0;
-    background-color: #141414;
+    background-color: var(--background);
 }
 
 .film_header {
@@ -398,7 +411,7 @@ video:focus {
     cursor: pointer;
 }
 .film_settings_container>div:hover{
-    background-color: #14141462;
+    background-color: var(--background)62;
 }
 .film_saved_icon{
     height: 40px;
@@ -541,7 +554,7 @@ video:focus {
 }
 
 .write_comment {
-    background-color: #141414;
+    background-color: var(--background);
     padding: 10px;
     display: flex;
     padding-left: 50px;
@@ -584,7 +597,7 @@ video:focus {
 
 .comment_content {
     margin-top: 20px;
-    background-color: #141414;
+    background-color: var(--background);
     padding: 20px;
     display: flex;
     padding-left: 50px;
@@ -696,7 +709,7 @@ video:focus {
     }
 
     .all_video_container {
-        padding-left: 10px;
+        padding-left: 110px;
     }
 
     .description_container>.fb_jsb {

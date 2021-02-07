@@ -16,6 +16,12 @@ $(document).ready(function () {
         })
 
         $(`.settings_container`).hide()
-        $(`.settings_container[number='${number}']`).show()
+        $(`.settings_container[number='${number}']`).show();    
+    })
+
+    $(".notification_btn").click(function(){
+        let notificationBtn = $(this).children();
+        $(this).children().attr("class") == "notification_btn_click" ?  $(notificationBtn).addClass("notification_btn_click2").removeClass("notification_btn_click") : $(notificationBtn).addClass("notification_btn_click").removeClass("notification_btn_click2");
+     
     })
 })

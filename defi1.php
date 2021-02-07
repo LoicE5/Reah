@@ -23,35 +23,40 @@
 
 
         <!-- Navigation menu -->
-        <nav class="menu_nav">
+        <nav>
 
             <!-- Logo Réah -->
-            <a class="reah_logo" href="fil_actu.php"> <img src="public/sources/img/logo_reah.svg" alt=""></a>
+            <a href="fil_actu.php" class="reah_logo_container"> <img src="public/sources/img/reah_logo_complet.png"
+                    class="reah_logo" alt=""></a>
 
-            <!-- Categories's title -->
-            <div class="menu_category">
-                <p class="category_title category_title1" number="1" number1="2" number2="3">Défi</p>
-                <p class="category_title category_title2" number="2" number1="1" number2="3">Courts-métrages</p>
-                <p class="category_title category_title3" number="3" number1="1" number2="2">Classement</p>
-                <div class="red_line underline"></div>
-                <div class="fb_jsb ai-c category_list">
-                    <p class="category_list_title">Catégories</p>
-                    <div class="category_triangle"></div>
+
+            <div class="menu_nav">
+                <!-- Categories's title -->
+                <div class="menu_category">
+                    <p class="category_title category_title1" number="1" number1="2" number2="3">Défi</p>
+                    <p class="category_title category_title2" number="2" number1="1" number2="3">Courts-métrages</p>
+                    <p class="category_title category_title3" number="3" number1="1" number2="2">Classement</p>
+                    <div class="red_line underline"></div>
+                    <div class="fb_jsb ai-c category_list">
+                        <p class="category_list_title">Catégories</p>
+                        <div class="category_triangle"></div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Search bar -->
-            <form action="" class="form_search_bar">
-                <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
-            </form>
+                <!-- Search bar -->
+                <form action="" class="form_search_bar">
+                    <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
+                </form>
 
-            <div class="menu_profile">
-                <!-- Home icon -->
-                <a href="fil_actu.php"> <img src="public/sources/img/fil_actu_icon.svg" class="defi_icon" alt=""></a>
-                <!-- Profile photo -->
-                <!-- Defi icon -->
-                <a href="defis.php"> <img src="public/sources/img/defi_icon.svg" class="defi_icon" alt=""></a>
-                <img src="public/sources/img/pdp.jpg" class="menu_pp" alt="">
+                <div class="menu_profile">
+                    <!-- Home icon -->
+                    <a href="fil_actu.php"> <img src="public/sources/img/fil_actu_icon.svg" class="defi_icon"
+                            alt=""></a>
+                    <!-- Profile photo -->
+                    <!-- Defi icon -->
+                    <a href="defis.php"> <img src="public/sources/img/defi_icon.svg" class="defi_icon" alt=""></a>
+                    <img src="public/sources/img/pdp.jpg" class="menu_pp" alt="">
+                </div>
             </div>
         </nav>
 
@@ -265,7 +270,9 @@
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c'>
                                         <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                        <p class='profile_comment_title'>
+                                            <nobr>1 925 commentaires</nobr>
+                                        </p>
                                     </div>
 
                                     <!-- Share icon -->
@@ -273,7 +280,9 @@
 
                                 </div>
                             </div>
-                            <p>{$films["synopsis"]}Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel iusto, consequatur obcaecati quibusdam saepe itaque praesentium, hic fugiat vero nam quisquam porro doloribus natus atque earum fugit ab totam consectetur! </p>
+                            <p>{$films["synopsis"]}Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel iusto,
+                                consequatur obcaecati quibusdam saepe itaque praesentium, hic fugiat vero nam quisquam
+                                porro doloribus natus atque earum fugit ab totam consectetur! </p>
                         </div>
 
 
@@ -326,7 +335,9 @@
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c'>
                                         <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                        <p class='profile_comment_title'>
+                                            <nobr>1 925 commentaires</nobr>
+                                        </p>
                                     </div>
 
                                     <!-- Share icon -->
@@ -386,7 +397,9 @@
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c'>
                                         <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                        <p class='profile_comment_title'>
+                                            <nobr>1 925 commentaires</nobr>
+                                        </p>
                                     </div>
 
                                     <!-- Share icon -->
@@ -496,8 +509,6 @@
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script src="public/assets/js/defi_details.js"></script>
-    <script src="public/assets/js/app.js"></script>
-    <script src="public/assets/js/register.js"></script>
     <script src="public/assets/js/fil_actu.js"></script>
     <script src="public/assets/js/defis.js"></script>
 </body>

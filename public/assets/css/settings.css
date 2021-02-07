@@ -1,6 +1,17 @@
+.main_content{
+    background: var(--black);
+}
+
 .form_search_bar {
     margin: auto;
     margin-right: 50px;
+}
+
+.reah_logo_container{
+    position: absolute;
+    top: 0px;
+    /* left: 15px; */
+    
 }
 
 .menu_profile {
@@ -23,7 +34,8 @@
     flex-direction: column;
     padding-top: 200px;
     box-shadow: 10px 0px 20px #0a0a0a;
-
+    position: fixed;
+    z-index: 200;
 }
 
 .settings_menu_option{
@@ -52,7 +64,191 @@
     font-weight: bold;
 }
 
+.menu_shadow{
+    min-width: 300px;
+    height: 100vh;
+}
+
+.settings_profile_container{
+    width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+
+}
+
+.modify_banner{
+    height: 300px;
+}
+
+.modify_file_container{
+    flex-direction: row;
+}
+.modify_file_banner, .modify_file_profile_photo{
+    height: 30px;
+}
+
+.modify_file_banner{
+    margin-right: 40px;
+    margin-left: 40px;
+}
+
+.modify_input_container{
+    align-items: flex-end;
+    align-self: center;
+}
+
+.input_container label{
+    flex-direction: row;
+    align-items: center;
+}
+
+.input_container span{
+    font-size: 1rem;
+color: white;
+}
+
+.input_connexion{
+    margin-left: 50px;
+}
+
+.input_bio{
+    width: 300px;
+}
+
+.modify_btn{
+    align-self: center;
+    margin-left: 140px;
+    margin-top: 20px;
+}
 .settings_notification_container{
     display: none;
+    min-width: 700px;
+    margin: auto;
     margin-top: 60px;
+    margin-bottom: 50px;
 }
+
+.settings_notification_container>div>div>p>span{
+    color: #bbbbbb;
+    font-size: 0.8rem;
+}
+
+.settings_title{
+    display: flex;
+    align-items: center;
+    position: relative;
+    left: -50px;
+}
+
+.settings_title_line{
+    width: 100px;
+    position: unset;
+    margin-right: 20px;
+}
+
+.settings_notification_container>div>div{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.notification_btn{
+    width: 60px;
+    height: 30px;
+    border: 2px solid #d60036;
+    display: flex;
+    align-items: center;
+    position: relative;
+    border-radius: 100px;
+    cursor: pointer;
+    margin-top: 16px;
+}
+.notification_btn>div{
+    height: 20px;
+    position: absolute;
+    width: 20px;
+    border-radius: 100px;
+    border: 2px solid white;
+    left: 4px;
+}
+
+.notification_btn_click{
+    animation: notification_btn_click 0.2s ease forwards;
+}
+.notification_btn_click2{
+    animation: notification_btn_click2 0.2s ease forwards;
+}
+
+.settings_account_container{
+    display: none;
+    flex-direction: column;
+    margin: auto;
+    text-align: center;
+    width: 60%;
+    margin-top: 60px;
+    margin-bottom: 50px;
+}
+.change_mdp_container{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 100px;
+}
+
+.all_input_container{
+    align-self: center;
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+}
+
+.change_mdp_btn{
+    width: 300px;
+    align-self: center;
+    line-height: unset;
+}
+
+.delete_link{
+    font-weight: bold;
+    color: #d60036;
+    cursor: pointer;
+    margin-top: 40px;
+}
+
+.delete_link:hover{
+    text-decoration: underline;
+}
+.delete_link + p>span{
+    color: #d60036;
+}
+
+
+@keyframes notification_btn_click{
+    0%{
+        background-color: transparent;
+        border: 2px solid white;
+        left: 4px;
+    }
+    100%{
+        background-color: #d60036;
+        border: none;
+        left: 33px;
+    }
+}
+
+
+@keyframes notification_btn_click2{
+    0%{
+        background-color: #d60036;
+        border: none;
+        left: 33px;
+    }
+    100%{
+        background-color: transparent;
+        border: 2px solid white;
+        left: 4px;
+    }
+}
+

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="268" height="281" viewBox="0 0 268 281">
+  <g id="Groupe_362" data-name="Groupe 362" transform="translate(-134 -611)">
+    <g id="Calque_2" data-name="Calque 2" transform="translate(167.875 614.5)">
+      <g id="Calque_1" data-name="Calque 1" transform="translate(25.926 2.5)">
+        <path id="Tracé_180" data-name="Tracé 180" d="M44.69,50.223,70.153,38.305,95.615,26.361,121.1,14.418,146.566,2.5V68.125" transform="translate(42.632 -2.5)" fill="none" stroke="#efecef" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+        <path id="Tracé_181" data-name="Tracé 181" d="M115.041,27.5V93.125L89.579,81.181,64.09,69.264" transform="translate(74.157 38.125)" fill="none" stroke="#efecef" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+        <circle id="Ellipse_52" data-name="Ellipse 52" cx="17.068" cy="17.068" r="17.068" transform="translate(0 47.522)" fill="#d60036"/>
+      </g>
+      <g id="Calque_4" data-name="Calque 4" transform="translate(2.5 25.926)">
+        <line id="Ligne_45" data-name="Ligne 45" x1="73.625" transform="translate(23.426 0)" fill="none" stroke="#efecef" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+        <path id="Tracé_182" data-name="Tracé 182" d="M39.99,126.625H83.329V29.5" transform="translate(58.421 17.949)" fill="none" stroke="#efecef" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+        <line id="Ligne_46" data-name="Ligne 46" x1="73.625" transform="translate(23.426 0)" fill="none" stroke="#efecef" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+        <path id="Tracé_183" data-name="Tracé 183" d="M39.99,126.625H83.329V29.5" transform="translate(58.421 17.949)" fill="none" stroke="#efecef" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+        <path id="Tracé_184" data-name="Tracé 184" d="M31.625,11.5,55.25,57.438,29,104.688l23.625,51.188" transform="translate(40.563 -11.301)" fill="none" stroke="#efecef" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+        <path id="Tracé_185" data-name="Tracé 185" d="M2.5,106V11.5H26.125" transform="translate(-2.5 -11.301)" fill="none" stroke="#efecef" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+        <line id="Ligne_47" data-name="Ligne 47" x1="51.161" transform="translate(47.25 144.574)" fill="none" stroke="#efecef" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+        <path id="Tracé_186" data-name="Tracé 186" d="M2.5,106V11.5H26.125" transform="translate(-2.5 -11.301)" fill="none" stroke="#efecef" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+        <line id="Ligne_48" data-name="Ligne 48" x1="51.161" transform="translate(47.25 144.574)" fill="none" stroke="#efecef" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"/>
+      </g>
+    </g>
+    <text id="REAH" transform="translate(268 871)" fill="#d60036" font-size="84" font-family="Montserrat-Black, Montserrat" font-weight="800" letter-spacing="0.05em"><tspan x="-133.476" y="0">R</tspan><tspan y="0" fill="#fff">EAH</tspan></text>
+  </g>
+</svg>

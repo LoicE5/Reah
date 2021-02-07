@@ -23,4 +23,34 @@ $(document).ready(function(){
         $(".delete_dark_filter").removeClass("show");
         $(".main_content").removeClass("scroll_none")
     })
+
+
+    // Arrow click
+    $(".arrow_next_container").click(function () {
+        let arrowParent =  $(this).closest("#category");
+        let videoChild = $(arrowParent).find(".defi_pop_container")
+        let videoPosition = $(arrowParent).find(".defi_pop_content").position().left - 110;
+        let translate = $(window).width();
+        // console.log(-$(".video_container").position().left)
+        let scroll = translate - videoPosition;
+        // console.log(translate)
+        $(videoChild).animate({
+            scrollLeft: scroll
+        }, "1s");
+    })
+    $(".arrow_prev_container").click(function () {
+        let arrowParent =  $(this).closest("#category");
+        let videoChild = $(arrowParent).find(".defi_pop_container")
+        let videoPosition = $(arrowParent).find(".defi_pop_content").position().left - 110;
+        let translate = $(window).width();
+        // console.log($(".video_container").position().left)
+        let scroll2 = -videoPosition - translate;
+        // console.log(translate)
+        $(videoChild).animate({
+            scrollLeft: scroll2
+        }, "1s");
+        // console.log(scroll2)
+
+    })
+
 })

@@ -12,6 +12,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>>REAH | Fil d'actualité</title>
+    <link rel="stylesheet" href="public/assets/css/day_mode.css">
     <link rel="stylesheet" href="public/assets/css/styles.css">
     <link rel="stylesheet" href="public/assets/css/fil_actu.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
@@ -23,33 +24,37 @@
 
 
         <!-- Navigation menu -->
-        <nav class="menu_nav">
+        <nav>
 
             <!-- Logo Réah -->
-            <a class="reah_logo" href="fil_actu.php"> <img src="public/sources/img/logo_reah.svg" alt=""></a>
-            <!-- Categories's title -->
-            <div class="menu_category">
-                <p class="category_title category_title1" number="1" number1="2" number2="3">Ajouts récents</p>
-                <p class="category_title category_title2" number="2" number1="1" number2="3">Défis du moment</p>
-                <p class="category_title category_title3" number="3" number1="1" number2="2">À découvrir</p>
-                <div class="red_line underline"></div>
-                <div class="fb_jsb ai-c category_list">
-                    <p class="category_list_title">Catégories</p>
-                    <div class="category_triangle"></div>
+            <a class="reah_logo_container" href="fil_actu.php"> <img src="public/sources/img/reah_logo_complet.png" class="reah_logo" alt=""></a>
+            
+            <div class="menu_nav">
+                <!-- Categories's title -->
+                <div class="menu_category">
+                    <p class="category_title category_title1" number="1" number1="2" number2="3">Ajouts récents</p>
+                    <p class="category_title category_title2" number="2" number1="1" number2="3">Défis du moment</p>
+                    <p class="category_title category_title3" number="3" number1="1" number2="2">À découvrir</p>
+                    <div class="red_line underline"></div>
+                    <div class="fb_jsb ai-c category_list">
+                        <p class="category_list_title">Catégories</p>
+                        <div class="category_triangle"></div>
+                    </div>
                 </div>
-            </div>
+    
+    
+                <!-- Search bar -->
+                <form action="" class="form_search_bar">
+                    <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
+                </form>
+    
+                <div class="menu_profile">
+                    <!-- Defi icon -->
+                    <a href="defis.php"> <img src="public/sources/img/defi_icon.svg" class="defi_icon" alt=""></a>
+                    <!-- Profile photo -->
+                    <img src="public/sources/img/pdp.jpg" class="menu_pp" alt="">
+                </div>
 
-
-            <!-- Search bar -->
-            <form action="" class="form_search_bar">
-                <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
-            </form>
-
-            <div class="menu_profile">
-                <!-- Defi icon -->
-                <a href="defis.php"> <img src="public/sources/img/defi_icon.svg" class="defi_icon" alt=""></a>
-                <!-- Profile photo -->
-                <img src="public/sources/img/pdp.jpg" class="menu_pp" alt="">
             </div>
         </nav>
 
@@ -67,7 +72,7 @@
 
 
         <!-- "Ajout récent" catégory -->
-        <div class="first_category">
+        <div class="first_category" id="category">
 
             <!-- prev arrow -->
             <div class="arrow_prev_container fp-controlArrow fp-prev">
@@ -163,7 +168,7 @@
         </div>
 
 
-        <div class="second_category">
+        <div class="second_category" id="category">
 
             <!-- prev arrow -->
             <div class="arrow_prev_container">
@@ -254,7 +259,7 @@
             </div>
         </div>
 
-        <div class="third_category">
+        <div class="third_category" id="category">
 
             <!-- prev arrow -->
             <div class="arrow_prev_container">
@@ -343,8 +348,11 @@
                 <img src="public/sources/img/next_arrow.svg" class="next_arrow" alt="">
             </div>
         </div>
-    </main>
+    <?php
+    require("footer.php");
+?>
 
+    </main>
 
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>

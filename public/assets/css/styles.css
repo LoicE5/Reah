@@ -11,8 +11,8 @@ textarea:focus {
 
 body {
     margin: 0;
-    background-color: #141414;
-    color: white;
+    /* background-color:; */
+    color: var(--text);
     font-family: 'Montserrat', sans-serif;
     font-size: 1em;
     /* font-weight: 400; */
@@ -103,8 +103,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100vh;
     flex-direction: row;
+    background: url(../../sources/img/red_background.png) 50% 250%;
+    background-color: var(--background);
 }
 
 /* Alert message */
@@ -291,16 +292,23 @@ select {
 
 
 
-.menu_nav {
+nav{
     display: flex;
     position: fixed;
     align-items: center;
     justify-content: space-between;
     min-width: 100%;
     z-index: 101;
-    background-color: #141414;
-    /* height: 60px; */
+    background-color: transparent;
     padding: 5px;
+}
+
+.menu_nav{
+    width: 100%;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
 }
 
 .menu_nav_scroll {
@@ -316,7 +324,6 @@ select {
     justify-content: space-between;
     min-width: 450px;
     text-align: center;
-    margin-left: 10%;
     position: relative;
     align-self: flex-start;
     color: #bbbbbb;
@@ -452,7 +459,7 @@ select {
 .category_list_container {
     /* height: 260px; */
     width: 180px;
-    left: 11%;
+    left: 16%;
     transform: translatey(-200px);
     display: none;
 }
@@ -550,7 +557,7 @@ select {
     flex-direction: column;
     box-shadow: black 0px 0px 20px;
     align-self: center;
-    background-color: #141414;
+    background-color: var(--background);
     margin: auto;
 }
 
@@ -660,6 +667,8 @@ select {
 @keyframes menu_nav_scroll2 {
     100% {
         box-shadow: 0px 5px 25px black;
+    background-color: var(--background);
+
         opacity: 1;
     }
 }
@@ -678,11 +687,14 @@ select {
 
     .menu_category {
         min-width: 120px;
-        margin-left: 15%;
     }
 
     .category_list_container {
         display: flex;
+    }
+    .menu_nav{
+    padding-left: 15%;
+
     }
 }
 
@@ -715,9 +727,6 @@ select {
         margin: 0;
     }
 
-    .menu_category {
-        margin-left: 20%;
-    }
 
     .category_list_container {
         left: 15%;

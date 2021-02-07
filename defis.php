@@ -24,32 +24,37 @@
 
 
         <!-- Navigation menu -->
-        <nav class="menu_nav">
+        <nav>
 
             <!-- Logo Réah -->
-            <a class="reah_logo" href="fil_actu.php"> <img src="public/sources/img/logo_reah.svg" alt=""></a>
-            <!-- Categories's title -->
-            <div class="menu_category">
-                <p class="category_title category_title1" number="1" number1="2" number2="3">Défis du moment</p>
-                <p class="category_title" number="2" number1="1" number2="3">Défis populaires</p>
-                <p class="category_title" number="3" number1="1" number2="2">Défis à découvrir</p>
-                <div class="red_line underline"></div>
-                <div class="fb_jsb ai-c category_list">
-                    <p class="category_list_title">Catégories</p>
-                    <div class="category_triangle"></div>
+            <a href="fil_actu.php" class="reah_logo_container"> <img src="public/sources/img/reah_logo_complet.png"
+                    class="reah_logo" alt=""></a>
+
+            <div class="menu_nav">
+                <!-- Categories's title -->
+                <div class="menu_category">
+                    <p class="category_title category_title1" number="1" number1="2" number2="3">Défis du moment</p>
+                    <p class="category_title" number="2" number1="1" number2="3">Défis populaires</p>
+                    <p class="category_title" number="3" number1="1" number2="2">Défis à découvrir</p>
+                    <div class="red_line underline"></div>
+                    <div class="fb_jsb ai-c category_list">
+                        <p class="category_list_title">Catégories</p>
+                        <div class="category_triangle"></div>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Search bar -->
-            <form action="" class="form_search_bar">
-                <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
-            </form>
+                <!-- Search bar -->
+                <form action="" class="form_search_bar">
+                    <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
+                </form>
 
-            <div class="menu_profile">
-                <!-- Home icon -->
-                <a href="fil_actu.php"> <img src="public/sources/img/fil_actu_icon.svg" class="defi_icon" alt=""></a>
-                <!-- Profile photo -->
-                <img src="public/sources/img/pdp.jpg" class="menu_pp" alt="">
+                <div class="menu_profile">
+                    <!-- Home icon -->
+                    <a href="fil_actu.php"> <img src="public/sources/img/fil_actu_icon.svg" class="defi_icon"
+                            alt=""></a>
+                    <!-- Profile photo -->
+                    <img src="public/sources/img/pdp.jpg" class="menu_pp" alt="">
+                </div>
             </div>
         </nav>
 
@@ -126,7 +131,7 @@
         </div>
 
         <!-- "Défis populaires" catégory -->
-        <div class="second_category">
+        <div class="second_category" id="category">
 
             <!-- prev arrow -->
             <div class="arrow_prev_container fp-controlArrow fp-prev">
@@ -177,7 +182,7 @@
             </div>
         </div>
 
-        <div class="third_category">
+        <div class="third_category" id="category">
 
             <!-- prev arrow -->
             <div class="arrow_prev_container fp-controlArrow fp-prev">
@@ -237,32 +242,32 @@
 
     <div class="pop_up_container add_defi_container">
         <form action="">
-        <div class="pop_up_header">
-            <h2>Proposer un défi</h2>
-            <img src='public/sources/img/close_icon.svg' class='close_icon' alt=''>
-        </div>
-        <div class="pop_up_text">
-
-            <!-- Inputs -->
-            <div class="add_defi_input">
-                <div class="input_container">
-                    <label for="title">
-                        <span>Titre</span>
-                        <input type="text" class="input_connexion" id="title" name="title">
-                    </label>
-                </div>
-                <div class="input_container input_constraints_container">
-                    <label for="constraints">
-                        <span>Contraintes</span>
-                        <textarea class="input_connexion input_constraints" id="constraints" name="constraints" cols="30"
-                            rows="10"></textarea>
-                    </label>
-                </div>
-
+            <div class="pop_up_header">
+                <h2>Proposer un défi</h2>
+                <img src='public/sources/img/close_icon.svg' class='close_icon' alt=''>
             </div>
-        </div>
+            <div class="pop_up_text">
 
-        <input type="submit" class="pop_up_btn btn add_defi_btn" value="Envoyer"></input>
+                <!-- Inputs -->
+                <div class="add_defi_input">
+                    <div class="input_container">
+                        <label for="title">
+                            <span>Titre</span>
+                            <input type="text" class="input_connexion" id="title" name="title">
+                        </label>
+                    </div>
+                    <div class="input_container input_constraints_container">
+                        <label for="constraints">
+                            <span>Contraintes</span>
+                            <textarea class="input_connexion input_constraints" id="constraints" name="constraints"
+                                cols="30" rows="10"></textarea>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <input type="submit" class="pop_up_btn btn add_defi_btn" value="Envoyer"></input>
         </form>
     </div>
 

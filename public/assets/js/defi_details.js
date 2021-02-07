@@ -16,4 +16,30 @@ $(document).ready(function(){
         $(".upload_dark_filter").removeClass("show");
         $(".main_content").removeClass("scroll_none")
     })
+
+
+    // Arrow click
+    $(".arrow_next_container").click(function () {
+        let videoPosition = $(".video_container").position().left - 110;
+        let translate = $(window).width();
+        // console.log(-$(".video_container").position().left)
+        let scroll = translate - videoPosition;
+        // console.log(translate)
+        $(".all_video_container").animate({
+            scrollLeft: scroll
+        }, "1s");
+    })
+    $(".arrow_prev_container").click(function () {
+        let videoPosition = $(".video_container").position().left - 110;
+        let translate = $(window).width();
+        // console.log($(".video_container").position().left)
+        let scroll2 = -videoPosition - translate;
+        // console.log(translate)
+        $(".all_video_container").animate({
+            scrollLeft: scroll2
+        }, "1s");
+        // console.log(scroll2)
+
+    })
+
 })
