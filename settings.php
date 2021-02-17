@@ -1,5 +1,5 @@
 <?php
-    require("header.php");
+    include('assets/php/config.php');
 ?>
 
 <!DOCTYPE html>
@@ -9,10 +9,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>>REAH | Paramètres</title>
-    <link rel="stylesheet" href="public/assets/css/styles.css">
-    <link rel="stylesheet" href="public/assets/css/fil_actu.css">
-    <link rel="stylesheet" href="public/assets/css/profil.css">
-    <link rel="stylesheet" href="public/assets/css/settings.css">
+    <link rel="stylesheet" href="assets/css/dark_mode.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/fil_actu.css">
+    <link rel="stylesheet" href="assets/css/profil.css">
+    <link rel="stylesheet" href="assets/css/settings.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
         rel="stylesheet">
 </head>
@@ -25,32 +26,43 @@
         <nav class="menu_nav">
 
             <!-- Logo Réah -->
-            <a class="reah_logo" href="fil_actu.php"> <img src="public/sources/img/logo_reah.svg" alt=""></a>
+            <a class="reah_logo_container" href="fil_actu.php"> <img src="sources/img/reah_logo_complet.png"
+                        class="reah_logo" alt=""></a>
 
             <!-- Search bar -->
             <form action="" class="form_search_bar">
                 <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
             </form>
 
-            <div class="menu_profile">
-                <!-- Home icon -->
-                <a href="fil_actu.php"> <img src="public/sources/img/fil_actu_icon.svg" class="defi_icon" alt=""></a>
-                <!-- Challenge icon -->
-                <a href="defis.php"> <img src="public/sources/img/defi_icon.svg" class="defi_icon" alt=""></a>
-                <!-- Profile photo -->
-                <img src="public/sources/img/profil_icon.svg" class="defi_icon menu_pp" alt="">
-            </div>
-        </nav>
+            <?php
+                if(func::checkLoginState($db)){ # If the user is connected
+                    $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute();
+
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    echo "<div class='menu_profile'>
+                    <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
+                    <!-- Defi icon -->
+                    <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
+                    <!-- Profile photo -->
+                    <img src='".$row['user_profile_picture']."' class='menu_pp' alt='' onclick='toggleBurgerMenu(this)'>
+                    </div>
+                    </nav>";
+
+                } else {
+                    redirect('login.php');
+                }
+            ?>
 
         <?php
-        require("menu.php");
+        require("ressources/menu.php");
         ?>
 
         <div class="fb">
 
             <div class="settings_menu">
-                <a class="reah_logo_container" href="fil_actu.php"> <img src="public/sources/img/reah_logo_complet.png"
-                        class="reah_logo" alt=""></a>
                 <div class="red_line settings_menu_line"></div>
                 <div class="settings_menu_option settings_menu_option_profile" number="0">Profil</div>
                 <div class="settings_menu_option settings_menu_option_notification" number="1">Notifications</div>
@@ -68,7 +80,10 @@
 
                 <div class="modify_profile_photo_container">
                     <!-- Profile photo -->
-                    <img src="database/profile_picture/minmin.jpg" alt="" class="profile_photo">
+                    <?php
+                        echo '<img src="'.$row['user_profile_picture'].'" alt="" class="profile_photo">';
+                    ?>
+                    
 
                     <div class="modify_file_container">
                         <!-- Input banner -->
@@ -279,9 +294,9 @@
 
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-    <script src="public/assets/js/app.js"></script>
-    <script src="public/assets/js/settings.js"></script>
-    <script src="public/assets/js/fil_actu.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/settings.js"></script>
+    <script src="assets/js/fil_actu.js"></script>
 </body>
 
 </html>

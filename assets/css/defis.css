@@ -1,0 +1,363 @@
+.main_content {
+    display: block;
+    background: url(../../sources/img/dark_background.svg) 1700px -700px /2200px;
+}
+
+.menu_category {
+    /* margin-left: 10%; */
+    min-width: 500px;
+}
+
+.underline {
+    width: 143px;
+}
+
+.underline1 {
+    transform: translateX(0px);
+    transition: ease 0.5s;
+    width: 143px;
+}
+
+.underline2 {
+    transform: translateX(190px);
+    width: 130px;
+    transition: ease 0.5s;
+}
+
+.underline3 {
+    transform: translateX(365px);
+    width: 135.5px;
+    transition: ease 0.5s;
+
+}
+
+.add_defi_btn_container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.add_defi_btn_container>h1{
+    margin-left: 0px;
+}
+
+.add_defi_btn{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 200px;
+}
+
+.add_defi_icon{
+    height: 20px;
+}
+
+.first_category {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    margin: auto;
+    margin-top: 80px;
+    align-items: flex-start;
+    width: 90%;
+    overflow: hidden;
+    justify-content: center;
+    min-height: auto;
+    height: auto;
+    margin-bottom: 50px;
+}
+
+.second_category,
+.third_category {
+    min-height: 400px;
+    height: 15%;
+    margin-bottom: 50px;
+}
+
+.arrow_prev_container, .arrow_next_container{
+    margin-top: 30px;
+}
+
+.defi_container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 40px;
+    min-height: 25vw;
+    overflow: hidden;
+}
+
+.defi_content {
+    width: 45%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.defi_img {
+    width: 100%;
+    height: 100%;
+}
+
+.defi_title {
+    font-size: 3vw;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    text-decoration: none !important;
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    text-shadow: black 0px 0px 15px;
+}
+
+.defi_title_hover {
+    transform: scale(1.1);
+    transition: 0.3s ease;
+}
+
+.defi_title_mouseout {
+    transform: scale(1);
+    transition: 0.3s ease;
+}
+
+.defi_time {
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    text-decoration: none !important;
+    position: absolute;
+    top: 60%;
+    width: 100%;
+    text-shadow: black 0px 0px 15px;
+}
+
+.defi_pop_container {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    position: relative;
+    padding-top: 40px;
+    padding-left: 110px;
+    height: 100%;
+}
+
+.defi_pop_content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 5%;
+    position: relative;
+    height: 360px;
+    width: 640px;
+}
+
+.defi_pop_img {
+    width: auto;
+}
+
+.defi_pop_title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    text-decoration: none !important;
+    position: absolute;
+    top: 30%;
+    width: 100%;
+    text-shadow: black 0px 0px 15px;
+}
+
+.add_defi_container{
+    display: none;
+}
+.add_defi_input>.input_container{
+    margin-bottom: 25px;
+}
+
+.input_constraints_container {
+    min-height: 200px;
+    max-width: 300px;
+    width: 300px;
+}
+
+.input_constraints{
+    text-align: start;
+    min-height: 200px;
+    
+}
+
+.add_defi_btn{
+    line-height: 30px;
+}
+
+@keyframes defi_img_hover {
+    0% {
+        filter: brightness(100%);
+        width: 100%;
+        height: 100%;
+    }
+
+    100% {
+        filter: brightness(50%);
+        height: 95%;
+        width: 95%;
+    }
+}
+
+.defi_img_hover {
+    animation: defi_img_hover 0.3s ease forwards;
+}
+
+@keyframes defi_img_mouseout {
+    100% {
+        filter: brightness(100%);
+        width: 100%;
+        height: 100%;
+    }
+
+    0% {
+        filter: brightness(50%);
+        width: 95%;
+        height: 95%;
+    }
+}
+
+.defi_img_mouseout {
+    animation: defi_img_mouseout 0.3s ease forwards;
+}
+
+@media screen and (max-width:1615px) {
+    
+    .defi_pop_content {
+        height: 240px;
+        width: 426px;
+        min-width: 426px;
+    }
+    
+}
+
+@media screen and (max-width:1140px) {
+    .main_content{
+        
+        background: url(../../sources/img/dark_background.svg) 1400px -180px /2200px;
+    }
+    .defi_pop_content {
+        height: 125px;
+        width: 200px;
+        min-width: 220px;
+    }
+
+    .defi_pop_title {
+        font-size: 1rem;
+    }
+
+    .defi_time {
+        font-size: 0.8rem;
+    }
+    .second_category,.third_category{
+        height: 40%;
+        min-height: auto;
+    }
+}
+
+@media screen and (max-width:1130px) {
+
+    .category_title,
+    .underline {
+        display: none;
+    }
+
+    .category_list {
+        display: flex;
+    }
+
+    .menu_category {
+        min-width: 120px;
+    }
+
+    .category_list_container {
+        display: flex;
+    }
+
+    .menu_nav{
+        padding-left: 15%;
+    
+        }
+}
+
+@media screen and (max-width:750px) {
+    .menu_profile {
+        min-width: 100px;
+    }
+
+    .search_bar_focus {
+        width: 250px;
+        border-radius: 100px;
+        box-shadow: 0px 0px 15px #000000;
+        color: white;
+        padding: 5px;
+        padding-left: 40px;
+        background: url(../../img/loupe_icon.svg) no-repeat 3%;
+        background-color: #500e1e;
+        transform: translateX(-270px);
+        transition: 0.5s ease;
+    }
+
+    form {
+        width: 25px;
+    }
+
+    .category_list_container {
+        left: 16%;
+    }
+
+    .menu_profile {
+        min-width: 100px;
+    }
+
+}
+
+@media screen and (max-width:700px) {
+    .main_content{
+        background: url(../../sources/img/dark_background.svg) 1400px -620px /1800px;
+    }
+}
+
+@media screen and (max-width:650px) {
+    
+    .main_content{
+        background: url(../../sources/img/dark_background.svg) 1400px -600px /2200px;
+    }
+
+    .add_defi_btn_container{
+        flex-direction: column;
+        min-height: 100px;
+        align-items: flex-start;
+    }
+    .defi_container {
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .defi_container>a:first-child{
+        margin-bottom: 50px;
+    }
+
+    .defi_content {
+        width: 100%;
+        height: auto;
+    }
+
+    .defi_time {
+        font-size: 1rem;
+    }
+    .defi_title{
+        font-size: 6vw;
+    }
+
+}

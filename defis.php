@@ -1,24 +1,19 @@
 <?php
-    require("header.php");
+    include('assets/php/config.php');
 ?>
-
-
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>>REAH | Défis</title>
-    <link rel="stylesheet" href="public/assets/css/styles.css">
-    <link rel="stylesheet" href="public/assets/css/fil_actu.css">
-    <link rel="stylesheet" href="public/assets/css/defis.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/fil_actu.css">
+    <link rel="stylesheet" href="assets/css/defis.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="public/assets/css/fullpage.css" />
-
+    <link rel="stylesheet" type="text/css" href="assets/css/fullpage.css" />
 </head>
-
 <body>
     <main class="main_content">
 
@@ -27,7 +22,7 @@
         <nav>
 
             <!-- Logo Réah -->
-            <a href="fil_actu.php" class="reah_logo_container"> <img src="public/sources/img/reah_logo_complet.png"
+            <a href="fil_actu.php" class="reah_logo_container"> <img src="sources/img/reah_logo_complet.png"
                     class="reah_logo" alt=""></a>
 
             <div class="menu_nav">
@@ -48,13 +43,37 @@
                     <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
                 </form>
 
-                <div class="menu_profile">
-                    <!-- Home icon -->
-                    <a href="fil_actu.php"> <img src="public/sources/img/fil_actu_icon.svg" class="defi_icon"
-                            alt=""></a>
-                    <!-- Profile photo -->
-                    <img src="public/sources/img/pdp.jpg" class="menu_pp" alt="">
-                </div>
+                <?php
+                    if(func::checkLoginState($db)){ # If the user is connected
+                        $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
+                        $stmt = $db->prepare($query);
+                        $stmt->execute();
+    
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+                        echo "<div class='menu_profile'>
+                        <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
+                        <!-- Defi icon -->
+                        <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
+                        <!-- Profile photo -->
+                        <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
+                        </div>
+                        </nav>";
+    
+                    } else {
+    
+                        echo "<div class='menu_profile'>
+                        <!-- Defi icon -->
+                        <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
+                        <!-- Profile photo -->
+                        <div class='se-connecter' onclick='redirect(`login.php`)'>
+                            <img src='sources/img/profile-user.svg' alt='' onload='SVGInject(this)'>
+                            SE CONNECTER
+                        </div>
+                        </div>
+                        </nav>";
+                    }
+                ?>
             </div>
         </nav>
 
@@ -64,37 +83,11 @@
             <p class="category_list_category" number="2" number1="1" number2="3">Défis populaires</p>
             <p class="category_list_category" number="3" number1="1" number2="2">Défis à découvrir</p>
         </div>
-
+        
         <!-- Menu -->
-        <div class="menu_container">
-            <a href="connexion.php" class="menu_option sign_in">Se connecter</a>
-            <a href="public/index.php" class="menu_option sign_up">S'inscrire</a>
-
-            <!-- Profile -->
-            <a href="profil.php" class="menu_option profil">
-                <img src="public/sources/img/profile_icon.svg" alt="">
-                <p class="menu_option_title">Profil</p>
-            </a>
-
-            <!-- Notifications -->
-            <a href="" class="menu_option notifications">
-                <img src="public/sources/img/notifications_icon.svg" alt="">
-                <p class="menu_option_title">Notifications</p>
-            </a>
-
-            <a href="" class="registered menu_option">
-                <img src="public/sources/img/saved_icon.svg" alt="">
-                <p class="menu_option_title">Enregistrés</p>
-            </a>
-            <a href="" class="settings menu_option">
-                <img src="public/sources/img/settings_icon.svg" alt="">
-                <p class="menu_option_title">Paramètres</p>
-            </a>
-            <a href="" class="disconnection menu_option">
-                <img src="public/sources/img/disconnection_icon.svg" alt="">
-                <p class="menu_option_title">Déconnexion</p>
-            </a>
-        </div>
+        <?php
+        require("ressources/menu.php");
+        ?>
 
         <!-- "Ajout récent" catégory -->
         <div class="first_category">
@@ -106,7 +99,7 @@
 
                 <!-- Add defi btn -->
                 <div class="btn add_defi_btn">
-                    <img class="add_defi_icon" src="public/sources/img/add_defi_icon.svg" alt="">
+                    <img class="add_defi_icon" src="sources/img/add_defi_icon.svg" alt="">
                     Proposer un défi
                 </div>
             </div>
@@ -116,14 +109,14 @@
 
                 <!-- Challenge n°1-->
                 <a href="defi1.php" class="defi_content" defi="1">
-                    <img class="defi_img defi1_img" src="public/sources/img/defi1.jpg" alt="">
+                    <img class="defi_img defi1_img" src="sources/img/defi1.jpg" alt="">
                     <p class="defi_title defi1_title">SAINT-VALENTIN</p>
                     <p class="defi_time">Temps restant : 14h 30min</p>
                 </a>
 
                 <!-- Challenge n°2-->
                 <a href="defi2.php" class="defi_content" defi="2">
-                    <img class="defi_img defi2_img" src="public/sources/img/avion.jpg" alt="">
+                    <img class="defi_img defi2_img" src="sources/img/avion.jpg" alt="">
                     <p class="defi_title defi2_title">AVION</p>
                     <p class="defi_time">Temps restant : 2 semaines et 3 jours</p>
                 </a>
@@ -135,8 +128,6 @@
 
             <!-- prev arrow -->
             <div class="arrow_prev_container fp-controlArrow fp-prev">
-                <!-- Arrow -->
-                <img src="public/sources/img/prev_arrow.svg" class="prev_arrow" alt="">
             </div>
 
             <!-- Category content  -->
@@ -150,25 +141,25 @@
 
                     <!-- Challenge n°1-->
                     <a href="defi_details.php" class="defi_pop_content" defi="1">
-                        <img class="defi_img defi_pop_img" src="public/sources/img/defi1.jpg" alt="">
+                        <img class="defi_img defi_pop_img" src="sources/img/defi1.jpg" alt="">
                         <p class="defi_pop_title">SAINT-VALENTIN</p>
                     </a>
 
                     <!-- Challenge n°2-->
                     <a href="defi_details.php" class="defi_pop_content" defi="2">
-                        <img class="defi_img defi_pop_img" src="public/sources/img/avion.jpg" alt="">
+                        <img class="defi_img defi_pop_img" src="sources/img/avion.jpg" alt="">
                         <p class="defi_pop_title">AVION</p>
                     </a>
 
                     <!-- Challenge n°1-->
                     <a href="defi_details.php" class="defi_pop_content" defi="1">
-                        <img class="defi_img defi_pop_img" src="public/sources/img/defi1.jpg" alt="">
+                        <img class="defi_img defi_pop_img" src="sources/img/defi1.jpg" alt="">
                         <p class="defi_pop_title">SAINT-VALENTIN</p>
                     </a>
 
                     <!-- Challenge n°2-->
                     <a href="defi_details.php" class="defi_pop_content" defi="2">
-                        <img class="defi_img defi_pop_img" src="public/sources/img/avion.jpg" alt="">
+                        <img class="defi_img defi_pop_img" src="sources/img/avion.jpg" alt="">
                         <p class="defi_pop_title">AVION</p>
                     </a>
 
@@ -177,8 +168,6 @@
 
             <!-- next arrow -->
             <div class="arrow_next_container fp-controlArrow fp-next">
-                <!-- Arrow -->
-                <img src="public/sources/img/next_arrow.svg" class="next_arrow" alt="">
             </div>
         </div>
 
@@ -186,8 +175,6 @@
 
             <!-- prev arrow -->
             <div class="arrow_prev_container fp-controlArrow fp-prev">
-                <!-- Arrow -->
-                <img src="public/sources/img/prev_arrow.svg" class="prev_arrow" alt="">
             </div>
 
             <!-- Category content  -->
@@ -200,25 +187,25 @@
 
                     <!-- Challenge n°1-->
                     <a href="defi1.php" class="defi_pop_content" defi="1">
-                        <img class="defi_img defi_pop_img" src="public/sources/img/defi1.jpg" alt="">
+                        <img class="defi_img defi_pop_img" src="sources/img/defi1.jpg" alt="">
                         <p class="defi_pop_title">SAINT-VALENTIN</p>
                     </a>
 
                     <!-- Challenge n°2-->
                     <a href="defi2.php" class="defi_pop_content" defi="2">
-                        <img class="defi_img defi_pop_img" src="public/sources/img/avion.jpg" alt="">
+                        <img class="defi_img defi_pop_img" src="sources/img/avion.jpg" alt="">
                         <p class="defi_pop_title">AVION</p>
                     </a>
 
                     <!-- Challenge n°1-->
                     <a href="defi1.php" class="defi_pop_content" defi="1">
-                        <img class="defi_img defi_pop_img" src="public/sources/img/defi1.jpg" alt="">
+                        <img class="defi_img defi_pop_img" src="sources/img/defi1.jpg" alt="">
                         <p class="defi_pop_title">SAINT-VALENTIN</p>
                     </a>
 
                     <!-- Challenge n°2-->
                     <a href="defi2.php" class="defi_pop_content" defi="2">
-                        <img class="defi_img defi_pop_img" src="public/sources/img/avion.jpg" alt="">
+                        <img class="defi_img defi_pop_img" src="sources/img/avion.jpg" alt="">
                         <p class="defi_pop_title">AVION</p>
                     </a>
 
@@ -227,10 +214,12 @@
 
             <!-- next arrow -->
             <div class="arrow_next_container fp-controlArrow fp-next">
-                <!-- Arrow -->
-                <img src="public/sources/img/next_arrow.svg" class="next_arrow" alt="">
             </div>
         </div>
+
+        <?php
+            require("ressources/footer.php");
+        ?>
     </main>
 
 
@@ -244,7 +233,7 @@
         <form action="">
             <div class="pop_up_header">
                 <h2>Proposer un défi</h2>
-                <img src='public/sources/img/close_icon.svg' class='close_icon' alt=''>
+                <img src='sources/img/close_icon.svg' class='close_icon' alt=''>
             </div>
             <div class="pop_up_text">
 
@@ -272,10 +261,10 @@
     </div>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-    <!-- <script src="public/assets/js/app.js"></script> -->
-    <!-- <script src="public/assets/js/register.js"></script> -->
-    <script src="public/assets/js/defis.js"></script>
-    <script src="public/assets/js/fil_actu.js"></script>
+    <!-- <script src="assets/js/app.js"></script> -->
+    <!-- <script src="assets/js/register.js"></script> -->
+    <script src="assets/js/defis.js"></script>
+    <script src="assets/js/fil_actu.js"></script>
 </body>
 
 </html>

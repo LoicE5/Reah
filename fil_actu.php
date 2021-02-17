@@ -1,8 +1,9 @@
 <?php
-    require("header.php");
-    require("pop_up_film_information.php");
-    require("pop_up_connexion.php");
-    require("pop_up_share.php");
+    include('assets/php/config.php');
+    include("ressources/pop_up_film_information.php");
+    include("ressources/pop_up_connexion.php");
+    include("ressources/pop_up_share.php");
+    include('vimeo_setup.php');
 ?>
 
 <!DOCTYPE html>
@@ -12,11 +13,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>>REAH | Fil d'actualité</title>
-    <link rel="stylesheet" href="public/assets/css/day_mode.css">
-    <link rel="stylesheet" href="public/assets/css/styles.css">
-    <link rel="stylesheet" href="public/assets/css/fil_actu.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
-        rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/dark_mode.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/fil_actu.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <script src="assets/js/libraries/svg-inject-master/src/svg-inject.js"></script>
+    <script src="https://player.vimeo.com/api/player.js"></script>
 </head>
 
 <body>
@@ -27,8 +29,9 @@
         <nav>
 
             <!-- Logo Réah -->
-            <a class="reah_logo_container" href="fil_actu.php"> <img src="public/sources/img/reah_logo_complet.png" class="reah_logo" alt=""></a>
-            
+            <a class="reah_logo_container" href="fil_actu.php"> <img src="sources/img/reah_logo_complet.png"
+                    class="reah_logo" alt=""></a>
+
             <div class="menu_nav">
                 <!-- Categories's title -->
                 <div class="menu_category">
@@ -41,22 +44,43 @@
                         <div class="category_triangle"></div>
                     </div>
                 </div>
-    
-    
+
+
                 <!-- Search bar -->
                 <form action="" class="form_search_bar">
                     <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
                 </form>
-    
-                <div class="menu_profile">
-                    <!-- Defi icon -->
-                    <a href="defis.php"> <img src="public/sources/img/defi_icon.svg" class="defi_icon" alt=""></a>
-                    <!-- Profile photo -->
-                    <img src="public/sources/img/pdp.jpg" class="menu_pp" alt="">
-                </div>
 
-            </div>
-        </nav>
+                <?php
+                    if(func::checkLoginState($db)){ # If the user is connected
+                        $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
+                        $stmt = $db->prepare($query);
+                        $stmt->execute();
+    
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+                        echo "<div class='menu_profile'>
+                        <!-- Defi icon -->
+                        <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
+                        <!-- Profile photo -->
+                        <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
+                        </div>
+                        </nav>";
+    
+                    } else {
+    
+                        echo "<div class='menu_profile'>
+                        <!-- Defi icon -->
+                        <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
+                        <!-- Profile photo -->
+                        <div class='se-connecter' onclick='redirect(`login.php`)'>
+                            <img src='sources/img/profile-user.svg' alt='' onload='SVGInject(this)'>
+                            SE CONNECTER
+                        </div>
+                        </div>
+                        </nav>";
+                    }
+                ?>
 
         <!-- Category list  -->
         <div class="category_list_container">
@@ -67,7 +91,7 @@
 
         <!-- Menu -->
         <?php
-        require("menu.php");
+            require("ressources/menu.php");
         ?>
 
 
@@ -75,10 +99,7 @@
         <div class="first_category" id="category">
 
             <!-- prev arrow -->
-            <div class="arrow_prev_container fp-controlArrow fp-prev">
-                <!-- Arrow -->
-                <img src="public/sources/img/prev_arrow.svg" class="prev_arrow" alt="">
-            </div>
+            <div class="arrow_prev_container fp-controlArrow fp-prev"></div>
 
             <!-- Category content  -->
             <div class="category_content">
@@ -89,67 +110,91 @@
                 <!-- All videos -->
                 <div class="all_video_container">
 
-                    <?php
-                    $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
-                    $stmt=$db->query($requete);
-                    $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
-                    foreach($resultat as $films){
-                        echo "
+                <?php
 
-                    <!-- Video container -->
+                $query = "SELECT * FROM `demo_videos`";
+                $stmt = $db->prepare($query);
+                $stmt->execute();
+
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach($rows as $row){
+                    echo "<!-- Video container -->
                     <div class='video_container'>
 
-                        <!-- Short film -->
+                        <!-- Short film (class=video) -->
                         <div class='video_content'>
-                            <video class='video' poster='{$films["poster"]}' muted>
-                                <source src='{$films["url"]}' type='video/mp4'>
-                            </video>
+                        <div data-vimeo-id='".$row['demo_video_url']."' data-vimeo-width='auto' id='video_".$row['demo_video_id']."' class='video'></div>
+                        <script>
+                            let video_".$row['demo_video_id']."_player = new Vimeo.Player('video_".$row['demo_video_id']."');
+                        
+                            let video_".$row['demo_video_id']."_div = video_".$row['demo_video_id']."_player.element;
+                            let video_".$row['demo_video_id']."_iframe;
+                            
+                            let video_".$row['demo_video_id']."_interval = setInterval(()=>{
+                        
+                                if(video_".$row['demo_video_id']."_div.firstChild){
+                        
+                                    video_".$row['demo_video_id']."_iframe = video_".$row['demo_video_id']."_div.firstChild;
+                        
+                                    let doc = video_".$row['demo_video_id']."_iframe.contentDocument ? video_".$row['demo_video_id']."_iframe.contentDocument :
+                                video_".$row['demo_video_id']."_iframe.contentWindow.document;
+                        
+                                console.log(doc);
+                        
+                                clearInterval(video_".$row['demo_video_id']."_interval);
+                                }
+                            });
+                        
+                        </script>
                             <!-- Name + pp -->
                             <div class='user_container'>
-                                <img src='{$films["photo"]}' class='pp_profile' alt=''>
-                                <p class='pseudo'>{$films["username"]}</p>
+                                <img src='profile_pictures/default.jpg' class='pp_profile' alt=''>
+                                <p class='pseudo'>".$row['demo_video_author']."</p>
                                 <div class='flou'></div>
                             </div>
 
                             <!-- Time -->
-                            <p class='time'>{$films["duration"]}</p>
+                            <p class='time'>01:54</p>
                         </div>
 
                         <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='fb_jsb'>
                                 <div class='synopsis_title_container' >
-                                    <h3 class='synopsis_title'>{$films["title"]}</h3>
+                                    <h3 class='synopsis_title'>".$row['demo_video_title']."</h3>
                                     <p class='see_more'>Voir plus
-                                        <img src='public/sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                         </p>
                                 </div>
                                 <div class='reaction_container'>
                                     <div class='fb_jsb like_container'>
                                         <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='public/sources/img/pop_corn.png' alt=''>
+                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
                                         <!-- Like\'s number -->
                                         <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c'>
-                                        <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                        <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
                                         <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                     </div>
 
                                     <!-- Share icon -->
-                                    <img src='public/sources/img/share_icon.svg' class='share_icon' alt=''>
+                                    <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
 
                                 </div>
                             </div>
-                            <p>{$films["synopsis"]}</p>
+                            <p>Lorem ipsum sit dolor es jeu si po koa aickrir isi</p>
                         </div>
 
 
-                    </div>
-                    
-                    ";
+                    </div>";
                 }
+
+                $stmt = null;
+                $query = null;
+                $rows = null;
 
                 ?>
 
@@ -160,10 +205,7 @@
 
 
             <!-- next arrow -->
-            <div class="arrow_next_container fp-controlArrow fp-next">
-                <!-- Arrow -->
-                <img src="public/sources/img/next_arrow.svg" class="next_arrow" alt="">
-            </div>
+            <div class="arrow_next_container fp-controlArrow fp-next"></div>
 
         </div>
 
@@ -171,10 +213,7 @@
         <div class="second_category" id="category">
 
             <!-- prev arrow -->
-            <div class="arrow_prev_container">
-                <!-- Arrow -->
-                <img src="public/sources/img/prev_arrow.svg" class="prev_arrow" alt="">
-            </div>
+            <div class="arrow_prev_container"></div>
 
             <!-- Category content  -->
             <div class="category_content">
@@ -185,67 +224,95 @@
                 <!-- All videos -->
                 <div class="all_video_container">
 
-                    <?php
-                    $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
-                    $stmt=$db->query($requete);
-                    $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
-                    foreach($resultat as $films){
-                        echo "
+                <?php
 
-                    <!-- Video container -->
+                $query = "SELECT * FROM `demo_videos`";
+                $stmt = $db->prepare($query);
+                $stmt->execute();
+
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach($rows as $row){
+                    echo "<!-- Video container -->
                     <div class='video_container'>
 
-                        <!-- Short film -->
+                        <!-- Short film (class=video) -->
                         <div class='video_content'>
-                            <video class='video' poster='{$films["poster"]}' muted>
-                                <source src='{$films["url"]}' type='video/mp4'>
-                            </video>
+                        <div data-vimeo-id='".$row['demo_video_url']."' data-vimeo-width='auto' id='video_".$row['demo_video_id']."' class='video'></div>
+                        <script>
+                            let video_".$row['demo_video_id']."_player = new Vimeo.Player('video_".$row['demo_video_id']."');
+                        
+                            let video_".$row['demo_video_id']."_div = video_".$row['demo_video_id']."_player.element;
+                            let video_".$row['demo_video_id']."_iframe;
+                            
+                            let video_".$row['demo_video_id']."_interval = setInterval(()=>{
+                        
+                                if(video_".$row['demo_video_id']."_div.firstChild){
+                        
+                                    video_".$row['demo_video_id']."_iframe = video_".$row['demo_video_id']."_div.firstChild;
+
+                                    video_".$row['demo_video_id']."_iframe.style.width = '100% !important';
+                                    
+                                    video_".$row['demo_video_id']."_iframe.style.height = '100% !important';
+
+                                    let doc = video_".$row['demo_video_id']."_iframe.contentDocument ? video_".$row['demo_video_id']."_iframe.contentDocument :
+                                video_".$row['demo_video_id']."_iframe.contentWindow.document;
+                        
+                                console.log(doc);
+                        
+                                clearInterval(video_".$row['demo_video_id']."_interval);
+                                }
+                            });
+                        
+                        </script>
                             <!-- Name + pp -->
                             <div class='user_container'>
-                                <img src='{$films["photo"]}' class='pp_profile' alt=''>
-                                <p class='pseudo'>{$films["username"]}</p>
+                                <img src='profile_pictures/default.jpg' class='pp_profile' alt=''>
+                                <p class='pseudo'>".$row['demo_video_author']."</p>
                                 <div class='flou'></div>
                             </div>
 
                             <!-- Time -->
-                            <p class='time'>{$films["duration"]}</p>
+                            <p class='time'>01:54</p>
                         </div>
 
                         <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='fb_jsb'>
                                 <div class='synopsis_title_container' >
-                                    <h3 class='synopsis_title'>{$films["title"]}</h3>
+                                    <h3 class='synopsis_title'>".$row['demo_video_title']."</h3>
                                     <p class='see_more'>Voir plus
-                                        <img src='public/sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                         </p>
                                 </div>
                                 <div class='reaction_container'>
-                                    <div class='fb_jsb'>
+                                    <div class='fb_jsb like_container'>
                                         <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='public/sources/img/pop_corn.png' alt=''>
+                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
                                         <!-- Like\'s number -->
                                         <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c'>
-                                        <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                        <p class='profile_comment_title'>1 925 commentaires</p>
+                                        <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                     </div>
 
                                     <!-- Share icon -->
-                                    <img src='public/sources/img/share_icon.svg' class='share_icon' alt=''>
+                                    <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
 
                                 </div>
                             </div>
-                            <p>{$films["synopsis"]}</p>
+                            <p>Lorem ipsum sit dolor es jeu si po koa aickrir isi</p>
                         </div>
 
 
-                    </div>
-                    
-                    ";
+                    </div>";
                 }
+
+                $stmt = null;
+                $query = null;
+                $rows = null;
 
                 ?>
 
@@ -253,19 +320,13 @@
             </div>
 
             <!-- next arrow -->
-            <div class="arrow_next_container">
-                <!-- Arrow -->
-                <img src="public/sources/img/next_arrow.svg" class="next_arrow" alt="">
-            </div>
+            <div class="arrow_next_container fp-controlArrow fp-next"></div>
         </div>
 
         <div class="third_category" id="category">
 
             <!-- prev arrow -->
-            <div class="arrow_prev_container">
-                <!-- Arrow -->
-                <img src="public/sources/img/prev_arrow.svg" class="prev_arrow" alt="">
-            </div>
+            <div class="arrow_prev_container"></div>
 
             <!-- Category content  -->
             <div class="category_content">
@@ -276,89 +337,110 @@
                 <!-- All videos -->
                 <div class="all_video_container">
 
-                    <?php
-                    $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
-                    $stmt=$db->query($requete);
-                    $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
-                    foreach($resultat as $films){
-                        echo "
+                <?php
+                    $query = "SELECT * FROM `demo_videos`";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute();
 
-                    <!-- Video container -->
-                    <div class='video_container'>
+                    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                        <!-- Short film -->
-                        <div class='video_content'>
-                            <video class='video' poster='{$films["poster"]}' muted>
-                                <source src='{$films["url"]}' type='video/mp4'>
-                            </video>
-                            <!-- Name + pp -->
-                            <div class='user_container'>
-                                <img src='{$films["photo"]}' class='pp_profile' alt=''>
-                                <p class='pseudo'>{$films["username"]}</p>
-                                <div class='flou'></div>
-                            </div>
-
-                            <!-- Time -->
-                            <p class='time'>{$films["duration"]}</p>
-                        </div>
-
-                        <!-- Short film\'s informations -->
-                        <div class='description_container'>
-                            <div class='fb_jsb'>
-                                <div class='synopsis_title_container' >
-                                    <h3 class='synopsis_title'>{$films["title"]}</h3>
-                                    <p class='see_more'>Voir plus
-                                        <img src='public/sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
-                                        </p>
+                    foreach($rows as $row){
+                        echo "<!-- Video container -->
+                        <div class='video_container'>
+    
+                            <!-- Short film (class=video) -->
+                            <div class='video_content'>
+                            <div data-vimeo-id='".$row['demo_video_url']."' data-vimeo-width='auto' id='video_".$row['demo_video_id']."' class='video'></div>
+                            <script>
+                                let video_".$row['demo_video_id']."_player = new Vimeo.Player('video_".$row['demo_video_id']."');
+                            
+                                let video_".$row['demo_video_id']."_div = video_".$row['demo_video_id']."_player.element;
+                                let video_".$row['demo_video_id']."_iframe;
+                                
+                                let video_".$row['demo_video_id']."_interval = setInterval(()=>{
+                            
+                                    if(video_".$row['demo_video_id']."_div.firstChild){
+                            
+                                        video_".$row['demo_video_id']."_iframe = video_".$row['demo_video_id']."_div.firstChild;
+                            
+                                        let doc = video_".$row['demo_video_id']."_iframe.contentDocument ? video_".$row['demo_video_id']."_iframe.contentDocument :
+                                    video_".$row['demo_video_id']."_iframe.contentWindow.document;
+                            
+                                    console.log(doc);
+                            
+                                    clearInterval(video_".$row['demo_video_id']."_interval);
+                                    }
+                                });
+                            
+                            </script>
+                                <!-- Name + pp -->
+                                <div class='user_container'>
+                                    <img src='profile_pictures/default.jpg' class='pp_profile' alt=''>
+                                    <p class='pseudo'>".$row['demo_video_author']."</p>
+                                    <div class='flou'></div>
                                 </div>
-                                <div class='reaction_container'>
-                                    <div class='fb_jsb'>
-                                        <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='public/sources/img/pop_corn.png' alt=''>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
-                                    </div>
-                                    <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
-                                        <img src='public/sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                        <p class='profile_comment_title'>1 925 commentaires</p>
-                                    </div>
-
-                                    <!-- Share icon -->
-                                    <img src='public/sources/img/share_icon.svg' class='share_icon' alt=''>
-
-                                </div>
+    
+                                <!-- Time -->
+                                <p class='time'>01:54</p>
                             </div>
-                            <p>{$films["synopsis"]}</p>
-                        </div>
+    
+                            <!-- Short film\'s informations -->
+                            <div class='description_container'>
+                                <div class='fb_jsb'>
+                                    <div class='synopsis_title_container' >
+                                        <h3 class='synopsis_title'>".$row['demo_video_title']."</h3>
+                                        <p class='see_more'>Voir plus
+                                            <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                            </p>
+                                    </div>
+                                    <div class='reaction_container'>
+                                        <div class='fb_jsb like_container'>
+                                            <!-- Pop corn image -->
+                                            <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                            <!-- Like\'s number -->
+                                            <p class='pop_corn_number'>515 J'aime</p>
+                                        </div>
+                                        <!-- Comment icon -->
+                                        <div class='fb_jc ai-c'>
+                                            <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                            <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                        </div>
+    
+                                        <!-- Share icon -->
+                                        <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
+    
+                                    </div>
+                                </div>
+                                <p>Lorem ipsum sit dolor es jeu si po koa aickrir isi</p>
+                            </div>
+    
+    
+                        </div>";
+                    }
 
-
-                    </div>
-                    
-                    ";
-                }
+                    $stmt = null;
+                    $query = null;
+                    $rows = null;
 
                 ?>
                 </div>
             </div>
 
             <!-- next arrow -->
-            <div class="arrow_next_container">
-                <!-- Arrow -->
-                <img src="public/sources/img/next_arrow.svg" class="next_arrow" alt="">
-            </div>
+            <div class="arrow_next_container fp-controlArrow fp-next"></div>
         </div>
-    <?php
-    require("footer.php");
-?>
+        <?php
+            require("ressources/footer.php");
+        ?>
 
     </main>
 
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-    <script src="public/assets/js/app.js"></script>
-    <!-- <script src="public/assets/js/register.js"></script> -->
-    <script src="public/assets/js/fil_actu.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/functions.js"></script>
+    <!-- <script src="assets/js/register.js"></script> -->
+    <script src="assets/js/fil_actu.js"></script>
 </body>
 
 </html>
