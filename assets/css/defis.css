@@ -1,6 +1,7 @@
 .main_content {
     display: block;
-    background: url(../../sources/img/dark_background.svg) 1700px -700px /2200px;
+    background: url(../../sources/img/defi_background.png) ;
+    background-size: 1980px 100%;
 }
 
 .menu_category {
@@ -242,10 +243,7 @@
 }
 
 @media screen and (max-width:1140px) {
-    .main_content{
-        
-        background: url(../../sources/img/dark_background.svg) 1400px -180px /2200px;
-    }
+
     .defi_pop_content {
         height: 125px;
         width: 200px;
@@ -322,17 +320,8 @@
 
 }
 
-@media screen and (max-width:700px) {
-    .main_content{
-        background: url(../../sources/img/dark_background.svg) 1400px -620px /1800px;
-    }
-}
-
 @media screen and (max-width:650px) {
     
-    .main_content{
-        background: url(../../sources/img/dark_background.svg) 1400px -600px /2200px;
-    }
 
     .add_defi_btn_container{
         flex-direction: column;

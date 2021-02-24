@@ -50,6 +50,7 @@
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
                         echo "<div class='menu_profile'>
+                        <!-- Fil actu icon -->
                         <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
                         <!-- Defi icon -->
                         <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
@@ -61,12 +62,14 @@
                     } else {
     
                         echo "<div class='menu_profile'>
+                        <!-- Fil actu icon -->
+                        <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
                         <!-- Defi icon -->
                         <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
                         <!-- Profile photo -->
                         <div class='se-connecter' onclick='redirect(`login.php`)'>
-                            <img src='sources/img/profile-user.svg' alt='' onload='SVGInject(this)'>
-                            SE CONNECTER
+                        <img src='sources/img/profil_icon.svg' class='menu_pp_icon' alt='Se connecter' onload='SVGInject(this)'>
+                    </div>
                         </div>
                         </div>
                         </nav>";
@@ -497,6 +500,7 @@
     <script src="assets/js/defi_details.js"></script>
     <script src="assets/js/fil_actu.js"></script>
     <script src="assets/js/defis.js"></script>
+    <script src="assets/js/functions.js"></script>
 </body>
 
 </html>

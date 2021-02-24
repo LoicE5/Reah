@@ -12,7 +12,7 @@ body {
 .main_content {
     display: block;    
     height: unset;
-    background : url(../../sources/img/dark_background.svg) -500px -150px /2200px;
+    background : url(../../sources/img/dark_background.png) 0 0/cover;
     background-color: var(--first_color);
     
 }
@@ -60,7 +60,6 @@ body {
     overflow-y: hidden;
     position: relative;
     margin-top: 50px;
-    height: 80%;
 }
 .first_category{
     margin-top: 80px;
@@ -349,7 +348,7 @@ video:focus {
     box-shadow: black 0px 0px 20px;
     align-self: center;
     top: 0;
-    background-color: var(--first_color);
+    background-color: #141414;
 }
 
 .film_header {
@@ -396,7 +395,7 @@ video:focus {
     cursor: pointer;
 }
 .film_settings_container>div:hover{
-    background-color: var(--first_color)62;
+    background-color: #d6003662;
 }
 .film_saved_icon{
     height: 40px;
@@ -539,7 +538,7 @@ video:focus {
 }
 
 .write_comment {
-    background-color: var(--first_color);
+    background-color: #141414;
     padding: 10px;
     display: flex;
     padding-left: 50px;
@@ -582,7 +581,7 @@ video:focus {
 
 .comment_content {
     margin-top: 20px;
-    background-color: var(--first_color);
+    background-color: #141414;
     padding: 20px;
     display: flex;
     padding-left: 50px;
@@ -684,7 +683,7 @@ video:focus {
 
 @media screen and (max-width:800px) {
     .main_content{
-    background : url(../../sources/img/dark_background.svg) -1000px -180px /2200px;
+    background : url(../../sources/img/dark_background2.png);
 
     }
     .video_content {
@@ -749,6 +748,7 @@ video:focus {
         --text:white;
         --text-grey:grey;
         --red-transparent:#d600354f;
+        --shadow: #d600358f;
     }
 
     .arrow_prev_container{
@@ -781,6 +781,7 @@ video:focus {
         --text:white;
         --text-grey:#bbbbbb;
         --red-transparent:#d600354f;
+        --shadow: black;
     }
 
     .arrow_prev_container{

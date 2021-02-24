@@ -5,7 +5,7 @@
 
 .form_search_bar {
     margin: auto;
-    margin-right: 50px;
+    margin-right: 100px;
 }
 
 .menu_profile {
@@ -29,7 +29,7 @@
     padding-top: 200px;
     box-shadow: 10px 0px 20px #0a0a0a;
     position: fixed;
-    z-index: 1;
+    z-index: 200;
 }
 
 .settings_menu_option {
@@ -62,6 +62,33 @@
     min-width: 300px;
     height: 100vh;
 }
+
+.menu_btn{
+    width: 50px;
+    height: 50px;
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    background: url(../../sources/img/next_arrow.svg) center/80%;
+    box-shadow: 5px 0px 20px #0a0a0a;
+    background-color: var(--menu);
+    position: absolute;
+    right: -50px;
+    top: 49%;
+    cursor: pointer;
+    display: none;
+    z-index: 200;
+}
+
+.settings_menu_open{
+    transform: translateX(0px);
+    transition: transform 0.5s ease;
+}
+
+.settings_menu_close{
+    transform: translateX(-300px);
+    transition: transform 0.5s ease;
+}
+
 
 .settings_profile_container {
     width: 100%;
@@ -229,11 +256,10 @@
     color: #d60036;
 }
 
-
 @keyframes notification_btn_click {
     0% {
         background-color: transparent;
-        border: 2px solid white;
+        border: 2px solid var(--text);
         left: 4px;
     }
 
@@ -254,10 +280,11 @@
 
     100% {
         background-color: transparent;
-        border: 2px solid white;
+        border: 2px solid var(--text);
         left: 4px;
     }
 }
+
 
 @media screen and (max-width:1100px) {
 
@@ -278,9 +305,15 @@
 
 @media screen and (max-width:950px) {
 
-    .menu_shadow,
-    .settings_menu {
+    .menu_shadow {
         display: none;
+    }
+    /* .settings_menu{
+        transform: translateX(-300px);
+        transition: transform 0.5s ease;
+    } */
+    .menu_btn{
+        display: block;
     }
 
 }

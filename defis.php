@@ -29,8 +29,8 @@
                 <!-- Categories's title -->
                 <div class="menu_category">
                     <p class="category_title category_title1" number="1" number1="2" number2="3">Défis du moment</p>
-                    <p class="category_title" number="2" number1="1" number2="3">Défis populaires</p>
-                    <p class="category_title" number="3" number1="1" number2="2">Défis à découvrir</p>
+                    <p class="category_title category_title2" number="2" number1="1" number2="3">Défis populaires</p>
+                    <p class="category_title category_title3" number="3" number1="1" number2="2">Défis à découvrir</p>
                     <div class="red_line underline"></div>
                     <div class="fb_jsb ai-c category_list">
                         <p class="category_list_title">Catégories</p>
@@ -52,9 +52,8 @@
                         $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
                         echo "<div class='menu_profile'>
+                        <!-- Fil actu icon -->
                         <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
-                        <!-- Defi icon -->
-                        <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
                         <!-- Profile photo -->
                         <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
                         </div>
@@ -63,12 +62,11 @@
                     } else {
     
                         echo "<div class='menu_profile'>
-                        <!-- Defi icon -->
-                        <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
+                        <!-- Fil actu icon -->
+                        <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
                         <!-- Profile photo -->
                         <div class='se-connecter' onclick='redirect(`login.php`)'>
-                            <img src='sources/img/profile-user.svg' alt='' onload='SVGInject(this)'>
-                            SE CONNECTER
+                            <img src='sources/img/profil_icon.svg' class='menu_pp_icon' alt='Se connecter' onload='SVGInject(this)'>
                         </div>
                         </div>
                         </nav>";
@@ -79,7 +77,7 @@
 
         <!-- Category list  -->
         <div class="category_list_container">
-            <p class="category_list_category" number="1" number1="2" number2="3">Défis du moment</p>
+            <p class="category_list_category" number="1" number1="2" number2="3" onclick='redirect(`login.php`)'>Défis du moment</p>
             <p class="category_list_category" number="2" number1="1" number2="3">Défis populaires</p>
             <p class="category_list_category" number="3" number1="1" number2="2">Défis à découvrir</p>
         </div>
@@ -264,7 +262,9 @@
     <!-- <script src="assets/js/app.js"></script> -->
     <!-- <script src="assets/js/register.js"></script> -->
     <script src="assets/js/defis.js"></script>
-    <script src="assets/js/fil_actu.js"></script>
+    <script src="assets/js/app2.js"></script>
+    <script src="assets/js/functions.js"></script>
+
 </body>
 
 </html>

@@ -24,4 +24,26 @@ $(document).ready(function () {
         $(this).children().attr("class") == "notification_btn_click" ?  $(notificationBtn).addClass("notification_btn_click2").removeClass("notification_btn_click") : $(notificationBtn).addClass("notification_btn_click").removeClass("notification_btn_click2");
      
     })
+
+    $(window).resize(function(){
+        if ($(window).width() <= 950){
+            $(".settings_menu").addClass("settings_menu_close").removeClass("settings_menu_open");
+            $(".settings_container").click(function(){
+                $(".settings_menu").addClass("settings_menu_close").removeClass("settings_menu_open");
+            })
+        } else{
+            $(".settings_menu").addClass("settings_menu_open").removeClass("settings_menu_close");
+            $(".settings_container").click(function(){
+                $(".settings_menu").addClass("settings_menu_open").removeClass("settings_menu_close");
+                
+            })
+        }
+    })
+
+    $(".menu_btn").click(function(){
+        // $(".settings_menu").addClass("settings_menu_open")
+        $(".settings_menu").hasClass("settings_menu_open") ?  $(".settings_menu").addClass("settings_menu_close").removeClass("settings_menu_open") : $(".settings_menu").addClass("settings_menu_open").removeClass("settings_menu_close");
+
+    })
+
 })

@@ -73,10 +73,9 @@
                         <!-- Defi icon -->
                         <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
                         <!-- Profile photo -->
-                        <div class='se-connecter' onclick='redirect(`login.php`)'>
-                            <img src='sources/img/profile-user.svg' alt='' onload='SVGInject(this)'>
-                            SE CONNECTER
-                        </div>
+                            <div class='se-connecter' onclick='redirect(`login.php`)'>
+                                <img src='sources/img/profil_icon.svg' class='menu_pp_icon' alt='Se connecter' onload='SVGInject(this)'>
+                            </div>
                         </div>
                         </nav>";
                     }
@@ -437,10 +436,9 @@
 
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
-    <script src="assets/js/app.js"></script>
-    <script src="assets/js/functions.js"></script>
-    <!-- <script src="assets/js/register.js"></script> -->
     <script src="assets/js/fil_actu.js"></script>
+    <script src="assets/js/app2.js"></script>
+    <script src="assets/js/functions.js"></script>
 </body>
 
 </html>
