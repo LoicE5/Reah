@@ -438,3 +438,23 @@
         top: -20px;
     }
 }
+
+@media screen and (max-width:550px) {
+    .category_list{
+        display: none;
+    }
+    .menu_nav{
+        justify-content: flex-end;
+        padding-left: 0;
+    }
+    .form_search_bar{
+        margin-right: 20px;
+    }
+    .search_bar{
+        margin-left: 0px;
+    }
+    h1{
+        align-self: center;
+        margin-left: 0;
+    }
+}

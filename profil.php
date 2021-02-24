@@ -100,7 +100,10 @@
                         </div>
                     </div>
 
-                    <div class="btn subscribe_btn">S'abonner</div>
+                    <div class="fb ai-c">
+                        <div class="btn subscribe_btn">S'abonner</div>
+                        <img src="sources/img/modify_icon.svg" class="modify_icon modify_icon2" alt="">
+                    </div>
                 </div>
                 <!-- Profile photo + username -->
                 <?php

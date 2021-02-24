@@ -13,10 +13,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>>REAH | Fil d'actualité</title>
-    <link rel="stylesheet" href="assets/css/dark_mode.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/fil_actu2.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
     <script src="assets/js/libraries/svg-inject-master/src/svg-inject.js"></script>
     <script src="https://player.vimeo.com/api/player.js"></script>
 </head>
@@ -81,35 +82,53 @@
                     }
                 ?>
 
-        <!-- Category list  -->
-        <div class="category_list_container">
-            <p class="category_list_category" number="1" number1="2" number2="3">Ajouts récents</p>
-            <p class="category_list_category" number="2" number1="1" number2="3">Défis du moment</p>
-            <p class="category_list_category" number="3" number1="1" number2="2">À découvrir</p>
-        </div>
+                <!-- Category list  -->
+                <div class="category_list_container">
+                    <p class="category_list_category" number="1" number1="2" number2="3">Ajouts récents</p>
+                    <p class="category_list_category" number="2" number1="1" number2="3">Défis du moment</p>
+                    <p class="category_list_category" number="3" number1="1" number2="2">À découvrir</p>
+                </div>
 
-        <!-- Menu -->
-        <?php
+                <!-- Menu -->
+                <?php
             require("ressources/menu.php");
         ?>
 
+                <!-- Nav footer -->
 
-        <!-- "Ajout récent" catégory -->
-        <div class="first_category" id="category">
+                <div class="nav_footer">
+                    <div class="nav_footer_category" number="1" number2="2" number3="3">
+                        <img src="sources/img/loupe_icon.svg" alt="">
+                        Ajouts récents</div>
+                    <div class="nav_footer_category" number="2" number2="1" number3="3">
+                        <img src="sources/img/loupe_icon.svg" alt="">
+                        Défis du moment</div>
+                    <div class="nav_footer_category" number="3" number2="1" number3="2">
+                        <img src="sources/img/loupe_icon.svg" alt="">
+                        À découvrir</div>
+                </div>
 
-            <!-- prev arrow -->
-            <div class="arrow_prev_container fp-controlArrow fp-prev"></div>
 
-            <!-- Category content  -->
-            <div class="category_content">
 
-                <!-- Category title -->
-                <h1>AJOUTS RÉCENTS</h1>
+                <div class="all_category_container">
 
-                <!-- All videos -->
-                <div class="all_video_container">
 
-                <?php
+                <!-- "Ajout récent" catégory -->
+                <div class="first_category" id="category" number="1">
+
+                    <!-- prev arrow -->
+                    <div class="arrow_prev_container fp-controlArrow fp-prev"></div>
+
+                    <!-- Category content  -->
+                    <div class="category_content">
+
+                        <!-- Category title -->
+                        <h1>AJOUTS RÉCENTS</h1>
+
+                        <!-- All videos -->
+                        <div class="all_video_container">
+
+                            <?php
 
                 $query = "SELECT * FROM `demo_videos`";
                 $stmt = $db->prepare($query);
@@ -198,32 +217,32 @@
                 ?>
 
 
+                        </div>
+                    </div>
+
+
+
+                    <!-- next arrow -->
+                    <div class="arrow_next_container fp-controlArrow fp-next"></div>
+
                 </div>
-            </div>
 
 
+                <div class="second_category" id="category" number="2">
 
-            <!-- next arrow -->
-            <div class="arrow_next_container fp-controlArrow fp-next"></div>
+                    <!-- prev arrow -->
+                    <div class="arrow_prev_container"></div>
 
-        </div>
+                    <!-- Category content  -->
+                    <div class="category_content">
 
+                        <!-- Category title -->
+                        <h1 class="title2">DÉFIS DU MOMENT</h1>
 
-        <div class="second_category" id="category">
+                        <!-- All videos -->
+                        <div class="all_video_container">
 
-            <!-- prev arrow -->
-            <div class="arrow_prev_container"></div>
-
-            <!-- Category content  -->
-            <div class="category_content">
-
-                <!-- Category title -->
-                <h1 class="title2">DÉFIS DU MOMENT</h1>
-
-                <!-- All videos -->
-                <div class="all_video_container">
-
-                <?php
+                            <?php
 
                 $query = "SELECT * FROM `demo_videos`";
                 $stmt = $db->prepare($query);
@@ -315,28 +334,28 @@
 
                 ?>
 
+                        </div>
+                    </div>
+
+                    <!-- next arrow -->
+                    <div class="arrow_next_container fp-controlArrow fp-next"></div>
                 </div>
-            </div>
 
-            <!-- next arrow -->
-            <div class="arrow_next_container fp-controlArrow fp-next"></div>
-        </div>
+                <div class="third_category" id="category" number="3">
 
-        <div class="third_category" id="category">
+                    <!-- prev arrow -->
+                    <div class="arrow_prev_container"></div>
 
-            <!-- prev arrow -->
-            <div class="arrow_prev_container"></div>
+                    <!-- Category content  -->
+                    <div class="category_content">
 
-            <!-- Category content  -->
-            <div class="category_content">
+                        <!-- Category title -->
+                        <h1>À DÉCOUVRIR</h1>
 
-                <!-- Category title -->
-                <h1>À DÉCOUVRIR</h1>
+                        <!-- All videos -->
+                        <div class="all_video_container">
 
-                <!-- All videos -->
-                <div class="all_video_container">
-
-                <?php
+                            <?php
                     $query = "SELECT * FROM `demo_videos`";
                     $stmt = $db->prepare($query);
                     $stmt->execute();
@@ -422,13 +441,16 @@
                     $rows = null;
 
                 ?>
-                </div>
-            </div>
+                        </div>
+                    </div>
 
-            <!-- next arrow -->
-            <div class="arrow_next_container fp-controlArrow fp-next"></div>
-        </div>
-        <?php
+                    <!-- next arrow -->
+                    <div class="arrow_next_container fp-controlArrow fp-next"></div>
+                </div>
+
+                </div>
+
+                <?php
             require("ressources/footer.php");
         ?>
 

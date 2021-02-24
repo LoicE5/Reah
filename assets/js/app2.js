@@ -1,109 +1,116 @@
 $(document).ready(function () {
 
 
-// Arrow click
- $(".arrow_next_container").click(function () {
-    let arrowParent =  $(this).closest("#category");
-    let videoChild = $(arrowParent).find(".all_video_container")
-    let videoPosition = $(arrowParent).find(".video_container").position().left - 110;
-    let translate = $(window).width();
-    // console.log(-$(".video_container").position().left)
-    let scroll = translate - videoPosition;
-    // console.log(translate)
-    $(videoChild).animate({
-        scrollLeft: scroll
-    }, "1s");
-})
-$(".arrow_prev_container").click(function () {
-    let arrowParent =  $(this).closest("#category");
-    let videoChild = $(arrowParent).find(".all_video_container")
-    let videoPosition = $(arrowParent).find(".video_container").position().left - 110;
-    let translate = $(window).width();
-    // console.log($(".video_container").position().left)
-    let scroll2 = -videoPosition - translate;
-    // console.log(translate)
-    $(videoChild).animate({
-        scrollLeft: scroll2
-    }, "1s");
-    // console.log(scroll2)
+    // Arrow click
+    $(".arrow_next_container").click(function () {
+        let arrowParent = $(this).closest("#category");
+        let videoChild = $(arrowParent).find(".all_video_container")
+        let videoPosition = $(arrowParent).find(".video_container").position().left - 110;
+        let translate = $(window).width();
+        // console.log(-$(".video_container").position().left)
+        let scroll = translate - videoPosition;
+        // console.log(translate)
+        $(videoChild).animate({
+            scrollLeft: scroll
+        }, "1s");
+    })
+    $(".arrow_prev_container").click(function () {
+        let arrowParent = $(this).closest("#category");
+        let videoChild = $(arrowParent).find(".all_video_container")
+        let videoPosition = $(arrowParent).find(".video_container").position().left - 110;
+        let translate = $(window).width();
+        // console.log($(".video_container").position().left)
+        let scroll2 = -videoPosition - translate;
+        // console.log(translate)
+        $(videoChild).animate({
+            scrollLeft: scroll2
+        }, "1s");
+        // console.log(scroll2)
 
-})
+    })
 
 
-// Search bar animation
-if ($(window).width() <= "750") {
-    $(".search_bar").focus(function () {
-        $(".search_bar").removeClass("search_bar_focusout").addClass("search_bar_focus");
-        $(".search_bar::-webkit-input-placeholder").css({
-            "color": "#c5c5c5",
+    // Search bar animation
+    if ($(window).width() <= "750") {
+        $(".search_bar").focus(function () {
+            $(".search_bar").removeClass("search_bar_focusout").addClass("search_bar_focus");
+            $(".search_bar::-webkit-input-placeholder").css({
+                "color": "#c5c5c5",
+            })
+            if ($(window).width() <= "450") {
+
+                $(".menu_profile").hide();
+            }
         })
+        $(".search_bar").focusout(function () {
+            $(".search_bar").addClass("search_bar_focusout").removeClass("search_bar_focus");
+            if ($(window).width() <= "450") {
 
-    })
-    $(".search_bar").focusout(function () {
-        $(".search_bar").addClass("search_bar_focusout").removeClass("search_bar_focus");
-    })
-}
-
-// Menu opacity
-$(window).scroll(function () {
-    // If the mouse is hover the menu or if the menu_container is open
-    if ($('nav:hover').length != 0 || $(".menu_container").hasClass("menu_container_click") || $(".category_list_container").hasClass("category_list_container_click")) {
-        // If we are at the top of the page
-        if ($(window).scrollTop() == "0") {
-            $("nav").removeClass("menu_nav_scroll menu_nav_scroll2");
-        } else {
-            $("nav").removeClass("menu_nav_scroll").addClass("menu_nav_scroll2");
-        }
+                $(".menu_profile").show();
+            }
+        })
     }
-    // If the mouse isn't hover the menu
-    else {
-        // If we are at the top of the page
-        if ($(window).scrollTop() == "0") {
-            $("nav").removeClass("menu_nav_scroll");
-            $("nav").hover(function () {
+
+    // Menu opacity
+    $(window).scroll(function () {
+        // If the mouse is hover the menu or if the menu_container is open
+        if ($('nav:hover').length != 0 || $(".menu_container").hasClass("menu_container_click") || $(".category_list_container").hasClass("category_list_container_click")) {
+            // If we are at the top of the page
+            if ($(window).scrollTop() == "0") {
                 $("nav").removeClass("menu_nav_scroll menu_nav_scroll2");
-            })
-
-        } else {
-            $("nav").addClass("menu_nav_scroll").removeClass("menu_nav_scroll2");
-            $("nav").hover(function () {
+            } else {
                 $("nav").removeClass("menu_nav_scroll").addClass("menu_nav_scroll2");
-            })
+            }
         }
-    }
-})
+        // If the mouse isn't hover the menu
+        else {
+            // If we are at the top of the page
+            if ($(window).scrollTop() == "0") {
+                $("nav").removeClass("menu_nav_scroll");
+                $("nav").hover(function () {
+                    $("nav").removeClass("menu_nav_scroll menu_nav_scroll2");
+                })
+
+            } else {
+                $("nav").addClass("menu_nav_scroll").removeClass("menu_nav_scroll2");
+                $("nav").hover(function () {
+                    $("nav").removeClass("menu_nav_scroll").addClass("menu_nav_scroll2");
+                })
+            }
+        }
+    })
 
 
 
-// Category list 
-$(".category_list,.category_list_container").hover(function () {
-    if ($(".category_list_container").hasClass("category_list_container_click")) {
-        $('.category_list_container').removeClass("category_list_container_click").addClass("category_list_container_click2"); //Adds 'b', removes 'a'
-    } else {
-        $('.category_list_container').removeClass("category_list_container_click2").addClass("category_list_container_click"); //Adds 'a', removes 'b'
-    }
-});
-
-// Category title, underline animation click
-$(".category_title1").addClass("category_title_click");
-
-$(".category_title").hover(function () {
-    $(this).css({
-        "color": "white"
+    // Category list 
+    $(".category_list,.category_list_container").hover(function () {
+        if ($(".category_list_container").hasClass("category_list_container_click")) {
+            $('.category_list_container').removeClass("category_list_container_click").addClass("category_list_container_click2"); //Adds 'b', removes 'a'
+        } else {
+            $('.category_list_container').removeClass("category_list_container_click2").addClass("category_list_container_click"); //Adds 'a', removes 'b'
+        }
     });
 
-    $(this).mouseout(function () {
-        if ($(this).hasClass("category_title_click")) {
-            $(this).css({
-                "color": "white"
-            });
-        } else {
-            $(this).css({
-                "color": "#bbbbbb"
-            });
-        }
+    // Category title, underline animation click
+    $(".category_title1").addClass("category_title_click");
+
+    $(".category_title").hover(function () {
+        $(this).css({
+            "color": "white"
+        });
+
+        $(this).mouseout(function () {
+            if ($(this).hasClass("category_title_click")) {
+                $(this).css({
+                    "color": "white"
+                });
+            } else {
+                $(this).css({
+                    "color": "#bbbbbb"
+                });
+            }
+        })
     })
-})
 
 
     // Pop up film informations settings icon animation hover
@@ -238,8 +245,8 @@ $(".category_title").hover(function () {
 
 
 
-      // Video hover
-      $(".video").hover(function toggleControls() {
+    // Video hover
+    $(".video").hover(function toggleControls() {
         let videoParent = $(this).parent();
         const video = document.querySelector('.video');
         let user_container = $(videoParent).find(".user_container");

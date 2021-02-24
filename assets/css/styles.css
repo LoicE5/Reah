@@ -291,7 +291,7 @@ select {
 
 
 
-nav{
+nav,.nav_footer{
     display: flex;
     position: fixed;
     align-items: center;
@@ -532,6 +532,25 @@ nav{
     margin: 0;
 }
 
+.nav_footer{
+    position: fixed;
+    bottom: 0px;
+    z-index: 300;
+    font-size: 0.8rem;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.nav_footer_category{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.nav_footer_category>img{
+    margin-bottom: 10px;
+}
+
 
 .google_btn {
     width: 100%;
@@ -661,6 +680,8 @@ nav{
     padding-bottom: 5px;
     margin-top: 40px;
 }
+
+
 @keyframes menu_nav_scroll {
     0% {
         opacity: 1;
@@ -743,3 +764,5 @@ nav{
         min-width: 100px;
     }
 }
+
+
