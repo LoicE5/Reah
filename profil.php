@@ -295,7 +295,7 @@
     </main>
 
     <!-- Modify btn -->
-    <div class="modify_container">
+    <div class="pop_up_container modify_container">
         <form action="oui.php" method="get">
             <!-- Close icon -->
             <img src='sources/img/close_icon.svg' class='modify_close_icon' alt=''>
@@ -438,9 +438,9 @@
         <div class="btn pop_up_btn unfollow_btn">Se désabonner</div>
     </div>
 
-    <script src="assets/js/app.js"></script>
-    <script src="assets/js/register.js"></script>
     <script src="assets/js/profil.js"></script>
+    <script src="assets/js/app2.js"></script>
+    <script src="assets/js/register.js"></script>
     <!-- <script src="assets/js/fil_actu.js"></script> -->
 </body>
 

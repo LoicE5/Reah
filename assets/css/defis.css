@@ -306,7 +306,7 @@
         transition: 0.5s ease;
     }
 
-    form {
+    .form_search_bar {
         width: 25px;
     }
 
@@ -368,6 +368,11 @@
     h1{
         align-self: center;
         margin-left: 0;
+    }
+
+    .input_constraints_container{
+        width: 100%;
+        max-width: 100%;
     }
 }
 

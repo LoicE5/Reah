@@ -153,8 +153,6 @@
 }
 
 .upload_container {
-    top: 0;
-    margin-top: 2vw;
     z-index: 300;
     width: 900px;
     display: none;
@@ -273,6 +271,10 @@
     display: flex;
     align-items: center;
     flex-direction: column;
+}
+
+.position_title{
+    display: none;
 }
 
 @media screen and (max-width:1130px) {
@@ -456,5 +458,129 @@
     h1{
         align-self: center;
         margin-left: 0;
+        text-align: center;
+    }
+
+    .defi_constraints,.defi_container>*{
+        margin-right: 0px;
+        min-width: unset;
+    }
+
+    .nav_footer{
+        display: flex;
+    }
+
+    .nav_footer_category{
+        flex: 1;
+    }
+
+    .nav_footer_category[number="2"]{
+        min-width: 150px;
+    }
+
+    .all_category_container{
+        display: flex;
+        overflow: auto;
+    }
+    .all_category_container>div{
+        min-width: 100%;
+        width: 90%;
+    }
+
+    .defi_container {
+        width: 90%;
+        margin: auto;
+    }
+
+    .arrow_prev_container,.arrow_next_container{
+        display: none;
+    }
+
+    .defi_category,.second_category,.third_category{
+        min-width: 100%;
+        margin-top: 80px;
+        align-items: unset;
+        margin-bottom: 0;
+    }
+
+    #category3,#category2{
+        display: none;
+    }
+
+    body{
+        background: #141414;
+    }
+    .all_video_container{
+        flex-direction: column;
+        align-items: center;
+        padding-left: 0;
+    }
+    .video_container{
+        margin-right: 0px;
+        min-width: 100%;
+    }
+    .video_content{
+        width: 100%;
+        height: 200px;
+        min-width: 100%;
+    }
+    .profile_comment_title{
+        display: none;
+    }
+    .comment_icon{
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+    .reaction_container{
+        justify-content: start; 
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .description_container{
+        width: 90%;
+    }
+
+    .classement_content,.gold_container{
+        width: 100%;
+    }
+    
+    .gold_container{
+        flex-direction: column;
+        margin-top: 20px;
+    }
+
+    .gold_container>img{
+        display: none;
+    }
+
+    .position_title>h2{
+        margin-left: 20px;
+        text-align: center;
+    }
+
+    .gold_medal{
+        top: 0px;
+        left: 0px;
+        height: 40px;
+        position: unset;
+    }
+
+    .position_title{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .synopsis_title{
+        font-size: 1.1rem;
+    }
+
+    .upload_container{
+        width: 100%;
+        height: unset;
+    }
+
+    .preview_video{
+        width: 100%;
     }
 }

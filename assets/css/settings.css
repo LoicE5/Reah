@@ -63,7 +63,7 @@
     height: 100vh;
 }
 
-.menu_btn{
+.menu_btn {
     width: 50px;
     height: 50px;
     border-top-right-radius: 100px;
@@ -79,12 +79,12 @@
     z-index: 200;
 }
 
-.settings_menu_open{
+.settings_menu_open {
     transform: translateX(0px);
     transition: transform 0.5s ease;
 }
 
-.settings_menu_close{
+.settings_menu_close {
     transform: translateX(-300px);
     transition: transform 0.5s ease;
 }
@@ -308,14 +308,73 @@
     .menu_shadow {
         display: none;
     }
-    /* .settings_menu{
+/* 
+    .settings_menu{
         transform: translateX(-300px);
         transition: transform 0.5s ease;
     } */
-    .menu_btn{
+    .menu_btn {
         display: block;
     }
 
+}
+@media screen and (max-width:650px) {
+
+.settings_notification_container,.settings_account_container{
+    min-width: 80%;
+    width: 80%;
+}
+
+.settings_notification_container>div>div{
+    flex-direction: column;
+}
+
+.notification_btn{
+    margin-bottom: 16px;
+    margin-top: 0px;
+}
+.settings_title{
+    font-size: 1.2rem;
+}
+}
+
+@media screen and (max-width:550px) {
+
+    .input_container label {
+        flex-direction: column;
+    }
+
+    .input_connexion {
+        margin-left: 0;
+    }
+
+    .category_list{
+        display: none;
+    }
+    .menu_nav{
+        justify-content: flex-end;
+        padding-left: 0;
+    }
+    .form_search_bar{
+        margin-right: 20px;
+    }
+    .search_bar{
+        margin-left: 0px;
+    }
+
+    .menu_profile{
+        min-width: 150px;
+    }
+
+    .modify_btn{
+        margin-left: 0;
+    }
+
+    .modify_banner {
+        height: 200px;
+    }
+
+ 
 }
 
 @media (prefers-color-scheme: light) {

@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     $(".menu_btn").click(function(){
         // $(".settings_menu").addClass("settings_menu_open")
-        $(".settings_menu").hasClass("settings_menu_open") ?  $(".settings_menu").addClass("settings_menu_close").removeClass("settings_menu_open") : $(".settings_menu").addClass("settings_menu_open").removeClass("settings_menu_close");
+        $(".settings_menu").hasClass("settings_menu_close") ?  $(".settings_menu").removeClass("settings_menu_close").addClass("settings_menu_open") : $(".settings_menu").removeClass("settings_menu_open").addClass("settings_menu_close");
 
     })
 

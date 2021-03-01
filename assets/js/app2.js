@@ -154,10 +154,10 @@ $(document).ready(function () {
 
     // Close icon animation hover
     $(".close_icon,.connexion_close_icon,.delete_close_icon,.share_close_icon").hover(function () {
-        $(this).attr('src', 'public/sources/img/close_icon_hover.svg');
+        $(this).attr('src', 'sources/img/close_icon_hover.svg');
     })
     $(".close_icon,.connexion_close_icon,.delete_close_icon,.share_close_icon").mouseout(function () {
-        $(this).attr('src', 'public/sources/img/close_icon.svg');
+        $(this).attr('src', 'sources/img/close_icon.svg');
     })
 
 
@@ -189,10 +189,10 @@ $(document).ready(function () {
 
     // Saved icon animation click
     $(".film_saved_icon").click(function () {
-        if ($(this).attr('src') == 'public/sources/img/film_saved_icon_click.svg') {
-            $(this).attr('src', 'public/sources/img/film_saved_icon.svg');
+        if ($(this).attr('src') == 'sources/img/film_saved_icon_click.svg') {
+            $(this).attr('src', 'sources/img/film_saved_icon.svg');
         } else {
-            $(this).attr('src', 'public/sources/img/film_saved_icon_click.svg');
+            $(this).attr('src', 'sources/img/film_saved_icon_click.svg');
 
         }
     })
@@ -219,7 +219,7 @@ $(document).ready(function () {
             }, "1s");
 
             // Comment arrow animation
-            $(".comment_arrow").attr('src', 'public/sources/img/bottom_arrow.svg');
+            $(".comment_arrow").attr('src', 'sources/img/bottom_arrow.svg');
         } else {
             $(".comment_space_container").fadeIn(500).addClass("comment_space_container_open").removeClass("comment_space_container_close");
             $("html, body").animate({
@@ -227,7 +227,7 @@ $(document).ready(function () {
             }, "1s");
 
             // Comment arrow animation
-            $(".comment_arrow").attr('src', 'public/sources/img/top_arrow.svg');
+            $(".comment_arrow").attr('src', 'sources/img/top_arrow.svg');
         }
     })
 
@@ -240,6 +240,7 @@ $(document).ready(function () {
         } else {
             $('.menu_container').removeClass("menu_container_click2").addClass("menu_container_click"); //Adds 'a', removes 'b'
         }
+
     });
 
 
@@ -277,9 +278,9 @@ $(document).ready(function () {
     // Btn "J'aime" animation click
     $('.pop_corn_icon').on({
         'click': function () {
-            var src = ($(this).attr('src') === 'public/img/pop_corn_icon.svg') ?
-                'public/sources/img/pop_corn.png' :
-                'public/sources/img/pop_corn_icon.svg';
+            var src = ($(this).attr('src') === 'img/pop_corn_icon.svg') ?
+                'sources/img/pop_corn.png' :
+                'sources/img/pop_corn_icon.svg';
             $(this).attr('src', src);
         }
     });

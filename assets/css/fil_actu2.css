@@ -49,6 +49,46 @@
         display: none;
     }
     .main_content{
-        background: var(--background);
+        background: #141414;
+    }
+    .nav_footer{
+        display: flex;
+    }
+
+    .film_container{
+        width: 100%;
+    }
+
+
+
+    .film_container{
+        margin-top: 0;
+    }
+
+ 
+
+    .film_informations_header{
+        height: unset;
+    }
+
+   
+
+    .film_informations_header>div>div,.film_informations_header>div>p{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+   
+
+    .share_title{
+        display: none;
+    }
+
+    .category_list{
+        display: none;
+    }
+
+    .menu_nav{
+        justify-content: flex-end;
+        padding-left: 0;
     }
 }

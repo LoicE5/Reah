@@ -3,6 +3,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,13 +16,14 @@
         rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/fullpage.css" />
 </head>
+
 <body>
     <main class="main_content">
         <!-- Navigation menu -->
         <nav>
             <!-- Logo Réah -->
             <a href="fil_actu.php" class="reah_logo_container"> <img src="sources/img/reah_logo_complet.png"
-            class="reah_logo" alt=""></a>
+                    class="reah_logo" alt=""></a>
 
             <div class="menu_nav">
                 <!-- Categories's title -->
@@ -40,7 +42,7 @@
                 <form action="" class="form_search_bar">
                     <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
                 </form>
-                
+
                 <?php
                     if(func::checkLoginState($db)){ # If the user is connected
                         $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
@@ -87,325 +89,358 @@
             <p class="category_list_category" number="3" number1="1" number2="2">Classement</p>
         </div>
 
-         <!-- Menu -->
+        <!-- Menu -->
         <?php
             require("ressources/menu.php");
         ?>
 
-        <!-- "Ajout récent" catégory -->
-        <div class="defi_category">
+        <!-- Nav footer -->
 
-            <!-- Category title -->
-            <h1>SAINT-VALENTIN</h1>
-
-            <!-- Challenges container -->
-            <div class="defi_container">
-                <div class="defi_constraints">
-                    <p><b>Contraintes</b></p>
-                    <ul>
-                        <li>Faire un court-métrage sur le thème de la Saint-Valentin</li>
-                    </ul>
-                </div>
-
-                <div class="defi_information">
-                    <div href="depot.php" class="btn depot_btn">
-                        <img class="depot_icon" src="sources/img/depot_icon.svg" alt="">
-                        Déposer un court-métrage
-                    </div>
-                    <p><span>Temps restant</span> 14 heures et 30 minutes</p>
-                    <p><span>Nombre de courts-métrages déposés</span> 27</p>
-                </div>
-            </div>
+        <div class="nav_footer">
+            <div class="nav_footer_category" number="1" number2="2" number3="3">
+                <img src="sources/img/loupe_icon.svg" alt="">
+                Défi</div>
+            <div class="nav_footer_category" number="2" number2="1" number3="3">
+                <img src="sources/img/loupe_icon.svg" alt="">
+                Courts-métrages</div>
+            <div class="nav_footer_category" number="3" number2="1" number3="2">
+                <img src="sources/img/loupe_icon.svg" alt="">
+                Classement</div>
         </div>
 
-        <div class="second_category">
 
-            <!-- prev arrow -->
-            <div class="arrow_prev_container">
-            </div>
+        <div class="all_category_container">
 
-            <!-- Category content  -->
-            <div class="category_content">
+            <!-- "Ajout récent" catégory -->
+            <div class="defi_category" id="category1">
 
                 <!-- Category title -->
-                <h1 class="title2">COURTS-MÉTRAGES</h1>
+                <h1>SAINT-VALENTIN</h1>
 
-                <!-- All videos -->
-                <div class="all_video_container">
-
-                    <?php
-                    // $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
-                    // $stmt=$db->query($requete);
-                    // $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
-                    // foreach($resultat as $films){
-                        echo "
-
-                    <!-- Video container -->
-                    <div class='video_container'>
-
-                        <!-- Short film -->
-                        <div class='video_content'>
-                            <video class='video' poster='{$films["poster"]}' muted>
-                                <source src='{$films["url"]}' type='video/mp4'>
-                            </video>
-                            <!-- Name + pp -->
-                            <div class='user_container'>
-                                <img src='{$films["photo"]}' class='pp_profile' alt=''>
-                                <p class='pseudo'>{$films["username"]}</p>
-                                <div class='flou'></div>
-                            </div>
-
-                            <!-- Time -->
-                            <p class='time'>{$films["duration"]}</p>
-                        </div>
-
-                        <!-- Short film\'s informations -->
-                        <div class='description_container'>
-                            <div class='fb_jsb'>
-                                <div class='synopsis_title_container' >
-                                    <h3 class='synopsis_title'>{$films["title"]}</h3>
-                                    <p class='see_more'>Voir plus
-                                        <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
-                                        </p>
-                                </div>
-                                <div class='reaction_container'>
-                                    <div class='fb_jsb'>
-                                        <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
-                                    </div>
-                                    <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
-                                        <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                    </div>
-
-                                    <!-- Share icon -->
-                                    <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
-
-                                </div>
-                            </div>
-                            <p>{$films["synopsis"]}</p>
-                        </div>
-
-
+                <!-- Challenges container -->
+                <div class="defi_container">
+                    <div class="defi_constraints">
+                        <p><b>Contraintes</b></p>
+                        <ul>
+                            <li>Faire un court-métrage sur le thème de la Saint-Valentin</li>
+                        </ul>
                     </div>
-                    
-                    ";
-                // }
 
-                ?>
-
-
+                    <div class="defi_information">
+                        <div href="depot.php" class="btn depot_btn">
+                            <img class="depot_icon" src="sources/img/depot_icon.svg" alt="">
+                            Déposer un court-métrage
+                        </div>
+                        <p><span>Temps restant</span> 14 heures et 30 minutes</p>
+                        <p><span>Nombre de courts-métrages déposés</span> 27</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- next arrow -->
-            <div class="arrow_next_container fp-controlArrow fp-next">
+            <div class="second_category" id="category2">
+
+                <!-- prev arrow -->
+                <div class="arrow_prev_container">
+                </div>
+
+                <!-- Category content  -->
+                <div class="category_content">
+
+                    <!-- Category title -->
+                    <h1 class="title2">COURTS-MÉTRAGES</h1>
+
+                    <!-- All videos -->
+                    <div class="all_video_container">
+
+                        <?php
+                                // $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
+                                // $stmt=$db->query($requete);
+                                // $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
+                                // foreach($resultat as $films){
+                                    echo "
+            
+                                <!-- Video container -->
+                                <div class='video_container'>
+            
+                                    <!-- Short film -->
+                                    <div class='video_content'>
+                                        <video class='video' poster='{$films["poster"]}' muted>
+                                            <source src='{$films["url"]}' type='video/mp4'>
+                                        </video>
+                                        <!-- Name + pp -->
+                                        <div class='user_container'>
+                                            <img src='{$films["photo"]}' class='pp_profile' alt=''>
+                                            <p class='pseudo'>{$films["username"]}</p>
+                                            <div class='flou'></div>
+                                        </div>
+            
+                                        <!-- Time -->
+                                        <p class='time'>{$films["duration"]}</p>
+                                    </div>
+            
+                                    <!-- Short film\'s informations -->
+                                    <div class='description_container'>
+                                        <div class='fb_jsb'>
+                                            <div class='synopsis_title_container' >
+                                                <h2 class='synopsis_title'>{$films["title"]}</h2>
+                                                <p class='see_more'>Voir plus
+                                                    <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                                    </p>
+                                            </div>
+                                            <div class='reaction_container'>
+                                                <div class='fb_jsb'>
+                                                    <!-- Pop corn image -->
+                                                    <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                                    <!-- Like\'s number -->
+                                                    <p class='pop_corn_number'>515 J'aime</p>
+                                                </div>
+                                                <!-- Comment icon -->
+                                                <div class='fb_jc ai-c'>
+                                                    <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                                    <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                                </div>
+            
+                                                <!-- Share icon -->
+                                                <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
+            
+                                            </div>
+                                        </div>
+                                        <p>{$films["synopsis"]}</p>
+                                    </div>
+            
+            
+                                </div>
+                                
+                                ";
+                            // }
+            
+                            ?>
+
+
+                    </div>
+                </div>
+
+                <!-- next arrow -->
+                <div class="arrow_next_container fp-controlArrow fp-next">
+                </div>
             </div>
-        </div>
 
-        <div class="third_category">
+            <div class="third_category" id="category3">
 
-            <!-- Category content  -->
-            <div class="classement_content">
+                <!-- Category content  -->
+                <div class="classement_content">
 
-                <!-- Category title -->
-                <h1>CLASSEMENT</h1>
-
-
-                <!-- Gold section -->
-                <div class="gold_container">
-
-                    <img src="sources/img/gold_medal.png" class="gold_medal" alt="">
-                    <!-- Video container -->
-                    <div class='video_container'>
+                    <!-- Category title -->
+                    <h1>CLASSEMENT</h1>
 
 
-                        <!-- Short film -->
-                        <div class='video_content'>
-                            <video class='video' poster='{$films["poster"]}' muted>
-                                <source src='{$films["url"]}' type='video/mp4'>
-                            </video>
+                    <!-- Gold section -->
+                    <div class="gold_container">
 
-                            <!-- Name + pp -->
-                            <div class='user_container'>
-                                <img src='{$films["photo"]}' class='pp_profile' alt=''>
-                                <p class='pseudo'>{$films["username"]}</p>
-                                <div class='flou'></div>
-                            </div>
-
-                            <!-- Time -->
-                            <p class='time'>{$films["duration"]}</p>
+                        <div class="position_title">
+                            <img src="sources/img/gold_medal.png" class="gold_medal" alt="">
+                            <h2>1<sup>ère</sup> position</h2>
                         </div>
 
-                        <!-- Short film\'s informations -->
-                        <div class='description_container'>
-                            <div class='fb_jsb'>
-                                <div class='synopsis_title_container'>
-                                    <h3 class='synopsis_title'>{$films["title"]}</h3>
-                                    <p class='see_more'>Voir plus
-                                        <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
-                                    </p>
+                        <img src="sources/img/gold_medal.png" class="gold_medal" alt="">
+                        <!-- Video container -->
+                        <div class='video_container'>
+
+
+                            <!-- Short film -->
+                            <div class='video_content'>
+                                <video class='video' poster='{$films["poster"]}' muted>
+                                    <source src='{$films["url"]}' type='video/mp4'>
+                                </video>
+
+                                <!-- Name + pp -->
+                                <div class='user_container'>
+                                    <img src='{$films["photo"]}' class='pp_profile' alt=''>
+                                    <p class='pseudo'>{$films["username"]}</p>
+                                    <div class='flou'></div>
                                 </div>
-                                <div class='reaction_container'>
-                                    <div class='fb_jsb'>
-                                        <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
-                                    </div>
-                                    <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
-                                        <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                        <p class='profile_comment_title'>
-                                            <nobr>1 925 commentaires</nobr>
+
+                                <!-- Time -->
+                                <p class='time'>{$films["duration"]}</p>
+                            </div>
+
+                            <!-- Short film\'s informations -->
+                            <div class='description_container'>
+                                <div class='fb_jsb'>
+                                    <div class='synopsis_title_container'>
+                                        <h2 class='synopsis_title'>{$films["title"]}</h2>
+                                        <p class='see_more'>Voir plus
+                                            <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                         </p>
                                     </div>
+                                    <div class='reaction_container'>
+                                        <div class='fb_jsb'>
+                                            <!-- Pop corn image -->
+                                            <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                            <!-- Like\'s number -->
+                                            <p class='pop_corn_number'>515 J'aime</p>
+                                        </div>
+                                        <!-- Comment icon -->
+                                        <div class='fb_jc ai-c'>
+                                            <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                            <p class='profile_comment_title'>
+                                                <nobr>1 925 commentaires</nobr>
+                                            </p>
+                                        </div>
 
-                                    <!-- Share icon -->
-                                    <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
+                                        <!-- Share icon -->
+                                        <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
 
+                                    </div>
                                 </div>
+                                <p>{$films["synopsis"]}Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel
+                                    iusto,
+                                    consequatur obcaecati quibusdam saepe itaque praesentium, hic fugiat vero nam
+                                    quisquam
+                                    porro doloribus natus atque earum fugit ab totam consectetur! </p>
                             </div>
-                            <p>{$films["synopsis"]}Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel iusto,
-                                consequatur obcaecati quibusdam saepe itaque praesentium, hic fugiat vero nam quisquam
-                                porro doloribus natus atque earum fugit ab totam consectetur! </p>
+
+
                         </div>
 
+                    </div>
+
+
+                    <!-- Silver container -->
+                    <div class="gold_container">
+
+                        <div class="position_title">
+                            <img src="sources/img/silver_medal.png" class="gold_medal" alt="">
+                            <h2>2<sup>ème</sup> position</h2>
+                        </div>
+
+                        <img src="sources/img/silver_medal.png" class="gold_medal" alt="">
+                        <!-- Video container -->
+                        <div class='video_container'>
+
+
+                            <!-- Short film -->
+                            <div class='video_content'>
+                                <video class='video' poster='{$films["poster"]}' muted>
+                                    <source src='{$films["url"]}' type='video/mp4'>
+                                </video>
+
+                                <!-- Name + pp -->
+                                <div class='user_container'>
+                                    <img src='{$films["photo"]}' class='pp_profile' alt=''>
+                                    <p class='pseudo'>{$films["username"]}</p>
+                                    <div class='flou'></div>
+                                </div>
+
+                                <!-- Time -->
+                                <p class='time'>{$films["duration"]}</p>
+                            </div>
+
+                            <!-- Short film\'s informations -->
+                            <div class='description_container'>
+                                <div class='fb_jsb'>
+                                    <div class='synopsis_title_container'>
+                                        <h2 class='synopsis_title'>{$films["title"]}</h2>
+                                        <p class='see_more'>Voir plus
+                                            <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        </p>
+                                    </div>
+                                    <div class='reaction_container'>
+                                        <div class='fb_jsb'>
+                                            <!-- Pop corn image -->
+                                            <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                            <!-- Like\'s number -->
+                                            <p class='pop_corn_number'>515 J'aime</p>
+                                        </div>
+                                        <!-- Comment icon -->
+                                        <div class='fb_jc ai-c'>
+                                            <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                            <p class='profile_comment_title'>
+                                                <nobr>1 925 commentaires</nobr>
+                                            </p>
+                                        </div>
+
+                                        <!-- Share icon -->
+                                        <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
+
+                                    </div>
+                                </div>
+                                <p>{$films["synopsis"]}</p>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+
+                    <!-- Bronze section -->
+                    <div class="gold_container">
+
+                    <div class="position_title">
+                            <img src="sources/img/bronze_medal.png" class="gold_medal" alt="">
+                            <h2>3<sup>ème</sup> position</h2>
+                        </div>
+
+                        <img src="sources/img/bronze_medal.png" class="gold_medal" alt="">
+                        <!-- Video container -->
+                        <div class='video_container'>
+
+
+                            <!-- Short film -->
+                            <div class='video_content'>
+                                <video class='video' poster='{$films["poster"]}' muted>
+                                    <source src='{$films["url"]}' type='video/mp4'>
+                                </video>
+
+                                <!-- Name + pp -->
+                                <div class='user_container'>
+                                    <img src='{$films["photo"]}' class='pp_profile' alt=''>
+                                    <p class='pseudo'>{$films["username"]}</p>
+                                    <div class='flou'></div>
+                                </div>
+
+                                <!-- Time -->
+                                <p class='time'>{$films["duration"]}</p>
+                            </div>
+
+                            <!-- Short film\'s informations -->
+                            <div class='description_container'>
+                                <div class='fb_jsb'>
+                                    <div class='synopsis_title_container'>
+                                        <h2 class='synopsis_title'>{$films["title"]}</h2>
+                                        <p class='see_more'>Voir plus
+                                            <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        </p>
+                                    </div>
+                                    <div class='reaction_container'>
+                                        <div class='fb_jsb'>
+                                            <!-- Pop corn image -->
+                                            <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                            <!-- Like\'s number -->
+                                            <p class='pop_corn_number'>515 J'aime</p>
+                                        </div>
+                                        <!-- Comment icon -->
+                                        <div class='fb_jc ai-c'>
+                                            <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                            <p class='profile_comment_title'>
+                                                <nobr>1 925 commentaires</nobr>
+                                            </p>
+                                        </div>
+
+                                        <!-- Share icon -->
+                                        <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
+
+                                    </div>
+                                </div>
+                                <p>{$films["synopsis"]}</p>
+                            </div>
+
+
+                        </div>
 
                     </div>
 
                 </div>
-
-
-                <!-- Silver container -->
-                <div class="gold_container">
-
-                    <img src="sources/img/silver_medal.png" class="gold_medal" alt="">
-                    <!-- Video container -->
-                    <div class='video_container'>
-
-
-                        <!-- Short film -->
-                        <div class='video_content'>
-                            <video class='video' poster='{$films["poster"]}' muted>
-                                <source src='{$films["url"]}' type='video/mp4'>
-                            </video>
-
-                            <!-- Name + pp -->
-                            <div class='user_container'>
-                                <img src='{$films["photo"]}' class='pp_profile' alt=''>
-                                <p class='pseudo'>{$films["username"]}</p>
-                                <div class='flou'></div>
-                            </div>
-
-                            <!-- Time -->
-                            <p class='time'>{$films["duration"]}</p>
-                        </div>
-
-                        <!-- Short film\'s informations -->
-                        <div class='description_container'>
-                            <div class='fb_jsb'>
-                                <div class='synopsis_title_container'>
-                                    <h3 class='synopsis_title'>{$films["title"]}</h3>
-                                    <p class='see_more'>Voir plus
-                                        <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
-                                    </p>
-                                </div>
-                                <div class='reaction_container'>
-                                    <div class='fb_jsb'>
-                                        <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
-                                    </div>
-                                    <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
-                                        <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                        <p class='profile_comment_title'>
-                                            <nobr>1 925 commentaires</nobr>
-                                        </p>
-                                    </div>
-
-                                    <!-- Share icon -->
-                                    <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
-
-                                </div>
-                            </div>
-                            <p>{$films["synopsis"]}</p>
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-                <!-- Bronze section -->
-                <div class="gold_container">
-
-                    <img src="sources/img/bronze_medal.png" class="gold_medal" alt="">
-                    <!-- Video container -->
-                    <div class='video_container'>
-
-
-                        <!-- Short film -->
-                        <div class='video_content'>
-                            <video class='video' poster='{$films["poster"]}' muted>
-                                <source src='{$films["url"]}' type='video/mp4'>
-                            </video>
-
-                            <!-- Name + pp -->
-                            <div class='user_container'>
-                                <img src='{$films["photo"]}' class='pp_profile' alt=''>
-                                <p class='pseudo'>{$films["username"]}</p>
-                                <div class='flou'></div>
-                            </div>
-
-                            <!-- Time -->
-                            <p class='time'>{$films["duration"]}</p>
-                        </div>
-
-                        <!-- Short film\'s informations -->
-                        <div class='description_container'>
-                            <div class='fb_jsb'>
-                                <div class='synopsis_title_container'>
-                                    <h3 class='synopsis_title'>{$films["title"]}</h3>
-                                    <p class='see_more'>Voir plus
-                                        <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
-                                    </p>
-                                </div>
-                                <div class='reaction_container'>
-                                    <div class='fb_jsb'>
-                                        <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
-                                    </div>
-                                    <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
-                                        <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                        <p class='profile_comment_title'>
-                                            <nobr>1 925 commentaires</nobr>
-                                        </p>
-                                    </div>
-
-                                    <!-- Share icon -->
-                                    <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
-
-                                </div>
-                            </div>
-                            <p>{$films["synopsis"]}</p>
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-
             </div>
         </div>
     </main>
@@ -498,8 +533,8 @@
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script src="assets/js/defi_details.js"></script>
-    <script src="assets/js/fil_actu.js"></script>
-    <script src="assets/js/defis.js"></script>
+    <script src="assets/js/app2.js"></script>
+    <!-- <script src="assets/js/defis.js"></script> -->
     <script src="assets/js/functions.js"></script>
 </body>
 

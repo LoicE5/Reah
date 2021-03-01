@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    
+
     $(".category_title,.category_list_category").click(function () {
         let number = $(this).attr("number");
         let number1 = $(this).attr("number1");
@@ -94,19 +94,28 @@ $(document).ready(function () {
         //     "color": "#bbbbbb"
         // });
 
-        let windowWidth = $(window).width();
-        console.log(windowWidth)
+        $(`#category[number='${number}']`).show();
+        $(`#category[number='${number2}'],#category${number3}`).hide();
+        $("html,body").animate({
+            scrollTop: 0
+        }, "0.2s")
 
-        // $(this).addClass("category_title_click");
-            $(`#category[number='${number}']`).show();
-            $(`#category[number='${number2}']`).hide();
-            $(`#category[number='${number3}']`).hide();
-            $("html,body").animate({
-                scrollTop: 0
-            },"0.2s")
+
+
     })
+    let windowWidth = $(window).width();
 
+    $(window).resize(function () {
+        console.log(windowWidth)
+        if (windowWidth >= 550) {
 
+            $(`#category1`).show();
+            $(`#category2`).show();
+            $(`#category3`).show();
+        } else {
+            
+        }
+    })
 
 
 
