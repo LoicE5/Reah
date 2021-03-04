@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>REAH | Fil d'actualité</title>
+    <title>REAH | Fil d'actualité</title>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
     <link rel="stylesheet" href="assets/css/fil_actu2.css">
@@ -48,8 +48,8 @@
 
 
                 <!-- Search bar -->
-                <form action="" class="form_search_bar">
-                    <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
+                <form action="search.php" method="GET" class="form_search_bar">
+                    <input class="search_bar" name="research" type="text" placeholder="Défis, courts-métrages, utilisateurs..." oninput="searchEngine(this.value)">
                 </form>
 
                 <?php
@@ -91,8 +91,8 @@
 
                 <!-- Menu -->
                 <?php
-            require("ressources/menu.php");
-        ?>
+                    require("ressources/menu.php");
+                ?>
 
                 <!-- Nav footer -->
 
@@ -128,7 +128,7 @@
                         <!-- All videos -->
                         <div class="all_video_container">
 
-                            <?php
+            <?php
 
                 $query = "SELECT * FROM `demo_videos`";
                 $stmt = $db->prepare($query);
@@ -214,7 +214,7 @@
                 $query = null;
                 $rows = null;
 
-                ?>
+            ?>
 
 
                         </div>
@@ -242,7 +242,7 @@
                         <!-- All videos -->
                         <div class="all_video_container">
 
-                            <?php
+            <?php
 
                 $query = "SELECT * FROM `demo_videos`";
                 $stmt = $db->prepare($query);
@@ -332,7 +332,7 @@
                 $query = null;
                 $rows = null;
 
-                ?>
+            ?>
 
                         </div>
                     </div>
@@ -355,7 +355,7 @@
                         <!-- All videos -->
                         <div class="all_video_container">
 
-                            <?php
+                <?php
                     $query = "SELECT * FROM `demo_videos`";
                     $stmt = $db->prepare($query);
                     $stmt->execute();
@@ -451,8 +451,8 @@
                 </div>
 
                 <?php
-            require("ressources/footer.php");
-        ?>
+                    require("ressources/footer.php");
+                ?>
 
     </main>
 
