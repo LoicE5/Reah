@@ -321,8 +321,7 @@ video:focus {
 }
 
 .dark_filter,
-.upload_dark_filter,.delete_dark_filter,.unfollow_dark_filter,.share_dark_filter {
-    /* position: absolute; */
+.upload_dark_filter,.delete_dark_filter,.unfollow_dark_filter,.share_dark_filter,.message_dark_filter {
     top: 0;
     bottom: 0;
     left: 0;
@@ -338,6 +337,11 @@ video:focus {
 
 .delete_dark_filter,.unfollow_dark_filter,.share_dark_filter{
     z-index: 300;
+}
+
+.message_dark_filter{
+    position: absolute;
+    display: block;
 }
 
 .film_container {

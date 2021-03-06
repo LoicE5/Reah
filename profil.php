@@ -440,7 +440,7 @@
 
     <script src="assets/js/profil.js"></script>
     <script src="assets/js/app2.js"></script>
-    <script src="assets/js/register.js"></script>
+    <script src="assets/js/functions.js"></script>
     <!-- <script src="assets/js/fil_actu.js"></script> -->
 </body>
 

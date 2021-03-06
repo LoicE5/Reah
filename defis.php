@@ -1,5 +1,41 @@
 <?php
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
     include('assets/php/config.php');
+    include("ressources/pop_up_film_information.php");
+    include("ressources/pop_up_connexion.php");
+    include("ressources/pop_up_share.php");
+    // include('vimeo_setup.php');
+
+if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['constraints'])) {
+    $title = $_GET['title'];
+if ($title == ' ') {
+    $message='Le nom choisi est invalide.';
+}else{
+        // $title = $_GET['title'];
+        // $constraints = $_GET['constraints'];
+        // $requete = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_poster) VALUES ($title, $constraints, NULL, NULL)";
+        // $stmt=$db->query($requete);
+
+    $sql = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_image) VALUES (:title, :constraints, NULL, NULL)";
+
+    $attributes = array(
+      'title' => $_GET['title'],
+      'constraints' => $_GET['constraints'],
+    );
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute($attributes);
+
+    $db = null;
+
+    header('Location: defis.php?success=true');
+
+  }
+} 
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -106,14 +142,14 @@
             <div class="defi_container ">
 
                 <!-- Challenge n°1-->
-                <a href="defi1.php" class="defi_content" defi="1">
+                <a href="defi_details.php" class="defi_content" defi="1">
                     <img class="defi_img defi1_img" src="sources/img/defi1.jpg" alt="">
                     <p class="defi_title defi1_title">SAINT-VALENTIN</p>
                     <p class="defi_time">Temps restant : 14h 30min</p>
                 </a>
 
                 <!-- Challenge n°2-->
-                <a href="defi2.php" class="defi_content" defi="2">
+                <a href="defi_details.php" class="defi_content" defi="2">
                     <img class="defi_img defi2_img" src="sources/img/avion.jpg" alt="">
                     <p class="defi_title defi2_title">AVION</p>
                     <p class="defi_time">Temps restant : 2 semaines et 3 jours</p>
@@ -137,30 +173,23 @@
                 <!-- Challenges container -->
                 <div class="defi_pop_container ">
 
-                    <!-- Challenge n°1-->
-                    <a href="defi_details.php" class="defi_pop_content" defi="1">
+                <?php
+                $query = "SELECT * FROM defis WHERE defi_verified='1'";
+                $stmt = $db->prepare($query);
+                $stmt->execute();
+
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+                foreach($rows as $row){
+                    echo '
+                        <a href="defi_details.php?defi='.$row['defi_id'].'" class="defi_pop_content">
                         <img class="defi_img defi_pop_img" src="sources/img/defi1.jpg" alt="">
-                        <p class="defi_pop_title">SAINT-VALENTIN</p>
-                    </a>
-
-                    <!-- Challenge n°2-->
-                    <a href="defi_details.php" class="defi_pop_content" defi="2">
-                        <img class="defi_img defi_pop_img" src="sources/img/avion.jpg" alt="">
-                        <p class="defi_pop_title">AVION</p>
-                    </a>
-
-                    <!-- Challenge n°1-->
-                    <a href="defi_details.php" class="defi_pop_content" defi="1">
-                        <img class="defi_img defi_pop_img" src="sources/img/defi1.jpg" alt="">
-                        <p class="defi_pop_title">SAINT-VALENTIN</p>
-                    </a>
-
-                    <!-- Challenge n°2-->
-                    <a href="defi_details.php" class="defi_pop_content" defi="2">
-                        <img class="defi_img defi_pop_img" src="sources/img/avion.jpg" alt="">
-                        <p class="defi_pop_title">AVION</p>
-                    </a>
-
+                        <p class="defi_pop_title">'. strtoupper($row['defi_name']) .'</p>
+                        </a>';
+                }
+                ?>
+                
                 </div>
             </div>
 
@@ -183,29 +212,23 @@
 
                 <div class="defi_pop_container ">
 
-                    <!-- Challenge n°1-->
-                    <a href="defi1.php" class="defi_pop_content" defi="1">
+                   
+                <?php
+                $query = "SELECT * FROM defis WHERE defi_verified='1'";
+                $stmt = $db->prepare($query);
+                $stmt->execute();
+
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+                foreach($rows as $row){
+                    echo '
+                        <a href="defi_details.php" class="defi_pop_content">
                         <img class="defi_img defi_pop_img" src="sources/img/defi1.jpg" alt="">
-                        <p class="defi_pop_title">SAINT-VALENTIN</p>
-                    </a>
-
-                    <!-- Challenge n°2-->
-                    <a href="defi2.php" class="defi_pop_content" defi="2">
-                        <img class="defi_img defi_pop_img" src="sources/img/avion.jpg" alt="">
-                        <p class="defi_pop_title">AVION</p>
-                    </a>
-
-                    <!-- Challenge n°1-->
-                    <a href="defi1.php" class="defi_pop_content" defi="1">
-                        <img class="defi_img defi_pop_img" src="sources/img/defi1.jpg" alt="">
-                        <p class="defi_pop_title">SAINT-VALENTIN</p>
-                    </a>
-
-                    <!-- Challenge n°2-->
-                    <a href="defi2.php" class="defi_pop_content" defi="2">
-                        <img class="defi_img defi_pop_img" src="sources/img/avion.jpg" alt="">
-                        <p class="defi_pop_title">AVION</p>
-                    </a>
+                        <p class="defi_pop_title">'. strtoupper($row['defi_name']) .'</p>
+                        </a>';
+                }
+                ?>
 
                 </div>
             </div>
@@ -228,35 +251,55 @@
     <div class="dark_filter"></div>
 
     <div class="pop_up_container add_defi_container">
-        <form action="">
+        <form action="defis.php" method=GET>
             <div class="pop_up_header">
                 <h2>Proposer un défi</h2>
                 <img src='sources/img/close_icon.svg' class='close_icon' alt=''>
             </div>
             <div class="pop_up_text">
 
+            <?php if (isset($message)){
+        echo '<p class="message">'. $message .'</p>';
+        }
+        ?>
+
                 <!-- Inputs -->
                 <div class="add_defi_input">
                     <div class="input_container">
                         <label for="title">
                             <span>Titre</span>
-                            <input type="text" class="input_connexion" id="title" name="title">
+                            <input type="text" class="input_connexion" id="title" name="title" required>
                         </label>
                     </div>
                     <div class="input_container input_constraints_container">
                         <label for="constraints">
                             <span>Contraintes</span>
                             <textarea class="input_connexion input_constraints" id="constraints" name="constraints"
-                                cols="30" rows="10"></textarea>
+                                cols="30" rows="10" required></textarea>
                         </label>
                     </div>
 
                 </div>
             </div>
 
-            <input type="submit" class="pop_up_btn btn add_defi_btn" value="Envoyer"></input>
+            <input type="submit" class="pop_up_btn btn add_defi_btn" name="send" value="Envoyer"></input>
         </form>
     </div>
+
+    <?php
+    if (isset($_GET['success'])) {
+        echo'
+        <div class="message_dark_filter"></div>
+        <div class="pop_up_container message_container">
+            <div class="pop_up_header">
+                <img src="sources/img/close_icon.svg" class="message_close_icon" alt="">
+            </div>
+            <div class="pop_up_text">
+                Ton défi a bien été pris en compte !
+            </div>
+        </div>';
+    }
+    ?>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <!-- <script src="assets/js/app.js"></script> -->

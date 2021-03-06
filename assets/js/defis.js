@@ -117,4 +117,13 @@ $(document).ready(function(){
 
     })
 
+    // Pop up message
+    $(".message_dark_filter,.message_close_icon").click(function () {
+        $(".message_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+        $(".message_dark_filter").hide();
+        $(".main_content").removeClass("scroll_none")
+    })
+
+
+
 })

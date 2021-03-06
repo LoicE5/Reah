@@ -130,7 +130,7 @@
 
             <?php
 
-                $query = "SELECT * FROM `demo_videos`";
+                $query = "SELECT * FROM `videos`";
                 $stmt = $db->prepare($query);
                 $stmt->execute();
 
@@ -142,25 +142,25 @@
 
                         <!-- Short film (class=video) -->
                         <div class='video_content'>
-                        <div data-vimeo-id='".$row['demo_video_url']."' data-vimeo-width='auto' id='video_".$row['demo_video_id']."' class='video'></div>
+                        <div data-vimeo-id='".$row['video_url']."' data-vimeo-width='auto' id='video_".$row['video_id']."' class='video'></div>
                         <script>
-                            let video_".$row['demo_video_id']."_player = new Vimeo.Player('video_".$row['demo_video_id']."');
+                            let video_".$row['video_id']."_player = new Vimeo.Player('video_".$row['video_id']."');
                         
-                            let video_".$row['demo_video_id']."_div = video_".$row['demo_video_id']."_player.element;
-                            let video_".$row['demo_video_id']."_iframe;
+                            let video_".$row['video_id']."_div = video_".$row['video_id']."_player.element;
+                            let video_".$row['video_id']."_iframe;
                             
-                            let video_".$row['demo_video_id']."_interval = setInterval(()=>{
+                            let video_".$row['video_id']."_interval = setInterval(()=>{
                         
-                                if(video_".$row['demo_video_id']."_div.firstChild){
+                                if(video_".$row['video_id']."_div.firstChild){
                         
-                                    video_".$row['demo_video_id']."_iframe = video_".$row['demo_video_id']."_div.firstChild;
+                                    video_".$row['video_id']."_iframe = video_".$row['video_id']."_div.firstChild;
                         
-                                    let doc = video_".$row['demo_video_id']."_iframe.contentDocument ? video_".$row['demo_video_id']."_iframe.contentDocument :
-                                video_".$row['demo_video_id']."_iframe.contentWindow.document;
+                                    let doc = video_".$row['video_id']."_iframe.contentDocument ? video_".$row['video_id']."_iframe.contentDocument :
+                                video_".$row['video_id']."_iframe.contentWindow.document;
                         
                                 console.log(doc);
                         
-                                clearInterval(video_".$row['demo_video_id']."_interval);
+                                clearInterval(video_".$row['video_id']."_interval);
                                 }
                             });
                         
@@ -168,7 +168,7 @@
                             <!-- Name + pp -->
                             <div class='user_container'>
                                 <img src='profile_pictures/default.jpg' class='pp_profile' alt=''>
-                                <p class='pseudo'>".$row['demo_video_author']."</p>
+                                <p class='pseudo'>".$row['video_author']."</p>
                                 <div class='flou'></div>
                             </div>
 
@@ -180,7 +180,7 @@
                         <div class='description_container'>
                             <div class='fb_jsb'>
                                 <div class='synopsis_title_container' >
-                                    <h3 class='synopsis_title'>".$row['demo_video_title']."</h3>
+                                    <h3 class='synopsis_title'>".$row['video_title']."</h3>
                                     <p class='see_more'>Voir plus
                                         <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                         </p>
@@ -203,7 +203,7 @@
 
                                 </div>
                             </div>
-                            <p>Lorem ipsum sit dolor es jeu si po koa aickrir isi</p>
+                            <p>".$row['video_synopsis']."</p>
                         </div>
 
 
@@ -244,7 +244,7 @@
 
             <?php
 
-                $query = "SELECT * FROM `demo_videos`";
+                $query = "SELECT * FROM `videos`";
                 $stmt = $db->prepare($query);
                 $stmt->execute();
 
@@ -256,29 +256,29 @@
 
                         <!-- Short film (class=video) -->
                         <div class='video_content'>
-                        <div data-vimeo-id='".$row['demo_video_url']."' data-vimeo-width='auto' id='video_".$row['demo_video_id']."' class='video'></div>
+                        <div data-vimeo-id='".$row['video_url']."' data-vimeo-width='auto' id='video_".$row['video_id']."' class='video'></div>
                         <script>
-                            let video_".$row['demo_video_id']."_player = new Vimeo.Player('video_".$row['demo_video_id']."');
+                            let video_".$row['video_id']."_player = new Vimeo.Player('video_".$row['video_id']."');
                         
-                            let video_".$row['demo_video_id']."_div = video_".$row['demo_video_id']."_player.element;
-                            let video_".$row['demo_video_id']."_iframe;
+                            let video_".$row['video_id']."_div = video_".$row['video_id']."_player.element;
+                            let video_".$row['video_id']."_iframe;
                             
-                            let video_".$row['demo_video_id']."_interval = setInterval(()=>{
+                            let video_".$row['video_id']."_interval = setInterval(()=>{
                         
-                                if(video_".$row['demo_video_id']."_div.firstChild){
+                                if(video_".$row['video_id']."_div.firstChild){
                         
-                                    video_".$row['demo_video_id']."_iframe = video_".$row['demo_video_id']."_div.firstChild;
+                                    video_".$row['video_id']."_iframe = video_".$row['video_id']."_div.firstChild;
 
-                                    video_".$row['demo_video_id']."_iframe.style.width = '100% !important';
+                                    video_".$row['video_id']."_iframe.style.width = '100% !important';
                                     
-                                    video_".$row['demo_video_id']."_iframe.style.height = '100% !important';
+                                    video_".$row['video_id']."_iframe.style.height = '100% !important';
 
-                                    let doc = video_".$row['demo_video_id']."_iframe.contentDocument ? video_".$row['demo_video_id']."_iframe.contentDocument :
-                                video_".$row['demo_video_id']."_iframe.contentWindow.document;
+                                    let doc = video_".$row['video_id']."_iframe.contentDocument ? video_".$row['video_id']."_iframe.contentDocument :
+                                video_".$row['video_id']."_iframe.contentWindow.document;
                         
                                 console.log(doc);
                         
-                                clearInterval(video_".$row['demo_video_id']."_interval);
+                                clearInterval(video_".$row['video_id']."_interval);
                                 }
                             });
                         
@@ -286,7 +286,7 @@
                             <!-- Name + pp -->
                             <div class='user_container'>
                                 <img src='profile_pictures/default.jpg' class='pp_profile' alt=''>
-                                <p class='pseudo'>".$row['demo_video_author']."</p>
+                                <p class='pseudo'>".$row['video_author']."</p>
                                 <div class='flou'></div>
                             </div>
 
@@ -298,7 +298,7 @@
                         <div class='description_container'>
                             <div class='fb_jsb'>
                                 <div class='synopsis_title_container' >
-                                    <h3 class='synopsis_title'>".$row['demo_video_title']."</h3>
+                                    <h3 class='synopsis_title'>".$row['video_title']."</h3>
                                     <p class='see_more'>Voir plus
                                         <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                         </p>
@@ -321,7 +321,7 @@
 
                                 </div>
                             </div>
-                            <p>Lorem ipsum sit dolor es jeu si po koa aickrir isi</p>
+                            <p>".$row['video_synopsis']."</p>
                         </div>
 
 
@@ -356,7 +356,7 @@
                         <div class="all_video_container">
 
                 <?php
-                    $query = "SELECT * FROM `demo_videos`";
+                    $query = "SELECT * FROM `videos`";
                     $stmt = $db->prepare($query);
                     $stmt->execute();
 
@@ -368,25 +368,25 @@
     
                             <!-- Short film (class=video) -->
                             <div class='video_content'>
-                            <div data-vimeo-id='".$row['demo_video_url']."' data-vimeo-width='auto' id='video_".$row['demo_video_id']."' class='video'></div>
+                            <div data-vimeo-id='".$row['video_url']."' data-vimeo-width='auto' id='video_".$row['video_id']."' class='video'></div>
                             <script>
-                                let video_".$row['demo_video_id']."_player = new Vimeo.Player('video_".$row['demo_video_id']."');
+                                let video_".$row['video_id']."_player = new Vimeo.Player('video_".$row['video_id']."');
                             
-                                let video_".$row['demo_video_id']."_div = video_".$row['demo_video_id']."_player.element;
-                                let video_".$row['demo_video_id']."_iframe;
+                                let video_".$row['video_id']."_div = video_".$row['video_id']."_player.element;
+                                let video_".$row['video_id']."_iframe;
                                 
-                                let video_".$row['demo_video_id']."_interval = setInterval(()=>{
+                                let video_".$row['video_id']."_interval = setInterval(()=>{
                             
-                                    if(video_".$row['demo_video_id']."_div.firstChild){
+                                    if(video_".$row['video_id']."_div.firstChild){
                             
-                                        video_".$row['demo_video_id']."_iframe = video_".$row['demo_video_id']."_div.firstChild;
+                                        video_".$row['video_id']."_iframe = video_".$row['video_id']."_div.firstChild;
                             
-                                        let doc = video_".$row['demo_video_id']."_iframe.contentDocument ? video_".$row['demo_video_id']."_iframe.contentDocument :
-                                    video_".$row['demo_video_id']."_iframe.contentWindow.document;
+                                        let doc = video_".$row['video_id']."_iframe.contentDocument ? video_".$row['video_id']."_iframe.contentDocument :
+                                    video_".$row['video_id']."_iframe.contentWindow.document;
                             
                                     console.log(doc);
                             
-                                    clearInterval(video_".$row['demo_video_id']."_interval);
+                                    clearInterval(video_".$row['video_id']."_interval);
                                     }
                                 });
                             
@@ -394,7 +394,7 @@
                                 <!-- Name + pp -->
                                 <div class='user_container'>
                                     <img src='profile_pictures/default.jpg' class='pp_profile' alt=''>
-                                    <p class='pseudo'>".$row['demo_video_author']."</p>
+                                    <p class='pseudo'>".$row['video_author']."</p>
                                     <div class='flou'></div>
                                 </div>
     
@@ -406,7 +406,7 @@
                             <div class='description_container'>
                                 <div class='fb_jsb'>
                                     <div class='synopsis_title_container' >
-                                        <h3 class='synopsis_title'>".$row['demo_video_title']."</h3>
+                                        <h3 class='synopsis_title'>".$row['video_title']."</h3>
                                         <p class='see_more'>Voir plus
                                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                             </p>
@@ -429,7 +429,7 @@
     
                                     </div>
                                 </div>
-                                <p>Lorem ipsum sit dolor es jeu si po koa aickrir isi</p>
+                                <p>".$row['video_synopsis']."</p>
                             </div>
     
     

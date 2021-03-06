@@ -36,7 +36,7 @@
     margin: auto;
     margin-top: 100px;
     align-items: flex-start;
-    width: 90%;
+    width: 100%;
     overflow: hidden;
     justify-content: start;
 }
@@ -59,7 +59,7 @@
 }
 
 .classement_content {
-    width: 90%;
+    width: 100%;
     align-self: flex-start;
 }
 
@@ -67,7 +67,8 @@
     justify-content: space-around;
     flex-direction: row;
     display: flex;
-    width: 100%;
+    width: 90%;
+    margin: auto;
 }
 
 .defi_container>* {

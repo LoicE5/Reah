@@ -196,6 +196,20 @@
     line-height: 30px;
 }
 
+.message_close_icon{
+    float: right;
+}
+
+.message_container>.pop_up_header{
+    display: block;
+}
+
+.message_container>.pop_up_text{
+    
+    padding-top: unset;
+    padding: 50px;
+}
+
 @keyframes defi_img_hover {
     0% {
         filter: brightness(100%);
