@@ -31,8 +31,8 @@
             Tente ta chance de te faire connaître ou contribue au succès des autres !
         </div>
         <div class="btn_container">
-            <a href="connexion.php" class="btn btn_connexion">Se connecter</a>
-            <a href="index.php" class="btn btn_connexion">S'inscrire</a>
+            <a href="login.php" class="btn btn_connexion">Se connecter</a>
+            <a href="signup.php" class="btn btn_connexion">S'inscrire</a>
 
         </div>
     </div>

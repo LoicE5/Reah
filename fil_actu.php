@@ -25,6 +25,15 @@
 </head>
 
 <body>
+    <section class="accueil">
+        <div class="btn_container">
+            <a href="login.php" class="btn btn_connexion">Se connecter</a>
+            <a href="signup.php" class="btn btn_connexion">S'inscrire</a>
+        </div>
+        <p>Reah est une plateforme audiovisuelle permetant…</p>
+        <div class="red_line line"></div>
+    </section>
+
     <main class="main_content">
 
 
@@ -51,7 +60,8 @@
 
                 <!-- Search bar -->
                 <form action="search.php" method="GET" class="form_search_bar">
-                    <input class="search_bar" name="research" type="text" placeholder="Défis, courts-métrages, utilisateurs..." oninput="searchEngine(this.value)">
+                    <input class="search_bar" name="research" type="text"
+                        placeholder="Défis, courts-métrages, utilisateurs..." oninput="searchEngine(this.value)">
                 </form>
 
                 <?php
@@ -115,22 +125,22 @@
                 <div class="all_category_container">
 
 
-                <!-- "Ajout récent" catégory -->
-                <div class="first_category" id="category" number="1">
+                    <!-- "Ajout récent" catégory -->
+                    <div class="first_category" id="category" number="1">
 
-                    <!-- prev arrow -->
-                    <div class="arrow_prev_container fp-controlArrow fp-prev"></div>
+                        <!-- prev arrow -->
+                        <div class="arrow_prev_container fp-controlArrow fp-prev"></div>
 
-                    <!-- Category content  -->
-                    <div class="category_content">
+                        <!-- Category content  -->
+                        <div class="category_content">
 
-                        <!-- Category title -->
-                        <h1>AJOUTS RÉCENTS</h1>
+                            <!-- Category title -->
+                            <h1>AJOUTS RÉCENTS</h1>
 
-                        <!-- All videos -->
-                        <div class="all_video_container">
+                            <!-- All videos -->
+                            <div class="all_video_container">
 
-            <?php
+                                <?php
 
                 $query = "SELECT * FROM `videos`";
                 $stmt = $db->prepare($query);
@@ -219,32 +229,32 @@
             ?>
 
 
+                            </div>
                         </div>
+
+
+
+                        <!-- next arrow -->
+                        <div class="arrow_next_container fp-controlArrow fp-next"></div>
+
                     </div>
 
 
+                    <div class="second_category" id="category" number="2">
 
-                    <!-- next arrow -->
-                    <div class="arrow_next_container fp-controlArrow fp-next"></div>
+                        <!-- prev arrow -->
+                        <div class="arrow_prev_container"></div>
 
-                </div>
+                        <!-- Category content  -->
+                        <div class="category_content">
 
+                            <!-- Category title -->
+                            <h1 class="title2">DÉFIS DU MOMENT</h1>
 
-                <div class="second_category" id="category" number="2">
+                            <!-- All videos -->
+                            <div class="all_video_container">
 
-                    <!-- prev arrow -->
-                    <div class="arrow_prev_container"></div>
-
-                    <!-- Category content  -->
-                    <div class="category_content">
-
-                        <!-- Category title -->
-                        <h1 class="title2">DÉFIS DU MOMENT</h1>
-
-                        <!-- All videos -->
-                        <div class="all_video_container">
-
-            <?php
+                                <?php
 
                 $query = "SELECT * FROM `videos`";
                 $stmt = $db->prepare($query);
@@ -336,28 +346,28 @@
 
             ?>
 
+                            </div>
                         </div>
+
+                        <!-- next arrow -->
+                        <div class="arrow_next_container fp-controlArrow fp-next"></div>
                     </div>
 
-                    <!-- next arrow -->
-                    <div class="arrow_next_container fp-controlArrow fp-next"></div>
-                </div>
+                    <div class="third_category" id="category" number="3">
 
-                <div class="third_category" id="category" number="3">
+                        <!-- prev arrow -->
+                        <div class="arrow_prev_container"></div>
 
-                    <!-- prev arrow -->
-                    <div class="arrow_prev_container"></div>
+                        <!-- Category content  -->
+                        <div class="category_content">
 
-                    <!-- Category content  -->
-                    <div class="category_content">
+                            <!-- Category title -->
+                            <h1>À DÉCOUVRIR</h1>
 
-                        <!-- Category title -->
-                        <h1>À DÉCOUVRIR</h1>
+                            <!-- All videos -->
+                            <div class="all_video_container">
 
-                        <!-- All videos -->
-                        <div class="all_video_container">
-
-                <?php
+                                <?php
                     $query = "SELECT * FROM `videos`";
                     $stmt = $db->prepare($query);
                     $stmt->execute();
@@ -443,12 +453,12 @@
                     $rows = null;
 
                 ?>
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- next arrow -->
-                    <div class="arrow_next_container fp-controlArrow fp-next"></div>
-                </div>
+                        <!-- next arrow -->
+                        <div class="arrow_next_container fp-controlArrow fp-next"></div>
+                    </div>
 
                 </div>
 

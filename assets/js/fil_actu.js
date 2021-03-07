@@ -1,6 +1,14 @@
 $(document).ready(function () {
 
 
+    $(window).scroll(function () {
+        let windowHeight = $(window).height()
+
+        if ($(window).scrollTop() >= windowHeight) {
+            $(".accueil").hide();
+        }
+    })
+
     $(".category_title,.category_list_category").click(function () {
         let number = $(this).attr("number");
         let number1 = $(this).attr("number1");

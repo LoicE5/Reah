@@ -8,6 +8,36 @@ body {
     background-color: var(--first_color);
 }
 
+.accueil{
+    height: 100vh;
+    background: url(../../sources/img/accueil_background.png) center;
+    background-size: cover;
+    background-color: #141414;
+    position: relative;
+}
+
+.btn_container{
+    display: flex;
+    width: 550px;
+    position: relative;
+    top: 10%;
+    left: 5%;
+}
+
+.accueil>p{
+    position: relative;
+    top: 70%;
+    left: 50%;
+    width: 50%;
+}
+
+.accueil>.line{
+    left: 50%;
+    height: 50px;
+    width: 3px;
+    bottom: 0;
+}
+
 
 .main_content {
     display: block;    
