@@ -19,32 +19,41 @@
             <div class="logo_container">
 
                 <!-- Mail -->
-                <a class="mail_container">
+                <a target="_blank" href="mailto:?body=https%3A//fr.wikipedia.org/wiki/Bonjour" class="mail_container">
                     <img src="sources/img/mail_logo.png" class="share_logo" alt="">
                     <p>Mail</p>
                 </a>
 
                 <!-- Facebook -->
-                <a class="facebook_container">
+                <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A//fr.wikipedia.org/wiki/Bonjour" class="facebook_container">
                     <img src="sources/img/facebook_logo.png" class="share_logo" alt="">
                     <p>Facebook</p>
                 </a>
 
                 <!-- Twitter -->
-                <a class="twitter_container">
+                <a target="_blank" href="https://twitter.com/intent/tweet?text=https%3A//fr.wikipedia.org/wiki/Bonjour" class="twitter_container">
                     <img src="sources/img/twitter_logo.png" class="share_logo" alt="">
                     <p>Twitter</p>
                 </a>
 
                 <!-- Messenger -->
-                <a class="messenger_container">
+                <a target="_blank" href="https://www.facebook.com/dialog/send?app_id=1217981644879628&link=https%3A%2F%2Ffr.wikipedia.org%2Fwiki%2FBonjour&redirect_uri=https%3A%2F%2Ffr.wikipedia.org%2Fwiki%2FBonjour" class="messenger_container">
                     <img src="sources/img/messenger_logo.png" class="share_logo" alt="">
                     <p>Messenger</p>
+                </a>
+
+                 <!-- Linkedin -->
+                 <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A//fr.wikipedia.org/wiki/Bonjour&title=&summary=&source=" class="linkedin_container">
+                    <img src="sources/img/linkedin_logo.png" class="share_logo" alt="">
+                    <p>Linkedin</p>
                 </a>
             </div>
 
             <!-- Link -->
-            <div class="share_link">URL</div>
+            <div class="share_link">
+            <p id="tocopy">URL</p>
+            <button class="share_btn btn js-copy" data-target="#tocopy">Copier</button>
+            </div>
         </div>
     </div>
 </body>

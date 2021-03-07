@@ -33,7 +33,6 @@ $(document).ready(function () {
 
     // Category title and underline animation scroll
     $(document).scroll(function () {
-        console.log($(document).scrollTop())
 
         if ($(document).scrollTop() >= 0) {
             $(".category_title").removeClass("category_title_click").css({

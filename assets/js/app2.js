@@ -1,5 +1,40 @@
 $(document).ready(function () {
 
+    // Share btn
+    var btncopy = document.querySelector('.js-copy');
+    if(btncopy) {
+        btncopy.addEventListener('click', docopy);
+    }
+    
+    function docopy() {
+        var range = document.createRange();
+        var target = this.dataset.target;
+        var fromElement = document.querySelector(target);
+        var selection = window.getSelection();
+    
+        range.selectNode(fromElement);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    
+        try {
+            var result = document.execCommand('copy');
+            if (result) {
+                $("body").prepend("<div class='message_container'>Lien copié dans le presse-papiers.</div>");
+            }
+        }
+        catch(err) {
+            // Une erreur est surevnue lors de la tentative de copie
+            alert(err);
+        }
+    
+        selection = window.getSelection();
+    
+        if (typeof selection.removeRange === 'function') {
+            selection.removeRange(range);
+        } else if (typeof selection.removeAllRanges === 'function') {
+            selection.removeAllRanges();
+        }
+    }
 
     // Arrow click
     $(".arrow_next_container").click(function () {
@@ -9,6 +44,7 @@ $(document).ready(function () {
         let translate = $(window).width();
         // console.log(-$(".video_container").position().left)
         let scroll = translate - videoPosition;
+        
         // console.log(translate)
         $(videoChild).animate({
             scrollLeft: scroll
@@ -142,7 +178,8 @@ $(document).ready(function () {
 
     // Pop up information films
     $(".synopsis_title_container").click(function () {
-        $(".film_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+        let title = $(this).attr("title");
+        $(`.film_container[title="${title}"]`).fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
         $(".dark_filter").addClass("show fixed");
         $(".main_content").addClass("scroll_none")
     })
@@ -175,7 +212,7 @@ $(document).ready(function () {
 
 
     // Pop up share
-    $(".share_icon").click(function () {
+    $(".share_icon, .share_container").click(function () {
         $(".share_film_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
         $(".share_dark_filter").addClass("show fixed");
         $(".main_content").addClass("scroll_none")
@@ -285,5 +322,6 @@ $(document).ready(function () {
         }
     });
 
+    
 
 })

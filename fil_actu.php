@@ -1,4 +1,6 @@
 <?php
+    // ini_set('display_errors', 1);
+    // ini_set('display_startup_errors', 1);
     include('assets/php/config.php');
     include("ressources/pop_up_film_information.php");
     include("ressources/pop_up_connexion.php");
@@ -179,7 +181,7 @@
                         <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='fb_jsb'>
-                                <div class='synopsis_title_container' >
+                                <div class='synopsis_title_container' title=".$row['video_id'].">
                                     <h3 class='synopsis_title'>".$row['video_title']."</h3>
                                     <p class='see_more'>Voir plus
                                         <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>

@@ -395,14 +395,13 @@ nav,.nav_footer{
     /* border: solid 1px white; */
     border-radius: 100px;
     /* height: 30px; */
-    box-shadow: 0px 0px 15px #000000;
-    color: white;
+    color: black;
     font-family: 'Montserrat', sans-serif;
     font-size: 1em;
     padding: 5px;
     padding-left: 40px;
-    background: url(../../sources/img/loupe_icon.svg) no-repeat 3%;
-    background-color: #d600354f;
+    background: url(../../sources/img/black_loupe_icon.svg) no-repeat 3%;
+    background-color: white;
     /* background-color: #d60036; */
 }
 
@@ -414,7 +413,7 @@ nav,.nav_footer{
 .search_bar::-webkit-input-placeholder {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.8em;
-    color: #c5c5c5;
+    color: #6d6d6d;
 }
 
 .menu_profile {
@@ -659,7 +658,7 @@ nav,.nav_footer{
 }
 
 .share_film_container{
-    width: 500px;
+    width: 600px;
     display: none;
     z-index: 400;
 }
@@ -671,6 +670,8 @@ nav,.nav_footer{
 
 .logo_container>a{
     cursor: pointer;
+    text-decoration: none;
+    color: white;
 }
 
 .share_logo{
@@ -683,9 +684,46 @@ nav,.nav_footer{
     border-bottom: white solid 2px;
     padding-bottom: 5px;
     margin-top: 40px;
+    display: flex;
+    align-items: flex-end;
 }
 
+.share_link>p{
+    width: 100%;
+    margin: 0;
+}
 
+.share_btn{
+    float: right;
+    width: 80px;
+    line-height: unset;
+}
+
+.message_container{
+    background-color: #d60035;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 500;
+    text-align: center;
+    padding: 10px;
+    animation: message 4s forwards;
+}
+@keyframes message{
+    0%{
+        transform: translateY(-40px);
+    }
+    10%{
+        transform: translateY(0px);
+    }
+    90%{
+        transform: translateY(0px);
+    }
+    100%{
+        transform: translateY(-40px);
+
+    }
+}
 @keyframes menu_nav_scroll {
     0% {
         opacity: 1;

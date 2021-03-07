@@ -1,11 +1,13 @@
 <?php
-    ini_set('display_errors', 1);
-    ini_set('display_startup_errors', 1);
+    // ini_set('display_errors', 1);
+    // ini_set('display_startup_errors', 1);
     include('assets/php/config.php');
-    include("ressources/pop_up_film_information.php");
+    // include("ressources/pop_up_film_information.php");
     include("ressources/pop_up_connexion.php");
     include("ressources/pop_up_share.php");
     // include('vimeo_setup.php');
+
+
 
 if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['constraints'])) {
     $title = $_GET['title'];
@@ -17,11 +19,12 @@ if ($title == ' ') {
         // $requete = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_poster) VALUES ($title, $constraints, NULL, NULL)";
         // $stmt=$db->query($requete);
 
-    $sql = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_image) VALUES (:title, :constraints, NULL, NULL)";
+    $sql = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_image, defi_user_id, defi_verified) VALUES (:title, :constraints, NULL, NULL, :user,0)";
 
     $attributes = array(
       'title' => $_GET['title'],
       'constraints' => $_GET['constraints'],
+      'user' => $_COOKIE['userid']
     );
 
     $stmt = $db->prepare($sql);
@@ -34,7 +37,6 @@ if ($title == ' ') {
 
   }
 } 
-
 
 ?>
 <!DOCTYPE html>
@@ -289,14 +291,8 @@ if ($title == ' ') {
     <?php
     if (isset($_GET['success'])) {
         echo'
-        <div class="message_dark_filter"></div>
-        <div class="pop_up_container message_container">
-            <div class="pop_up_header">
-                <img src="sources/img/close_icon.svg" class="message_close_icon" alt="">
-            </div>
-            <div class="pop_up_text">
+        <div class="message_container">
                 Ton défi a bien été pris en compte !
-            </div>
         </div>';
     }
     ?>
