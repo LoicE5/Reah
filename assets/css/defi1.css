@@ -1,11 +1,44 @@
-.main_content{
-    background: #141414;
+@media (prefers-color-scheme: light) {
+    .gold_medal,.silver_medal,.bronze_medal {
+        position: absolute;
+        height: 400px;
+        width: 400px;
+        left: -250px;
+        top: -30px;
+        background: url(../../sources/img/light_gold_medal.png) center/auto 100% no-repeat;
+    }
+    .silver_medal{
+        background: url(../../sources/img/light_silver_medal.png) center/auto 100% no-repeat;
+    }
+    .bronze_medal{
+        background: url(../../sources/img/light_bronze_medal.png) center/auto 100% no-repeat;
+    }
 }
+@media (prefers-color-scheme: dark) {
+
+    .gold_medal,.silver_medal,.bronze_medal {
+        position: absolute;
+        height: 400px;
+        width: 400px;
+        left: -250px;
+        top: -30px;
+        background: url(../../sources/img/dark_gold_medal.png) center/auto 100% no-repeat;
+    }
+    .silver_medal{
+        background: url(../../sources/img/dark_silver_medal.png) center/auto 100% no-repeat;
+    }
+    .bronze_medal{
+        background: url(../../sources/img/dark_bronze_medal.png) center/auto 100% no-repeat;
+    }
+}
+
 
 .menu_category {
     min-width: 350px;
 }
-
+form{
+    margin-bottom: 0;
+}
 .underline {
     width: 34px;
 }
@@ -144,13 +177,6 @@
     display: flex;
     margin-top: 80px;
     margin-bottom: 20px;
-}
-
-.gold_medal {
-    position: absolute;
-    height: 400px;
-    left: -250px;
-    top: -30px;
 }
 
 .upload_container {
@@ -401,7 +427,7 @@
         margin-right: 0px;
     } */
     .gold_container {
-        width: 80%;
+    width: 80%;
     }
 }
 
@@ -433,13 +459,40 @@
         display: block;
         margin-left: 10px;
     }
-
-    .gold_medal {
-        position: absolute;
-        height: 270px;
-        left: -150px;
-        top: -20px;
+    @media (prefers-color-scheme: light) {
+        .gold_medal,.silver_medal,.bronze_medal {
+            position: absolute;
+            height: 270px;
+            width: 270px;
+            left: -150px;
+            top: -20px;
+            background: url(../../sources/img/light_gold_medal.png) center/auto 100% no-repeat;
+        }
+        .silver_medal{
+            background: url(../../sources/img/light_silver_medal.png) center/auto 100% no-repeat;
+        }
+        .bronze_medal{
+            background: url(../../sources/img/light_bronze_medal.png) center/auto 100% no-repeat;
+        }
     }
+    @media (prefers-color-scheme: dark) {
+    
+        .gold_medal,.silver_medal,.bronze_medal {
+            position: absolute;
+            height: 270px;
+            width: 270px;
+            left: -150px;
+            top: -20px;
+            background: url(../../sources/img/dark_gold_medal.png) center/auto 100% no-repeat;
+        }
+        .silver_medal{
+            background: url(../../sources/img/dark_silver_medal.png) center/auto 100% no-repeat;
+        }
+        .bronze_medal{
+            background: url(../../sources/img/dark_bronze_medal.png) center/auto 100% no-repeat;
+        }
+    }
+    
 }
 
 @media screen and (max-width:550px) {
@@ -507,10 +560,6 @@
     #category3,#category2{
         display: none;
     }
-
-    body{
-        background: #141414;
-    }
     .all_video_container{
         flex-direction: column;
         align-items: center;
@@ -559,21 +608,52 @@
         text-align: center;
     }
 
-    .gold_medal{
-        top: 0px;
-        left: 0px;
-        height: 40px;
+    .menu_category {
+        display: none;
+    }
+
+    @media (prefers-color-scheme: light) {
+        .gold_medal,.silver_medal,.bronze_medal {
+            top: 0px;
+            left: 0px;
+            height: 40px;
+            width: 40px;
         position: unset;
+            background: url(../../sources/img/light_gold_medal.png) center/auto 100% no-repeat;
+        }
+        .silver_medal{
+            background: url(../../sources/img/dark_silver_medal.png) center/auto 100% no-repeat;
+        }
+        .bronze_medal{
+            background: url(../../sources/img/dark_bronze_medal.png) center/auto 100% no-repeat;
+        }
+    }
+    @media (prefers-color-scheme: dark) {
+    
+        .gold_medal,.silver_medal,.bronze_medal {
+            top: 0px;
+            left: 0px;
+            height: 40px;
+            width: 40px;
+        position: unset;
+            background: url(../../sources/img/dark_gold_medal.png) center/auto 100% no-repeat;
+        }
+        .silver_medal{
+            background: url(../../sources/img/dark_silver_medal.png) center/auto 100% no-repeat;
+        }
+        .bronze_medal{
+            background: url(../../sources/img/dark_bronze_medal.png) center/auto 100% no-repeat;
+        }
+    }
+
+    #medal{
+        display: none;
     }
 
     .position_title{
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    .synopsis_title{
-        font-size: 1.1rem;
     }
 
     .upload_container{

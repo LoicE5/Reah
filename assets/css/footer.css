@@ -26,18 +26,6 @@ footer{
     color: inherit;
 }
 
-.linkedin_logo,.insta_logo{
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-}
-
-.reah_logo_complet{
-    width: 150px;
-    height: 150px;
-    align-self: center;
-}
-
 .section1{
     display: flex;
     justify-content: space-between;
@@ -65,15 +53,15 @@ footer{
 
 footer>div>div>a{
     text-decoration: none;
-    color: white;
+    color: var(--text);
     margin-bottom: 10px;
 } 
 footer>div>div>a:hover{
     text-decoration: underline;
 }
 
-@media screen and (max-width:900px) {
-    .reah_logo_complet{
+@media screen and (max-width:1000px) {
+    .footer_reah_logo{
         display: none;
     }
 
@@ -89,11 +77,18 @@ footer>div>div>a:hover{
     }
     .section1>div{
         min-width: 250px;
-        
+        margin-top: 20px;
     }
     .reah_logo_complet{
         display: block;
         order: 5;
         margin-top: 40px;
     }
+}
+
+@media screen and (max-width:450px) {
+    .footer_reah_logo{
+        display: block;
+    }
+
 }

@@ -1,14 +1,55 @@
 $(document).ready(function () {
 
+    //     // Accueil + nav footer
+    if ($(".accueil").length) {
+        if ($(".accueil").css('display') == 'none') {
+            $(".nav_footer").addClass('flex');
+        } else {
+            $(".nav_footer").hide();
+        }
+
+    }
+
 
     $(window).scroll(function () {
         let windowHeight = $(window).height()
 
         if ($(window).scrollTop() >= windowHeight) {
             $(".accueil").hide();
+
+            let windowWidth = $(window).width();
+
+            if (windowWidth <= 450) {
+                $(".nav_footer").addClass('flex');
+            }
+
+        } else {
+            $(window).resize(function () {
+                let windowWidth = $(window).width();
+                if (windowWidth >= 450) {
+                    $(".nav_footer").hide();
+                    $(`#category1,#category2,#category3`).show();
+                } else {
+                    $(".nav_footer").addClass('flex');
+                }
+            })
+        }
+
+    })
+
+    $(window).resize(function () {
+
+        let windowWidth = $(window).width();
+        if (windowWidth >= 450) {
+            $(".nav_footer").hide();
+            $(`#category1,#category2,#category3`).show();
+        } else {
+            $(".nav_footer").addClass('flex');
         }
     })
 
+
+    // Categary title
     $(".category_title,.category_list_category").click(function () {
         let number = $(this).attr("number");
         let number1 = $(this).attr("number1");
@@ -16,7 +57,8 @@ $(document).ready(function () {
         console.log("number");
         // $(".category_title").removeClass("category_title_click");
         $(".category_title" + number1 + ",.category_title" + number2 + "").css({
-            "color": "#bbbbbb"
+            "color": "var(--text-grey)",
+            "font-weight": "400",
         });
 
         $(this).addClass("category_title_click");
@@ -44,28 +86,34 @@ $(document).ready(function () {
 
         if ($(document).scrollTop() >= 0) {
             $(".category_title").removeClass("category_title_click").css({
-                "color": "#bbbbbb"
+                "color": "var(--text_grey)",
+                "font-weight": "400",
             });
             $(".category_title1").addClass("category_title_click").css({
-                "color": "white"
+                "color": "var(--text)",
+                "font-weight": "bold"
             });
             $(".underline").removeClass("underline2 underline3").addClass("underline1");
         }
         if ($(document).scrollTop() >= 670) {
             $(".category_title").removeClass("category_title_click").css({
-                "color": "#bbbbbb"
+                "color": "var(--text_grey)",
+                "font-weight": "400",
             });
             $(".category_title2").addClass("category_title_click").css({
-                "color": "white"
+                "color": "var(--text)",
+                "font-weight": "bold"
             });
             $(".underline").removeClass("underline1 underline3").addClass("underline2");
         }
         if ($(document).scrollTop() >= 1300) {
             $(".category_title").removeClass("category_title_click").css({
-                "color": "#bbbbbb"
+                "color": "var(--text_grey)",
+                "font-weight": "400",
             });
             $(".category_title3").addClass("category_title_click").css({
-                "color": "white"
+                "color": "var(--text)",
+                "font-weight": "bold"
             });
             $(".underline").addClass("underline3");
         }
@@ -102,7 +150,7 @@ $(document).ready(function () {
         // });
 
         $(`#category[number='${number}']`).show();
-        $(`#category[number='${number2}'],#category${number3}`).hide();
+        $(`#category[number='${number2}'],#category[number='${number3}']`).hide();
         $("html,body").animate({
             scrollTop: 0
         }, "0.2s")
@@ -110,19 +158,19 @@ $(document).ready(function () {
 
 
     })
-    let windowWidth = $(window).width();
 
-    $(window).resize(function () {
-        console.log(windowWidth)
-        if (windowWidth >= 550) {
+    // $(window).resize(function () {
+    //     let windowWidth = $(window).width();
+    //     console.log(windowWidth)
+    //     if (windowWidth >= 450) {
 
-            $(`#category1`).show();
-            $(`#category2`).show();
-            $(`#category3`).show();
-        } else {
-            
-        }
-    })
+    //         $(`#category1,#category2,#category3`).show();
+    //         $(".nav_footer").hide();
+    //     } else {
+    //         $(".nav_footer").addClass('flex');
+
+    //     }
+    // })
 
 
 

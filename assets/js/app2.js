@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    // Share btn
+    // Share btn -> copy btn
     var btncopy = document.querySelector('.js-copy');
     if(btncopy) {
         btncopy.addEventListener('click', docopy);
@@ -132,17 +132,17 @@ $(document).ready(function () {
 
     $(".category_title").hover(function () {
         $(this).css({
-            "color": "white"
+            "color": "var(--text)"
         });
 
         $(this).mouseout(function () {
             if ($(this).hasClass("category_title_click")) {
                 $(this).css({
-                    "color": "white"
+                    "color": "var(--text)"
                 });
             } else {
                 $(this).css({
-                    "color": "#bbbbbb"
+                    "color": "var(--text_grey)"
                 });
             }
         })

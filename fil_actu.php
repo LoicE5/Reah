@@ -25,15 +25,33 @@
 </head>
 
 <body>
-    <section class="accueil">
-        <div class="btn_container">
-            <a href="login.php" class="btn btn_connexion">Se connecter</a>
-            <a href="signup.php" class="btn btn_connexion">S'inscrire</a>
-        </div>
-        <p>Reah est une plateforme audiovisuelle permetant…</p>
-        <div class="red_line line"></div>
-    </section>
 
+<?php
+if(!isset($_GET['accueil'])){
+ echo'
+
+    <section class="accueil" id="accueil">
+
+        <a class="accueil_reah_logo" href="fil_actu.php"></a>
+
+        <img src="sources/img/pdp.jpg" class="accueil_img" alt="">
+
+        <div class="accueil_text">
+            <p class="h1">Bienvenue sur <nobr> REAH !</nobr>
+            </p>
+            <p>Viens stimuler ton esprit créatif en participant aux défis avec tes <nobr> court-métrages.</nobr> <br>
+                Tente ta chance de te faire connaître ou contribue au succès des autres. <br> <br> <b> Réalisateurs,
+                    amateurs ou <nobr> débutants ? </nobr> <br> À vos marques, prêt·e·s, <span>tournez !</span> </b></p>
+            <div class="btn_container">
+                <a href="login.php" class="btn btn_connexion">Se connecter</a>
+                <a href="signup.php" class="btn btn_connexion">S\'inscrire</a>
+            </div>
+        </div>
+        <img src="sources/img/accueil_arrow.svg" class="scroll_arrow" alt="">
+
+    </section>';
+}
+?>
     <main class="main_content">
 
 
@@ -41,16 +59,15 @@
         <nav>
 
             <!-- Logo Réah -->
-            <a class="reah_logo_container" href="fil_actu.php"> <img src="sources/img/reah_logo_complet.png"
-                    class="reah_logo" alt=""></a>
+            <a class="reah_logo" href="fil_actu.php"> </a>
 
             <div class="menu_nav">
                 <!-- Categories's title -->
                 <div class="menu_category">
-                    <p class="category_title category_title1" number="1" number1="2" number2="3">Ajouts récents</p>
+                    <p class="category_title category_title1" number="1" number1="2" number2="3">Nouveautés</p>
                     <p class="category_title category_title2" number="2" number1="1" number2="3">Défis du moment</p>
-                    <p class="category_title category_title3" number="3" number1="1" number2="2">À découvrir</p>
-                    <div class="red_line underline"></div>
+                    <p class="category_title category_title3" number="3" number1="1" number2="2">Explorer</p>
+                    <!-- <div class="red_line underline"></div> -->
                     <div class="fb_jsb ai-c category_list">
                         <p class="category_list_title">Catégories</p>
                         <div class="category_triangle"></div>
@@ -74,7 +91,7 @@
     
                         echo "<div class='menu_profile'>
                         <!-- Defi icon -->
-                        <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
+                        <a href='defis.php' class='defi_icon'></a>
                         <!-- Profile photo -->
                         <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
                         </div>
@@ -84,10 +101,9 @@
     
                         echo "<div class='menu_profile'>
                         <!-- Defi icon -->
-                        <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
+                        <a href='defis.php' class='defi_icon'></a>
                         <!-- Profile photo -->
-                            <div class='se-connecter' onclick='redirect(`login.php`)'>
-                                <img src='sources/img/profil_icon.svg' class='menu_pp_icon' alt='Se connecter' onload='SVGInject(this)'>
+                            <div class='se-connecter menu_pp_icon' onclick='redirect(`login.php`)' onload='SVGInject(this)'>
                             </div>
                         </div>
                         </nav>";
@@ -96,9 +112,9 @@
 
                 <!-- Category list  -->
                 <div class="category_list_container">
-                    <p class="category_list_category" number="1" number1="2" number2="3">Ajouts récents</p>
-                    <p class="category_list_category" number="2" number1="1" number2="3">Défis du moment</p>
-                    <p class="category_list_category" number="3" number1="1" number2="2">À découvrir</p>
+                    <p class="category_list_category" number="1" number2="2" number3="3">Nouveautés</p>
+                    <p class="category_list_category" number="2" number2="1" number3="3">Défis du moment</p>
+                    <p class="category_list_category" number="3" number2="1" number3="2">Explorer</p>
                 </div>
 
                 <!-- Menu -->
@@ -110,14 +126,14 @@
 
                 <div class="nav_footer">
                     <div class="nav_footer_category" number="1" number2="2" number3="3">
-                        <img src="sources/img/loupe_icon.svg" alt="">
-                        Ajouts récents</div>
+                        <div class="nouveaute_icon"></div>
+                        Nouveautés</div>
                     <div class="nav_footer_category" number="2" number2="1" number3="3">
-                        <img src="sources/img/loupe_icon.svg" alt="">
+                        <div class="defi_moment_icon"></div>
                         Défis du moment</div>
                     <div class="nav_footer_category" number="3" number2="1" number3="2">
-                        <img src="sources/img/loupe_icon.svg" alt="">
-                        À découvrir</div>
+                        <div class="explorer_icon"></div>
+                        Explorer</div>
                 </div>
 
 
@@ -135,7 +151,10 @@
                         <div class="category_content">
 
                             <!-- Category title -->
-                            <h1>AJOUTS RÉCENTS</h1>
+                            <h1>
+                                <div class="red_line title_line"></div>
+                                NOUVEAUTÉS
+                            </h1>
 
                             <!-- All videos -->
                             <div class="all_video_container">
@@ -206,12 +225,12 @@
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c'>
-                                        <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                        <div class='comment_icon'></div>
                                         <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                     </div>
 
                                     <!-- Share icon -->
-                                    <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
+                                    <div class='share_icon'></div>
 
                                 </div>
                             </div>
@@ -249,7 +268,10 @@
                         <div class="category_content">
 
                             <!-- Category title -->
-                            <h1 class="title2">DÉFIS DU MOMENT</h1>
+                            <h1 class="title2">
+                                <div class="red_line title_line"></div>
+                                DÉFIS DU MOMENT
+                            </h1>
 
                             <!-- All videos -->
                             <div class="all_video_container">
@@ -324,12 +346,12 @@
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c'>
-                                        <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                        <div class='comment_icon'></div>
                                         <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                     </div>
 
                                     <!-- Share icon -->
-                                    <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
+                                    <div class='share_icon'></div>
 
                                 </div>
                             </div>
@@ -362,7 +384,10 @@
                         <div class="category_content">
 
                             <!-- Category title -->
-                            <h1>À DÉCOUVRIR</h1>
+                            <h1>
+                                <div class="red_line title_line"></div>
+                                EXPLORER
+                            </h1>
 
                             <!-- All videos -->
                             <div class="all_video_container">
@@ -432,12 +457,12 @@
                                         </div>
                                         <!-- Comment icon -->
                                         <div class='fb_jc ai-c'>
-                                            <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                            <div class='comment_icon'></div>
                                             <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                         </div>
     
                                         <!-- Share icon -->
-                                        <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
+                                        <div class='share_icon'></div>
     
                                     </div>
                                 </div>

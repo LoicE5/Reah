@@ -3,48 +3,118 @@ body {
     width: 100%;
     /* height: 300vh; */
     display: flex;
+    font-weight: 500;
     justify-content: center;
     flex-direction: column;
     background-color: var(--first_color);
 }
 
-.accueil{
+.accueil {
     height: 100vh;
-    background: url(../../sources/img/accueil_background.png) center;
-    background-size: cover;
-    background-color: #141414;
+    width: 100%;
+    padding: 5%;
     position: relative;
-}
-
-.btn_container{
     display: flex;
-    width: 550px;
-    position: relative;
-    top: 10%;
-    left: 5%;
+    justify-content: center;
+    align-items: center
 }
 
-.accueil>p{
-    position: relative;
-    top: 70%;
-    left: 50%;
-    width: 50%;
+.accueil_text>.btn_container {
+    display: flex;
+    width: 350px;
+    margin-top: 35px;
+    padding: 0;
 }
 
-.accueil>.line{
+
+.accueil_text>.btn_container>a {
+    width: 150px;
+    text-align: center;
+}
+
+
+.accueil_text {
+    width: 45%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 50px;
+    /* text-align: center; */
+    line-height: 30px;
+}
+
+.accueil_text>.h1 {
+    font-size: 3rem;
+    margin-bottom: 30px;
+    margin-left: 0;
+    line-height: 50px;
+    font-weight: bold;
+    color: #d60035;
+}
+
+.accueil_text>p>b {
+    font-size: 1.1rem;
+}
+
+.accueil_text>p>b>span {
+    color: #d60035;
+}
+
+
+.accueil>.line {
     left: 50%;
     height: 50px;
     width: 3px;
     bottom: 0;
 }
 
+.accueil>a>img {
+    height: 100%;
+    width: 100%;
+    margin-left: 0;
+}
+
+
+
+.scroll_arrow {
+    position: absolute;
+    width: 60px;
+    opacity: 0;
+    bottom: 40px;
+    width: 50px;
+    animation: scroll_arrow_translate ease 1.5s infinite, scroll_arrow_opacity ease 1.5s infinite;
+}
+
+
+@keyframes scroll_arrow_translate {
+    0% {
+        transform: translateY(0px);
+    }
+
+    100% {
+        transform: translateY(30px);
+    }
+}
+
+@keyframes scroll_arrow_opacity {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+
 
 .main_content {
-    display: block;    
+    display: block;
     height: unset;
-    background : url(../../sources/img/dark_background.png) 0 0/cover;
-    background-color: var(--first_color);
-    
+
 }
 
 ::-webkit-scrollbar {
@@ -66,15 +136,29 @@ body {
     background: transparent;
 }
 
-.reah_logo_container {
-    height: 45px;
-    width: 45px;
-    min-width: 45px;
+
+.underline {
+    width: 96px;
+    top: 40px;
 }
-.reah_logo{
-    margin-left: 15px;
-    height: 45px;
-    width: 45px;
+
+.underline1 {
+    transform: translateX(0px);
+    transition: ease 0.5s;
+    width: 96px;
+}
+
+.underline2 {
+    transform: translateX(143px);
+    width: 143.5px;
+    transition: ease 0.5s;
+}
+
+.underline3 {
+    transform: translateX(334px);
+    width: 66px;
+    transition: ease 0.5s;
+
 }
 
 
@@ -91,11 +175,12 @@ body {
     position: relative;
     margin-top: 50px;
 }
-.first_category{
+
+.first_category {
     margin-top: 80px;
 }
 
-.third_category{
+.third_category {
     margin-bottom: 50px;
 }
 
@@ -124,8 +209,20 @@ body {
 h1 {
     /* text-shadow: 0px 0px 10px #000000; */
     margin: 0;
-    margin-left: 50px;
+    margin-left: 150px;
     color: var(--second_color);
+    display: flex;
+    align-items: center;
+    position: relative;
+
+}
+
+.title_line {
+    position: absolute;
+    left: -170px;
+    height: 2px;
+    width: 150px;
+    margin-right: 20px;
 }
 
 .all_video_container {
@@ -259,6 +356,7 @@ video:focus {
     color: #d60035;
     font-weight: bold;
     cursor: pointer;
+    width: 100px;
 }
 
 .see_more_arrow {
@@ -276,6 +374,7 @@ video:focus {
     bottom: 10px;
     margin: 0;
     text-shadow: #000000 0px 0px 5px;
+    color: white;
 }
 
 .reaction_container {
@@ -303,11 +402,6 @@ video:focus {
     cursor: pointer;
 }
 
-.comment_icon,
-.share_icon {
-    height: 25px;
-    cursor: pointer;
-}
 
 .profile_comment_title {
     display: none;
@@ -351,7 +445,11 @@ video:focus {
 }
 
 .dark_filter,
-.upload_dark_filter,.delete_dark_filter,.unfollow_dark_filter,.share_dark_filter,.message_dark_filter {
+.upload_dark_filter,
+.delete_dark_filter,
+.unfollow_dark_filter,
+.share_dark_filter,
+.message_dark_filter {
     top: 0;
     bottom: 0;
     left: 0;
@@ -365,11 +463,13 @@ video:focus {
     align-items: center;
 }
 
-.delete_dark_filter,.unfollow_dark_filter,.share_dark_filter{
+.delete_dark_filter,
+.unfollow_dark_filter,
+.share_dark_filter {
     z-index: 300;
 }
 
-.message_dark_filter{
+.message_dark_filter {
     position: absolute;
     display: block;
 }
@@ -392,13 +492,13 @@ video:focus {
     padding: 20px;
 }
 
-.film_settings{
+.film_settings {
     display: flex;
     align-items: center;
     position: relative;
 }
 
-.film_settings_icon{
+.film_settings_icon {
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -409,13 +509,14 @@ video:focus {
     padding-left: 10px;
 }
 
-.film_settings_icon>div{
+.film_settings_icon>div {
     height: 5px;
     width: 5px;
     border-radius: 100px;
     background-color: white;
 }
-.film_settings_container{
+
+.film_settings_container {
     width: 150px;
     background-color: #d60036;
     position: absolute;
@@ -423,17 +524,20 @@ video:focus {
     z-index: 100;
     display: none;
 }
-.film_settings_container>div{
+
+.film_settings_container>div {
     height: 35px;
     width: 100%;
     text-align: center;
     line-height: 35px;
     cursor: pointer;
 }
-.film_settings_container>div:hover{
+
+.film_settings_container>div:hover {
     background-color: #d6003662;
 }
-.film_saved_icon{
+
+.film_saved_icon {
     height: 40px;
     cursor: pointer;
 }
@@ -630,6 +734,7 @@ video:focus {
 .comment_date,
 .comment_number {
     margin: 0;
+    color: white;
 }
 
 .comment_date {
@@ -719,10 +824,11 @@ video:focus {
 }
 
 @media screen and (max-width:800px) {
-    .main_content{
-    background : url(../../sources/img/dark_background2.png) 0 0/cover;
+    .main_content {
+        background: url(../../sources/img/dark_background2.png) 0 0/cover;
 
     }
+
     .video_content {
         height: 240px;
         width: 426px;
@@ -760,18 +866,18 @@ video:focus {
         width: 95%;
     }
 
-    .film{
+    .film {
         width: unset;
     }
 
-    .film_informations_header>div{
+    .film_informations_header>div {
         flex-wrap: wrap;
         width: 100%;
     }
 
- 
 
-    .film_title{
+
+    .film_title {
         font-size: 1.5rem;
     }
 
@@ -780,22 +886,32 @@ video:focus {
         align-items: flex-start;
         height: 80px;
     }
+
+    .accueil_img {
+        display: none;
+    }
+
+    .accueil_text {
+        width: unset;
+        margin-left: 0;
+    }
 }
 
 @media screen and (max-width:800px) {
-    .challenge_container{
+    .challenge_container {
         width: 100%;
         margin-bottom: 20px;
         margin-top: 20px;
     }
+
     .film_informations_header {
         height: unset;
     }
 
-    
-        .film_informations_header>div:first-child {
-            justify-content: start;
-        }
+
+    .film_informations_header>div:first-child {
+        justify-content: start;
+    }
 }
 
 @media screen and (max-width:700px) {
@@ -803,140 +919,371 @@ video:focus {
         flex-direction: column;
     }
 
-    .film_header{
+    .film_header {
         flex-wrap: wrap;
         justify-content: space-between;
     }
 
-    .film_title{
-        order: 3;
-        margin-top: 20px;
-        font-size: 1.2rem;
-        min-width: 100%;
-    }
-    .film_title{
+    .film_title {
         order: 3;
         margin-top: 20px;
         font-size: 1.2rem;
         min-width: 100%;
     }
 
-    .connexion_container{
+    .film_title {
+        order: 3;
+        margin-top: 20px;
+        font-size: 1.2rem;
+        min-width: 100%;
+    }
+
+    .connexion_container {
         width: unset;
     }
 
-    .connexion_container>.pop_up_text,.connexion_container>.btn_container{
+    .connexion_container>.pop_up_text,
+    .connexion_container>.btn_container {
         padding-right: 20px;
         padding-left: 20px;
     }
 }
 
 @media screen and (max-width:550px) {
-  
-    .form_search_bar{
+
+    .form_search_bar {
         margin-right: 20px;
     }
-    .search_bar{
+
+    .search_bar {
         margin-left: 0px;
     }
-    h1{
+
+    h1 {
         align-self: center;
         margin-left: 0;
     }
 
-    .film_informations,.comment_content, .write_comment{
+    .film_informations,
+    .comment_content,
+    .write_comment {
         padding-left: 20px;
         padding-right: 20px;
     }
 
-    .comment_number,.share_title{
+    .comment_number,
+    .share_title {
         display: none;
     }
 
-    .share_film_container{
+    .share_film_container {
         width: 100%;
     }
 
-    .logo_container{
+    .logo_container {
         flex-direction: column;
         align-items: center;
     }
 
-    .logo_container>a{
+    .logo_container>a {
         display: flex;
         width: 200px;
         margin-bottom: 20px;
     }
 
-    .share_logo{
+    .share_logo {
         margin-right: 20px;
+    }
+
+    .synopsis_title{
+        font-size: 1.1rem;
+        padding-right: 0;
+        width: 100%;
+    }
+    
+}
+
+@media screen and (max-width:400px) {
+    .accueil>a {
+        height: 75px;
+        width: 75px;
+        margin-left: 0;
+    }
+
+    .accueil_text>h1 {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+
+    .accueil_text>.btn_container {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .accueil_text>.btn_container>a {
+        width: 80%;
+        margin-bottom: 40px;
     }
 }
 
 
 @media (prefers-color-scheme: light) {
-    :root{
-        --first_color:#EFECEF;
-        --second_color:#d60036;
-        --second_color_shadow:#A7002A;
-        --background:#EFECEF;
-        --text:white;
-        --text-grey:grey;
-        --red-transparent:#d600354f;
+    :root {
+        --first_color: #f5f5f5;
+        --second_color: #d60036;
+        --second_color_shadow: #A7002A;
+        --background: #EFECEF;
+        --text: black;
+        --text-grey: grey;
+        --red-transparent: #d600354f;
         --shadow: #d600358f;
+        --nav-shadow: rgb(196, 196, 196);
     }
 
-    .arrow_prev_container{
-        background: url(../../sources/img/prev_arrow_light.svg) 30%/80% ;
+    .arrow_prev_container {
+        background: url(../../sources/img/light_prev_arrow.png) 35%/70% no-repeat;
         left: 20px;
     }
-    .arrow_next_container{
-        background: url(../../sources/img/next_arrow_light.svg) 70%/80% ;
+
+    .arrow_next_container {
+        background: url(../../sources/img/light_next_arrow.png) 70%/70% no-repeat;
         right: 20px;
     }
 
-    .arrow_prev_container:hover{
-        background: url(../../sources/img/prev_arrow.svg) 30%/80% ;
+    .arrow_prev_container:hover {
+        background: url(../../sources/img/light_prev_arrow_hover.png) 35%/70% no-repeat;
         background-color: var(--second_color);
         box-shadow: 0px 5px 25px var(--second_color_shadow);
     }
-    .arrow_next_container:hover{
-        background: url(../../sources/img/next_arrow.svg) 70%/80% ;
+
+    .arrow_next_container:hover {
+        background: url(../../sources/img/light_next_arrow_hover.png) 70%/70% no-repeat;
         background-color: var(--second_color);
         box-shadow: 0px 5px 25px var(--second_color_shadow);
+    }
+
+    .reah_logo,
+    .accueil_reah_logo {
+        height: 45px;
+        width: 45px;
+        min-width: 45px;
+        background: url(../../sources/img/light_reah_logo.png) center/ auto 100% no-repeat;
+        margin-left: 20px;
+    }
+
+    .accueil_reah_logo {
+        margin-left: 0;
+        height: 100px;
+        width: 100px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+
+    .comment_icon,
+    .share_icon {
+        background: url(../../sources/img/light_comment_icon.svg) center no-repeat;
+        background-size: auto 100%;
+        height: 25px;
+        cursor: pointer;
+        width: 30px;
+    }
+
+    .share_icon {
+        background: url(../../sources/img/light_share_icon.svg) center no-repeat;
+        background-size: auto 100%;
+    }
+
+    .footer_reah_logo {
+        width: 150px;
+        height: 150px;
+        align-self: center;
+        background: url(../../sources/img/light_reah_logo.png) center/ auto 100% no-repeat;
+    }
+
+
+    .linkedin_logo,
+    .insta_logo {
+        width: 30px;
+        height: 25px;
+        margin-right: 10px;
+        background: url(../../sources/img/light_linkedin_icon.png) center/ auto 100% no-repeat;
+    }
+
+    .insta_logo {
+        background: url(../../sources/img/light_insta_icon.png) center/ auto 100% no-repeat;
+    }
+
+    .defi_icon,
+    .fil_actu_icon,
+    .menu_pp_icon {
+        height: 40px;
+        cursor: pointer;
+        margin-right: 20px;
+        width: 40px;
+        background: url(../../sources/img/light_defi_icon.svg) center/auto 100% no-repeat;
+        border: none;
+    }
+
+    .fil_actu_icon {
+        background: url(../../sources/img/light_fil_actu_icon.svg) center/auto 100% no-repeat;
+    }
+
+
+    .menu_pp_icon {
+        display: block;
+        background: url(../../sources/img/light_profile_icon.svg) center/auto 100% no-repeat;
+    }
+
+    .nav_footer{
+        position: fixed;
+        bottom: 0px;
+        z-index: 300;
+        font-size: 0.7rem;
+        padding: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+        display: none;
+        border-top: 1px solid #bbbbbb;
+    }
+    
+    .nouveaute_icon,.defi_moment_icon,.explorer_icon{
+        background: url(../../sources/img/light_nouveaute_icon.svg) center/auto 100% no-repeat;
+        height: 35px;
+        cursor: pointer;
+        width: 40px;
+    }
+    .explorer_icon{
+        background: url(../../sources/img/light_explorer_icon.svg) center/auto 100% no-repeat;
     }
 }
 
 @media (prefers-color-scheme: dark) {
-    :root{
-        --first_color:#730722;
-        --second_color:#EFECEF;
-        --second_color_shadow:#3B3B3B;
-        --background:#141414;
-        --text:white;
-        --text-grey:#bbbbbb;
-        --red-transparent:#d600354f;
+    :root {
+        --first_color: #141414;
+        /* --first_color:#735722; */
+        --second_color: #EFECEF;
+        --second_color_shadow: #3B3B3B;
+        --background: #141414;
+        --text: white;
+        --text-grey: #bbbbbb;
+        --red-transparent: #d600354f;
         --shadow: black;
+        --nav-shadow: black;
     }
 
-    .arrow_prev_container{
-        background: url(../../sources/img/prev_arrow.svg) 30%/80% ;
+    .arrow_prev_container {
+        background: url(../../sources/img/dark_prev_arrow.png) 35%/70% no-repeat;
         left: 20px;
     }
-    .arrow_next_container{
-        background: url(../../sources/img/next_arrow.svg) 70%/80% ;
+
+    .arrow_next_container {
+        background: url(../../sources/img/dark_next_arrow.png) 70%/70% no-repeat;
         right: 20px;
     }
 
-    .arrow_prev_container:hover{
-        background: url(../../sources/img/prev_arrow_dark.svg) 30%/80% ;
-        background-color: var(--second_color);
-        box-shadow: 0px 5px 25px var(--second_color_shadow);
-    }
-    .arrow_next_container:hover{
-        background: url(../../sources/img/next_arrow_dark.svg) 70%/80% ;
+    .arrow_prev_container:hover {
+        background: url(../../sources/img/dark_prev_arrow_hover.png) 35%/70% no-repeat;
         background-color: var(--second_color);
         box-shadow: 0px 5px 25px var(--second_color_shadow);
     }
 
+    .arrow_next_container:hover {
+        background: url(../../sources/img/dark_next_arrow_hover.png) 70%/70% no-repeat;
+        background-color: var(--second_color);
+        box-shadow: 0px 5px 25px var(--second_color_shadow);
+    }
+
+    .reah_logo,
+    .accueil_reah_logo {
+        height: 45px;
+        width: 45px;
+        min-width: 45px;
+        background: url(../../sources/img/dark_reah_logo.png) center/ auto 100% no-repeat;
+        margin-left: 20px;
+    }
+
+    .accueil_reah_logo {
+        margin-left: 0;
+        height: 100px;
+        width: 100px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+
+    .comment_icon,
+    .share_icon {
+        background: url(../../sources/img/dark_comment_icon.svg) center no-repeat;
+        background-size: auto 100%;
+        height: 25px;
+        cursor: pointer;
+        width: 30px;
+    }
+
+    .share_icon {
+        background: url(../../sources/img/dark_share_icon.svg) center no-repeat;
+        background-size: auto 100%;
+    }
+
+    .footer_reah_logo {
+        width: 150px;
+        height: 150px;
+        align-self: center;
+        background: url(../../sources/img/dark_reah_logo.png) center/ auto 100% no-repeat;
+    }
+
+
+    .linkedin_logo,
+    .insta_logo {
+        width: 30px;
+        height: 25px;
+        margin-right: 10px;
+        background: url(../../sources/img/dark_linkedin_icon.png) center/ auto 100% no-repeat;
+    }
+
+    .insta_logo {
+        background: url(../../sources/img/dark_insta_icon.png) center/ auto 100% no-repeat;
+    }
+
+    .defi_icon,.fil_actu_icon,.menu_pp_icon {
+        height: 40px;
+        cursor: pointer;
+        margin-right: 20px;
+        width: 40px;
+        background: url(../../sources/img/dark_defi_icon.svg) center/auto 100% no-repeat;
+        border: none;
+    }
+
+    .fil_actu_icon {
+        background: url(../../sources/img/dark_fil_actu_icon.svg) center/auto 100% no-repeat;
+    }
+
+    .menu_pp_icon {
+        display: block;
+        background: url(../../sources/img/dark_profile_icon.svg) center/auto 100% no-repeat;
+    }
+
+    .nav_footer{
+        position: fixed;
+        bottom: 0px;
+        z-index: 300;
+        font-size: 0.7rem;
+        padding: 10px;
+        padding-left: 15px;
+        padding-right: 15px;
+        display: none;
+        border-top: 1px solid #3f3f3f;
+    }
+    
+    .nouveaute_icon,.defi_moment_icon,.explorer_icon{
+        background: url(../../sources/img/dark_nouveaute_icon.svg) center/auto 100% no-repeat;
+        height: 35px;
+        cursor: pointer;
+        width: 40px;
+    }
+
+    .explorer_icon{
+        background: url(../../sources/img/dark_explorer_icon.svg) center/auto 100% no-repeat;
+    }
 }

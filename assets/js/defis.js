@@ -61,7 +61,7 @@ $(document).ready(function(){
         console.log("number");
         $(".category_title").removeClass("category_title_click");
         $(".category_title" + number1 + ",.category_title" + number2 + "").css({
-            "color": "#bbbbbb"
+            "color": "var(--text_grey)",
         });
 
         $(this).addClass("category_title_click");
@@ -88,10 +88,10 @@ $(document).ready(function(){
 
         if ($(document).scrollTop() >= 0) {
             $(".category_title").removeClass("category_title_click").css({
-                "color": "#bbbbbb"
+                "color": "var(--text_grey)",
             });
             $(".category_title1").addClass("category_title_click").css({
-                "color": "white"
+                "color": "var(--text_grey)",
             });
             $(".underline").removeClass("underline2 underline3").addClass("underline1");
         }
@@ -100,7 +100,7 @@ $(document).ready(function(){
                 "color": "#bbbbbb"
             });
             $(".category_title2").addClass("category_title_click").css({
-                "color": "white"
+                "color": "var(--text_grey)",
             });
             $(".underline").removeClass("underline1 underline3").addClass("underline2");
         }
@@ -109,7 +109,7 @@ $(document).ready(function(){
                 "color": "#bbbbbb"
             });
             $(".category_title3").addClass("category_title_click").css({
-                "color": "white"
+                "color": "var(--text_grey)",
             });
             $(".underline").addClass("underline3");
         }

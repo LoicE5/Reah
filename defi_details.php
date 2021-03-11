@@ -53,8 +53,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
         <!-- Navigation menu -->
         <nav>
             <!-- Logo Réah -->
-            <a href="fil_actu.php" class="reah_logo_container"> <img src="sources/img/reah_logo_complet.png"
-                    class="reah_logo" alt=""></a>
+            <a href="fil_actu.php" class="reah_logo" alt=""></a>
 
             <div class="menu_nav">
                 <!-- Categories's title -->
@@ -62,7 +61,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                     <p class="category_title category_title1" number="1" number1="2" number2="3">Défi</p>
                     <p class="category_title category_title2" number="2" number1="1" number2="3">Courts-métrages</p>
                     <p class="category_title category_title3" number="3" number1="1" number2="2">Classement</p>
-                    <div class="red_line underline"></div>
+                    <!-- <div class="red_line underline"></div> -->
                     <div class="fb_jsb ai-c category_list">
                         <p class="category_list_title">Catégories</p>
                         <div class="category_triangle"></div>
@@ -84,9 +83,11 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
     
                         echo "<div class='menu_profile'>
                         <!-- Fil actu icon -->
-                        <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
+                        <form action='fil_actu.php' method='GET'>
+                            <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                        </form>
                         <!-- Defi icon -->
-                        <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
+                        <a href='defis.php' class='defi_icon'></a>
                         <!-- Profile photo -->
                         <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
                         </div>
@@ -96,12 +97,15 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
     
                         echo "<div class='menu_profile'>
                         <!-- Fil actu icon -->
-                        <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
+                        <form action='fil_actu.php' method='GET'>
+                            <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                        </form>
                         <!-- Defi icon -->
-                        <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
+                        <a href='defis.php' class='defi_icon' alt=''></a>
                         <!-- Profile photo -->
                         <div class='se-connecter' onclick='redirect(`login.php`)'>
-                        <img src='sources/img/profil_icon.svg' class='menu_pp_icon' alt='Se connecter' onload='SVGInject(this)'>
+                        <div class='se-connecter menu_pp_icon' onclick='redirect(`login.php`)' onload='SVGInject(this)'>
+
                     </div>
                         </div>
                         </div>
@@ -271,22 +275,22 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         </p>
                                 </div>
                                 <div class='reaction_container'>
-                                    <div class='fb_jsb like_container'>
-                                        <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
-                                    </div>
-                                    <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
-                                        <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                    </div>
-
-                                    <!-- Share icon -->
-                                    <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
-
+                                <div class='fb_jsb like_container'>
+                                    <!-- Pop corn image -->
+                                    <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                    <!-- Like\'s number -->
+                                    <p class='pop_corn_number'>515 J'aime</p>
                                 </div>
+                                <!-- Comment icon -->
+                                <div class='fb_jc ai-c'>
+                                    <div class='comment_icon'></div>
+                                    <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                </div>
+
+                                <!-- Share icon -->
+                                <div class='share_icon'></div>
+
+                            </div>
                             </div>
                             <p>".$row['video_synopsis']."</p>
                         </div>
@@ -323,11 +327,12 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                     <div class="gold_container">
 
                         <div class="position_title">
-                            <img src="sources/img/gold_medal.png" class="gold_medal" alt="">
+                            <div class="gold_medal"></div>
                             <h2>1<sup>ère</sup> position</h2>
                         </div>
 
-                        <img src="sources/img/gold_medal.png" class="gold_medal" alt="">
+                        <div class="gold_medal" id="medal"></div>
+
                         
                         <!-- Video container -->
                         <?php
@@ -389,23 +394,23 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                                 <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                                 </p>
                                         </div>
-                                        <div class='reaction_container'>
-                                            <div class='fb_jsb like_container'>
-                                                <!-- Pop corn image -->
-                                                <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                                <!-- Like\'s number -->
-                                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
-                                            </div>
-                                            <!-- Comment icon -->
-                                            <div class='fb_jc ai-c'>
-                                                <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                            </div>
-        
-                                            <!-- Share icon -->
-                                            <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
-        
-                                        </div>
+                                       <div class='reaction_container'>
+                                    <div class='fb_jsb like_container'>
+                                        <!-- Pop corn image -->
+                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
+                                    </div>
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c'>
+                                        <div class='comment_icon'></div>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
+
+                                    <!-- Share icon -->
+                                    <div class='share_icon'></div>
+
+                                </div>
                                     </div>
                                     <p>".$row['video_synopsis']."</p>
                                 </div>
@@ -425,11 +430,12 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                     <div class='gold_container'>
 
                         <div class='position_title'>
-                            <img src='sources/img/silver_medal.png' class='gold_medal' alt=''>
+                            <div class="silver_medal"></div>
+
                             <h2>2<sup>ème</sup> position</h2>
                         </div>
 
-                        <img src='sources/img/silver_medal.png' class='gold_medal' alt=''>
+                        <div class="silver_medal" id="medal"></div>
 
                         <?php 
 
@@ -491,23 +497,23 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                                 <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                                 </p>
                                         </div>
-                                        <div class='reaction_container'>
-                                            <div class='fb_jsb like_container'>
-                                                <!-- Pop corn image -->
-                                                <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                                <!-- Like\'s number -->
-                                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
-                                            </div>
-                                            <!-- Comment icon -->
-                                            <div class='fb_jc ai-c'>
-                                                <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                            </div>
-        
-                                            <!-- Share icon -->
-                                            <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
-        
-                                        </div>
+                                       <div class='reaction_container'>
+                                    <div class='fb_jsb like_container'>
+                                        <!-- Pop corn image -->
+                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
+                                    </div>
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c'>
+                                        <div class='comment_icon'></div>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
+
+                                    <!-- Share icon -->
+                                    <div class='share_icon'></div>
+
+                                </div>
                                     </div>
                                     <p>".$row['video_synopsis']."</p>
                                 </div>
@@ -527,11 +533,13 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                     <div class="gold_container">
 
                         <div class="position_title">
-                            <img src="sources/img/bronze_medal.png" class="gold_medal" alt="">
+                         <div class="bronze_medal"></div>
+
                             <h2>3<sup>ème</sup> position</h2>
                         </div>
 
-                        <img src="sources/img/bronze_medal.png" class="gold_medal" alt="">
+                        <div class="bronze_medal" id="medal"></div>
+
                         <!-- Video container -->
 
                         <?php
@@ -593,23 +601,23 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                                 <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                                 </p>
                                         </div>
-                                        <div class='reaction_container'>
-                                            <div class='fb_jsb like_container'>
-                                                <!-- Pop corn image -->
-                                                <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                                <!-- Like\'s number -->
-                                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
-                                            </div>
-                                            <!-- Comment icon -->
-                                            <div class='fb_jc ai-c'>
-                                                <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
-                                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                            </div>
-        
-                                            <!-- Share icon -->
-                                            <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
-        
-                                        </div>
+                                       <div class='reaction_container'>
+                                    <div class='fb_jsb like_container'>
+                                        <!-- Pop corn image -->
+                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
+                                    </div>
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c'>
+                                        <div class='comment_icon'></div>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
+
+                                    <!-- Share icon -->
+                                    <div class='share_icon'></div>
+
+                                </div>
                                     </div>
                                     <p>".$row['video_synopsis']."</p>
                                 </div>

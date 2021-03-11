@@ -60,8 +60,7 @@ if ($title == ' ') {
         <nav>
 
             <!-- Logo Réah -->
-            <a href="fil_actu.php" class="reah_logo_container"> <img src="sources/img/reah_logo_complet.png"
-                    class="reah_logo" alt=""></a>
+            <a href="fil_actu.php" class="reah_logo"></a>
 
             <div class="menu_nav">
                 <!-- Categories's title -->
@@ -69,7 +68,7 @@ if ($title == ' ') {
                     <p class="category_title category_title1" number="1" number1="2" number2="3">Défis du moment</p>
                     <p class="category_title category_title2" number="2" number1="1" number2="3">Défis populaires</p>
                     <p class="category_title category_title3" number="3" number1="1" number2="2">Défis à découvrir</p>
-                    <div class="red_line underline"></div>
+                    <!-- <div class="red_line underline"></div> -->
                     <div class="fb_jsb ai-c category_list">
                         <p class="category_list_title">Catégories</p>
                         <div class="category_triangle"></div>
@@ -91,7 +90,9 @@ if ($title == ' ') {
     
                         echo "<div class='menu_profile'>
                         <!-- Fil actu icon -->
-                        <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
+                        <form action='fil_actu.php' method='GET'>
+                            <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                        </form>
                         <!-- Profile photo -->
                         <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
                         </div>
@@ -101,10 +102,12 @@ if ($title == ' ') {
     
                         echo "<div class='menu_profile'>
                         <!-- Fil actu icon -->
-                        <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
+                        <form action='fil_actu.php' method='GET'>
+                            <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                        </form>
                         <!-- Profile photo -->
                         <div class='se-connecter' onclick='redirect(`login.php`)'>
-                            <img src='sources/img/profil_icon.svg' class='menu_pp_icon' alt='Se connecter' onload='SVGInject(this)'>
+                        <div class='se-connecter menu_pp_icon' onclick='redirect(`login.php`)' onload='SVGInject(this)'>
                         </div>
                         </div>
                         </nav>";

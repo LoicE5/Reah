@@ -58,12 +58,6 @@ body {
     align-items: center;
 }
 
-.reah_logo {
-    height: 100px;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-}
 
 .flex {
     display: flex !important;
@@ -298,7 +292,7 @@ nav,.nav_footer{
     justify-content: space-between;
     min-width: 100%;
     z-index: 101;
-    background-color: #141414;
+    background-color: var(--first_color);
     padding: 5px;
     height: 60px;
 }
@@ -323,15 +317,16 @@ nav,.nav_footer{
 .menu_category {
     display: flex;
     justify-content: space-between;
-    min-width: 450px;
+    min-width: 400px;
     text-align: center;
     position: relative;
     align-self: flex-start;
-    color: #bbbbbb;
+    color: var(--text-grey);
 }
 
 .category_title_click {
-    color: white !important;
+    color: var(--text) !important;
+    font-weight: bold;
 }
 
 .category_list {
@@ -341,14 +336,14 @@ nav,.nav_footer{
 }
 
 .category_list_title {
-    color: white !important;
+    color: var(--text) !important;
 }
 
 .category_triangle {
     display: inline-block;
     height: 0;
     width: 0;
-    border-top: 10px solid white;
+    border-top: 10px solid var(--text);
     border-right: 10px solid transparent;
     border-left: 10px solid transparent;
 }
@@ -365,34 +360,12 @@ nav,.nav_footer{
     box-shadow: 0px 2px 8px #d60035;
 }
 
-.underline {
-    width: 115px;
-    top: 40px;
-}
 
-.underline1 {
-    transform: translateX(0px);
-    transition: ease 0.5s;
-    width: 115px;
-}
-
-.underline2 {
-    transform: translateX(162px);
-    width: 150.5px;
-    transition: ease 0.5s;
-}
-
-.underline3 {
-    transform: translateX(358px);
-    width: 91.5px;
-    transition: ease 0.5s;
-
-}
 
 .search_bar {
     min-width: 300px;
     border: none;
-    /* border: solid 1px white; */
+    border: solid 1.5px #131313;
     border-radius: 100px;
     /* height: 30px; */
     color: black;
@@ -400,7 +373,7 @@ nav,.nav_footer{
     font-size: 1em;
     padding: 5px;
     padding-left: 40px;
-    background: url(../../sources/img/black_loupe_icon.svg) no-repeat 3%;
+    background: url(../../sources/img/loupe_icon.svg) no-repeat 3%/20px;
     background-color: white;
     /* background-color: #d60036; */
 }
@@ -422,11 +395,7 @@ nav,.nav_footer{
     justify-content: space-between;
 }
 
-.defi_icon {
-    height: 40px;
-    cursor: pointer;
-    margin-right: 20px;
-}
+
 
 .menu_pp,
 .pp_profile {
@@ -438,13 +407,6 @@ nav,.nav_footer{
     display: block;
 }
 
-.menu_pp_icon{
-    height: 40px;
-    width: 40px;
-    cursor: pointer;
-    margin-right: 20px;
-    display: block;
-}
 
 .menu_container,
 .category_list_container {
@@ -459,7 +421,7 @@ nav,.nav_footer{
     justify-content: start;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0px 0px 50px var(--shadow);
+    box-shadow: 0px 0px 20px var(--shadow);
     transform: translate(300px);
     cursor: pointer;
 }
@@ -468,7 +430,7 @@ nav,.nav_footer{
     /* height: 260px; */
     width: 180px;
     left: 16%;
-    transform: translatey(-200px);
+    transform: translatey(-220px);
     display: none;
 }
 
@@ -478,12 +440,12 @@ nav,.nav_footer{
 }
 
 .category_list_container_click2 {
-    transform: translatey(-200px);
+    transform: translatey(-220px);
     transition: ease 0.5s;
 }
 
 .category_list_container_click3 {
-    transform: translatey(-200px);
+    transform: translatey(-220px);
     transition: ease 0.5s;
 }
 
@@ -533,16 +495,6 @@ nav,.nav_footer{
     margin: 0;
 }
 
-.nav_footer{
-    position: fixed;
-    bottom: 0px;
-    z-index: 300;
-    font-size: 0.7rem;
-    padding: 10px;
-    padding-left: 15px;
-    padding-right: 15px;
-    display: none;
-}
 
 .nav_footer_category{
     display: flex;
@@ -709,6 +661,8 @@ nav,.nav_footer{
     padding: 10px;
     animation: message 4s forwards;
 }
+
+
 @keyframes message{
     0%{
         transform: translateY(-40px);
@@ -736,8 +690,8 @@ nav,.nav_footer{
 
 @keyframes menu_nav_scroll2 {
     100% {
-        box-shadow: 0px 5px 25px black;
-    background-color: #141414;
+        box-shadow: 0px 5px 25px var(--nav-shadow);
+    background-color: var(--first_color);
 
         opacity: 1;
     }
@@ -776,20 +730,19 @@ nav,.nav_footer{
         width: 0px;
         cursor: pointer;
         margin-left: 200%;
+        border: none;
     }
 
     .search_bar_focus {
         width: 300px;
         min-width: 300px;
         border-radius: 100px;
-        box-shadow: 0px 0px 15px #000000;
+        /* box-shadow: 0px 0px 15px #000000; */
         color: white;
-        padding: 5px;
-        padding-left: 40px;
-        background: url(../../img/loupe_icon.svg) no-repeat 3%;
-        background-color: #500e1e;
+        background-color: whitesmoke;
         transform: translateX(-270px);
         transition: 0.5s ease;
+        border: solid 1.5px #141414;
     }
 
     .form_search_bar {
