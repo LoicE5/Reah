@@ -40,26 +40,7 @@ form{
     margin-bottom: 0;
 }
 .underline {
-    width: 34px;
-}
-
-.underline1 {
-    transform: translateX(0px);
-    transition: ease 0.5s;
-    width: 34px;
-}
-
-.underline2 {
-    transform: translateX(78px);
-    width: 136px;
-    transition: ease 0.5s;
-}
-
-.underline3 {
-    transform: translateX(255px);
-    width: 95px;
-    transition: ease 0.5s;
-
+    width: 36px;
 }
 
 .defi_category {
@@ -276,7 +257,7 @@ form{
     height: 35px;
     background-color: #D60036;
     border-radius: 5px;
-
+    width: unset;
 }
 
 .file_video input[type=file],

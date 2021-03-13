@@ -8,12 +8,15 @@
 </head> -->
 
 <body>
+<div class="connexion_dark_filter" onclick="closePopupConnexion()"></div>
+
+
     <div class="pop_up_container connexion_container">
         <div class="pop_up_header">
             <h2>Tu n'es pas connecté !</h2>
-            <img src='sources/img/close_icon.svg' class='connexion_close_icon' alt=''>
+            <img src='sources/img/close_icon.svg' class='connexion_close_icon' alt='' onclick="closePopupConnexion()">
         </div>
-        <div class="pop_up_text">Connectes-toi afin de participer à la vie de REAH, tu pourras ainsi : <br>
+        <div class="pop_up_text">Connectes-toi afin de participer à la vie de REAH, tu pourras <nobr> ainsi : </nobr> <br>
             <ul class="connexion_list">
                 <li>
                     interagir avec les autres utilisateurs

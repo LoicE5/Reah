@@ -109,7 +109,9 @@ body {
     }
 }
 
-
+.input_connexion{
+    color: var(--text);
+}
 
 .main_content {
     display: block;
@@ -138,28 +140,40 @@ body {
 
 
 .underline {
-    width: 96px;
-    top: 40px;
-}
-
-.underline1 {
+    width: 100px;
+    top: 52px;
+    height: 4px;
+    border-radius: 0;
     transform: translateX(0px);
     transition: ease 0.5s;
-    width: 96px;
+    opacity: 0;
+}
+
+.underline_opacity{
+    opacity: 1;
+}
+
+/* .underline1 {
+    transform: translateX(0px);
+    transition: ease 0.5s;
+    width: 100;
+    opacity: 1;
 }
 
 .underline2 {
     transform: translateX(143px);
     width: 143.5px;
     transition: ease 0.5s;
+    opacity: 1;
 }
 
 .underline3 {
     transform: translateX(334px);
     width: 66px;
     transition: ease 0.5s;
+    opacity: 1;
 
-}
+} */
 
 
 .first_category,
@@ -214,6 +228,7 @@ h1 {
     display: flex;
     align-items: center;
     position: relative;
+    text-shadow: 0px 2px 5px #d60035a9;
 
 }
 
@@ -311,6 +326,7 @@ h1 {
     align-items: flex-start;
     justify-content: space-between;
     position: relative;
+    box-shadow: 0px 0px 20px var(--nav-shadow);
 }
 
 .video {
@@ -394,15 +410,6 @@ video:focus {
     cursor: default;
 }
 
-
-.pop_corn_icon {
-    margin-right: 5px;
-    height: 25px;
-    width: 25px;
-    cursor: pointer;
-}
-
-
 .profile_comment_title {
     display: none;
 }
@@ -449,7 +456,7 @@ video:focus {
 .delete_dark_filter,
 .unfollow_dark_filter,
 .share_dark_filter,
-.message_dark_filter {
+.message_dark_filter,.connexion_dark_filter {
     top: 0;
     bottom: 0;
     left: 0;
@@ -465,7 +472,7 @@ video:focus {
 
 .delete_dark_filter,
 .unfollow_dark_filter,
-.share_dark_filter {
+.share_dark_filter,.connexion_dark_filter {
     z-index: 300;
 }
 
@@ -513,10 +520,15 @@ video:focus {
     height: 5px;
     width: 5px;
     border-radius: 100px;
-    background-color: white;
+    background-color: var(--text-grey);
 }
+/* 
+.film_settings_icon:hover{
+    background-color: #3f3f3f;
+} */
 
 .film_settings_container {
+    color: white;
     width: 150px;
     background-color: #d60036;
     position: absolute;
@@ -612,7 +624,7 @@ video:focus {
 
 .distribution_container>span,
 .genre_container>span {
-    color: #afafaf;
+    color: var(--text-grey);
     font-weight: bold;
 }
 
@@ -1085,37 +1097,22 @@ video:focus {
     }
 
     .comment_icon,
-    .share_icon {
-        background: url(../../sources/img/light_comment_icon.svg) center no-repeat;
-        background-size: auto 100%;
+    .share_icon,.pop_corn_icon {
+        background: url(../../sources/img/light_comment_icon.svg) center/auto 100% no-repeat;
         height: 25px;
         cursor: pointer;
         width: 30px;
     }
 
     .share_icon {
-        background: url(../../sources/img/light_share_icon.svg) center no-repeat;
-        background-size: auto 100%;
+        background: url(../../sources/img/light_share_icon.svg) center/auto 100% no-repeat;
     }
 
-    .footer_reah_logo {
-        width: 150px;
-        height: 150px;
-        align-self: center;
-        background: url(../../sources/img/light_reah_logo.png) center/ auto 100% no-repeat;
-    }
-
-
-    .linkedin_logo,
-    .insta_logo {
-        width: 30px;
-        height: 25px;
-        margin-right: 10px;
-        background: url(../../sources/img/light_linkedin_icon.png) center/ auto 100% no-repeat;
-    }
-
-    .insta_logo {
-        background: url(../../sources/img/light_insta_icon.png) center/ auto 100% no-repeat;
+    
+    .pop_corn_icon {
+        margin-right: 5px;
+        background: none;
+        width: unset;
     }
 
     .defi_icon,
@@ -1228,37 +1225,21 @@ video:focus {
     }
 
     .comment_icon,
-    .share_icon {
-        background: url(../../sources/img/dark_comment_icon.svg) center no-repeat;
-        background-size: auto 100%;
+    .share_icon,.pop_corn_icon {
+        background: url(../../sources/img/dark_comment_icon.svg) center/auto 100% no-repeat;
         height: 25px;
         cursor: pointer;
         width: 30px;
     }
 
     .share_icon {
-        background: url(../../sources/img/dark_share_icon.svg) center no-repeat;
-        background-size: auto 100%;
+        background: url(../../sources/img/dark_share_icon.svg) center/auto 100% no-repeat;
     }
 
-    .footer_reah_logo {
-        width: 150px;
-        height: 150px;
-        align-self: center;
-        background: url(../../sources/img/dark_reah_logo.png) center/ auto 100% no-repeat;
-    }
-
-
-    .linkedin_logo,
-    .insta_logo {
-        width: 30px;
-        height: 25px;
-        margin-right: 10px;
-        background: url(../../sources/img/dark_linkedin_icon.png) center/ auto 100% no-repeat;
-    }
-
-    .insta_logo {
-        background: url(../../sources/img/dark_insta_icon.png) center/ auto 100% no-repeat;
+    .pop_corn_icon {
+        margin-right: 5px;
+        background: none;
+        width: unset;
     }
 
     .defi_icon,.fil_actu_icon,.menu_pp_icon {

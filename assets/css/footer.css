@@ -13,12 +13,12 @@
     background-image: url(../../sources/img/insta_icon.png);
 } */
 footer{
-    width: 80%;
+    width: 100%;
     margin: auto;
     font-size: 0.8rem;
     margin-top: 100px;
-    /* background-color: black; */
-    
+    background-color: #141414;
+    padding-top: 40px;
 }
 
 .not_a_link {
@@ -30,12 +30,16 @@ footer{
     display: flex;
     justify-content: space-between;
     margin-bottom: 50px;
+    width: 80%;
+    margin: auto;
+    color: white;
 }
 
 .section2{
     display: flex;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    color: white;
 }
 
 .section1>div{
@@ -53,11 +57,32 @@ footer{
 
 footer>div>div>a{
     text-decoration: none;
-    color: var(--text);
+    color: white;
     margin-bottom: 10px;
 } 
 footer>div>div>a:hover{
     text-decoration: underline;
+}
+
+
+.footer_reah_logo {
+    width: 150px;
+    height: 150px;
+    align-self: center;
+    background: url(../../sources/img/dark_reah_logo.png) center/ auto 100% no-repeat;
+}
+
+
+.linkedin_logo,
+.insta_logo {
+    width: 30px;
+    height: 25px;
+    margin-right: 10px;
+    background: url(../../sources/img/dark_linkedin_icon.png) center/ auto 100% no-repeat;
+}
+
+.insta_logo {
+    background: url(../../sources/img/dark_insta_icon.png) center/ auto 100% no-repeat;
 }
 
 @media screen and (max-width:1000px) {

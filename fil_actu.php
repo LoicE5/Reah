@@ -67,7 +67,7 @@ if(!isset($_GET['accueil'])){
                     <p class="category_title category_title1" number="1" number1="2" number2="3">Nouveautés</p>
                     <p class="category_title category_title2" number="2" number1="1" number2="3">Défis du moment</p>
                     <p class="category_title category_title3" number="3" number1="1" number2="2">Explorer</p>
-                    <!-- <div class="red_line underline"></div> -->
+                    <div class="red_line underline"></div>
                     <div class="fb_jsb ai-c category_list">
                         <p class="category_list_title">Catégories</p>
                         <div class="category_triangle"></div>
@@ -93,7 +93,7 @@ if(!isset($_GET['accueil'])){
                         <!-- Defi icon -->
                         <a href='defis.php' class='defi_icon'></a>
                         <!-- Profile photo -->
-                        <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
+                        <img src='".$row['user_profile_picture']."' class='menu_pp' onclick='toggleBurgerMenu()' alt=''>
                         </div>
                         </nav>";
     
@@ -112,9 +112,9 @@ if(!isset($_GET['accueil'])){
 
                 <!-- Category list  -->
                 <div class="category_list_container">
-                    <p class="category_list_category" number="1" number2="2" number3="3">Nouveautés</p>
-                    <p class="category_list_category" number="2" number2="1" number3="3">Défis du moment</p>
-                    <p class="category_list_category" number="3" number2="1" number3="2">Explorer</p>
+                    <p class="category_list_category category_list_category1" number="1" number2="2" number3="3">Nouveautés</p>
+                    <p class="category_list_category category_list_category2" number="2" number2="1" number3="3">Défis du moment</p>
+                    <p class="category_list_category category_list_category3" number="3" number2="1" number3="2">Explorer</p>
                 </div>
 
                 <!-- Menu -->
@@ -145,13 +145,13 @@ if(!isset($_GET['accueil'])){
                     <div class="first_category" id="category" number="1">
 
                         <!-- prev arrow -->
-                        <div class="arrow_prev_container fp-controlArrow fp-prev"></div>
+                        <div class="arrow_prev_container" onclick="prevArrowClick($(this))"></div>
 
                         <!-- Category content  -->
                         <div class="category_content">
 
                             <!-- Category title -->
-                            <h1>
+                            <h1 id="title1">
                                 <div class="red_line title_line"></div>
                                 NOUVEAUTÉS
                             </h1>
@@ -210,29 +210,54 @@ if(!isset($_GET['accueil'])){
                         <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='fb_jsb'>
-                                <div class='synopsis_title_container' title=".$row['video_id'].">
+                                <div class='synopsis_title_container' title=".$row['video_id']." onclick='popupFilm($(this))'>
                                     <h3 class='synopsis_title'>".$row['video_title']."</h3>
                                     <p class='see_more'>Voir plus
                                         <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                         </p>
-                                </div>
+                                </div>";
+
+                                if(func::checkLoginState($db)){ # If the user is connected
+                                echo"
                                 <div class='reaction_container'>
                                     <div class='fb_jsb like_container'>
                                         <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                         <!-- Like\'s number -->
                                         <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
+                                    <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
                                         <div class='comment_icon'></div>
                                         <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                     </div>
 
                                     <!-- Share icon -->
-                                    <div class='share_icon'></div>
+                                    <div class='share_icon' onclick='popupShare()'></div>
 
-                                </div>
+                                </div>";
+                                } else { # If the user is an asshole
+                                    echo"
+                                    <div class='reaction_container'>
+                                    <div class='fb_jsb like_container'>
+                                        <!-- Pop corn image -->
+                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
+                                    </div>
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c' onclick='popupConnexion()' >
+                                        <div class='comment_icon'></div>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
+
+                                    <!-- Share icon -->
+                                    <div class='share_icon' onclick='popupConnexion()'></div>
+
+                                </div>";
+                                }
+
+                              echo"
                             </div>
                             <p>".$row['video_synopsis']."</p>
                         </div>
@@ -254,7 +279,7 @@ if(!isset($_GET['accueil'])){
 
 
                         <!-- next arrow -->
-                        <div class="arrow_next_container fp-controlArrow fp-next"></div>
+                        <div class="arrow_next_container" onclick="nextArrowClick($(this))"></div>
 
                     </div>
 
@@ -262,13 +287,13 @@ if(!isset($_GET['accueil'])){
                     <div class="second_category" id="category" number="2">
 
                         <!-- prev arrow -->
-                        <div class="arrow_prev_container"></div>
+                        <div class="arrow_prev_container" onclick="prevArrowClick($(this))"></div>
 
                         <!-- Category content  -->
                         <div class="category_content">
 
                             <!-- Category title -->
-                            <h1 class="title2">
+                            <h1 class="title2" id="title2">
                                 <div class="red_line title_line"></div>
                                 DÉFIS DU MOMENT
                             </h1>
@@ -331,29 +356,53 @@ if(!isset($_GET['accueil'])){
                         <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='fb_jsb'>
-                                <div class='synopsis_title_container' >
+                                <div class='synopsis_title_container' onclick='popupFilm($(this))' >
                                     <h3 class='synopsis_title'>".$row['video_title']."</h3>
                                     <p class='see_more'>Voir plus
                                         <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                         </p>
-                                </div>
-                                <div class='reaction_container'>
-                                <div class='fb_jsb like_container'>
-                                    <!-- Pop corn image -->
-                                    <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                    <!-- Like\'s number -->
-                                    <p class='pop_corn_number'>515 J'aime</p>
-                                </div>
-                                <!-- Comment icon -->
-                                <div class='fb_jc ai-c'>
-                                    <div class='comment_icon'></div>
-                                    <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                </div>
-
-                                <!-- Share icon -->
-                                <div class='share_icon'></div>
-
-                            </div>
+                                </div>";
+                                if(func::checkLoginState($db)){ # If the user is connected
+                                    echo"
+                                    <div class='reaction_container'>
+                                        <div class='fb_jsb like_container'>
+                                            <!-- Pop corn image -->
+                                            <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                            <!-- Like\'s number -->
+                                            <p class='pop_corn_number'>515 J'aime</p>
+                                        </div>
+                                        <!-- Comment icon -->
+                                        <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
+                                            <div class='comment_icon'></div>
+                                            <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                        </div>
+    
+                                        <!-- Share icon -->
+                                        <div class='share_icon' onclick='popupShare()'></div>
+    
+                                    </div>";
+                                    } else { # If the user is an asshole
+                                        echo"
+                                        <div class='reaction_container'>
+                                        <div class='fb_jsb like_container'>
+                                            <!-- Pop corn image -->
+                                            <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+                                            <!-- Like\'s number -->
+                                            <p class='pop_corn_number'>515 J'aime</p>
+                                        </div>
+                                        <!-- Comment icon -->
+                                        <div class='fb_jc ai-c' onclick='popupConnexion()' >
+                                            <div class='comment_icon'></div>
+                                            <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                        </div>
+    
+                                        <!-- Share icon -->
+                                        <div class='share_icon' onclick='popupConnexion()'></div>
+    
+                                    </div>";
+                                    }
+    
+                                  echo"
                             </div>
                             <p>".$row['video_synopsis']."</p>
                         </div>
@@ -372,19 +421,19 @@ if(!isset($_GET['accueil'])){
                         </div>
 
                         <!-- next arrow -->
-                        <div class="arrow_next_container fp-controlArrow fp-next"></div>
+                        <div class="arrow_next_container" onclick="nextArrowClick($(this))"></div>
                     </div>
 
                     <div class="third_category" id="category" number="3">
 
                         <!-- prev arrow -->
-                        <div class="arrow_prev_container"></div>
+                        <div class="arrow_prev_container" onclick="prevArrowClick($(this))"></div>
 
                         <!-- Category content  -->
                         <div class="category_content">
 
                             <!-- Category title -->
-                            <h1>
+                            <h1 id="title3">
                                 <div class="red_line title_line"></div>
                                 EXPLORER
                             </h1>
@@ -442,29 +491,55 @@ if(!isset($_GET['accueil'])){
                             <!-- Short film\'s informations -->
                             <div class='description_container'>
                                 <div class='fb_jsb'>
-                                    <div class='synopsis_title_container' >
-                                        <h3 class='synopsis_title'>".$row['video_title']."</h3>
+                                    <div class='synopsis_title_container' onclick='popupFilm($(this))'>
+                                      <h3 class='synopsis_title'>".$row['video_title']."</h3>
                                         <p class='see_more'>Voir plus
                                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                             </p>
-                                    </div>
-                                    <div class='reaction_container'>
-                                        <div class='fb_jsb like_container'>
-                                            <!-- Pop corn image -->
-                                            <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                            <!-- Like\'s number -->
-                                            <p class='pop_corn_number'>515 J'aime</p>
-                                        </div>
-                                        <!-- Comment icon -->
-                                        <div class='fb_jc ai-c'>
-                                            <div class='comment_icon'></div>
-                                            <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                        </div>
-    
-                                        <!-- Share icon -->
-                                        <div class='share_icon'></div>
-    
-                                    </div>
+                                    </div>";
+
+                                    if(func::checkLoginState($db)){ # If the user is connected
+                                        echo"
+                                        <div class='reaction_container'>
+                                            <div class='fb_jsb like_container'>
+                                                <!-- Pop corn image -->
+                                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                                <!-- Like\'s number -->
+                                                <p class='pop_corn_number'>515 J'aime</p>
+                                            </div>
+                                            <!-- Comment icon -->
+                                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
+                                                <div class='comment_icon'></div>
+                                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                            </div>
+        
+                                            <!-- Share icon -->
+                                            <div class='share_icon' onclick='popupShare()'></div>
+        
+                                        </div>";
+
+                                        } else { # If the user is an asshole
+                                            echo"
+                                            <div class='reaction_container'>
+                                            <div class='fb_jsb like_container'>
+                                                <!-- Pop corn image -->
+                                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+                                                <!-- Like\'s number -->
+                                                <p class='pop_corn_number'>515 J'aime</p>
+                                            </div>
+                                            <!-- Comment icon -->
+                                            <div class='fb_jc ai-c' onclick='popupConnexion()' >
+                                                <div class='comment_icon'></div>
+                                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                            </div>
+        
+                                            <!-- Share icon -->
+                                            <div class='share_icon' onclick='popupConnexion()'></div>
+        
+                                        </div>";
+                                        }
+        
+                                      echo"
                                 </div>
                                 <p>".$row['video_synopsis']."</p>
                             </div>
@@ -482,7 +557,7 @@ if(!isset($_GET['accueil'])){
                         </div>
 
                         <!-- next arrow -->
-                        <div class="arrow_next_container fp-controlArrow fp-next"></div>
+                        <div class="arrow_next_container" onclick="nextArrowClick($(this))"></div>
                     </div>
 
                 </div>

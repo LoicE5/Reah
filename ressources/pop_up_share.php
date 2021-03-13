@@ -8,12 +8,12 @@
 </head> -->
 
 <body>
-    <div class="share_dark_filter"></div>
+    <div class="share_dark_filter" onclick="closePopupShare()"></div>
 
     <div class="pop_up_container share_film_container">
         <div class="pop_up_header">
             <h2>Partager</h2>
-            <img src='sources/img/close_icon.svg' class='share_close_icon' alt=''>
+            <img src='sources/img/close_icon.svg' class='share_close_icon' alt='' onclick="closePopupShare()">
         </div>
         <div class="pop_up_text">
             <div class="logo_container">

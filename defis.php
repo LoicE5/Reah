@@ -70,7 +70,7 @@ if ($title == ' ') {
                     <p class="category_title category_title1" number="1" number1="2" number2="3">Défis du moment</p>
                     <p class="category_title category_title2" number="2" number1="1" number2="3">Défis populaires</p>
                     <p class="category_title category_title3" number="3" number1="1" number2="2">Défis à découvrir</p>
-                    <!-- <div class="red_line underline"></div> -->
+                    <div class="red_line underline"></div>
                     <div class="fb_jsb ai-c category_list">
                         <p class="category_list_title">Catégories</p>
                         <div class="category_triangle"></div>
@@ -96,7 +96,7 @@ if ($title == ' ') {
                             <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
                         </form>
                         <!-- Profile photo -->
-                        <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
+                        <img src='".$row['user_profile_picture']."' class='menu_pp' alt='' onclick='toggleBurgerMenu()'>
                         </div>
                         </nav>";
     
@@ -120,10 +120,9 @@ if ($title == ' ') {
 
         <!-- Category list  -->
         <div class="category_list_container">
-            <p class="category_list_category" number="1" number1="2" number2="3" onclick='redirect(`login.php`)'>Défis
-                du moment</p>
-            <p class="category_list_category" number="2" number1="1" number2="3">Défis populaires</p>
-            <p class="category_list_category" number="3" number1="1" number2="2">Défis à découvrir</p>
+            <p class="category_list_category category_list_category1" number="1" number1="2" number2="3">Défis du moment</p>
+            <p class="category_list_category category_list_category2" number="2" number1="1" number2="3">Défis populaires</p>
+            <p class="category_list_category category_list_category3" number="3" number1="1" number2="2">Défis à découvrir</p>
         </div>
 
         <!-- Menu -->
@@ -137,16 +136,27 @@ if ($title == ' ') {
 
             <div class="add_defi_btn_container">
                 <!-- Category title -->
-                <h1>
+                <h1 id="title1">
                     <div class="red_line title_line"></div>
                     DÉFIS DU MOMENT
                 </h1>
 
                 <!-- Add defi btn -->
-                <div class="btn add_defi_btn">
+                <?php
+                if(func::checkLoginState($db)){ # If the user is connected
+                echo'
+                <div class="btn add_defi_btn" onclick="popupAddDefi()">
                     <img class="add_defi_icon" src="sources/img/add_defi_icon.svg" alt="">
                     Proposer un défi
-                </div>
+                </div>';
+                } else { # If the user is an asshole
+                    echo'
+                    <div class="btn add_defi_btn" onclick="popupConnexion()">
+                        <img class="add_defi_icon" src="sources/img/add_defi_icon.svg" alt="">
+                        Proposer un défi
+                    </div>';
+                }
+                ?>
             </div>
 
             <!-- Challenges container -->
@@ -185,7 +195,7 @@ if ($title == ' ') {
             <div class="category_content">
 
                 <!-- Category title -->
-                <h1 class="title2">
+                <h1 id="title2">
                     <div class="red_line title_line"></div>
                     DÉFIS POPULAIRES
                 </h1>
@@ -227,7 +237,7 @@ if ($title == ' ') {
             <div class="category_content">
 
                 <!-- Category title -->
-                <h1>
+                <h1 id="title3">
                     <div class="red_line title_line"></div>
                     À DÉCOUVRIR
                 </h1>
@@ -270,13 +280,13 @@ if ($title == ' ') {
 
     <!-- Pop up add defi -->
 
-    <div class="dark_filter"></div>
+    <div class="dark_filter" onclick="closePopupAddDefi()"></div>
 
     <div class="pop_up_container add_defi_container">
         <form action="defis.php" method=GET>
             <div class="pop_up_header">
                 <h2>Proposer un défi</h2>
-                <img src='sources/img/close_icon.svg' class='close_icon' alt=''>
+                <img src='sources/img/close_icon.svg' class='close_icon' alt='' onclick="closePopupAddDefi()">
             </div>
             <div class="pop_up_text">
 

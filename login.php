@@ -35,7 +35,7 @@
 
                         echo '<h1>CONNECTED</h1>';
                         func::createRecord($db,$row['user_username'],$row['user_id']); # Deleting from sessions the previous username & user_id & creating new cookies & session.
-                        redirect('index.php');
+                        redirect('fil_actu.php?accueil=true');
                     } else {
                         echo '<h1 style="color:red">ERROR : password doesn"t match !</h1>';
                     }
@@ -53,7 +53,7 @@
                 makeVisible('main.main_content',true);
             }
         } else { # If the user is logged in, we redirect him to the index.php
-            redirect('index.php');
+            redirect('fil_actu.php?accueil=true');
         }
     ?>
     <main class="main_content" style="visibility: hidden;">

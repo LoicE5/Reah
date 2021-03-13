@@ -62,7 +62,7 @@
                     <!-- Defi icon -->
                     <a href='defis.php' class='defi_icon'></a>
                     <!-- Profile photo -->
-                    <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
+                    <img src='".$row['user_profile_picture']."' class='menu_pp' alt='' onclick='toggleBurgerMenu()'>
                     </div>
                     </nav>";
 

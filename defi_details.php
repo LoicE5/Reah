@@ -42,7 +42,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
     <link rel="stylesheet" href="assets/css/dark_mode.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
-    <link rel="stylesheet" href="assets/css/defi1.css">
+    <link rel="stylesheet" href="assets/css/defi_details.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/fullpage.css" />
@@ -61,7 +61,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                     <p class="category_title category_title1" number="1" number1="2" number2="3">Défi</p>
                     <p class="category_title category_title2" number="2" number1="1" number2="3">Courts-métrages</p>
                     <p class="category_title category_title3" number="3" number1="1" number2="2">Classement</p>
-                    <!-- <div class="red_line underline"></div> -->
+                    <div class="red_line underline"></div>
                     <div class="fb_jsb ai-c category_list">
                         <p class="category_list_title">Catégories</p>
                         <div class="category_triangle"></div>
@@ -89,7 +89,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                         <!-- Defi icon -->
                         <a href='defis.php' class='defi_icon'></a>
                         <!-- Profile photo -->
-                        <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
+                        <img src='".$row['user_profile_picture']."' class='menu_pp' alt='' onclick='toggleBurgerMenu()'>
                         </div>
                         </nav>";
     
@@ -119,9 +119,9 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
         <!-- Category list  -->
         <div class="category_list_container">
 
-            <p class="category_list_category" number="1" number1="2" number2="3">Défi</p>
-            <p class="category_list_category" number="2" number1="1" number2="3">Couts-métrages</p>
-            <p class="category_list_category" number="3" number1="1" number2="2">Classement</p>
+            <p class="category_list_category category_list_category1" number="1" number1="2" number2="3">Défi</p>
+            <p class="category_list_category category_list_category2" number="2" number1="1" number2="3">Couts-métrages</p>
+            <p class="category_list_category category_list_category3" number="3" number1="1" number2="2">Classement</p>
         </div>
 
         <!-- Menu -->
@@ -159,7 +159,9 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                     
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
                     
-                    echo "<h1>". strtoupper($row['defi_name']) ."</h1>";
+                    echo "<h1 id='title1'>
+                        <div class='red_line title_line'></div>
+                        ". strtoupper($row['defi_name']) ."</h1>";
              
             }
              ?>
@@ -176,10 +178,22 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                     </div>
 
                     <div class="defi_information">
-                        <div href="depot.php" class="btn depot_btn">
+                    <?php
+                    if(func::checkLoginState($db)){ # If the user is connected
+                    echo'
+                    <div href="depot.php" class="btn depot_btn" onclick="popupAddFilm()">
+                        <img class="depot_icon" src="sources/img/depot_icon.svg" alt="">
+                        Déposer un court-métrage
+                    </div>';
+                    } else { # If the user is an asshole
+                        echo'
+                        <div href="depot.php" class="btn depot_btn" onclick="popupConnexion()">
                             <img class="depot_icon" src="sources/img/depot_icon.svg" alt="">
                             Déposer un court-métrage
-                        </div>
+                        </div>';
+                    }
+                    ?>
+                       
 
                         <!-- Time left and number of short films submitted -->
                         <?php
@@ -210,7 +224,10 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                 <div class="category_content">
 
                     <!-- Category title -->
-                    <h1 class="title2">COURTS-MÉTRAGES</h1>
+                    <h1 id="title2">
+                        <div class="red_line title_line"></div>
+                        COURTS-MÉTRAGES
+                    </h1>
 
                     <!-- All videos -->
                     <div class="all_video_container">
@@ -268,29 +285,54 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                         <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='fb_jsb'>
-                                <div class='synopsis_title_container' >
+                                <div class='synopsis_title_container' title=".$row['video_id']." onclick='popupFilm($(this))'>
                                     <h3 class='synopsis_title'>".$row['video_title']."</h3>
                                     <p class='see_more'>Voir plus
                                         <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                         </p>
-                                </div>
+                                </div>";
+
+                                if(func::checkLoginState($db)){ # If the user is connected
+                                echo"
                                 <div class='reaction_container'>
-                                <div class='fb_jsb like_container'>
-                                    <!-- Pop corn image -->
-                                    <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                    <!-- Like\'s number -->
-                                    <p class='pop_corn_number'>515 J'aime</p>
-                                </div>
-                                <!-- Comment icon -->
-                                <div class='fb_jc ai-c'>
-                                    <div class='comment_icon'></div>
-                                    <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                </div>
+                                    <div class='fb_jsb like_container'>
+                                        <!-- Pop corn image -->
+                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
+                                    </div>
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
+                                        <div class='comment_icon'></div>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
 
-                                <!-- Share icon -->
-                                <div class='share_icon'></div>
+                                    <!-- Share icon -->
+                                    <div class='share_icon' onclick='popupShare()'></div>
 
-                            </div>
+                                </div>";
+                                } else { # If the user is an asshole
+                                    echo"
+                                    <div class='reaction_container'>
+                                    <div class='fb_jsb like_container'>
+                                        <!-- Pop corn image -->
+                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
+                                    </div>
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c' onclick='popupConnexion()' >
+                                        <div class='comment_icon'></div>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
+
+                                    <!-- Share icon -->
+                                    <div class='share_icon' onclick='popupConnexion()'></div>
+
+                                </div>";
+                                }
+
+                              echo"
                             </div>
                             <p>".$row['video_synopsis']."</p>
                         </div>
@@ -321,7 +363,10 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                 <div class="classement_content">
 
                     <!-- Category title -->
-                    <h1>CLASSEMENT</h1>
+                    <h1 id='title3'>
+                        <div class="red_line title_line"></div>
+                        CLASSEMENT
+                    </h1>
 
                     <!-- Gold section -->
                     <div class="gold_container">
@@ -333,7 +378,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
                         <div class="gold_medal" id="medal"></div>
 
-                        
+
                         <!-- Video container -->
                         <?php
                         
@@ -388,29 +433,54 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 <!-- Short film\'s informations -->
                                 <div class='description_container'>
                                     <div class='fb_jsb'>
-                                        <div class='synopsis_title_container' >
+                                        <div class='synopsis_title_container' title=".$row['video_id']." onclick='popupFilm($(this))'>
                                             <h3 class='synopsis_title'>".$row['video_title']."</h3>
                                             <p class='see_more'>Voir plus
                                                 <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                                 </p>
-                                        </div>
-                                       <div class='reaction_container'>
-                                    <div class='fb_jsb like_container'>
-                                        <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
-                                    </div>
-                                    <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
-                                        <div class='comment_icon'></div>
-                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                    </div>
-
-                                    <!-- Share icon -->
-                                    <div class='share_icon'></div>
-
-                                </div>
+                                        </div>";
+        
+                                        if(func::checkLoginState($db)){ # If the user is connected
+                                        echo"
+                                        <div class='reaction_container'>
+                                            <div class='fb_jsb like_container'>
+                                                <!-- Pop corn image -->
+                                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                                <!-- Like\'s number -->
+                                                <p class='pop_corn_number'>515 J'aime</p>
+                                            </div>
+                                            <!-- Comment icon -->
+                                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
+                                                <div class='comment_icon'></div>
+                                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                            </div>
+        
+                                            <!-- Share icon -->
+                                            <div class='share_icon' onclick='popupShare()'></div>
+        
+                                        </div>";
+                                        } else { # If the user is an asshole
+                                            echo"
+                                            <div class='reaction_container'>
+                                            <div class='fb_jsb like_container'>
+                                                <!-- Pop corn image -->
+                                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+                                                <!-- Like\'s number -->
+                                                <p class='pop_corn_number'>515 J'aime</p>
+                                            </div>
+                                            <!-- Comment icon -->
+                                            <div class='fb_jc ai-c' onclick='popupConnexion()' >
+                                                <div class='comment_icon'></div>
+                                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                            </div>
+        
+                                            <!-- Share icon -->
+                                            <div class='share_icon' onclick='popupConnexion()'></div>
+        
+                                        </div>";
+                                        }
+        
+                                      echo"
                                     </div>
                                     <p>".$row['video_synopsis']."</p>
                                 </div>
@@ -489,34 +559,59 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 </div>
         
                                 <!-- Short film\'s informations -->
-                                <div class='description_container'>
-                                    <div class='fb_jsb'>
-                                        <div class='synopsis_title_container' >
-                                            <h3 class='synopsis_title'>".$row['video_title']."</h3>
-                                            <p class='see_more'>Voir plus
-                                                <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
-                                                </p>
-                                        </div>
-                                       <div class='reaction_container'>
+                        <div class='description_container'>
+                            <div class='fb_jsb'>
+                                <div class='synopsis_title_container' title=".$row['video_id']." onclick='popupFilm($(this))'>
+                                    <h3 class='synopsis_title'>".$row['video_title']."</h3>
+                                    <p class='see_more'>Voir plus
+                                        <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        </p>
+                                </div>";
+
+                                if(func::checkLoginState($db)){ # If the user is connected
+                                echo"
+                                <div class='reaction_container'>
                                     <div class='fb_jsb like_container'>
                                         <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                         <!-- Like\'s number -->
                                         <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
+                                    <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
                                         <div class='comment_icon'></div>
                                         <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                     </div>
 
                                     <!-- Share icon -->
-                                    <div class='share_icon'></div>
+                                    <div class='share_icon' onclick='popupShare()'></div>
 
-                                </div>
+                                </div>";
+                                } else { # If the user is an asshole
+                                    echo"
+                                    <div class='reaction_container'>
+                                    <div class='fb_jsb like_container'>
+                                        <!-- Pop corn image -->
+                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
-                                    <p>".$row['video_synopsis']."</p>
-                                </div>
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c' onclick='popupConnexion()' >
+                                        <div class='comment_icon'></div>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
+
+                                    <!-- Share icon -->
+                                    <div class='share_icon' onclick='popupConnexion()'></div>
+
+                                </div>";
+                                }
+
+                              echo"
+                            </div>
+                            <p>".$row['video_synopsis']."</p>
+                        </div>
         
         
                             </div>";
@@ -533,7 +628,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                     <div class="gold_container">
 
                         <div class="position_title">
-                         <div class="bronze_medal"></div>
+                            <div class="bronze_medal"></div>
 
                             <h2>3<sup>ème</sup> position</h2>
                         </div>
@@ -593,34 +688,59 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 </div>
         
                                 <!-- Short film\'s informations -->
-                                <div class='description_container'>
-                                    <div class='fb_jsb'>
-                                        <div class='synopsis_title_container' >
-                                            <h3 class='synopsis_title'>".$row['video_title']."</h3>
-                                            <p class='see_more'>Voir plus
-                                                <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
-                                                </p>
-                                        </div>
-                                       <div class='reaction_container'>
+                        <div class='description_container'>
+                            <div class='fb_jsb'>
+                                <div class='synopsis_title_container' title=".$row['video_id']." onclick='popupFilm($(this))'>
+                                    <h3 class='synopsis_title'>".$row['video_title']."</h3>
+                                    <p class='see_more'>Voir plus
+                                        <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        </p>
+                                </div>";
+
+                                if(func::checkLoginState($db)){ # If the user is connected
+                                echo"
+                                <div class='reaction_container'>
                                     <div class='fb_jsb like_container'>
                                         <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                         <!-- Like\'s number -->
                                         <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
+                                    <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
                                         <div class='comment_icon'></div>
                                         <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                     </div>
 
                                     <!-- Share icon -->
-                                    <div class='share_icon'></div>
+                                    <div class='share_icon' onclick='popupShare()'></div>
 
-                                </div>
+                                </div>";
+                                } else { # If the user is an asshole
+                                    echo"
+                                    <div class='reaction_container'>
+                                    <div class='fb_jsb like_container'>
+                                        <!-- Pop corn image -->
+                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
-                                    <p>".$row['video_synopsis']."</p>
-                                </div>
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c' onclick='popupConnexion()' >
+                                        <div class='comment_icon'></div>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
+
+                                    <!-- Share icon -->
+                                    <div class='share_icon' onclick='popupConnexion()'></div>
+
+                                </div>";
+                                }
+
+                              echo"
+                            </div>
+                            <p>".$row['video_synopsis']."</p>
+                        </div>
          
                             </div>";
 
@@ -639,7 +759,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
     </main>
 
     <!-- Dark filter -->
-    <div class='upload_dark_filter'></div>
+    <div class='upload_dark_filter' onclick="closePopupAddFilm()"></div>
 
     <!-- Pop up upload films -->
     <div class="pop_up_container upload_container">
@@ -647,7 +767,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
             <div class="pop_up_header upload_header">
                 <h2>Déposer un court-métrage</h2>
-                <img src='sources/img/close_icon.svg' class='close_icon' alt=''>
+                <img src='sources/img/close_icon.svg' class='close_icon' alt='' onclick="closePopupAddFilm()">
             </div>
 
             <!-- Challenge's name -->
@@ -692,7 +812,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                 <!-- Video -->
                 <div class="upload_video">
                     <!-- Input upload video -->
-                    <div class="file_video">
+                    <div class="file_video btn">
                         <button class="btn file_video_btn">Sélectionner un fichier</button>
                         <input type="file" name="video" class="">
                     </div>
@@ -701,7 +821,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                     <div class="preview_video"></div>
 
                     <!-- Input upload poster -->
-                    <div class="file_poster">
+                    <div class="file_poster btn">
                         <button class="btn file_poster_btn">Sélectionner une miniature</button>
                         <input type="file" name="poster" class="">
                     </div>

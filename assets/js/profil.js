@@ -1,14 +1,5 @@
 $(document).ready(function () {
 
-    // Burger menu
-    $(".menu_pp").click(function () {
-        if ($(".menu_container").hasClass("menu_container_click")) {
-            $('.menu_container').removeClass("menu_container_click").addClass("menu_container_click2"); //Adds 'b', removes 'a'
-        } else {
-            $('.menu_container').removeClass("menu_container_click2").addClass("menu_container_click"); //Adds 'a', removes 'b'
-        }
-
-    });
 
     // Modify icon animation hover
     $(".modify_icon").hover(function () {

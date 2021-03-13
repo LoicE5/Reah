@@ -10,26 +10,7 @@
 }
 
 .underline {
-    width: 143px;
-}
-
-.underline1 {
-    transform: translateX(0px);
-    transition: ease 0.5s;
-    width: 143px;
-}
-
-.underline2 {
-    transform: translateX(190px);
-    width: 130px;
-    transition: ease 0.5s;
-}
-
-.underline3 {
-    transform: translateX(365px);
-    width: 135.5px;
-    transition: ease 0.5s;
-
+    width: 148px;
 }
 
 .add_defi_btn_container{
@@ -64,7 +45,7 @@
     position: relative;
     flex-direction: column;
     margin: auto;
-    margin-top: 80px;
+    padding-top: 80px;
     align-items: flex-start;
     width: 100%;
     overflow: hidden;
@@ -82,7 +63,7 @@
 }
 
 .arrow_prev_container, .arrow_next_container{
-    margin-top: 30px;
+    margin-top: 17px;
 }
 
 .defi_container {
@@ -92,7 +73,6 @@
     margin: auto;
     margin-top: 40px;
     min-height: 25vw;
-    overflow: hidden;
 }
 
 .defi_content {
@@ -102,6 +82,7 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+    box-shadow: 0px 0px 20px var(--nav-shadow);
 }
 
 .defi_img {
@@ -140,7 +121,7 @@
     position: absolute;
     bottom: 5%;
     width: 100%;
-    text-shadow: black 0px 0px 15px;
+    text-shadow: rgba(0, 0, 0, 0.734) 0px 0px 5px;
     margin: 0;
 }
 
@@ -149,7 +130,7 @@
     align-items: center;
     overflow-x: auto;
     position: relative;
-    padding-top: 40px;
+    padding: 40px;
     padding-left: 110px;
     height: 100%;
 }
@@ -162,6 +143,7 @@
     position: relative;
     height: 360px;
     width: 640px;
+    box-shadow: 0px 0px 20px var(--nav-shadow);
 }
 
 .defi_pop_img {
@@ -232,15 +214,11 @@
 
 @keyframes defi_img_hover {
     0% {
-        /* filter: brightness(100%); */
-        width: 100%;
-        height: 100%;
     }
 
     100% {
         /* filter: brightness(50%); */
-        height: 95%;
-        width: 95%;
+        transform: scale(0.9);
     }
 }
 
@@ -251,14 +229,14 @@
 @keyframes defi_img_mouseout {
     100% {
         /* filter: brightness(100%); */
-        width: 100%;
-        height: 100%;
+        transform: scale(1);
+
     }
 
     0% {
         /* filter: brightness(50%); */
-        width: 95%;
-        height: 95%;
+        transform: scale(0.9);
+
     }
 }
 
