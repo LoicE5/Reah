@@ -2,12 +2,13 @@ $(document).ready(function(){
 
     $(".defi_content").hover(function () {
         let number = $(this).attr("defi");
+        let img = $(this).children(".defi_img");
         if ($('.defi_title:hover').length == 0 || $('.defi_content:hover').length == 0) {
-            $(".defi" + number + "_img").removeClass("defi_img_hover").addClass("defi_img_mouseout");
+            $(img).removeClass("defi_img_hover").addClass("defi_img_mouseout");
             $(".defi" + number + "_title").removeClass("defi_title_hover").addClass("defi_title_mouseout");
         }
         if ($('.defi_title:hover').length != 0 || $('.defi_content:hover').length != 0) {
-            $(".defi" + number + "_img").addClass("defi_img_hover").removeClass("defi_img_mouseout");
+            $(img).addClass("defi_img_hover").removeClass("defi_img_mouseout");
             $(".defi" + number + "_title").addClass("defi_title_hover").removeClass("defi_title_mouseout");
         }
         
@@ -58,7 +59,7 @@ $(document).ready(function(){
         let number = $(this).attr("number");
         let number1 = $(this).attr("number1");
         let number2 = $(this).attr("number2");
-        console.log("number");
+        // console.log("number");
         $(".category_title").removeClass("category_title_click");
         $(".category_title" + number1 + ",.category_title" + number2 + "").css({
             "color": "var(--text_grey)",
@@ -84,7 +85,7 @@ $(document).ready(function(){
     })
 
     $(document).scroll(function () {
-        console.log($(document).scrollTop())
+        // console.log($(document).scrollTop())
 
         if ($(document).scrollTop() >= 0) {
             $(".category_title").removeClass("category_title_click").css({

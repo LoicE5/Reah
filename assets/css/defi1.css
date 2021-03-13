@@ -133,7 +133,7 @@ form{
 .btn_send:hover,
 .file_video:hover,
 .file_poster:hover {
-    background-color: #d60035b4;
+    background-color: #af002c;
     transition: 0.1s ease;
     overflow: hidden;
 }
@@ -206,7 +206,7 @@ form{
 
 .input_connexion {
     width: 300px;
-
+    border-bottom: 1px solid var(--text);
 }
 
 .input_synopsis {
@@ -217,6 +217,10 @@ form{
 
 .input_container label {
     height: auto;
+}
+
+.input_container label>span {
+    color: var(--text);
 }
 
 .input_tag_container {
@@ -268,9 +272,10 @@ form{
     display: inline-block;
     position: relative;
     overflow: hidden;
-    line-height: 35px;
+    line-height: unset;
     height: 35px;
     background-color: #D60036;
+    border-radius: 5px;
 
 }
 
@@ -289,6 +294,7 @@ form{
     margin-top: 0;
     margin-bottom: 20px;
     width: 250px;
+    line-height: unset;
     background-color: transparent;
 }
 

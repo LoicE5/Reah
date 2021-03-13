@@ -1,7 +1,3 @@
-.main_content{
-    background:#141414;
-}
-
 .form_search_bar {
     margin: auto;
     margin-right: 50px;
@@ -9,6 +5,10 @@
 
 .menu_profile {
     min-width: 200px;
+}
+
+.menu_profile>form{
+    margin-bottom: 0;
 }
 
 .banner {
@@ -20,13 +20,13 @@
 .banner_flou_left,
 .banner_flou_right {
     position: absolute;
-    background: linear-gradient(to right, #141414 0%, transparent);
+    background: linear-gradient(to right, var(--first_color) 0%, transparent);
     width: 300px;
     height: 100%;
 }
 
 .banner_flou_right {
-    background: linear-gradient(to left, #141414 0%, transparent);
+    background: linear-gradient(to left, var(--first_color) 0%, transparent);
     right: 0;
 }
 
@@ -44,6 +44,7 @@
 .menu_nav {
     padding-top: 10px;
     padding-bottom: 10px;
+    padding-left: 0;
 }
 
 .profile_container {
@@ -74,7 +75,7 @@
     height: 200px;
     width: 200px;
     border-radius: 100px;
-    box-shadow: black 0px 0px 20px;
+    box-shadow: var(--nav-shadow) 0px 0px 20px;
     z-index: 100;
     top: -80px;
 }
@@ -82,7 +83,6 @@
 .profile_username {
     font-size: 1.5rem;
     font-weight: bold;
-    text-shadow: 0px 0px 10px black;
     margin: 0;
     margin-bottom: 10px;
 }
@@ -134,6 +134,7 @@
     border: #d60036 solid 2px;
     line-height: 30px;
     min-height: 35px;
+    color: var(--text);
 }
 
 .profile_bio_container {
@@ -162,14 +163,14 @@
     display: none;
 }
 .menu_nav {
-    background-color: #141414e1;
+    background-color: var(--nav-color);
 }
 
 .realisation_number_container {
     width: 100%;
     padding-bottom: 15px;
     background:
-        radial-gradient(at 50% 0px, black 0%, transparent 70%) bottom;
+        radial-gradient(at 50% 0px, var(--nav-shadow) 0%, transparent 70%) bottom;
     background-size: 100% 20px;
     background-repeat: no-repeat;
     margin-top: 50px;
@@ -183,11 +184,11 @@
 
 .realisation_number_content_title {
     cursor: pointer;
-    color: #bbbbbb;
+    color: var(--text-grey);
 }
 
 .realisation_number_content_title1 {
-    color: white;
+    color: var(--text);
 }
 
 .realisation_number_content_number {
@@ -197,7 +198,7 @@
 }
 
 .realisation_number_content_line {
-    width: 111.5px;
+    width: 132px;
     top: 50px;
     left: 0;
 }
@@ -307,7 +308,7 @@
 
 .modify_container {
     position: absolute;
-    background-color: #141414;
+    /* background-color: #141414; */
     box-shadow: black 0px 0px 20px;
     z-index: 300;
     min-width: 550px;
@@ -333,7 +334,7 @@
     height: 200px;
     width: 200px;
     border-radius: 100px;
-    box-shadow: black 0px 0px 20px;
+    box-shadow: var(--nav-shadow) 0px 0px 20px;
     z-index: 100;
     top: -80px;
     /* left: -150px; */
@@ -353,12 +354,13 @@
     position: relative;
     overflow: hidden;
     background-color: #d60036;
+    border-radius: 5px;
 
 }
 
 .modify_file_banner:hover,
 .modify_file_profile_photo:hover {
-    background-color: #d60035b4;
+    background-color: #af002c;
     transition: 0.1s ease;
     overflow: hidden;
 }
@@ -406,8 +408,13 @@
     height: auto;
 }
 
+.input_container label>span {
+    color: var(--text);
+}
+
 .input_connexion {
     width: 300px;
+    border-bottom: var(--text) 1px solid;
 }
 
 .input_bio {
@@ -422,6 +429,7 @@
     width: 250px;
     margin-top: 50px;
     font-family: 'Montserrat', sans-serif;
+    line-height: unset;
 }
 
 .subscription_container {
@@ -443,7 +451,7 @@
     align-items: center;
     position: relative;
     background:
-        radial-gradient(at 50% 0px, black 0%, transparent 70%) bottom;
+        radial-gradient(at 50% 0px, var(--nav-shadow) 0%, transparent 70%) bottom;
     background-size: 100% 20px;
     background-repeat: no-repeat;
     padding-bottom: 30px;
@@ -452,7 +460,7 @@
 .subscriber_title,
 .subscription_title {
     cursor: pointer;
-    color: #bbbbbb;
+    color: var(--text-grey);
 }
 
 .subscription_line {
@@ -499,7 +507,7 @@
 
 .subscription_name {
     font-size: 0.8em;
-    color: #bbbbbb;
+    color: var(--text-grey);
 }
 
 .subscription_user_btn,.subscriber_user_btn {
@@ -913,5 +921,18 @@
         .form_search_bar{
             margin-right: 20px;
         }
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    :root{
+        --nav-color: #f5f5f5e1;
+    }
+}
+
+
+@media (prefers-color-scheme: dark) {
+    :root{
+        --nav-color: #000000e1;
     }
 }

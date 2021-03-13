@@ -39,8 +39,13 @@
     align-items: flex-end;
 }
 
+.add_defi_container>form{
+    flex-direction: column;
+    display: flex;
+}
+
 .add_defi_btn_container>h1{
-    margin-left: 0px;
+    margin-left: 150px;
 }
 
 .add_defi_btn{
@@ -61,7 +66,7 @@
     margin: auto;
     margin-top: 80px;
     align-items: flex-start;
-    width: 90%;
+    width: 100%;
     overflow: hidden;
     justify-content: center;
     min-height: auto;
@@ -82,8 +87,9 @@
 
 .defi_container {
     display: flex;
-    width: 100%;
+    width: 90%;
     justify-content: space-between;
+    margin: auto;
     margin-top: 40px;
     min-height: 25vw;
     overflow: hidden;
@@ -132,9 +138,10 @@
     color: white;
     text-decoration: none !important;
     position: absolute;
-    top: 60%;
+    bottom: 5%;
     width: 100%;
     text-shadow: black 0px 0px 15px;
+    margin: 0;
 }
 
 .defi_pop_container {
@@ -178,12 +185,26 @@
 }
 .add_defi_input>.input_container{
     margin-bottom: 25px;
+    align-items: center;
+}
+
+.input_container label>span{
+    color: var(--text);
+}
+
+.input_connexion{
+    width: 300px;
+    border-bottom: 1px solid var(--text);
 }
 
 .input_constraints_container {
     min-height: 200px;
-    max-width: 300px;
-    width: 300px;
+    max-width: 500px;
+    width: 500px;
+}
+
+.input_constraints_container>label>textarea {
+    width: 500px;
 }
 
 .input_constraints{
@@ -194,6 +215,7 @@
 
 .add_defi_btn{
     line-height: 30px;
+    margin-right: 5%;
 }
 
 .message_close_icon{
@@ -201,16 +223,22 @@
 }
 
 
+.send_btn{
+    line-height: unset;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
 
 @keyframes defi_img_hover {
     0% {
-        filter: brightness(100%);
+        /* filter: brightness(100%); */
         width: 100%;
         height: 100%;
     }
 
     100% {
-        filter: brightness(50%);
+        /* filter: brightness(50%); */
         height: 95%;
         width: 95%;
     }
@@ -222,13 +250,13 @@
 
 @keyframes defi_img_mouseout {
     100% {
-        filter: brightness(100%);
+        /* filter: brightness(100%); */
         width: 100%;
         height: 100%;
     }
 
     0% {
-        filter: brightness(50%);
+        /* filter: brightness(50%); */
         width: 95%;
         height: 95%;
     }
@@ -324,16 +352,21 @@
         min-width: 100px;
     }
 
-}
-
-@media screen and (max-width:650px) {
-    
-
     .add_defi_btn_container{
         flex-direction: column;
         min-height: 100px;
         align-items: flex-start;
     }
+
+    .add_defi_btn{
+        margin-left: 5%;
+    }
+}
+
+@media screen and (max-width:650px) {
+    
+
+  
     .defi_container {
         flex-direction: column;
         height: 100%;
@@ -354,6 +387,7 @@
     .defi_title{
         font-size: 6vw;
     }
+
 
 }
 
@@ -379,7 +413,20 @@
     .input_constraints_container{
         width: 100%;
         max-width: 100%;
+        min-width: 100%;
     }
+    
+    .input_constraints_container>label>textarea,.input_connexion {
+        width: 90%;
+    }
+    .input_container>label{
+        width: 100%;
+        align-items: center;
+    }
+    .add_defi_btn_container>h1{
+        margin-left: 0px;
+    }
+    
 }
 
 @media screen and (max-width:450px) {

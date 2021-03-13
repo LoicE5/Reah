@@ -165,7 +165,7 @@ body {
     border-radius: 5px;
 }
 .btn:hover{
-    background-color: #d60035b4;
+    background-color: #af002c;
     transition: 0.1s ease;
 }
 
@@ -173,6 +173,8 @@ body {
 .btn_next,
 .btn_inscription {
     width: 100%;
+    line-height: unset;
+
 }
 
 .cannot_click {
@@ -212,6 +214,7 @@ body {
 
 .input_container span {
     font-size: 0.8em;
+    color: white;
 }
 
 .input_container label {
@@ -255,6 +258,7 @@ body {
 
 .checkbox_label {
     cursor: pointer;
+    color: white;
 }
 
 select {
@@ -365,7 +369,7 @@ nav,.nav_footer{
 .search_bar {
     min-width: 300px;
     border: none;
-    border: solid 1.5px #131313;
+    border: solid 2px #131313;
     border-radius: 100px;
     /* height: 30px; */
     color: black;
@@ -537,7 +541,7 @@ nav,.nav_footer{
     flex-direction: column;
     box-shadow: black 0px 0px 20px;
     align-self: center;
-    background-color: #141414;
+    background-color: var(--first_color);
     margin: auto;
     top: 2vw;
 }
@@ -623,7 +627,7 @@ nav,.nav_footer{
 .logo_container>a{
     cursor: pointer;
     text-decoration: none;
-    color: white;
+    color: var(--text);
 }
 
 .share_logo{
@@ -633,7 +637,7 @@ nav,.nav_footer{
 
 .share_link{
     width: 100%;
-    border-bottom: white solid 2px;
+    border-bottom: var(--text) solid 2px;
     padding-bottom: 5px;
     margin-top: 40px;
     display: flex;

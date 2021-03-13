@@ -1,34 +1,35 @@
 $(document).ready(function () {
 
+
+
     // Share btn -> copy btn
     var btncopy = document.querySelector('.js-copy');
-    if(btncopy) {
+    if (btncopy) {
         btncopy.addEventListener('click', docopy);
     }
-    
+
     function docopy() {
         var range = document.createRange();
         var target = this.dataset.target;
         var fromElement = document.querySelector(target);
         var selection = window.getSelection();
-    
+
         range.selectNode(fromElement);
         selection.removeAllRanges();
         selection.addRange(range);
-    
+
         try {
             var result = document.execCommand('copy');
             if (result) {
                 $("body").prepend("<div class='message_container'>Lien copié dans le presse-papiers.</div>");
             }
-        }
-        catch(err) {
+        } catch (err) {
             // Une erreur est surevnue lors de la tentative de copie
             alert(err);
         }
-    
+
         selection = window.getSelection();
-    
+
         if (typeof selection.removeRange === 'function') {
             selection.removeRange(range);
         } else if (typeof selection.removeAllRanges === 'function') {
@@ -44,7 +45,7 @@ $(document).ready(function () {
         let translate = $(window).width();
         // console.log(-$(".video_container").position().left)
         let scroll = translate - videoPosition;
-        
+
         // console.log(translate)
         $(videoChild).animate({
             scrollLeft: scroll
@@ -87,12 +88,17 @@ $(document).ready(function () {
         })
     }
 
+
+    let lastScrollTop = 0;
+
     // Menu opacity
     $(window).scroll(function () {
+        let st = $(this).scrollTop();
+
         // If the mouse is hover the menu or if the menu_container is open
         if ($('nav:hover').length != 0 || $(".menu_container").hasClass("menu_container_click") || $(".category_list_container").hasClass("category_list_container_click")) {
             // If we are at the top of the page
-            if ($(window).scrollTop() == "0") {
+            if ($(window).scrollTop() == 0) {
                 $("nav").removeClass("menu_nav_scroll menu_nav_scroll2");
             } else {
                 $("nav").removeClass("menu_nav_scroll").addClass("menu_nav_scroll2");
@@ -101,18 +107,30 @@ $(document).ready(function () {
         // If the mouse isn't hover the menu
         else {
             // If we are at the top of the page
-            if ($(window).scrollTop() == "0") {
+            if ($(window).scrollTop() == 0) {
                 $("nav").removeClass("menu_nav_scroll");
                 $("nav").hover(function () {
                     $("nav").removeClass("menu_nav_scroll menu_nav_scroll2");
                 })
 
-            } else {
+            } else if (st > lastScrollTop) {
+                // console.log("scroll vers le bas");
+
                 $("nav").addClass("menu_nav_scroll").removeClass("menu_nav_scroll2");
                 $("nav").hover(function () {
                     $("nav").removeClass("menu_nav_scroll").addClass("menu_nav_scroll2");
                 })
+            } else {
+                // console.log("scroll vers le haut");
+                // console.log($(window).scrollTop());
+                if ($(window).scrollTop() <= 10) {
+                    $("nav").removeClass("menu_nav_scroll menu_nav_scroll2");
+                } else {
+                    $("nav").removeClass("menu_nav_scroll").addClass("menu_nav_scroll2");
+                }
             }
+            lastScrollTop = st;
+
         }
     })
 
@@ -322,6 +340,6 @@ $(document).ready(function () {
         }
     });
 
-    
+
 
 })

@@ -338,22 +338,22 @@ if(!isset($_GET['accueil'])){
                                         </p>
                                 </div>
                                 <div class='reaction_container'>
-                                    <div class='fb_jsb like_container'>
-                                        <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
-                                    </div>
-                                    <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
-                                        <div class='comment_icon'></div>
-                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                    </div>
-
-                                    <!-- Share icon -->
-                                    <div class='share_icon'></div>
-
+                                <div class='fb_jsb like_container'>
+                                    <!-- Pop corn image -->
+                                    <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                    <!-- Like\'s number -->
+                                    <p class='pop_corn_number'>515 J'aime</p>
                                 </div>
+                                <!-- Comment icon -->
+                                <div class='fb_jc ai-c'>
+                                    <div class='comment_icon'></div>
+                                    <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                </div>
+
+                                <!-- Share icon -->
+                                <div class='share_icon'></div>
+
+                            </div>
                             </div>
                             <p>".$row['video_synopsis']."</p>
                         </div>

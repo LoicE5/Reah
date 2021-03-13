@@ -46,7 +46,7 @@ echo "
 
                     <!-- Challenge section -->
                     <div class='fb challenge_container'>
-                        <img src='sources/img/defi_icon.svg' class='challenge_defi_icon' alt=''>
+                        <div class='defi_icon challenge_defi_icon'></div>
                         <a href='defi1.php' class='challenge_title'>{$row["defi_name"]}</a>
                     </div>
 
@@ -65,7 +65,7 @@ echo "
 
                     <!-- Share section -->
                     <div class='fb_jsb share_container'>
-                        <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
+                        <div class='share_icon'></div>
                         <p class='share_title'>Partager</p>
                     </div>
                 </div>
@@ -80,8 +80,15 @@ echo "
 
         </div>
         <div class='fb_jc ai-c comment_title_container'>
-            <img src='sources/img/comment_icon.svg' class='reaction_icons' alt=''>
-            <p class='comment_title'>25 commentaires</p>
+            <div class='comment_icon'></div>";
+
+            $query = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id";
+            $stmt = $db->prepare($query);
+            $stmt->execute();
+            
+            $rows = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            echo "<p class='comment_title'>". $rows['number'] ." commentaires</p>
             <img src='sources/img/bottom_arrow.svg' class='comment_arrow' alt=''>
         </div>
     </div>";
@@ -106,7 +113,7 @@ echo "
         <!-- All the comments -->
         <?php
         
-        $query = "SELECT * FROM comments, users, videos WHERE comment_user_id=user_id AND comment_video_id=video_id";
+        $query = "SELECT * FROM comments, users, videos WHERE comment_video_id=video_id";
         $stmt = $db->prepare($query);
         $stmt->execute();
         
@@ -139,11 +146,11 @@ echo "
                         <p class='pop_corn_number'>515 J'aime</p>
                     </div>
                     <div class='fb_jsb comment_container'>
-                        <img class='comment_icon' src='sources/img/comment_icon.svg' alt=''>
+                        <div class='comment_icon'></div>
                         <p class='comment_number'><nobr>8 réponses</nobr></p>
                     </div>
                     <div class='fb_jsb share_container'>
-                        <img class='share_icon' src='sources/img/share_icon.svg' alt=''>
+                        <div class='share_icon'></div>
                         <p class='share_title'>Partager</p>
                     </div>
                 </div>

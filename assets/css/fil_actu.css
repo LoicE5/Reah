@@ -299,7 +299,7 @@ h1 {
 
 .pseudo {
     z-index: 100;
-    text-shadow: #000000 0px 0px 5px;
+    /* text-shadow: #000000 0px 0px 5px; */
 }
 
 .video_content {
@@ -484,7 +484,7 @@ video:focus {
     box-shadow: black 0px 0px 20px;
     align-self: center;
     top: 0;
-    background-color: #141414;
+    background-color: var(--first_color);
 }
 
 .film_header {
@@ -534,7 +534,7 @@ video:focus {
 }
 
 .film_settings_container>div:hover {
-    background-color: #d6003662;
+    background-color: #af002c;
 }
 
 .film_saved_icon {
@@ -591,7 +591,8 @@ video:focus {
 }
 
 .challenge_defi_icon {
-    height: 25px;
+    height: 25px !important;
+    margin-right: 0 !important;
 }
 
 .challenge_title {
@@ -627,12 +628,12 @@ video:focus {
 .comment_title_container {
     margin-top: 10px;
     cursor: pointer;
-    box-shadow: #070707 0px 20px 20px;
+    box-shadow: var(--nav-shadow) 0px 20px 20px;
     z-index: 100;
 }
 
 .comment_title_container:hover {
-    background: radial-gradient(circle, #d6003556 0%, #141414 100%);
+    background: radial-gradient(circle, #d6003556 0%, transparent 100%);
 }
 
 .scroll_none {
@@ -643,7 +644,7 @@ video:focus {
 }
 
 .comment_space_container {
-    background-color: #0a0a0a;
+    background-color: var(--mode);
     padding-top: 20px;
     height: 90vh;
     display: none;
@@ -679,7 +680,7 @@ video:focus {
 }
 
 .write_comment {
-    background-color: #141414;
+    background-color: var(--first_color);
     padding: 10px;
     display: flex;
     padding-left: 50px;
@@ -689,7 +690,7 @@ video:focus {
 .write_comment>textarea {
     border: none;
     background: none;
-    color: white;
+    color: var(--text);
     font-family: 'Montserrat', sans-serif;
     font-size: 1em;
     font-weight: 500;
@@ -722,7 +723,7 @@ video:focus {
 
 .comment_content {
     margin-top: 20px;
-    background-color: #141414;
+    background-color: var(--first_color);
     padding: 20px;
     display: flex;
     padding-left: 50px;
@@ -734,11 +735,11 @@ video:focus {
 .comment_date,
 .comment_number {
     margin: 0;
-    color: white;
+    color: var(--text);
 }
 
 .comment_date {
-    color: #afafaf;
+    color: var(--text-grey);
     font-size: 0.8rem;
 }
 
@@ -1038,6 +1039,7 @@ video:focus {
         --red-transparent: #d600354f;
         --shadow: #d600358f;
         --nav-shadow: rgb(196, 196, 196);
+        --mode: white;
     }
 
     .arrow_prev_container {
@@ -1054,12 +1056,14 @@ video:focus {
         background: url(../../sources/img/light_prev_arrow_hover.png) 35%/70% no-repeat;
         background-color: var(--second_color);
         box-shadow: 0px 5px 25px var(--second_color_shadow);
+        transition: 0.2s ease;
     }
 
     .arrow_next_container:hover {
         background: url(../../sources/img/light_next_arrow_hover.png) 70%/70% no-repeat;
         background-color: var(--second_color);
         box-shadow: 0px 5px 25px var(--second_color_shadow);
+        transition: 0.2s ease;
     }
 
     .reah_logo,
@@ -1153,9 +1157,17 @@ video:focus {
         cursor: pointer;
         width: 40px;
     }
+
+    .defi_moment_icon{
+        background: url(../../sources/img/light_clap_icon.svg) center/auto 100% no-repeat;
+    }
+
     .explorer_icon{
         background: url(../../sources/img/light_explorer_icon.svg) center/auto 100% no-repeat;
     }
+
+
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1170,6 +1182,7 @@ video:focus {
         --red-transparent: #d600354f;
         --shadow: black;
         --nav-shadow: black;
+        --mode: black;
     }
 
     .arrow_prev_container {
@@ -1186,12 +1199,14 @@ video:focus {
         background: url(../../sources/img/dark_prev_arrow_hover.png) 35%/70% no-repeat;
         background-color: var(--second_color);
         box-shadow: 0px 5px 25px var(--second_color_shadow);
+        transition: 0.2s ease;
     }
 
     .arrow_next_container:hover {
         background: url(../../sources/img/dark_next_arrow_hover.png) 70%/70% no-repeat;
         background-color: var(--second_color);
         box-shadow: 0px 5px 25px var(--second_color_shadow);
+        transition: 0.2s ease;
     }
 
     .reah_logo,
@@ -1283,7 +1298,12 @@ video:focus {
         width: 40px;
     }
 
+    .defi_moment_icon{
+        background: url(../../sources/img/dark_clap_icon.svg) center/auto 100% no-repeat;
+    }
+
     .explorer_icon{
         background: url(../../sources/img/dark_explorer_icon.svg) center/auto 100% no-repeat;
     }
+
 }
