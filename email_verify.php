@@ -13,7 +13,13 @@
 </head>
 <body>
 
-<?php
+
+<a href="fil_actu.php" class="reah_logo">
+        <img src="sources/img/dark_reah_logo.png" alt="">
+    </a>
+
+    
+    <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
@@ -26,24 +32,24 @@ $global_wrapper_visibility = false;
 
 
 if( !func::checkLoginState($db) ){
-
+    
     if(isset($_POST['code1']) 
     && isset($_POST['code2']) 
     && isset($_POST['code3']) 
     && isset($_POST['code4']) 
     && isset($_POST['code5']) 
     && isset($_POST['code6'])){
-
-
-
+        
+        
+        
     } else {
-
+        
         if(isset($_GET['client_email'])){
             $client_email = $_GET['client_email'];
         } else {
             consoleWarn('No email address specified as GET parameters.\nGET parameter : client_email');
         }
-
+        
         $mail = new PHPMailer();
         $mail->isSMTP();
         $mail->SMTPAuth = true;
@@ -53,31 +59,32 @@ if( !func::checkLoginState($db) ){
         $mail->isHTML();
         $mail->Username = 'credential';
         $mail->Password = 'credential';
-
+        
         $mail->setFrom('no-reply@reah.fr');
         $mail->Subject = 'SUBJECT';
         $mail->Body = '<h1>A TEST EMAIL</h1>';
         $mail->AddAddress($client_email);
-
+        
         $mail->send();
-
+        
         // consoleLog($client_email);
         // consoleLog($mail->Host);
         // consoleLog($mail->Username);
         // consoleLog($mail->Password);
-
+        
         $global_wrapper_visibility = true;
-
+        
     }
-
+    
 } else {
     redirect('index.php');
 }
 ?>
 
+<main class="main_content">
 <div id="global-wrapper">
-        <!-- Background video -->
-        <video class="background_video" poster="" autoplay loop muted>
+    <!-- Background video -->
+    <video class="background_video" poster="" autoplay loop muted>
             <source src="sources/video/videobackPT.mp4" type="video/mp4">
         </video>
 
@@ -127,6 +134,7 @@ if( !func::checkLoginState($db) ){
                 </div>
             </form>
         </div>
+    </main>
 
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
         <script src="assets/js/app.js"></script>
@@ -137,6 +145,5 @@ if( !func::checkLoginState($db) ){
                 makeVisible('#global-wrapper',true);
             }
         ?>
-
     </body>
 </html>

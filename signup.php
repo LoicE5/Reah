@@ -199,7 +199,7 @@
                     <label for="pswd">
                         <span>Mot de passe</span>
                         <input type="password" id="input_mdp" class="input_connexion input_mdp second_form" name="pswd"
-                            id="psdw" required autocomplete="off">
+                            id="psdw" required autocomplete="off" onclick="restrictionMdp()">
                     </label>
 
                     <!-- To see the password -->
@@ -232,7 +232,7 @@
                 <div class="checkbox_container">
                     <input id="CGU" type="checkbox" class="CGU_checkbox second_form" value="accepted" name="cgu"
                         required>
-                    <label for="CGU" class="CGU_label">J'ai lu et j'accepte les <a href="" class="link"> conditions
+                    <label for="CGU" class="CGU_label">J'ai lu et j'accepte les <a href="cgu.php" class="link"> conditions
                             générales d'utilisation</a></label>
                 </div>
 

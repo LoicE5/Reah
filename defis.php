@@ -22,8 +22,8 @@ if ($title == ' ') {
     $sql = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_image, defi_user_id, defi_verified, defi_current) VALUES (:title, :constraints, NULL, NULL, :user, 0, 0)";
 
     $attributes = array(
-      'title' => $_GET['title'],
-      'constraints' => $_GET['constraints'],
+      'title' => addslashes($_GET['title']),
+      'constraints' => addslashes($_GET['constraints']),
       'user' => $_COOKIE['userid']
     );
 

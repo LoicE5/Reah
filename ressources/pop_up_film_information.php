@@ -3,7 +3,7 @@
         $sql = "INSERT INTO comments (comment_content, comment_video_id, comment_user_id) VALUES (:content, :video_id, :user_id)";
 
         $attributes = array(
-          'content' => 'oui',
+          'content' => addslashes('oui'),
           'video_id' => '1',
           'user_id' => $_COOKIE['userid'],
         );

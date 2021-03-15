@@ -26,12 +26,12 @@
 if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
 
     $id = $_COOKIE['userid'];
-    $username = $_GET['username'];
+    $username = addslashes($_GET['username']);
       $profile_picture = $_GET['profile_picture'];
       $banner = $_GET['banner'];
-      $name = $_GET['name'];
+      $name = addslashes($_GET['name']);
       $website = $_GET['website'];
-      $bio = $_GET['bio'];
+      $bio = addslashes($_GET['bio']);
 
     if(isset($_GET["profile_picture"]) && isset($_GET["banner"])){
         $sql = "UPDATE users SET user_username='$username', user_profile_picture='$profile_picture', user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
@@ -466,7 +466,7 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
                     <label for="bio">
                         <span>Bio</span>
                         <textarea class="input_connexion input_bio" id="bio" name="bio" cols="30"
-                            rows="6"><?php echo $row['user_bio'];?>"</textarea>
+                            rows="6"><?php echo $row['user_bio'];?></textarea>
                     </label>
                 </div>
 

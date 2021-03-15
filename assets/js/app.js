@@ -185,10 +185,13 @@ $(".icon_eye").mousedown(function(){
 $(".icon_eye").mouseup(function(){
     $(this).removeClass("icon_eye_open")
 })
-$(".input_mdp").click(function(){
+
+
+function restrictionMdp(){
     $(".restriction").addClass("restriction_translate")
     $(".restriction_container").addClass("restriction_container_border")
-})
+
+}
 
 // Voir le mdp
 document.querySelector('#eye').addEventListener("mousedown",  () => 
