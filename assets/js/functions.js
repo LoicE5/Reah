@@ -120,3 +120,39 @@ function searchEngine(input){
 
     }
 }
+
+function showLikesAsDisconnected(){
+
+    $(".connexion_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+    $(".dark_filter").addClass("show fixed");
+    $(".main_content").addClass("scroll_none");
+
+    $(".dark_filter,.connexion_close_icon").click(function (){
+        $(".connexion_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+        $(".dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none");
+    })
+}
+
+function addLike(element){
+    let closest_iframe = element.closest('.video_container').querySelector('iframe');
+    let video_url = closest_iframe.src;
+    let video_vimeo_id = Number(video_url.split('https://player.vimeo.com/video/')[1]); // Basically, split returns an array like ["", "51831727"]
+
+    console.log(closest_iframe);
+    console.log(video_vimeo_id);
+
+    let fetch_url = `assets/php/actions.php?action=addLike&video=${video_vimeo_id}`;
+
+    fetch(fetch_url).then(response=>{
+        response.text().then(text=>{
+            let final_count = Number(text);
+            console.log(`final_count = ${final_count}`);
+
+            let target = element.querySelector('.pop_corn_number>b');
+            console.log(element);
+            console.log(target);
+            target.innerHTML = final_count;
+        });
+    });
+}

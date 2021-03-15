@@ -25,6 +25,7 @@
 </head>
 
 <body>
+
     <section class="accueil">
         <div class="btn_container">
             <a href="login.php" class="btn btn_connexion">Se connecter</a>
@@ -140,7 +141,7 @@
                             <!-- All videos -->
                             <div class="all_video_container">
 
-                                <?php
+            <?php
 
                 $query = "SELECT * FROM `videos`";
                 $stmt = $db->prepare($query);
@@ -154,29 +155,7 @@
 
                         <!-- Short film (class=video) -->
                         <div class='video_content'>
-                        <div data-vimeo-id='".$row['video_url']."' data-vimeo-width='auto' id='video_".$row['video_id']."' class='video'></div>
-                        <script>
-                            let video_".$row['video_id']."_player = new Vimeo.Player('video_".$row['video_id']."');
-                        
-                            let video_".$row['video_id']."_div = video_".$row['video_id']."_player.element;
-                            let video_".$row['video_id']."_iframe;
-                            
-                            let video_".$row['video_id']."_interval = setInterval(()=>{
-                        
-                                if(video_".$row['video_id']."_div.firstChild){
-                        
-                                    video_".$row['video_id']."_iframe = video_".$row['video_id']."_div.firstChild;
-                        
-                                    let doc = video_".$row['video_id']."_iframe.contentDocument ? video_".$row['video_id']."_iframe.contentDocument :
-                                video_".$row['video_id']."_iframe.contentWindow.document;
-                        
-                                console.log(doc);
-                        
-                                clearInterval(video_".$row['video_id']."_interval);
-                                }
-                            });
-                        
-                        </script>
+                        <iframe src='https://player.vimeo.com/video/".$row['video_vimeo_id']."' class='video' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                             <!-- Name + pp -->
                             <div class='user_container'>
                                 <img src='profile_pictures/default.jpg' class='pp_profile' alt=''>
@@ -198,12 +177,26 @@
                                         </p>
                                 </div>
                                 <div class='reaction_container'>
-                                    <div class='fb_jsb like_container'>
+                                ";
+                                if(!func::checkLoginState($db)){ # If the user isn't connected
+                                    echo "
+                                    <div class='fb_jsb like_container' onclick='showLikesAsDisconnected()'>
                                         <!-- Pop corn image -->
                                         <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
-                                    </div>
+                                        <p class='pop_corn_number'><b>".$row['video_like_counter']."</b>&nbsp;J'aime</p>
+                                    </div>";
+                                } else {
+                                    echo "
+                                    <div class='fb_jsb like_container' onclick='addLike(this)'>
+                                        <!-- Pop corn image -->
+                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'><b>".$row['video_like_counter']."</b>&nbsp;J'aime</p>
+                                    </div>";
+                                }
+
+                                echo "
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c'>
                                         <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
@@ -268,33 +261,7 @@
 
                         <!-- Short film (class=video) -->
                         <div class='video_content'>
-                        <div data-vimeo-id='".$row['video_url']."' data-vimeo-width='auto' id='video_".$row['video_id']."' class='video'></div>
-                        <script>
-                            let video_".$row['video_id']."_player = new Vimeo.Player('video_".$row['video_id']."');
-                        
-                            let video_".$row['video_id']."_div = video_".$row['video_id']."_player.element;
-                            let video_".$row['video_id']."_iframe;
-                            
-                            let video_".$row['video_id']."_interval = setInterval(()=>{
-                        
-                                if(video_".$row['video_id']."_div.firstChild){
-                        
-                                    video_".$row['video_id']."_iframe = video_".$row['video_id']."_div.firstChild;
-
-                                    video_".$row['video_id']."_iframe.style.width = '100% !important';
-                                    
-                                    video_".$row['video_id']."_iframe.style.height = '100% !important';
-
-                                    let doc = video_".$row['video_id']."_iframe.contentDocument ? video_".$row['video_id']."_iframe.contentDocument :
-                                video_".$row['video_id']."_iframe.contentWindow.document;
-                        
-                                console.log(doc);
-                        
-                                clearInterval(video_".$row['video_id']."_interval);
-                                }
-                            });
-                        
-                        </script>
+                        <iframe src='https://player.vimeo.com/video/".$row['video_vimeo_id']."' class='video' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                             <!-- Name + pp -->
                             <div class='user_container'>
                                 <img src='profile_pictures/default.jpg' class='pp_profile' alt=''>
@@ -380,29 +347,7 @@
     
                             <!-- Short film (class=video) -->
                             <div class='video_content'>
-                            <div data-vimeo-id='".$row['video_url']."' data-vimeo-width='auto' id='video_".$row['video_id']."' class='video'></div>
-                            <script>
-                                let video_".$row['video_id']."_player = new Vimeo.Player('video_".$row['video_id']."');
-                            
-                                let video_".$row['video_id']."_div = video_".$row['video_id']."_player.element;
-                                let video_".$row['video_id']."_iframe;
-                                
-                                let video_".$row['video_id']."_interval = setInterval(()=>{
-                            
-                                    if(video_".$row['video_id']."_div.firstChild){
-                            
-                                        video_".$row['video_id']."_iframe = video_".$row['video_id']."_div.firstChild;
-                            
-                                        let doc = video_".$row['video_id']."_iframe.contentDocument ? video_".$row['video_id']."_iframe.contentDocument :
-                                    video_".$row['video_id']."_iframe.contentWindow.document;
-                            
-                                    console.log(doc);
-                            
-                                    clearInterval(video_".$row['video_id']."_interval);
-                                    }
-                                });
-                            
-                            </script>
+                            <iframe src='https://player.vimeo.com/video/".$row['video_vimeo_id']."' class='video' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
                                 <!-- Name + pp -->
                                 <div class='user_container'>
                                     <img src='profile_pictures/default.jpg' class='pp_profile' alt=''>

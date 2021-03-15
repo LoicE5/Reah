@@ -16,10 +16,5 @@ $db = new PDO("mysql:host=$db_host;dbname=$db_name",$db_username,$db_password);
 $stmt = $db->prepare("SELECT * FROM users");
 $stmt->execute();
 
-$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// foreach ($rows as $row){
-//     echo $row["user_username"];
-// }
 
 ?>

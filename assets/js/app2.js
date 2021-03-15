@@ -199,16 +199,16 @@ $(document).ready(function () {
 
 
     // Pop up connexion
-    $(".like_container").click(function () {
-        $(".connexion_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
-        $(".dark_filter").addClass("show fixed");
-        $(".main_content").addClass("scroll_none")
-    })
-    $(".dark_filter,.connexion_close_icon").click(function () {
-        $(".connexion_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
-        $(".dark_filter").removeClass("show");
-        $(".main_content").removeClass("scroll_none")
-    })
+    // $(".like_container").click(function () {
+    //     $(".connexion_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+    //     $(".dark_filter").addClass("show fixed");
+    //     $(".main_content").addClass("scroll_none")
+    // })
+    // $(".dark_filter,.connexion_close_icon").click(function () {
+    //     $(".connexion_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+    //     $(".dark_filter").removeClass("show");
+    //     $(".main_content").removeClass("scroll_none")
+    // })
 
 
     // Pop up share
