@@ -155,6 +155,51 @@ $(document).ready(function () {
         let title2Left = $(".category_title2").position();
         let title3Left = $(".category_title3").position();
 
+    // Pop up connexion
+    // $(".like_container").click(function () {
+    //     $(".connexion_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+    //     $(".dark_filter").addClass("show fixed");
+    //     $(".main_content").addClass("scroll_none")
+    // })
+    // $(".dark_filter,.connexion_close_icon").click(function () {
+    //     $(".connexion_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+    //     $(".dark_filter").removeClass("show");
+    //     $(".main_content").removeClass("scroll_none")
+    // })
+
+
+    // Pop up share
+    $(".share_icon, .share_container").click(function () {
+        $(".share_film_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+        $(".share_dark_filter").addClass("show fixed");
+        $(".main_content").addClass("scroll_none")
+    })
+    $(".share_dark_filter,.share_close_icon").click(function () {
+        $(".share_film_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+        $(".share_dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none")
+    })
+
+
+    // Saved icon animation click
+    $(".film_saved_icon").click(function () {
+        if ($(this).attr('src') == 'sources/img/film_saved_icon_click.svg') {
+            $(this).attr('src', 'sources/img/film_saved_icon.svg');
+        } else {
+            $(this).attr('src', 'sources/img/film_saved_icon_click.svg');
+
+        }
+    })
+
+
+    // Pop up film informations settings
+    $(".film_settings_icon").click(function () {
+        if ($(".film_settings_container").hasClass("show")) {
+            $('.film_settings_container').removeClass("show").addClass("hide"); //Adds 'b', removes 'a'
+        } else {
+            $('.film_settings_container').removeClass("hide").addClass("show"); //Adds 'a', removes 'b'
+        }
+    });
         let titlePosition = $("#title2").offset().top - 100;
         let titlePosition2 = $("#title3").offset().top - 100;
 

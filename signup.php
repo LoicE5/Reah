@@ -36,7 +36,7 @@
                     redirect('signup.php');
                 } else {
         
-                    $query = "INSERT INTO users (user_lastname,user_firstname,user_username,user_email,user_password,user_status,user_profile_picture) VALUES ('$last_name','$first_name','$username','$email','$hashed_password',0,'profile_pictures/default.jpg')";
+                    $query = "INSERT INTO users (user_lastname,user_firstname,user_username,user_email,user_password,user_status,user_CGU,user_profile_picture) VALUES ('$last_name','$first_name','$username','$email','$hashed_password',0,1,'profile_pictures/default.jpg')";
                     $stmt = $db->prepare($query);
                     $stmt->execute();
                     

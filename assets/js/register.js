@@ -71,7 +71,7 @@ body.addEventListener('change', (e) =>
 
 
     })
-
+/*
 body.addEventListener('submit', e =>
 
     {
@@ -223,6 +223,9 @@ body.addEventListener('submit', e =>
         }
 
     })
+
+*/
+
 $(document).ready(function () {
 
     let count = 0;

@@ -184,4 +184,9 @@ function isNumber(?array $array){
     return $isInt;
 }
 
+function transformToArray($str){
+    $array = explode(",",$str);
+    return $array;
+}
+
 ?>

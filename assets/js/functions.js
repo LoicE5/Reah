@@ -1,33 +1,33 @@
-function scrollLeft(selector, distance) {
+function scrollLeft(selector,distance) {
     let element;
-    if (typeof selector == "string") {
+    if(typeof selector == "string"){
         element = document.querySelector(selector);
     } else {
         element = selector;
     }
     console.log('ÇA MARCHE ZEBI');
     element.scrollBy({
-        left: -distance,
-        behavior: 'smooth'
+      left: -distance,
+      behavior: 'smooth'
     });
 }
 
-function scrollRight(selector, distance) {
+function scrollRight(selector,distance) {
     let element;
-    if (typeof selector == "string") {
+    if(typeof selector == "string"){
         element = document.querySelector(selector);
     } else {
         element = selector;
     }
     console.log('ÇA MARCHE ZEBI');
     element.scrollBy({
-        left: distance,
-        behavior: 'smooth'
+      left: distance,
+      behavior: 'smooth'
     });
 }
 
-function redirect(url) {
-    if (typeof url == "string") {
+function redirect(url){
+    if(typeof url == "string"){
         window.location = url;
     } else {
         console.log(`Error : wrong redirect input. You entered : ${url}.`)
@@ -42,18 +42,18 @@ function toggleBurgerMenu() {
     }
 }
 
-function searchEngine(input) {
+function searchEngine(input){
     console.log('triggered');
     let url = `assets/php/actions.php?action=research&search=${input}`;
     let searchbar = document.querySelector('input.search_bar');
 
-    if ((input == null || input == '' || input == undefined) && document.querySelector('#search_list')) {
+    if((input == null || input == '' || input == undefined) && document.querySelector('#search_list')){
         console.log('YES TRIGGERED');
         document.querySelector('body').removeChild(document.querySelector('#search_list'));
     } else {
 
-        fetch(url).then(response => {
-            response.text().then(text => {
+        fetch(url).then(response=>{
+            response.text().then(text=>{
                 let splitted = text.split('splitter');
 
                 let videos = JSON.parse(splitted[0]);
@@ -61,13 +61,13 @@ function searchEngine(input) {
 
                 let coordinates = {
                     left: searchbar.offsetLeft,
-                    top: Number(searchbar.offsetTop + searchbar.offsetHeight),
+                    top: Number(searchbar.offsetTop+searchbar.offsetHeight),
                     width: searchbar.offsetWidth
                 };
 
                 console.log(coordinates);
 
-                if (!document.querySelector('#search_list')) {
+                if(!document.querySelector('#search_list')){
                     let list = document.createElement('div');
                     list.id = 'search_list';
                     list.style = `left: ${coordinates.left}px; top: ${coordinates.top}px; width: ${coordinates.width}px;`;
@@ -81,9 +81,9 @@ function searchEngine(input) {
 
                 searchList.innerHTML += `<h4 style="text-align: center;">Courts-métrages</h4>`;
 
-                for (let i = 0; i < videos.length; i++) {
+                for(let i=0;i<videos.length;i++){
 
-                    if (videos.length == 0) {
+                    if(videos.length == 0){
 
                         searchList.innerHTML += `<p>Aucun résultat</p>`;
 
@@ -99,9 +99,9 @@ function searchEngine(input) {
 
                 searchList.innerHTML += `<h4 style="text-align: center;">Membres</h4>`;
 
-                for (let i = 0; i < users.length; i++) {
+                for(let i=0;i<users.length;i++){
 
-                    if (users.length == 0) {
+                    if(users.length == 0){
 
                         searchList.innerHTML += `<p>Aucun résultat</p>`;
 
@@ -119,6 +119,42 @@ function searchEngine(input) {
         });
 
     }
+}
+
+function showLikesAsDisconnected(){
+
+    $(".connexion_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+    $(".dark_filter").addClass("show fixed");
+    $(".main_content").addClass("scroll_none");
+
+    $(".dark_filter,.connexion_close_icon").click(function (){
+        $(".connexion_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+        $(".dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none");
+    })
+}
+
+function addLike(element){
+    let closest_iframe = element.closest('.video_container').querySelector('iframe');
+    let video_url = closest_iframe.src;
+    let video_vimeo_id = Number(video_url.split('https://player.vimeo.com/video/')[1]); // Basically, split returns an array like ["", "51831727"]
+
+    console.log(closest_iframe);
+    console.log(video_vimeo_id);
+
+    let fetch_url = `assets/php/actions.php?action=addLike&video=${video_vimeo_id}`;
+
+    fetch(fetch_url).then(response=>{
+        response.text().then(text=>{
+            let final_count = Number(text);
+            console.log(`final_count = ${final_count}`);
+
+            let target = element.querySelector('.pop_corn_number>b');
+            console.log(element);
+            console.log(target);
+            target.innerHTML = final_count;
+        });
+    });
 }
 
 
