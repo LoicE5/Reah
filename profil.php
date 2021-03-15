@@ -39,7 +39,7 @@
         <nav class="menu_nav">
 
             <!-- Logo Réah -->
-            <a class="reah_logo" href="fil_actu.php"> <img src="sources/img/logo_reah.svg" alt=""></a>
+            <a href="fil_actu.php" class="reah_logo"></a>
 
             <!-- Search bar -->
             <form action="" class="form_search_bar">
@@ -47,7 +47,7 @@
             </form>
 
             <?php
-                if(func::checkLoginState($db)){ # If the user is connected
+                 if(func::checkLoginState($db)){ # If the user is connected
                     $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
                     $stmt = $db->prepare($query);
                     $stmt->execute();
@@ -55,11 +55,14 @@
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     echo "<div class='menu_profile'>
-                    <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
+                    <!-- Fil actu icon -->
+                    <form action='fil_actu.php' method='GET'>
+                        <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                    </form>
                     <!-- Defi icon -->
-                    <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
+                    <a href='defis.php' class='defi_icon'></a>
                     <!-- Profile photo -->
-                    <img src='".$row['user_profile_picture']."' class='menu_pp' alt='' onclick='toggleBurgerMenu(this)'>
+                    <img src='".$row['user_profile_picture']."' class='menu_pp' alt='' onclick='toggleBurgerMenu()'>
                     </div>
                     </nav>";
 
@@ -182,13 +185,13 @@
 
                             <!-- Comment icon -->
                             <div class='fb_jc ai-c'>
-                                <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                <div class='comment_icon'></div>
                                 <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                             </div>
 
                             <!-- Share icon -->
                             <div class='fb_jsb share_container'>
-                                <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
+                                <div class='share_icon'></div>
                                 <p class='share_title'>Partager</p>
                             </div>
                         </div>
@@ -259,13 +262,13 @@
 
                             <!-- Comment icon -->
                             <div class='fb_jc ai-c'>
-                                <img src='sources/img/comment_icon.svg' class='comment_icon' alt=''>
+                                <div class='comment_icon'></div>
                                 <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                             </div>
 
                             <!-- Share icon -->
                             <div class='fb_jsb share_container'>
-                                <img src='sources/img/share_icon.svg' class='share_icon' alt=''>
+                                <div class='share_icon'></div>
                                 <p class='share_title'>Partager</p>
                             </div>
                         </div>
@@ -439,7 +442,7 @@
     </div>
 
     <script src="assets/js/profil.js"></script>
-    <script src="assets/js/app2.js"></script>
+    <script src="assets/js/app.js"></script>
     <script src="assets/js/functions.js"></script>
     <!-- <script src="assets/js/fil_actu.js"></script> -->
 </body>

@@ -1,3 +1,8 @@
+.nav_footer{
+    display: flex;
+    display: none;
+}
+
 @media screen and (max-width:450px) {
     .all_video_container{
         flex-direction: column;
@@ -7,7 +12,15 @@
     .video_container{
         margin-bottom: 40px;
         margin-right: 0px;
-        min-width: unset;
+        min-width: 100%;
+    }
+
+    .see_more{
+        display: none;
+    }
+
+    .synopsis_title{
+        min-width: 100%;
     }
     .video_content{
         width: 100%;
@@ -48,11 +61,9 @@
     .second_category,.third_category{
         display: none;
     }
-    .main_content{
-        background: #141414;
-    }
     .nav_footer{
         display: flex;
+        /* display: none; */
     }
 
     .film_container{
@@ -90,5 +101,9 @@
     .menu_nav{
         justify-content: flex-end;
         padding-left: 0;
+    }
+
+    .section2{
+        margin-bottom: 60px !important;
     }
 }

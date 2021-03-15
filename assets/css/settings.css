@@ -18,6 +18,7 @@
 
 .menu_nav {
     padding-top: 10px;
+    z-index: 400;
 }
 
 .settings_menu {

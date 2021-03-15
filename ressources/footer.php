@@ -12,7 +12,8 @@
 <div class="section1">
 
 <!-- Logo REAH -->
-    <img src="sources/img/reah_logo_complet.png" alt="" class="reah_logo_complet">
+<a class="footer_reah_logo" href="fil_actu.php"></a>
+
 
 <!-- About -->
     <div class="about">
@@ -36,11 +37,11 @@
     <div class="social">
         <p><b>Suivez-nous !</b></p>
         <a href="https://www.linkedin.com/company/reah" target="_bank">
-        <img src="sources/img/linkedin_icon.png" alt="" class="linkedin_logo">
+        <div class="linkedin_logo"></div>
         <p>Linkedin</p>
         </a>
         <a href="https://www.instagram.com/reahfr/" target="_bank">
-        <img src="sources/img/insta_icon.png" alt="" class="insta_logo">
+        <div class="insta_logo"></div>
         <p>Instagram</p>
         </a>
     </div>
@@ -54,7 +55,7 @@
 </div>
 
 <div class="section2">
-    <p>@2020 REAH. Tous droits réservés</p>
+    <p>©2021 REAH. Tous droits réservés</p>
 </div>
 
   

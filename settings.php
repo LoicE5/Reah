@@ -26,8 +26,7 @@
         <nav class="menu_nav">
 
             <!-- Logo Réah -->
-            <a class="reah_logo_container" href="fil_actu.php"> <img src="sources/img/reah_logo_complet.png"
-                    class="reah_logo" alt=""></a>
+            <a class="reah_logo" href="fil_actu.php"> </a>
 
             <!-- Search bar -->
             <form action="" class="form_search_bar">
@@ -43,11 +42,14 @@
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     echo "<div class='menu_profile'>
-                    <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
+                    <!-- Fil actu icon -->
+                    <form action='fil_actu.php' method='GET'>
+                        <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                    </form>
                     <!-- Defi icon -->
-                    <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
+                    <a href='defis.php' class='defi_icon'></a>
                     <!-- Profile photo -->
-                    <img src='".$row['user_profile_picture']."' class='menu_pp' alt='' onclick='toggleBurgerMenu(this)'>
+                    <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
                     </div>
                     </nav>";
 

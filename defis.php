@@ -19,7 +19,7 @@ if ($title == ' ') {
         // $requete = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_poster) VALUES ($title, $constraints, NULL, NULL)";
         // $stmt=$db->query($requete);
 
-    $sql = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_image, defi_user_id, defi_verified) VALUES (:title, :constraints, NULL, NULL, :user,0)";
+    $sql = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_image, defi_user_id, defi_verified, defi_current) VALUES (:title, :constraints, NULL, NULL, :user, 0, 0)";
 
     $attributes = array(
       'title' => $_GET['title'],
@@ -41,6 +41,7 @@ if ($title == ' ') {
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,6 +53,7 @@ if ($title == ' ') {
         rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/fullpage.css" />
 </head>
+
 <body>
     <main class="main_content">
 
@@ -60,8 +62,7 @@ if ($title == ' ') {
         <nav>
 
             <!-- Logo Réah -->
-            <a href="fil_actu.php" class="reah_logo_container"> <img src="sources/img/reah_logo_complet.png"
-                    class="reah_logo" alt=""></a>
+            <a href="fil_actu.php" class="reah_logo"></a>
 
             <div class="menu_nav">
                 <!-- Categories's title -->
@@ -91,9 +92,11 @@ if ($title == ' ') {
     
                         echo "<div class='menu_profile'>
                         <!-- Fil actu icon -->
-                        <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
+                        <form action='fil_actu.php' method='GET'>
+                            <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                        </form>
                         <!-- Profile photo -->
-                        <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
+                        <img src='".$row['user_profile_picture']."' class='menu_pp' alt='' onclick='toggleBurgerMenu()'>
                         </div>
                         </nav>";
     
@@ -101,10 +104,12 @@ if ($title == ' ') {
     
                         echo "<div class='menu_profile'>
                         <!-- Fil actu icon -->
-                        <a href='fil_actu.php'> <img src='sources/img/fil_actu_icon.svg' class='defi_icon' alt=''></a>
+                        <form action='fil_actu.php' method='GET'>
+                            <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                        </form>
                         <!-- Profile photo -->
                         <div class='se-connecter' onclick='redirect(`login.php`)'>
-                            <img src='sources/img/profil_icon.svg' class='menu_pp_icon' alt='Se connecter' onload='SVGInject(this)'>
+                        <div class='se-connecter menu_pp_icon' onclick='redirect(`login.php`)' onload='SVGInject(this)'>
                         </div>
                         </div>
                         </nav>";
@@ -115,11 +120,11 @@ if ($title == ' ') {
 
         <!-- Category list  -->
         <div class="category_list_container">
-            <p class="category_list_category" number="1" number1="2" number2="3" onclick='redirect(`login.php`)'>Défis du moment</p>
-            <p class="category_list_category" number="2" number1="1" number2="3">Défis populaires</p>
-            <p class="category_list_category" number="3" number1="1" number2="2">Défis à découvrir</p>
+            <p class="category_list_category category_list_category1" number="1" number1="2" number2="3">Défis du moment</p>
+            <p class="category_list_category category_list_category2" number="2" number1="1" number2="3">Défis populaires</p>
+            <p class="category_list_category category_list_category3" number="3" number1="1" number2="2">Défis à découvrir</p>
         </div>
-        
+
         <!-- Menu -->
         <?php
         require("ressources/menu.php");
@@ -131,31 +136,51 @@ if ($title == ' ') {
 
             <div class="add_defi_btn_container">
                 <!-- Category title -->
-                <h1>DÉFIS DU MOMENT</h1>
+                <h1 id="title1">
+                    <div class="red_line title_line"></div>
+                    DÉFIS DU MOMENT
+                </h1>
 
                 <!-- Add defi btn -->
-                <div class="btn add_defi_btn">
+                <?php
+                if(func::checkLoginState($db)){ # If the user is connected
+                echo'
+                <div class="btn add_defi_btn" onclick="popupAddDefi()">
                     <img class="add_defi_icon" src="sources/img/add_defi_icon.svg" alt="">
                     Proposer un défi
-                </div>
+                </div>';
+                } else { # If the user is an asshole
+                    echo'
+                    <div class="btn add_defi_btn" onclick="popupConnexion()">
+                        <img class="add_defi_icon" src="sources/img/add_defi_icon.svg" alt="">
+                        Proposer un défi
+                    </div>';
+                }
+                ?>
             </div>
 
             <!-- Challenges container -->
             <div class="defi_container ">
 
                 <!-- Challenge n°1-->
-                <a href="defi_details.php" class="defi_content" defi="1">
-                    <img class="defi_img defi1_img" src="sources/img/defi1.jpg" alt="">
-                    <p class="defi_title defi1_title">SAINT-VALENTIN</p>
-                    <p class="defi_time">Temps restant : 14h 30min</p>
-                </a>
 
-                <!-- Challenge n°2-->
-                <a href="defi_details.php" class="defi_content" defi="2">
-                    <img class="defi_img defi2_img" src="sources/img/avion.jpg" alt="">
-                    <p class="defi_title defi2_title">AVION</p>
-                    <p class="defi_time">Temps restant : 2 semaines et 3 jours</p>
-                </a>
+                <?php
+                $query = "SELECT * FROM defis WHERE defi_verified='1' AND defi_current='1'";
+                $stmt = $db->prepare($query);
+                $stmt->execute();
+
+                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+                foreach($rows as $row){
+                    echo '
+                        <a href="defi_details.php?defi='.$row['defi_id'].'" class="defi_content">
+                        <img class="defi_img defi1_img" src="data:image/png;base64,' . base64_encode($row['defi_image']) . '" alt="">
+                        <p class="defi_time">Temps restant : 14h 30min</p>
+                    </a>';
+                }
+                ?>
+                <!--  -->
             </div>
         </div>
 
@@ -170,12 +195,15 @@ if ($title == ' ') {
             <div class="category_content">
 
                 <!-- Category title -->
-                <h1 class="title2">DÉFIS POPULAIRES</h1>
+                <h1 id="title2">
+                    <div class="red_line title_line"></div>
+                    DÉFIS POPULAIRES
+                </h1>
 
                 <!-- Challenges container -->
                 <div class="defi_pop_container ">
 
-                <?php
+                    <?php
                 $query = "SELECT * FROM defis WHERE defi_verified='1'";
                 $stmt = $db->prepare($query);
                 $stmt->execute();
@@ -186,12 +214,11 @@ if ($title == ' ') {
                 foreach($rows as $row){
                     echo '
                         <a href="defi_details.php?defi='.$row['defi_id'].'" class="defi_pop_content">
-                        <img class="defi_img defi_pop_img" src="sources/img/defi1.jpg" alt="">
-                        <p class="defi_pop_title">'. strtoupper($row['defi_name']) .'</p>
+                        <img class="defi_img defi_pop_img" src="data:image/png;base64,' . base64_encode($row['defi_image']) . '" alt="">
                         </a>';
                 }
                 ?>
-                
+
                 </div>
             </div>
 
@@ -210,12 +237,15 @@ if ($title == ' ') {
             <div class="category_content">
 
                 <!-- Category title -->
-                <h1>À DÉCOUVRIR</h1>
+                <h1 id="title3">
+                    <div class="red_line title_line"></div>
+                    À DÉCOUVRIR
+                </h1>
 
                 <div class="defi_pop_container ">
 
-                   
-                <?php
+
+                    <?php
                 $query = "SELECT * FROM defis WHERE defi_verified='1'";
                 $stmt = $db->prepare($query);
                 $stmt->execute();
@@ -226,11 +256,11 @@ if ($title == ' ') {
                 foreach($rows as $row){
                     echo '
                         <a href="defi_details.php" class="defi_pop_content">
-                        <img class="defi_img defi_pop_img" src="sources/img/defi1.jpg" alt="">
-                        <p class="defi_pop_title">'. strtoupper($row['defi_name']) .'</p>
+                        <img class="defi_img defi_pop_img" src="data:image/png;base64,' . base64_encode($row['defi_image']) . '" alt="">
                         </a>';
-                }
-                ?>
+                    }
+                    ?>
+                    <!-- <p class="defi_pop_title">'. strtoupper($row['defi_name']) .'</p> -->
 
                 </div>
             </div>
@@ -250,17 +280,17 @@ if ($title == ' ') {
 
     <!-- Pop up add defi -->
 
-    <div class="dark_filter"></div>
+    <div class="dark_filter" onclick="closePopupAddDefi()"></div>
 
     <div class="pop_up_container add_defi_container">
         <form action="defis.php" method=GET>
             <div class="pop_up_header">
                 <h2>Proposer un défi</h2>
-                <img src='sources/img/close_icon.svg' class='close_icon' alt=''>
+                <img src='sources/img/close_icon.svg' class='close_icon' alt='' onclick="closePopupAddDefi()">
             </div>
             <div class="pop_up_text">
 
-            <?php if (isset($message)){
+                <?php if (isset($message)){
         echo '<p class="message">'. $message .'</p>';
         }
         ?>
@@ -284,7 +314,7 @@ if ($title == ' ') {
                 </div>
             </div>
 
-            <input type="submit" class="pop_up_btn btn add_defi_btn" name="send" value="Envoyer"></input>
+            <input type="submit" class="pop_up_btn btn send_btn" name="send" value="Envoyer"></input>
         </form>
     </div>
 

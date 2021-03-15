@@ -10,26 +10,7 @@
 }
 
 .underline {
-    width: 143px;
-}
-
-.underline1 {
-    transform: translateX(0px);
-    transition: ease 0.5s;
-    width: 143px;
-}
-
-.underline2 {
-    transform: translateX(190px);
-    width: 130px;
-    transition: ease 0.5s;
-}
-
-.underline3 {
-    transform: translateX(365px);
-    width: 135.5px;
-    transition: ease 0.5s;
-
+    width: 148px;
 }
 
 .add_defi_btn_container{
@@ -39,8 +20,13 @@
     align-items: flex-end;
 }
 
+.add_defi_container>form{
+    flex-direction: column;
+    display: flex;
+}
+
 .add_defi_btn_container>h1{
-    margin-left: 0px;
+    margin-left: 150px;
 }
 
 .add_defi_btn{
@@ -59,9 +45,9 @@
     position: relative;
     flex-direction: column;
     margin: auto;
-    margin-top: 80px;
+    padding-top: 80px;
     align-items: flex-start;
-    width: 90%;
+    width: 100%;
     overflow: hidden;
     justify-content: center;
     min-height: auto;
@@ -77,16 +63,16 @@
 }
 
 .arrow_prev_container, .arrow_next_container{
-    margin-top: 30px;
+    margin-top: 17px;
 }
 
 .defi_container {
     display: flex;
-    width: 100%;
+    width: 90%;
     justify-content: space-between;
+    margin: auto;
     margin-top: 40px;
     min-height: 25vw;
-    overflow: hidden;
 }
 
 .defi_content {
@@ -96,6 +82,7 @@
     justify-content: center;
     align-items: center;
     height: 100%;
+    box-shadow: 0px 0px 20px var(--nav-shadow);
 }
 
 .defi_img {
@@ -132,9 +119,10 @@
     color: white;
     text-decoration: none !important;
     position: absolute;
-    top: 60%;
+    bottom: 5%;
     width: 100%;
-    text-shadow: black 0px 0px 15px;
+    text-shadow: rgba(0, 0, 0, 0.734) 0px 0px 5px;
+    margin: 0;
 }
 
 .defi_pop_container {
@@ -142,7 +130,7 @@
     align-items: center;
     overflow-x: auto;
     position: relative;
-    padding-top: 40px;
+    padding: 40px;
     padding-left: 110px;
     height: 100%;
 }
@@ -155,6 +143,7 @@
     position: relative;
     height: 360px;
     width: 640px;
+    box-shadow: 0px 0px 20px var(--nav-shadow);
 }
 
 .defi_pop_img {
@@ -178,12 +167,26 @@
 }
 .add_defi_input>.input_container{
     margin-bottom: 25px;
+    align-items: center;
+}
+
+.input_container label>span{
+    color: var(--text);
+}
+
+.input_connexion{
+    width: 300px;
+    border-bottom: 1px solid var(--text);
 }
 
 .input_constraints_container {
     min-height: 200px;
-    max-width: 300px;
-    width: 300px;
+    max-width: 500px;
+    width: 500px;
+}
+
+.input_constraints_container>label>textarea {
+    width: 500px;
 }
 
 .input_constraints{
@@ -194,6 +197,7 @@
 
 .add_defi_btn{
     line-height: 30px;
+    margin-right: 5%;
 }
 
 .message_close_icon{
@@ -201,18 +205,20 @@
 }
 
 
+.send_btn{
+    line-height: unset;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
 
 @keyframes defi_img_hover {
     0% {
-        filter: brightness(100%);
-        width: 100%;
-        height: 100%;
     }
 
     100% {
-        filter: brightness(50%);
-        height: 95%;
-        width: 95%;
+        /* filter: brightness(50%); */
+        transform: scale(0.9);
     }
 }
 
@@ -222,15 +228,15 @@
 
 @keyframes defi_img_mouseout {
     100% {
-        filter: brightness(100%);
-        width: 100%;
-        height: 100%;
+        /* filter: brightness(100%); */
+        transform: scale(1);
+
     }
 
     0% {
-        filter: brightness(50%);
-        width: 95%;
-        height: 95%;
+        /* filter: brightness(50%); */
+        transform: scale(0.9);
+
     }
 }
 
@@ -324,16 +330,21 @@
         min-width: 100px;
     }
 
-}
-
-@media screen and (max-width:650px) {
-    
-
     .add_defi_btn_container{
         flex-direction: column;
         min-height: 100px;
         align-items: flex-start;
     }
+
+    .add_defi_btn{
+        margin-left: 5%;
+    }
+}
+
+@media screen and (max-width:650px) {
+    
+
+  
     .defi_container {
         flex-direction: column;
         height: 100%;
@@ -354,6 +365,7 @@
     .defi_title{
         font-size: 6vw;
     }
+
 
 }
 
@@ -379,7 +391,20 @@
     .input_constraints_container{
         width: 100%;
         max-width: 100%;
+        min-width: 100%;
     }
+    
+    .input_constraints_container>label>textarea,.input_connexion {
+        width: 90%;
+    }
+    .input_container>label{
+        width: 100%;
+        align-items: center;
+    }
+    .add_defi_btn_container>h1{
+        margin-left: 0px;
+    }
+    
 }
 
 @media screen and (max-width:450px) {

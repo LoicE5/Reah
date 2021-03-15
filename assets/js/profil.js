@@ -1,14 +1,5 @@
 $(document).ready(function () {
 
-    // Burger menu
-    $(".menu_pp").click(function () {
-        if ($(".menu_container").hasClass("menu_container_click")) {
-            $('.menu_container').removeClass("menu_container_click").addClass("menu_container_click2"); //Adds 'b', removes 'a'
-        } else {
-            $('.menu_container').removeClass("menu_container_click2").addClass("menu_container_click"); //Adds 'a', removes 'b'
-        }
-
-    });
 
     // Modify icon animation hover
     $(".modify_icon").hover(function () {
@@ -77,6 +68,7 @@ $(document).ready(function () {
     // Line position left and width
     let realisationLenght = $(".realisation_number_content_title1").width();
     let realisationLeft = $(".realisation_number_content_title1").position();
+    
     $(".realisation_number_content_line").css({
 
         "width": `${realisationLenght}px`,
@@ -89,17 +81,17 @@ $(document).ready(function () {
 
     $(".realisation_number_content_title").hover(function () {
         $(this).css({
-            "color": "white"
+            "color": "var(--text)"
         });
 
         $(this).mouseout(function () {
             if ($(this).hasClass("category_title_click")) {
                 $(this).css({
-                    "color": "white"
+                    "color": "var(--text)"
                 });
             } else {
                 $(this).css({
-                    "color": "#bbbbbb"
+                    "color": "var(--text-grey)"
                 });
             }
         })
@@ -110,7 +102,7 @@ $(document).ready(function () {
         console.log("number");
         $(".realisation_number_content_title").removeClass("category_title_click");
         $(".realisation_number_content_title" + number).css({
-            "color": "#bbbbbb"
+            "color": "var(--text-grey)"
         });
 
         $(this).addClass("category_title_click");
@@ -212,17 +204,17 @@ $(document).ready(function () {
 
     $(".subscriber_title,.subscription_title").hover(function () {
         $(this).css({
-            "color": "white"
+            "color": "var(--text)"
         });
 
         $(this).mouseout(function () {
             if ($(this).hasClass("category_title_click")) {
                 $(this).css({
-                    "color": "white"
+                    "color": "var(--text)"
                 });
             } else {
                 $(this).css({
-                    "color": "#bbbbbb"
+                    "color": "var(--text-grey)"
                 });
             }
         })
@@ -234,7 +226,7 @@ $(document).ready(function () {
         let number = $(this).attr("number");
         $(".subscriber_title,.subscription_title").removeClass("category_title_click");
         $(".subscriber_title,.subscription_title" + number).css({
-            "color": "#bbbbbb"
+            "color": "var(--text-grey)"
         });
 
         $(this).addClass("category_title_click");
