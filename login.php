@@ -13,6 +13,13 @@
 </head>
 
 <body>
+
+
+    <a href="fil_actu.php" class="reah_logo">
+        <img src="sources/img/dark_reah_logo.png" alt="">
+    </a>
+
+
     <?php
         if( !func::checkLoginState($db) ){ # If the user isn't logged in
             

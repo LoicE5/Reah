@@ -8,12 +8,12 @@
 </a>
 
 <!-- Notifications -->
-<a href="" class="menu_option notifications">
+<a href="notifications.php" class="menu_option notifications">
     <img src="sources/img/notifications_icon.svg" alt="">
     <p class="menu_option_title">Notifications</p>
 </a>
 
-<a href="" class="registered menu_option">
+<a href="saved.php" class="registered menu_option">
     <img src="sources/img/saved_icon.svg" alt="">
     <p class="menu_option_title">Enregistrés</p>
 </a>

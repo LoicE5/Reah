@@ -34,7 +34,7 @@ if(!isset($_GET['accueil'])){
 
         <a class="accueil_reah_logo" href="fil_actu.php"></a>
 
-        <img src="sources/img/pdp.jpg" class="accueil_img" alt="">
+        <img src="sources/img/accueil_img.png" class="accueil_img" alt="">
 
         <div class="accueil_text">
             <p class="h1">Bienvenue sur <nobr> REAH !</nobr>
@@ -93,7 +93,7 @@ if(!isset($_GET['accueil'])){
                         <!-- Defi icon -->
                         <a href='defis.php' class='defi_icon'></a>
                         <!-- Profile photo -->
-                        <img src='".$row['user_profile_picture']."' class='menu_pp' onclick='toggleBurgerMenu()' alt=''>
+                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
                         </div>
                         </nav>";
     
@@ -161,7 +161,7 @@ if(!isset($_GET['accueil'])){
 
                                 <?php
 
-                $query = "SELECT * FROM `videos`";
+                $query = "SELECT * FROM videos, users WHERE user_id=video_user_id";
                 $stmt = $db->prepare($query);
                 $stmt->execute();
 
@@ -197,11 +197,13 @@ if(!isset($_GET['accueil'])){
                         
                         </script>
                             <!-- Name + pp -->
-                            <div class='user_container'>
-                                <img src='profile_pictures/default.jpg' class='pp_profile' alt=''>
-                                <p class='pseudo'>".$row['video_author']."</p>
+                            <a href='profil.php?id=".$row['user_id']."' class='user_container'>
+                            
+                            <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                            
+                                <p class='pseudo'>".$row['user_username']."</p>
                                 <div class='flou'></div>
-                            </div>
+                            </a>
 
                             <!-- Time -->
                             <p class='time'>01:54</p>
@@ -246,7 +248,7 @@ if(!isset($_GET['accueil'])){
                                         <p class='pop_corn_number'>515 J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
-                                    <div class='fb_jc ai-c' onclick='popupConnexion()' >
+                                    <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
                                         <div class='comment_icon'></div>
                                         <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                     </div>
@@ -344,8 +346,10 @@ if(!isset($_GET['accueil'])){
                         </script>
                             <!-- Name + pp -->
                             <div class='user_container'>
-                                <img src='profile_pictures/default.jpg' class='pp_profile' alt=''>
-                                <p class='pseudo'>".$row['video_author']."</p>
+
+                            <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+
+                                <p class='pseudo'>".$row['user_username']."</p>
                                 <div class='flou'></div>
                             </div>
 
@@ -391,7 +395,7 @@ if(!isset($_GET['accueil'])){
                                             <p class='pop_corn_number'>515 J'aime</p>
                                         </div>
                                         <!-- Comment icon -->
-                                        <div class='fb_jc ai-c' onclick='popupConnexion()' >
+                                        <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
                                             <div class='comment_icon'></div>
                                             <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                         </div>
@@ -479,8 +483,10 @@ if(!isset($_GET['accueil'])){
                             </script>
                                 <!-- Name + pp -->
                                 <div class='user_container'>
-                                    <img src='profile_pictures/default.jpg' class='pp_profile' alt=''>
-                                    <p class='pseudo'>".$row['video_author']."</p>
+
+                                <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
+
+                                <p class='pseudo'>".$row['user_username']."</p>
                                     <div class='flou'></div>
                                 </div>
     
@@ -528,7 +534,7 @@ if(!isset($_GET['accueil'])){
                                                 <p class='pop_corn_number'>515 J'aime</p>
                                             </div>
                                             <!-- Comment icon -->
-                                            <div class='fb_jc ai-c' onclick='popupConnexion()' >
+                                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
                                                 <div class='comment_icon'></div>
                                                 <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                                             </div>

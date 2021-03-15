@@ -7,6 +7,7 @@ body {
     justify-content: center;
     flex-direction: column;
     background-color: var(--first_color);
+    color: var(--text);
 }
 
 .accueil {
@@ -17,6 +18,12 @@ body {
     display: flex;
     justify-content: center;
     align-items: center
+}
+
+.accueil_img{
+    width: 500px;
+    margin-right: 50px;
+    filter: drop-shadow(20px 20px 30px var(--accueil-shadow));
 }
 
 .accueil_text>.btn_container {
@@ -37,7 +44,6 @@ body {
     width: 45%;
     display: flex;
     flex-direction: column;
-    margin-left: 50px;
     /* text-align: center; */
     line-height: 30px;
 }
@@ -49,6 +55,7 @@ body {
     line-height: 50px;
     font-weight: bold;
     color: #d60035;
+    margin-top: 0;
 }
 
 .accueil_text>p>b {
@@ -294,6 +301,7 @@ h1 {
     height: 40px;
     padding-right: 15px;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .user_container_hover {
@@ -314,7 +322,6 @@ h1 {
 
 .pseudo {
     z-index: 100;
-    /* text-shadow: #000000 0px 0px 5px; */
 }
 
 .video_content {
@@ -527,7 +534,7 @@ video:focus {
     background-color: #3f3f3f;
 } */
 
-.film_settings_container {
+.film_settings_container, .comment_settings_container {
     color: white;
     width: 150px;
     background-color: #d60036;
@@ -537,7 +544,12 @@ video:focus {
     display: none;
 }
 
-.film_settings_container>div {
+.comment_settings_container{
+    top: 40px;
+    right: 0px;
+}
+
+.film_settings_container>div,.comment_settings_container>div {
     height: 35px;
     width: 100%;
     text-align: center;
@@ -545,7 +557,7 @@ video:focus {
     cursor: pointer;
 }
 
-.film_settings_container>div:hover {
+.film_settings_container>div:hover,.comment_settings_container>div:hover {
     background-color: #af002c;
 }
 
@@ -741,6 +753,11 @@ video:focus {
     padding-left: 50px;
     padding-right: 50px;
     flex-direction: column;
+    
+}
+.comment_content>div>a{
+    text-decoration: none;
+
 }
 
 .pseudo,
@@ -1052,6 +1069,7 @@ video:focus {
         --shadow: #d600358f;
         --nav-shadow: rgb(196, 196, 196);
         --mode: white;
+        --accueil-shadow: rgba(0, 0, 0, 0.438);
     }
 
     .arrow_prev_container {
@@ -1085,6 +1103,9 @@ video:focus {
         min-width: 45px;
         background: url(../../sources/img/light_reah_logo.png) center/ auto 100% no-repeat;
         margin-left: 20px;
+        top: unset;
+        left: unset;
+        position: unset;
     }
 
     .accueil_reah_logo {
@@ -1136,19 +1157,25 @@ video:focus {
         background: url(../../sources/img/light_profile_icon.svg) center/auto 100% no-repeat;
     }
 
+    .defi_icon{
+        background: url(../../sources/img/light_defi_icon.svg) center/auto 100% no-repeat;
+    }
+
     .nav_footer{
         position: fixed;
         bottom: 0px;
         z-index: 300;
         font-size: 0.7rem;
-        padding: 10px;
+        height: 70px;
+        padding: 15px;
+        padding-bottom: 25px;
         padding-left: 15px;
         padding-right: 15px;
         display: none;
         border-top: 1px solid #bbbbbb;
     }
     
-    .nouveaute_icon,.defi_moment_icon,.explorer_icon{
+    .nouveaute_icon,.defi_moment_icon,.explorer_icon, .defi_constraints_icon, .classement_icon, .short_film_icon{
         background: url(../../sources/img/light_nouveaute_icon.svg) center/auto 100% no-repeat;
         height: 35px;
         cursor: pointer;
@@ -1163,6 +1190,14 @@ video:focus {
         background: url(../../sources/img/light_explorer_icon.svg) center/auto 100% no-repeat;
     }
 
+
+    .classement_icon{
+        background: url(../../sources/img/light_classement_icon.svg) center/auto 100% no-repeat;
+    }
+
+    .short_film_icon{
+        background: url(../../sources/img/light_short_film_icon.svg) center/auto 100% no-repeat;
+    }
 
 
 }
@@ -1180,6 +1215,7 @@ video:focus {
         --shadow: black;
         --nav-shadow: black;
         --mode: black;
+        --accueil-shadow: black;
     }
 
     .arrow_prev_container {
@@ -1213,6 +1249,9 @@ video:focus {
         min-width: 45px;
         background: url(../../sources/img/dark_reah_logo.png) center/ auto 100% no-repeat;
         margin-left: 20px;
+        top: unset;
+        left: unset;
+        position: unset;
     }
 
     .accueil_reah_logo {
@@ -1260,12 +1299,19 @@ video:focus {
         background: url(../../sources/img/dark_profile_icon.svg) center/auto 100% no-repeat;
     }
 
+    .defi_icon{
+        background: url(../../sources/img/dark_defi_icon.svg) center/auto 100% no-repeat;
+    }
+
+
     .nav_footer{
         position: fixed;
         bottom: 0px;
         z-index: 300;
         font-size: 0.7rem;
-        padding: 10px;
+        height: 70px;
+        padding: 15px;
+        padding-bottom: 25px;
         padding-left: 15px;
         padding-right: 15px;
         display: none;

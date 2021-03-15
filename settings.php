@@ -49,7 +49,7 @@
                     <!-- Defi icon -->
                     <a href='defis.php' class='defi_icon'></a>
                     <!-- Profile photo -->
-                    <img src='".$row['user_profile_picture']."' class='menu_pp' alt=''>
+                    <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
                     </div>
                     </nav>";
 
@@ -300,6 +300,7 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script src="assets/js/settings.js"></script>
     <script src="assets/js/app2.js"></script>
+    <script src="assets/js/functions.js"></script>
 </body>
 
 </html>

@@ -96,7 +96,7 @@ if ($title == ' ') {
                             <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
                         </form>
                         <!-- Profile photo -->
-                        <img src='".$row['user_profile_picture']."' class='menu_pp' alt='' onclick='toggleBurgerMenu()'>
+                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
                         </div>
                         </nav>";
     
@@ -255,7 +255,7 @@ if ($title == ' ') {
 
                 foreach($rows as $row){
                     echo '
-                        <a href="defi_details.php" class="defi_pop_content">
+                        <a href="defi_details.php?defi='.$row['defi_id'].'" class="defi_pop_content">
                         <img class="defi_img defi_pop_img" src="data:image/png;base64,' . base64_encode($row['defi_image']) . '" alt="">
                         </a>';
                     }

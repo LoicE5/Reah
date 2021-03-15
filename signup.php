@@ -14,6 +14,10 @@
 
 <body>
 
+    <a href="fil_actu.php" class="reah_logo">
+        <img src="sources/img/dark_reah_logo.png" alt="">
+    </a>
+    
     <?php
         if( !func::checkLoginState($db) ){
             if( isset($_POST['last_name']) && isset($_POST['first_name']) && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['pswd']) && isset($_POST['pswd_confirm']) ) {
@@ -197,20 +201,22 @@
                         <input type="password" id="input_mdp" class="input_connexion input_mdp second_form" name="pswd"
                             id="psdw" required autocomplete="off">
                     </label>
+
+                    <!-- To see the password -->
+                    <div class="icon_eye" id="eye" alt=""></div>
+
+                    <!-- Restriction -->
+
+                    <!-- Icon restriction -->
+                    <img class="icon_restriction" src="sources/img/restriction.svg" alt="">
+
+                    <!-- Message restriction -->
+                    <div class="restriction_container">
+                        <p class="restriction">- 8 caractères minimum <br> - 1 majuscule au minimum </p>
+                    </div>
                 </div>
 
-                <!-- To see the password -->
-                <div class="icon_eye" id="eye" alt=""></div>
 
-                <!-- Restriction -->
-
-                <!-- Icon restriction -->
-                <img class="icon_restriction" src="sources/img/restriction.svg" alt="">
-
-                <!-- Message restriction -->
-                <div class="restriction_container">
-                    <p class="restriction">-8 caractères minimum <br> -1 majuscule et minuscule au minimum </p>
-                </div>
 
                 <!-- Intput password confirmation -->
                 <div class="input_container">
@@ -244,8 +250,8 @@
         <!-- <form id="form2">
             <div class="form_container3"> -->
 
-                <!-- Back arrow -->
-                <!-- <svg class="btn_prev2" xmlns="http://www.w3.org/2000/svg" width="31.621" height="25.241"
+        <!-- Back arrow -->
+        <!-- <svg class="btn_prev2" xmlns="http://www.w3.org/2000/svg" width="31.621" height="25.241"
                     viewBox="0 0 31.621 25.241">
                     <g class="fleche" id="Groupe_12" data-name="Groupe 12" transform="translate(-754.379 -406.379)">
                         <line class="line2" id="Ligne_12" data-name="Ligne 12" x1="0" x2="27"
@@ -260,8 +266,8 @@
                     </g>
                 </svg> -->
 
-                <!-- Input validation code -->
-                <!-- <p id="mail">Entre le code de validation envoyé à : <span class="mailcontainer"></span> </p>
+        <!-- Input validation code -->
+        <!-- <p id="mail">Entre le code de validation envoyé à : <span class="mailcontainer"></span> </p>
                 <div class="input_confirm_container">
                     <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code1"
                         required>
@@ -277,16 +283,16 @@
                         required>
                 </div> -->
 
-                <!-- Link haven't received the code.  -->
-                <!-- <a href="" class="link">Je n'ai pas reçu de code</a> -->
+        <!-- Link haven't received the code.  -->
+        <!-- <a href="" class="link">Je n'ai pas reçu de code</a> -->
 
-                <!-- Validation button -->
-                <!-- <button class="btn btn_connexion cannot_click">Valider</button>
+        <!-- Validation button -->
+        <!-- <button class="btn btn_connexion cannot_click">Valider</button>
             </div>
         </form> -->
 
         <!-- CGU -->
-        <p class="CGU">CGU</p>
+        <a href="cgu.php" class="CGU">CGU<a>
     </main>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>

@@ -119,9 +119,8 @@ form{
     overflow: hidden;
 }
 
-.second_category {
+.second_category,.third_category {
     margin-top: 80px;
-    height: 80%;
 }
 
 
@@ -650,5 +649,9 @@ form{
 
     .preview_video{
         width: 100%;
+    }
+
+    .upload_footer{
+        padding: 20px;
     }
 }

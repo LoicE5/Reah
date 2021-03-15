@@ -1,4 +1,6 @@
 <?php
+// ini_set('display_errors',1);
+// ini_set('display_startup_errors',1);
     include('assets/php/config.php');
     require("ressources/pop_up_film_information.php");
 ?>
@@ -6,12 +8,54 @@
     if(!func::checkLoginState($db)){ # If the user isn't connected
         redirect('login.php');
     } else {
+        if(isset($_GET['id'])){
+            $query = "SELECT * FROM users WHERE user_id = ".$_GET['id'].";";
+            $stmt = $db->prepare($query);
+            $stmt->execute();
+    
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        } else {
         $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
         $stmt = $db->prepare($query);
         $stmt->execute();
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
     }
+}
+
+if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
+
+    $id = $_COOKIE['userid'];
+    $username = $_GET['username'];
+      $profile_picture = $_GET['profile_picture'];
+      $banner = $_GET['banner'];
+      $name = $_GET['name'];
+      $website = $_GET['website'];
+      $bio = $_GET['bio'];
+
+    if(isset($_GET["profile_picture"]) && isset($_GET["banner"])){
+        $sql = "UPDATE users SET user_username='$username', user_profile_picture='$profile_picture', user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+      }
+
+    else if(isset($_GET["profile_picture"])){
+        $sql = "UPDATE users SET user_username='$username', user_profile_picture='$profile_picture', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+    }
+
+    else if(isset($_GET["banner"])){
+        $sql = "UPDATE users SET user_username='$username', user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+    }
+
+    else {
+        $sql = "UPDATE users SET user_username='$username', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+
+    }
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+
+    header('Location: profil.php?success=true');
+}
 ?>
 
 <!DOCTYPE html>
@@ -33,6 +77,15 @@
 </head>
 
 <body>
+
+<?php
+    if (isset($_GET['success'])) {
+        echo'
+        <div class="message_container">
+                Ton profil a bien été modifié !
+        </div>';
+    }
+    ?>
     <main class="main_content">
 
         <!-- Navigation menu -->
@@ -51,23 +104,33 @@
                     $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
                     $stmt = $db->prepare($query);
                     $stmt->execute();
-
+            
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
+                    
                     echo "<div class='menu_profile'>
                     <!-- Fil actu icon -->
                     <form action='fil_actu.php' method='GET'>
-                        <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                    <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
                     </form>
                     <!-- Defi icon -->
                     <a href='defis.php' class='defi_icon'></a>
                     <!-- Profile photo -->
-                    <img src='".$row['user_profile_picture']."' class='menu_pp' alt='' onclick='toggleBurgerMenu()'>
+                    <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
                     </div>
                     </nav>";
-
+                    
                 } else {
-                    redirect('login.php');
+                    echo "<div class='menu_profile'>
+                    <!-- Fil actu icon -->
+                    <form action='fil_actu.php' method='GET'>
+                    <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                    </form>
+                    <!-- Defi icon -->
+                    <a href='defis.php' class='defi_icon'></a>
+                    <!-- Profile photo -->
+                    <div class='se-connecter menu_pp_icon' onclick='redirect(`login.php`)' onload='SVGInject(this)'>
+                    </div>
+                    </nav>";
                 }
             ?>
         </nav>
@@ -80,7 +143,9 @@
 
         <div class="banner_container">
             <div class="banner_flou_left"></div>
-            <div class="banner"></div>
+            <?php
+                    echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_banner']) .") no-repeat center/cover' alt=''  class='banner'></div>";
+                ?>
             <div class="banner_flou_right"></div>
         </div>
 
@@ -103,14 +168,28 @@
                         </div>
                     </div>
 
-                    <div class="fb ai-c">
-                        <div class="btn subscribe_btn">S'abonner</div>
-                        <img src="sources/img/modify_icon.svg" class="modify_icon modify_icon2" alt="">
-                    </div>
+
+                    <!-- Subcription btn -->
+                    <?php
+                    if(isset($_GET['id'])){ #if the profile is an other user's profile
+                        $query = "SELECT * FROM users WHERE user_id = ".$_GET['id'].";";
+                        $stmt = $db->prepare($query);
+                        $stmt->execute();
+                
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                        echo'
+                            <div class="fb ai-c">
+                                <div class="btn subscribe_btn">S\'abonner</div>
+                                <img src="sources/img/modify_icon.svg" class="modify_icon modify_icon2" alt="">
+                            </div>';
+                    }
+                    ?>
                 </div>
+
+
                 <!-- Profile photo + username -->
                 <?php
-                    echo '<img src="'.$row['user_profile_picture'].'" alt="" class="profile_photo">';
+                    echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_banner']) .") no-repeat center/cover' alt=''  class='profile_photo'></div>";
                 ?>
             </div>
 
@@ -121,14 +200,46 @@
                     ?>
                     <div class="red_line profile_line"></div>
                     <?php 
-                        echo '<p class="profile_name">'.$row['user_firstname'].'&nbsp;'.$row['user_lastname'].'</p>';
+                        echo '<p class="profile_name">'.$row['user_name'].'</p>';
                     ?>
                     <?php 
-                        echo '<p class="profile_bio">'.$row['user_profile_description'].'</p>';
+                        echo '<p class="profile_bio">'.$row['user_bio'].'</p>';
+                    ?>
+                       <?php 
+                        echo '<a target="_blank" href="https://'.$row['user_website'].'" class="profile_website">'.$row['user_website'].'</a>';
                     ?>
                 </div>
+
+                <!-- Modify icon -->
+
+                <?php
+                    if(isset($_GET['id'])){ #if the profile is an other user's profile
+                        $query = "SELECT * FROM users WHERE user_id = ".$_GET['id'].";";
+                        $stmt = $db->prepare($query);
+                        $stmt->execute();
+                
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                        echo"
+                        <div class='user_settings'>
+                        <div class='user_settings_icon' onclick='userSettings()'>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>";
+        
+                        echo"
+                        <div class='user_settings_container'>
+                            <div>Signaler</div>
+                            <div>Bloquer</div>
+                        </div>
+                    </div>";
+                    
+                    } else {
+                        echo'
+                        <img src="sources/img/modify_icon.svg" class="modify_icon" alt="">';
+                    }
+                    ?>
                 <div class="fb_c">
-                    <img src="sources/img/modify_icon.svg" class="modify_icon" alt="">
                 </div>
             </div>
         </div>
@@ -152,7 +263,7 @@
             <!-- Realisations's videos -->
             <div class="realisation_container">
 
-            <?php
+                <?php
                 // $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
                 // $stmt=$db->query($requete);
                 // $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
@@ -222,7 +333,7 @@
             <!-- Identified's videos -->
             <div class="identified_container">
 
-            <?php
+                <?php
                 // $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
                 // $stmt=$db->query($requete);
                 // $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
@@ -299,29 +410,31 @@
 
     <!-- Modify btn -->
     <div class="pop_up_container modify_container">
-        <form action="oui.php" method="get">
+        <form action="profil.php" method="get">
             <!-- Close icon -->
             <img src='sources/img/close_icon.svg' class='modify_close_icon' alt=''>
 
             <!-- Banner -->
-            <div class="modify_banner"></div>
+                <?php
+                    echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_banner']) .") no-repeat center/100%' alt=''  class='modify_banner'></div>";
+                ?>
 
             <div class="modify_profile_photo_container">
                 <!-- Profile photo -->
-                <?php
-                    echo '<img src="'.$row['user_profile_picture'].'" alt="" class="modify_profile_photo">';
+             <?php
+                    echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_banner']) .") no-repeat center/cover' alt=''  class='modify_profile_photo'></div>";
                 ?>
 
                 <div class="modify_file_container">
                     <!-- Input banner -->
-                    <div class="modify_file_banner">
+                    <div class="modify_file_banner btn">
                         <button class="btn modify_btn_banner">Modifier la bannière</button>
-                        <input type="file" class="">
+                        <input type="file" class="" name="banner">
                     </div>
                     <!-- Input profile photo -->
-                    <div class="modify_file_profile_photo">
+                    <div class="modify_file_profile_photo btn">
                         <button class="btn modify_btn_profile_photo">Modifier la photo de profil</button>
-                        <input type="file" class="">
+                        <input type="file" class="" name="profile_picture">
                     </div>
 
                 </div>
@@ -331,29 +444,33 @@
                 <div class="input_container">
                     <label for="username">
                         <span>Nom d'utilisateur</span>
-                        <input type="text" class="input_connexion" id="username" name="username">
+                        <input type="text" class="input_connexion" id="username" name="username"
+                            value="<?php echo $row['user_username'];?>" required>
                     </label>
                 </div>
                 <div class="input_container">
                     <label for="name">
                         <span>Nom</span>
-                        <input type="text" class="input_connexion" id="name" name="name">
+                        <input type="text" class="input_connexion" id="name" name="name"
+                            value="<?php echo $row['user_name'];?>">
                     </label>
                 </div>
                 <div class="input_container">
                     <label for="website">
                         <span>Site web</span>
-                        <input type="text" class="input_connexion" id="website" name="website">
+                        <input type="text" class="input_connexion" id="website" name="website"
+                            value="<?php echo $row['user_website'];?>">
                     </label>
                 </div>
                 <div class="input_container">
                     <label for="bio">
                         <span>Bio</span>
-                        <textarea class="input_connexion input_bio" id="bio" name="bio" cols="30" rows="10"></textarea>
+                        <textarea class="input_connexion input_bio" id="bio" name="bio" cols="30"
+                            rows="6"><?php echo $row['user_bio'];?>"</textarea>
                     </label>
                 </div>
 
-                <input type="submit" class="btn modify_btn" value="Modifier">
+                <input type="submit" class="btn modify_btn" name="modify_btn" value="Modifier">
             </div>
         </form>
     </div>
@@ -362,7 +479,7 @@
     <div class="pop_up_container subscription_container">
         <div class="pop_up_header subscription_header">
             <!-- Username -->
-            <h2>MinminDddddddddddddddd</h2>
+            <h2><?php echo $row['user_username'];?></h2>
             <!-- Close icon -->
             <img src='sources/img/close_icon.svg' class='close_icon' alt=''>
         </div>
@@ -442,7 +559,7 @@
     </div>
 
     <script src="assets/js/profil.js"></script>
-    <script src="assets/js/app.js"></script>
+    <script src="assets/js/app2.js"></script>
     <script src="assets/js/functions.js"></script>
     <!-- <script src="assets/js/fil_actu.js"></script> -->
 </body>

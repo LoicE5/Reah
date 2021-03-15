@@ -18,9 +18,8 @@
 <!-- About -->
     <div class="about">
         <p><b>À propos</b></p>
-        <a href="">REAH</a>
-        <a href="">L'équipe REAH</a>
-        <a href="">Mentions légales</a>
+        <a href="cgu.php">REAH</a>
+        <a href="cgu.php#mentions">Mentions légales</a>
     </div>
 
 <!-- Navigation -->

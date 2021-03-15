@@ -89,7 +89,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                         <!-- Defi icon -->
                         <a href='defis.php' class='defi_icon'></a>
                         <!-- Profile photo -->
-                        <img src='".$row['user_profile_picture']."' class='menu_pp' alt='' onclick='toggleBurgerMenu()'>
+                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
                         </div>
                         </nav>";
     
@@ -120,7 +120,8 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
         <div class="category_list_container">
 
             <p class="category_list_category category_list_category1" number="1" number1="2" number2="3">Défi</p>
-            <p class="category_list_category category_list_category2" number="2" number1="1" number2="3">Couts-métrages</p>
+            <p class="category_list_category category_list_category2" number="2" number1="1" number2="3">Couts-métrages
+            </p>
             <p class="category_list_category category_list_category3" number="3" number1="1" number2="2">Classement</p>
         </div>
 
@@ -133,14 +134,17 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
         <div class="nav_footer">
             <div class="nav_footer_category" number="1" number2="2" number3="3">
-                <img src="sources/img/loupe_icon.svg" alt="">
-                Défi</div>
+                <div class="defi_icon"></div>
+                Défi
+            </div>
             <div class="nav_footer_category" number="2" number2="1" number3="3">
-                <img src="sources/img/loupe_icon.svg" alt="">
-                Courts-métrages</div>
+                <div class="short_film_icon"></div>
+                Courts-métrages
+            </div>
             <div class="nav_footer_category" number="3" number2="1" number3="2">
-                <img src="sources/img/loupe_icon.svg" alt="">
-                Classement</div>
+                <div class="classement_icon"></div>
+                Classement
+            </div>
         </div>
 
 
@@ -178,7 +182,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                     </div>
 
                     <div class="defi_information">
-                    <?php
+                        <?php
                     if(func::checkLoginState($db)){ # If the user is connected
                     echo'
                     <div href="depot.php" class="btn depot_btn" onclick="popupAddFilm()">
@@ -193,7 +197,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                         </div>';
                     }
                     ?>
-                       
+
 
                         <!-- Time left and number of short films submitted -->
                         <?php

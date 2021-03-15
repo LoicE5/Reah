@@ -1,3 +1,26 @@
+<?php
+    if(isset($_GET['comment_send'])){
+        $sql = "INSERT INTO comments (comment_content, comment_video_id, comment_user_id) VALUES (:content, :video_id, :user_id)";
+
+        $attributes = array(
+          'content' => 'oui',
+          'video_id' => '1',
+          'user_id' => $_COOKIE['userid'],
+        );
+    
+        $stmt = $db->prepare($sql);
+    
+        $stmt->execute($attributes);
+    
+        $db = null;
+
+    header('Location: fil_actu.php?accueil=true');
+
+    }
+?>
+
+
+
 <!-- Films'informations -->
 
 <div class='dark_filter' onclick="closePopupFilm()"></div>
@@ -54,7 +77,7 @@ echo "
                     <!-- Challenge section -->
                     <div class='fb challenge_container'>
                         <div class='defi_icon challenge_defi_icon'></div>
-                        <a href='defi1.php' class='challenge_title'>{$row["defi_name"]}</a>
+                        <a href='defi_details.php?defi={$row["defi_id"]}' class='challenge_title'>{$row["defi_name"]}</a>
                     </div>
 
                     <!-- Date + duration section -->
@@ -126,20 +149,51 @@ echo "
     ?>
     <!-- Comment -->
     <div class='comment_space_container'>
-
+        
         <!-- Write a comment -->
-        <form>
-            <div class='write_comment'  onclick='popupConnexion()'>
-                <img src='sources/img/profile_photo/jstm.jpg' class='pp_profile' alt=''>
-                <textarea name='comment' class='comment_textarea' placeholder='Écrire un commentaire...'></textarea>
-                <input type='submit' class='send_comment' value=''>
-            </div>
-        </form>
+        
+        <?php
+            if(func::checkLoginState($db)){ # If the user isn't connected
+                   
+                $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
+                $stmt = $db->prepare($query);
+                $stmt->execute();
+
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    echo"
+                    <form action='fil_actu.php?accueil=true' method='GET'>
+                        <div class='write_comment'>
+                            <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='pp_profile'></div>
+                            <textarea name='comment' class='comment_textarea' name='comment_content' placeholder='Écrire un commentaire...'></textarea>
+                            <input type='submit' class='send_comment' name='comment_send' value=''>
+                        </div>
+                    </form>
+
+                    ";
+
+                } else {
+
+                    echo"
+                    <form>
+                        <div class='write_comment'  onclick='popupConnexion()'>
+                            <div class='se-connecter menu_pp_icon' onclick='redirect(`login.php`)' onload='SVGInject(this)'></div>
+                            <textarea name='comment' class='comment_textarea' placeholder='Écrire un commentaire...'></textarea>
+                            <input type='submit' class='send_comment' value=''>
+                        </div>
+                    </form>
+
+                    ";
+                }
+                $stmt = null;
+                $query = null;
+                $rows = null;
+        ?>
 
         <!-- All the comments -->
         <?php
         
-        $query = "SELECT * FROM comments, users, videos WHERE comment_video_id=video_id";
+        $query = "SELECT * FROM comments, users, videos WHERE comment_video_id=video_id AND user_id=comment_user_id";
         $stmt = $db->prepare($query);
         $stmt->execute();
         
@@ -149,18 +203,22 @@ echo "
         
             echo "
             <div class='comment_content'>
-                <div class='fb_jsb'>
-                    <div class='fb'>
-                        <img src='{$row["user_profile_picture"]}' class='pp_profile' alt=''>
+                <div class='fb_jsb position_r'>
+                    <a href='profil.php?id={$row['user_id']}' class='fb'>
+                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='pp_profile'></div>
                         <div class='fb_c_jsb pseudo_date_comment'>
                             <p class='pseudo'>{$row["user_username"]}</p>
-                            <p class='comment_date'>{$row["comment_date"]}</p>
+                            <p class='comment_date'>". date('d-m-Y', strtotime($row["comment_date"])) ."</p>
                         </div>
+                    </a>
+                    <div class='comment_param_container' onclick='commentFilmSettings($(this))'>
+                        <div></div>
+                        <div></div>
+                        <div></div>
                     </div>
-                    <div class='comment_param_container'>
-                        <div></div>
-                        <div></div>
-                        <div></div>
+
+                    <div class='comment_settings_container'>
+                        <div>Signaler</div>
                     </div>
                 </div>
     

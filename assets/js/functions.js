@@ -127,12 +127,17 @@ function popupConnexion() {
     $(".connexion_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
     $(".connexion_dark_filter").addClass("show fixed");
     $(".main_content").addClass("scroll_none")
+    $("body,.html").animate({
+        scrollTop:0
+    },"1s")
 }
 
 function closePopupConnexion() {
     $(".connexion_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
     $(".connexion_dark_filter").removeClass("show");
-    $(".main_content").removeClass("scroll_none")
+    if($(".dark_filter").css('display') == 'none'){
+        $(".main_content").removeClass("scroll_none")
+    } 
 }
 
 
@@ -306,4 +311,25 @@ function closePopupAddFilm() {
     $(".upload_container").addClass("film_container_close").removeClass("film_container_open");
     $(".upload_dark_filter").removeClass("show");
     $(".main_content").removeClass("scroll_none")
+}
+
+// Pop up user profile settings
+function userSettings() {
+    if ($(".user_settings_container").hasClass("show")) {
+        $('.user_settings_container').removeClass("show").addClass("hide"); //Adds 'b', removes 'a'
+    } else {
+        $('.user_settings_container').removeClass("hide").addClass("show"); //Adds 'a', removes 'b'
+    }
+}
+
+// Pop up user profile settings
+function commentFilmSettings(e) {
+    let parent = $(e).parent();
+    let commentSettings = $(parent).children(".comment_settings_container");
+    
+    if ($(commentSettings).hasClass("show")) {
+        $(commentSettings).removeClass("show").addClass("hide"); //Adds 'b', removes 'a'
+    } else {
+        $(commentSettings).removeClass("hide").addClass("show"); //Adds 'a', removes 'b'
+    }
 }
