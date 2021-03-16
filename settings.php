@@ -1,5 +1,41 @@
 <?php
     include('assets/php/config.php');
+
+
+// Modifier son profil
+if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
+
+    $id = $_COOKIE['userid'];
+    $username = addslashes($_GET['username']);
+      $profile_picture = $_GET['profile_picture'];
+      $banner = $_GET['banner'];
+      $name = addslashes($_GET['name']);
+      $website = $_GET['website'];
+      $bio = addslashes($_GET['bio']);
+
+    if(isset($_GET["profile_picture"]) && isset($_GET["banner"])){
+        $sql = "UPDATE users SET user_username='$username', user_profile_picture='$profile_picture', user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+      }
+
+    else if(isset($_GET["profile_picture"])){
+        $sql = "UPDATE users SET user_username='$username', user_profile_picture='$profile_picture', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+    }
+
+    else if(isset($_GET["banner"])){
+        $sql = "UPDATE users SET user_username='$username', user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+    }
+
+    else {
+        $sql = "UPDATE users SET user_username='$username', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+
+    }
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+
+    header('Location: settings.php?success=true');
+}
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +55,16 @@
 </head>
 
 <body>
+
+
+    <?php
+    if (isset($_GET['success'])) {
+        echo'
+        <div class="message_container">
+                Ton profil a bien été modifié !
+        </div>';
+    }
+    ?>
 
     <main class="main_content">
 
@@ -79,57 +125,66 @@
                 <!-- Profil -->
                 <div class="settings_container settings_profile_container" number="0">
                     <!-- Banner -->
-                    <div class="modify_banner"></div>
+                    <?php
+                        echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_banner']) .") no-repeat center/100%' alt=''  class='modify_banner'></div>";
+                    ?>
 
                     <div class="modify_profile_photo_container">
                         <!-- Profile photo -->
-                        <img src="database/profile_picture/minmin.jpg" alt="" class="profile_photo">
+                        <?php
+                            echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover' alt=''  class='modify_profile_photo'></div>";
+                        ?>
 
                         <div class="modify_file_container">
                             <!-- Input banner -->
-                            <div class="modify_file_banner">
+                            <div class="modify_file_banner btn">
                                 <button class="btn modify_btn_banner">Modifier la bannière</button>
-                                <input type="file" class="">
+                                <input type="file" accept=".png,.jpeg,.jpg" class="">
                             </div>
                             <!-- Input profile photo -->
-                            <div class="modify_file_profile_photo">
+                            <div class="modify_file_profile_photo btn">
                                 <button class="btn modify_btn_profile_photo">Modifier la photo de profil</button>
-                                <input type="file" class="">
+                                <input type="file" accept=".png,.jpeg,.jpg" class="">
                             </div>
 
                         </div>
                     </div>
                     <!-- Inputs username, name, bio.. -->
                     <div class="modify_input_container">
-                        <div class="all_input_container">
-                            <div class="input_container">
-                                <label for="username">
-                                    <span>Nom d'utilisateur</span>
-                                    <input type="text" class="input_connexion" id="username" name="username">
-                                </label>
+                        <form action="settings.php" method="GET">
+                            <div class="all_input_container">
+                                <div class="input_container">
+                                    <label for="username">
+                                        <span>Nom d'utilisateur</span>
+                                        <input type="text" class="input_connexion" id="username" name="username"
+                                            value="<?php echo $row['user_username'];?>">
+                                    </label>
+                                </div>
+                                <div class="input_container">
+                                    <label for="name">
+                                        <span>Nom</span>
+                                        <input type="text" class="input_connexion" id="name" name="name"
+                                            value="<?php echo $row['user_name'];?>">
+                                    </label>
+                                </div>
+                                <div class="input_container">
+                                    <label for="website">
+                                        <span>Site web</span>
+                                        <input type="text" class="input_connexion" id="website" name="website"
+                                            value="<?php echo $row['user_website'];?>">
+                                    </label>
+                                </div>
+                                <div class="input_container">
+                                    <label for="bio">
+                                        <span>Bio</span>
+                                        <textarea class="input_connexion input_bio" id="bio" name="bio" cols="30"
+                                            rows="10"><?php echo $row['user_bio'];?></textarea>
+                                    </label>
+                                </div>
                             </div>
-                            <div class="input_container">
-                                <label for="name">
-                                    <span>Nom</span>
-                                    <input type="text" class="input_connexion" id="name" name="name">
-                                </label>
-                            </div>
-                            <div class="input_container">
-                                <label for="website">
-                                    <span>Site web</span>
-                                    <input type="text" class="input_connexion" id="website" name="website">
-                                </label>
-                            </div>
-                            <div class="input_container">
-                                <label for="bio">
-                                    <span>Bio</span>
-                                    <textarea class="input_connexion input_bio" id="bio" name="bio" cols="30"
-                                        rows="10"></textarea>
-                                </label>
-                            </div>
-                        </div>
 
-                        <input type="submit" class="btn modify_btn" value="Modifier">
+                            <input type="submit" class="btn modify_btn" name="modify_btn" value="Modifier">
+                        </form>
                     </div>
 
                 </div>
@@ -287,6 +342,60 @@
                     <div>
                         <p></p>
                     </div>
+                </div>
+
+
+                <!-- Security -->
+                <div class="settings_container settings_security_container" number="3">
+                    <h2 class="settings_title">
+                        <div class="red_line settings_title_line"></div>Confidentialité du compte
+                    </h2>
+
+                    <p>REAH étant une plateforme de concours, nous sommes dans l'obligation de rendre votre compte
+                        public afin que tous les utilisateurs puissent voir vos courts-métrages et voter. <br> Avoir un
+                        compte privé serait contradictoire avec le but de la plateforme : exposer ses réalisations et
+                        gagner en visibilité</p>
+
+                    <h2 class="settings_title">
+                        <div class="red_line settings_title_line"></div>Statut en ligne
+                    </h2>
+
+                    <p>Aucun utilisateur ne peut voir votre acitivité en ligne.</p>
+
+                    <h2 class="settings_title">
+                        <div class="red_line settings_title_line"></div>Protection des données
+                    </h2>
+
+                    <p>Les informations recueillies sur le formulaire d’inscription sont enregistrées dans notre base de
+                        données
+                        informatisée par nos développeurs pour créer votre profil Reah.</p>
+
+                    <p>Les données collectées seront communiquées aux seuls destinataires suivants : Étienne Loïc, Saint
+                        Martin
+                        Julie, Bassimane Manar, Baillon Edouard et Lad Minal.</p>
+                    <p>Les données sont conservées jusqu’à la suppression souhaitée par l’utilisateur. En cas
+                        d’inactivité
+                        pendant 2
+                        ans entraînera la suppression du compte et des données.</p>
+                    <p>Vous pouvez accéder aux données vous concernant, les rectifier, demander leur effacement ou
+                        exercer votre
+                        droit à la limitation du traitement de vos données. Vous pouvez retirer à tout moment votre
+                        consentement
+                        au
+                        traitement de vos données ; Vous pouvez également vous opposer au traitement de vos données ;
+                        Vous
+                        pouvez
+                        également exercer votre droit à la portabilité de vos données.</p>
+                    <p>Consultez le site <a target="_blank" href="https://www.cnil.fr">cnil.fr </a> pour plus
+                        d’informations sur vos droits.</p>
+                    <p>Pour exercer ces droits ou pour toute question sur le traitement de vos données dans ce
+                        dispositif, vous
+                        pouvez contacter <a target="_blank" href="mailto:reahapp.fr@gmail.com"
+                            class="not_a_link">reahapp.fr@gmail.com</a>.</p>
+
+                    <p>Si vous estimez, après nous avoir contactés, que vos droits « Informatique et Libertés » ne sont
+                        pas
+                        respectés, vous pouvez adresser une réclamation à la CNIL.</p>
                 </div>
 
             </div>

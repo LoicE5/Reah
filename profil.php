@@ -4,6 +4,7 @@
     include('assets/php/config.php');
     require("ressources/pop_up_film_information.php");
 ?>
+
 <?php
     if(!func::checkLoginState($db)){ # If the user isn't connected
         redirect('login.php');
@@ -56,6 +57,62 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
 
     header('Location: profil.php?success=true');
 }
+
+
+// S'abonner 
+
+
+if (isset($_GET["add_subscription"])){
+    $sql = "INSERT INTO subscription (subscription_subscriber_id, subscription_artist_id) VALUES (:subscriber_id, :artist_id)";
+
+    $attributes = array(
+      'subscriber_id' => $_GET['add_subscription'],
+      'artist_id' => $_GET['id'],
+    );
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute($attributes);
+
+    $db = null;
+
+    header('Refresh:0; url=profil.php?id='.$_GET['id']);
+}
+
+// Se désabonner 
+
+
+if (isset($_GET["delete_subscription"])){
+    $subscriber_id = $_GET['delete_subscription'];
+    $artist_id = $_GET["id"];
+    $sql = "DELETE FROM subscription WHERE subscription_subscriber_id='$subscriber_id' AND subscription_artist_id='$artist_id'";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+
+    $db = null;
+
+    header('Refresh:0; url=profil.php?id='.$_GET['id']);
+
+}
+
+// Supprimer un utilisateur de ses abonnés
+
+if (isset($_GET["delete_subscriber"])){
+    $subscriber_id = $_GET['delete_subscriber'];
+    $artist_id = $_COOKIE['userid'];
+    $sql = "DELETE FROM subscription WHERE subscription_subscriber_id='$subscriber_id' AND subscription_artist_id='$artist_id'";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+
+    $db = null;
+
+    header('Refresh:0; url=profil.php?id='.$_GET['id']);
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -78,7 +135,7 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
 
 <body>
 
-<?php
+    <?php
     if (isset($_GET['success'])) {
         echo'
         <div class="message_container">
@@ -156,13 +213,68 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
                 <div class="fb_c ai-c">
                     <div class="fb_jsb profile_subscription_container">
                         <div class="profile_subscription_content" number="1">
-                            <p class="fb profile_subscription_number">1213</p>
+                            <p class="fb profile_subscription_number">
+
+
+                                <!-- Nbr d'abonnés -->
+                                <?php
+                            
+                            if(isset($_GET['id'])){ #if the profile is an other user's profile
+
+                            $query2 = "SELECT COUNT(subscription_subscriber_id) as subscriber_nb FROM subscription WHERE subscription_artist_id=".$_GET['id'].";";
+                            $stmt2 = $db->prepare($query2);
+                            $stmt2->execute();
+                    
+                            $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+                            echo $row2['subscriber_nb'];
+
+                            } else {
+                                $query2 = "SELECT COUNT(subscription_subscriber_id) as subscriber_nb FROM subscription WHERE subscription_artist_id=".$_COOKIE['userid'].";";
+                                $stmt2 = $db->prepare($query2);
+                                $stmt2->execute();
+                        
+                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+    
+                                echo $row2['subscriber_nb'];
+                            } 
+                            ?>
+
+                            </p>
                             <div class="red_line profile_subscription_line"></div>
                             <p class="profile_subscription_title">Abonnés</p>
                         </div>
 
                         <div class="profile_subscription_content" number="2">
-                            <p class="fb profile_subscription_number">2000</p>
+                            <p class="fb profile_subscription_number">
+
+
+                                <!-- Nbr d'abonnements -->
+
+                                <?php
+                            
+                            if(isset($_GET['id'])){ #if the profile is an other user's profile
+
+                            $query2 = "SELECT COUNT(subscription_artist_id) as subscription_nb FROM subscription WHERE subscription_subscriber_id=".$_GET['id'].";";
+                            $stmt2 = $db->prepare($query2);
+                            $stmt2->execute();
+                    
+                            $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+                            echo $row2['subscription_nb'];
+
+                            } else {
+                                $query2 = "SELECT COUNT(subscription_artist_id) as subscription_nb FROM subscription WHERE subscription_subscriber_id=".$_COOKIE['userid'].";";
+                                $stmt2 = $db->prepare($query2);
+                                $stmt2->execute();
+                        
+                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+    
+                                echo $row2['subscription_nb'];
+                            } 
+                            ?>
+
+                            </p>
                             <div class="red_line profile_subscription_line"></div>
                             <p class="profile_subscription_title">Abonnements</p>
                         </div>
@@ -172,16 +284,22 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
                     <!-- Subcription btn -->
                     <?php
                     if(isset($_GET['id'])){ #if the profile is an other user's profile
-                        $query = "SELECT * FROM users WHERE user_id = ".$_GET['id'].";";
+                        $query = "SELECT * FROM users, subscription WHERE user_id = ".$_GET['id']." AND subscription_subscriber_id=".$_COOKIE['userid'].";";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
                 
-                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-                        echo'
-                            <div class="fb ai-c">
-                                <div class="btn subscribe_btn">S\'abonner</div>
-                                <img src="sources/img/modify_icon.svg" class="modify_icon modify_icon2" alt="">
-                            </div>';
+                        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach($rows as $row){}
+
+                        if($row['subscription_artist_id'] == $_GET['id']){
+                            echo'
+                            <div class="btn subscribe_btn subscribe_btn_click" onclick="subscribe()">Se désabonner</div>';
+
+                        } else {
+                            echo'
+                                    <a href="profil.php?id='.$_GET['id'].'&add_subscription='.$_COOKIE["userid"].'" class="btn subscribe_btn" onclick="subscribe()">S\'abonner</a>';
+                        }
                     }
                     ?>
                 </div>
@@ -189,7 +307,7 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
 
                 <!-- Profile photo + username -->
                 <?php
-                    echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_banner']) .") no-repeat center/cover' alt=''  class='profile_photo'></div>";
+                    echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover' alt=''  class='profile_photo'></div>";
                 ?>
             </div>
 
@@ -205,7 +323,7 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
                     <?php 
                         echo '<p class="profile_bio">'.$row['user_bio'].'</p>';
                     ?>
-                       <?php 
+                    <?php 
                         echo '<a target="_blank" href="https://'.$row['user_website'].'" class="profile_website">'.$row['user_website'].'</a>';
                     ?>
                 </div>
@@ -415,26 +533,26 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
             <img src='sources/img/close_icon.svg' class='modify_close_icon' alt=''>
 
             <!-- Banner -->
-                <?php
+            <?php
                     echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_banner']) .") no-repeat center/100%' alt=''  class='modify_banner'></div>";
                 ?>
 
             <div class="modify_profile_photo_container">
                 <!-- Profile photo -->
-             <?php
-                    echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_banner']) .") no-repeat center/cover' alt=''  class='modify_profile_photo'></div>";
+                <?php
+                    echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover' alt=''  class='modify_profile_photo'></div>";
                 ?>
 
                 <div class="modify_file_container">
                     <!-- Input banner -->
                     <div class="modify_file_banner btn">
                         <button class="btn modify_btn_banner">Modifier la bannière</button>
-                        <input type="file" class="" name="banner">
+                        <input type="file" accept=".png,.jpeg,.jpg" class="" name="banner">
                     </div>
                     <!-- Input profile photo -->
                     <div class="modify_file_profile_photo btn">
                         <button class="btn modify_btn_profile_photo">Modifier la photo de profil</button>
-                        <input type="file" class="" name="profile_picture">
+                        <input type="file" accept=".png,.jpeg,.jpg" class="" name="profile_picture">
                     </div>
 
                 </div>
@@ -487,9 +605,64 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
         <!-- Title -->
         <div class="subsciption_title_container">
             <div class="subscription_title1 subscriber_title" number="2"><span
-                    class="realisation_number_content_number ">1213 </span> Abonnés</div>
+                    class="realisation_number_content_number ">
+
+                    <!-- Nombre d'abonnés -->
+                    <?php
+                            
+                            if(isset($_GET['id'])){ #if the profile is an other user's profile
+
+                            $query2 = "SELECT COUNT(subscription_subscriber_id) as subscriber_nb FROM subscription WHERE subscription_artist_id=".$_GET['id'].";";
+                            $stmt2 = $db->prepare($query2);
+                            $stmt2->execute();
+                    
+                            $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+                            echo $row2['subscriber_nb'];
+
+                            } else {
+                                $query2 = "SELECT COUNT(subscription_subscriber_id) as subscriber_nb FROM subscription WHERE subscription_artist_id=".$_COOKIE['userid'].";";
+                                $stmt2 = $db->prepare($query2);
+                                $stmt2->execute();
+                        
+                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+    
+                                echo $row2['subscriber_nb'];
+                            } 
+                            ?>
+
+
+
+                </span> Abonnés</div>
             <div class="subscription_title2 subscription_title" number="1"><span
-                    class="realisation_number_content_number ">2000 </span> Abonnements</div>
+                    class="realisation_number_content_number ">
+
+                    <!-- Nbr d'abonnements -->
+
+                    <?php
+                            
+                            if(isset($_GET['id'])){ #if the profile is an other user's profile
+
+                            $query2 = "SELECT COUNT(subscription_artist_id) as subscription_nb FROM subscription WHERE subscription_subscriber_id=".$_GET['id'].";";
+                            $stmt2 = $db->prepare($query2);
+                            $stmt2->execute();
+                    
+                            $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+                            echo $row2['subscription_nb'];
+
+                            } else {
+                                $query2 = "SELECT COUNT(subscription_artist_id) as subscription_nb FROM subscription WHERE subscription_subscriber_id=".$_COOKIE['userid'].";";
+                                $stmt2 = $db->prepare($query2);
+                                $stmt2->execute();
+                        
+                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+    
+                                echo $row2['subscription_nb'];
+                            } 
+                            ?>
+
+                </span> Abonnements</div>
             <div class="red_line subscription_line"></div>
         </div>
 
@@ -498,49 +671,105 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
             <div class="subscriber_section">
 
                 <!-- User -->
-                <div class="subscription_user">
-                    <div class="subcription_pp"></div>
-                    <div class="subscription_username_container">
-                        <div class="subscription_username">Jstm</div>
-                        <div class="subscription_name">Julie Saint Martin</div>
-                    </div>
-                    <div class="btn subscriber_user_btn">Supprimer</div>
-                </div>
 
-                <!-- User -->
-                <div class="subscription_user">
-                    <div class="subcription_pp"></div>
-                    <div class="subscription_username_container">
-                        <div class="subscription_username">Jstm</div>
-                        <div class="subscription_name">Julie Saint Martin</div>
-                    </div>
-                    <div class="btn subscriber_user_btn">Supprimer</div>
-                </div>
+                <?php
+                            
+                            if(isset($_GET['id'])){ #if the profile is an other user's profile
 
+                            $query = "SELECT * FROM users, subscription WHERE subscription_artist_id=".$_GET['id']." AND subscription_subscriber_id=user_id ;";
+                            $stmt = $db->prepare($query);
+                            $stmt->execute();
+                    
+                            $rows = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+                            foreach($rows as $row){
+
+                                echo'
+                                <div class="subscription_user">
+                                <a href="profil.php?id='.$row['user_id'].'" class="subcription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
+                                        <a href="profil.php?id='.$row['user_id'].'" class="subscription_username_container">
+                                            <div class="subscription_username">'.$row['user_username'].'</div>
+                                            <div class="subscription_name">'.$row['user_name'].'</div>
+                                        </a>
+                                    <div class="btn subscriber_user_btn" onclick="deleteSubscriber()">Supprimer</div>
+                                </div>';
+
+                            }
+
+                            } else {
+                                $query = "SELECT * FROM users, subscription WHERE subscription_artist_id=".$_COOKIE['userid']." AND subscription_subscriber_id=user_id;";
+                                $stmt = $db->prepare($query);
+                                $stmt->execute();
+                        
+                                $rows = $stmt->fetchall(PDO::FETCH_ASSOC);
+    
+                                foreach($rows as $row){
+                                    echo'
+                                    <div class="subscription_user">
+                                    <a href="profil.php?id='.$row['user_id'].'" class="subcription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
+                                            <a href="profil.php?id='.$row['user_id'].'" class="subscription_username_container">
+                                                <div class="subscription_username">'.$row['user_username'].'</div>
+                                                <div class="subscription_name">'.$row['user_name'].'</div>
+                                            </a>
+                                        <div class="btn subscriber_user_btn" onclick="deleteSubscriber()">Supprimer</div>
+                                    </div>';
+                                }
+                            } 
+                            ?>
+                
             </div>
 
             <!-- All subscriptions -->
             <div class="subscription_section">
 
                 <!-- User -->
-                <div class="subscription_user">
-                    <div class="subcription_pp"></div>
-                    <div class="subscription_username_container">
-                        <div class="subscription_username">Jstm</div>
-                        <div class="subscription_name">Julie Saint Martin</div>
-                    </div>
-                    <div class="btn subscription_user_btn subcribe_btn_click">Abonné(e)</div>
-                </div>
+                 
+                <?php
+                            
+                            if(isset($_GET['id'])){ #if the profile is an other user's profile
 
-                <!-- User -->
-                <div class="subscription_user">
-                    <div class="subcription_pp"></div>
-                    <div class="subscription_username_container">
-                        <div class="subscription_username">Jstm</div>
-                        <div class="subscription_name">Julie Saint Martin</div>
-                    </div>
-                    <div class="btn subscription_user_btn subcribe_btn_click">Abonné(e)</div>
-                </div>
+                            $query = "SELECT * FROM users, subscription WHERE subscription_subscriber_id=".$_GET['id']." AND subscription_artist_id=user_id;";
+                            $stmt = $db->prepare($query);
+                            $stmt->execute();
+                    
+                            $rows = $stmt->fetchall(PDO::FETCH_ASSOC);
+
+                            foreach($rows as $row){
+                                
+                                echo'
+                                <div class="subscription_user">
+                                    <a href="profil.php?id='.$row['user_id'].'" class="subcription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
+                                        <a href="profil.php?id='.$row['user_id'].'" class="subscription_username_container">
+                                            <div class="subscription_username">'.$row['user_username'].'</div>
+                                            <div class="subscription_name">'.$row['user_name'].'</div>
+                                        </a>
+
+                                    <div class="btn subscriber_user_btn subscribe_btn_click" onclick="subscribe()">Abonné(e)</div>
+                                </div>';
+
+                            }
+
+                            } else {
+                                $query = "SELECT * FROM users, subscription WHERE subscription_subscriber_id=".$_COOKIE['userid']." AND subscription_artist_id=user_id;";
+                                $stmt = $db->prepare($query);
+                                $stmt->execute();
+                        
+                                $rows = $stmt->fetchall(PDO::FETCH_ASSOC);
+    
+                                foreach($rows as $row){
+                                    
+                                echo'
+                                <div class="subscription_user">
+                                <a href="profil.php?id='.$row['user_id'].'" class="subcription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
+                                        <a href="profil.php?id='.$row['user_id'].'" class="subscription_username_container">
+                                            <div class="subscription_username">'.$row['user_username'].'</div>
+                                            <div class="subscription_name">'.$row['user_name'].'</div>
+                                        </a>
+                                    <a class="btn subscriber_user_btn subscribe_btn_click" onclick="subscribe()">Abonné(e)</a>
+                                </div>';
+                                }
+                            } 
+                            ?>
             </div>
         </div>
 
@@ -555,7 +784,33 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
             <img src='sources/img/close_icon.svg' class='unfollow_close_icon' alt=''>
         </div>
         <p class="pop_up_text">Se désabonner de <?php echo $row['user_username']; ?> ?</p>
-        <div class="btn pop_up_btn unfollow_btn">Se désabonner</div>
+        <!-- <div class="btn pop_up_btn unfollow_btn">Se désabonner</div> -->
+        <?php
+
+        $user_id = $row['user_id'];
+        if(isset($_GET['id'])){ #SI on se désabonne depuis le profil de l'utilisateur
+            echo'<a href="profil.php?id='.$_GET['id'].'&delete_subscription='.$_COOKIE['userid'].'" class="btn pop_up_btn unfollow_btn">Se désabonner</a>';
+        } else { #si on se désabonne depuis notre profil
+            echo'<a href="profil.php?id='.$user_id.'&delete_subscription='.$_COOKIE['userid'].'" class="btn pop_up_btn unfollow_btn">Se désabonner</a>';
+        }
+
+        ?>
+    </div>
+
+
+     <!-- Delete subscriber pop up-->
+     <div class="pop_up_container delete_subscriber_container">
+        <div class="pop_up_header">
+            <h2>Supprimer un abonné</h2>
+            <img src='sources/img/close_icon.svg' class='unfollow_close_icon' alt=''>
+        </div>
+        <p class="pop_up_text">Supprimer <?php echo $row['user_username']; ?> de vos abonnés ?</p>
+        <!-- <div class="btn pop_up_btn unfollow_btn">Se désabonner</div> -->
+        <?php
+
+        echo'<a href="profil.php?id='.$_GET['id'].'&delete_subscriber='.$row['user_id'].'" class="btn pop_up_btn unfollow_btn">Supprimer</a>';
+
+        ?>
     </div>
 
     <script src="assets/js/profil.js"></script>

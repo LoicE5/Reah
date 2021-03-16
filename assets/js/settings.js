@@ -16,7 +16,11 @@ $(document).ready(function () {
         })
 
         $(`.settings_container`).hide()
-        $(`.settings_container[number='${number}']`).show();    
+        $(`.settings_container[number='${number}']`).show();   
+        
+        $("body,html").animate({
+            scrollTop:0
+        },'0.2s')
     })
 
     $(".notification_btn").click(function(){

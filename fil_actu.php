@@ -14,7 +14,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv= »Content-Type » content= »text/html; charset=utf-8″ /> -->
     <title>REAH | Fil d'actualité</title>
+    <link rel="icon" type="image/png" href="sources/img/reah_logo.png">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
     <link rel="stylesheet" href="assets/css/fil_actu2.css">
@@ -83,7 +85,7 @@ if(!isset($_GET['accueil'])){
 
                 <?php
                     if(func::checkLoginState($db)){ # If the user is connected
-                        $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
+                        $query = "SELECT * FROM `users` WHERE user_id = ".$_COOKIE['userid'].";";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
     
@@ -161,7 +163,7 @@ if(!isset($_GET['accueil'])){
 
                                 <?php
 
-                $query = "SELECT * FROM videos, users WHERE user_id=video_user_id";
+                $query = "SELECT * FROM `videos`, `users` WHERE user_id=video_user_id";
                 $stmt = $db->prepare($query);
                 $stmt->execute();
 
@@ -224,7 +226,7 @@ if(!isset($_GET['accueil'])){
                                 <div class='reaction_container'>
                                     <div class='fb_jsb like_container'>
                                         <!-- Pop corn image -->
-                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this)); addLike($(this))'>
                                         <!-- Like\'s number -->
                                         <p class='pop_corn_number'>515 J'aime</p>
                                     </div>

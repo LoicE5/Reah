@@ -74,7 +74,7 @@
     height: 200px;
     width: 200px;
     border-radius: 100px;
-    box-shadow: var(--nav-shadow) 0px 0px 20px;
+    box-shadow: var(--accueil-shadow) 0px 0px 20px;
     z-index: 100;
     top: -80px;
 }
@@ -133,16 +133,19 @@
     text-align: center;
 }
 
+
 .subscribe_btn {
     margin-top: 30px;
+    text-decoration: none;
 }
 
-.subcribe_btn_click {
+.subscribe_btn_click {
     background-color: transparent;
     border: #d60036 solid 2px;
     line-height: 30px;
     min-height: 35px;
     color: var(--text);
+    box-shadow: none;
 }
 
 .profile_bio_container {
@@ -178,7 +181,7 @@
     width: 100%;
     padding-bottom: 15px;
     background:
-        radial-gradient(at 50% 0px, var(--nav-shadow) 0%, transparent 70%) bottom;
+        radial-gradient(at 50% 0px, var(--accueil-shadow) 0%, transparent 70%) bottom;
     background-size: 100% 20px;
     background-repeat: no-repeat;
     margin-top: 50px;
@@ -207,8 +210,10 @@
 
 .realisation_number_content_line {
     width: 132px;
-    top: 50px;
+    top: 48px;
     left: 0;
+    height: 4px;
+    border-radius: 0;
 }
 
 .realisation_number_content_line1 {
@@ -342,7 +347,7 @@
     height: 200px;
     width: 200px;
     border-radius: 100px;
-    box-shadow: var(--nav-shadow) 0px 0px 20px;
+    box-shadow: var(--accueil-shadow) 0px 0px 20px;
     z-index: 100;
     top: -80px;
     /* left: -150px; */
@@ -459,7 +464,7 @@
     align-items: center;
     position: relative;
     background:
-        radial-gradient(at 50% 0px, var(--nav-shadow) 0%, transparent 70%) bottom;
+        radial-gradient(at 50% 0px, var(--accueil-shadow) 0%, transparent 70%) bottom;
     background-size: 100% 20px;
     background-repeat: no-repeat;
     padding-bottom: 30px;
@@ -472,9 +477,10 @@
 }
 
 .subscription_line {
-    top: 33px;
+    top: 31px;
     left: 0px;
-
+    height: 4px;
+    border-radius: 0;
 }
 
 .subscription_section,
@@ -511,6 +517,9 @@
 
 .subscription_username_container {
     min-width: 200px;
+    text-align: start;
+    color: white;
+    text-decoration: none;
 }
 
 .subscription_name {
@@ -987,13 +996,13 @@
 
 @media (prefers-color-scheme: light) {
     :root{
-        --nav-color: #f5f5f5e1;
+        --nav-color: #f5f5f59d;
     }
 }
 
 
 @media (prefers-color-scheme: dark) {
     :root{
-        --nav-color: #141414e1;
+        --nav-color: #1414149d;
     }
 }

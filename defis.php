@@ -283,7 +283,7 @@ if ($title == ' ') {
     <div class="dark_filter" onclick="closePopupAddDefi()"></div>
 
     <div class="pop_up_container add_defi_container">
-        <form action="defis.php" method=GET>
+        <form action="defis.php?success=true" method=GET>
             <div class="pop_up_header">
                 <h2>Proposer un défi</h2>
                 <img src='sources/img/close_icon.svg' class='close_icon' alt='' onclick="closePopupAddDefi()">

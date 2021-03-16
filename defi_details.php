@@ -174,11 +174,15 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                 <div class="defi_container">
                     <div class="defi_constraints">
                         <p><b>Contraintes</b></p>
-                        <ul>
+                        <p>
+                            
                             <?php
-                            echo "<li>".$row['defi_description']."</li>";
+                            echo nl2br($row['defi_description']);
                             ?>
-                        </ul>
+
+                        </p>
+                        <p style="color:#d60036">*Nous vous rappelons que tout contenu inapproprié se verra retiré de la plateforme.</p>
+                        <p><b>À vos marques, prêt·e·s, tournez !</b></p>
                     </div>
 
                     <div class="defi_information">

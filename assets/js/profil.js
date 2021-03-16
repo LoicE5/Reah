@@ -1,3 +1,35 @@
+// Subcribe button
+function subscribe(e) {
+    if ($(e).text() == "S'abonner") {
+        $(e).text("Abonné(e)")
+        $(e).addClass("subscribe_btn_click");
+    } else {
+        $(".unfollow_container").fadeIn(500).addClass("film_container_open flex").removeClass("film_container_close");
+        $(".unfollow_dark_filter").addClass("show fixed");
+        $(".main_content").addClass("scroll_none")
+    
+    $(".unfollow_dark_filter,.unfollow_close_icon, ,.unfollow_btn").click(function () {
+        $(".unfollow_container").fadeOut().addClass("film_container_close").removeClass("film_container_open flex");
+        $(".unfollow_dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none")
+    })
+    }
+}
+
+// Delete subcriber button
+function deleteSubscriber() {
+  
+        $(".delete_subscriber_container").fadeIn(500).addClass("film_container_open flex").removeClass("film_container_close");
+        $(".unfollow_dark_filter").addClass("show fixed");
+        $(".main_content").addClass("scroll_none")
+    
+    $(".unfollow_dark_filter,.unfollow_close_icon, ,.unfollow_btn").click(function () {
+        $(".delete_subscriber_container").fadeOut().addClass("film_container_close").removeClass("film_container_open flex");
+        $(".unfollow_dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none")
+    })
+}
+
 $(document).ready(function () {
 
 
@@ -11,23 +43,6 @@ $(document).ready(function () {
     })
 
 
-    // Subcribe button
-    $(".subscribe_btn").click(function () {
-        if ($(this).text() == "S'abonner") {
-            $(this).text("Abonné(e)")
-            $(this).addClass("subcribe_btn_click");
-        } else {
-            $(".unfollow_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
-            $(".dark_filter").addClass("show fixed");
-            $(".main_content").addClass("scroll_none")
-        
-        $(".dark_filter,.unfollow_close_icon").click(function () {
-            $(".unfollow_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
-            $(".dark_filter").removeClass("show");
-            $(".main_content").removeClass("scroll_none")
-        })
-        }
-    })
 
     $(".unfollow_btn").click(function(){
         $(".subscribe_btn").text("S'abonner").removeClass("subcribe_btn_click");

@@ -363,9 +363,11 @@ function commentFilmSettings(e) {
     let parent = $(e).parent();
     let commentSettings = $(parent).children(".comment_settings_container");
     
-    if ($(commentSettings).hasClass("show")) {
-        $(commentSettings).removeClass("show").addClass("hide"); //Adds 'b', removes 'a'
+    if ($(commentSettings).hasClass("flex")) {
+        $(commentSettings).removeClass("flex").addClass("hide"); //Adds 'b', removes 'a'
     } else {
-        $(commentSettings).removeClass("hide").addClass("show"); //Adds 'a', removes 'b'
+        $(commentSettings).removeClass("hide").addClass("flex"); //Adds 'a', removes 'b'
     }
 }
+
+

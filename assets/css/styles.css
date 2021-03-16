@@ -597,6 +597,7 @@ nav,.nav_footer{
     margin: auto;
     margin-top: 0px;
     margin-bottom: 20px;
+    text-decoration: none;
 }
 .connexion_container {
     display: none;
@@ -633,7 +634,7 @@ nav,.nav_footer{
     text-align: center;
 }
 
-.delete_warning,.unfollow_container {
+.delete_warning,.unfollow_container,.delete_subscriber_container{
     width: 400px;
     z-index: 400;
     line-height: 25px;
@@ -691,6 +692,7 @@ nav,.nav_footer{
     text-align: center;
     padding: 10px;
     animation: message 4s forwards;
+    color: white;
 }
 
 

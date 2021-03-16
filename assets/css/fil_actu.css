@@ -542,6 +542,7 @@ video:focus {
     top: 60px;
     z-index: 100;
     display: none;
+    align-items: center;
 }
 
 .comment_settings_container{
@@ -549,15 +550,18 @@ video:focus {
     right: 0px;
 }
 
-.film_settings_container>div,.comment_settings_container>div {
+.film_settings_container>div,.comment_settings_container>a {
     height: 35px;
     width: 100%;
     text-align: center;
     line-height: 35px;
     cursor: pointer;
+    color: white;
+    text-decoration: none;
+    text-align: center;
 }
 
-.film_settings_container>div:hover,.comment_settings_container>div:hover {
+.film_settings_container>div:hover,.comment_settings_container>a:hover {
     background-color: #af002c;
 }
 

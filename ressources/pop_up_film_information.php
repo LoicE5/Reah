@@ -1,9 +1,12 @@
 <?php
+
+
+// Ajout d'un commentaire
     if(isset($_GET['comment_send'])){
         $sql = "INSERT INTO comments (comment_content, comment_video_id, comment_user_id) VALUES (:content, :video_id, :user_id)";
 
         $attributes = array(
-          'content' => addslashes('oui'),
+          'content' => $_GET["comment_content"],
           'video_id' => '1',
           'user_id' => $_COOKIE['userid'],
         );
@@ -16,6 +19,22 @@
 
     header('Location: fil_actu.php?accueil=true');
 
+    }
+
+// Supression d'un commentaire
+    if(isset($_GET['delete_comment'])){
+
+        $comment_id = $_GET['delete_comment'];
+        $user_id = $_COOKIE['userid'];
+        $sql = "DELETE FROM comments WHERE comment_user_id='$user_id' AND comment_id='$comment_id'";
+
+        $stmt = $db->prepare($sql);
+
+        $stmt->execute();
+
+        $db = null;
+
+        header('Location: fil_actu.php?accueil=true');
     }
 ?>
 
@@ -165,7 +184,7 @@ echo "
                     <form action='fil_actu.php?accueil=true' method='GET'>
                         <div class='write_comment'>
                             <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='pp_profile'></div>
-                            <textarea name='comment' class='comment_textarea' name='comment_content' placeholder='Écrire un commentaire...'></textarea>
+                            <textarea class='comment_textarea' name='comment_content' placeholder='Écrire un commentaire...'></textarea>
                             <input type='submit' class='send_comment' name='comment_send' value=''>
                         </div>
                     </form>
@@ -193,7 +212,7 @@ echo "
         <!-- All the comments -->
         <?php
         
-        $query = "SELECT * FROM comments, users, videos WHERE comment_video_id=video_id AND user_id=comment_user_id";
+        $query = "SELECT * FROM comments, users, videos WHERE comment_video_id=video_id AND user_id=comment_user_id ORDER BY comment_date DESC";
         $stmt = $db->prepare($query);
         $stmt->execute();
         
@@ -217,12 +236,21 @@ echo "
                         <div></div>
                     </div>
 
-                    <div class='comment_settings_container'>
-                        <div>Signaler</div>
+                    <div class='comment_settings_container'>";
+
+                    if($row["comment_user_id"] == $_COOKIE["userid"]){
+                        echo"
+                            <a href='fil_actu.php?delete_comment=".$row["comment_id"]."'>Supprimer</a>";
+                    } else {
+                        echo"
+                        <div>Signaler</div>";
+                    }
+
+                    echo"
                     </div>
                 </div>
     
-                <p class='comment_text'>{$row["comment_content"]}</p>
+                <p class='comment_text'>".$row["comment_content"]."</p>
     
                 <div class='fb_jsa ai-c'>
                     <div class='fb_jsb'  onclick='popupConnexion()'>
