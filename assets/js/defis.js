@@ -44,4 +44,27 @@ $(document).ready(function(){
     })
 
 
+
+    // Temps restant
+        // var launch = new Date();
+        // var launch = Date.parse(20, 03, 2021);
+        var launch = new Date(2021,03,20,22,28,00);
+        console.log(launch.getTime());
+        // console.log(launch.getTime());
+        setDate();
+        function setDate(){
+            var now = new Date();
+            var s = (launch.getTime() - now.getTime())/1000;
+            // var d = s/86400;
+            // s('#days').html('<strong>'+d+'</strong>');
+         console.log(s)
+        //  console.log(now.getTime())
+
+            }
+             
+         
+    // setInterval(setDate,1000);
+
+
 })
+

@@ -32,31 +32,30 @@
 </head>
 
 <body>
-    <main class="main_content">
+    
+    <!-- Navigation menu -->
+    <nav class="menu_nav">
 
-        <!-- Navigation menu -->
-        <nav class="menu_nav">
-
-            <!-- Logo Réah -->
-            <a href="fil_actu.php" class="reah_logo"></a>
-
-            <!-- Search bar -->
-            <form action="" class="form_search_bar">
-                <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
-            </form>
-
-            <?php
+        <!-- Logo Réah -->
+        <a href="fil_actu.php" class="reah_logo"></a>
+        
+        <!-- Search bar -->
+        <form action="" class="form_search_bar">
+            <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
+        </form>
+        
+        <?php
                  if(func::checkLoginState($db)){ # If the user is connected
                     $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
                     $stmt = $db->prepare($query);
                     $stmt->execute();
-
+                    
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
+                    
                     echo "<div class='menu_profile'>
                     <!-- Fil actu icon -->
                     <form action='fil_actu.php' method='GET'>
-                        <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                    <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
                     </form>
                     <!-- Defi icon -->
                     <a href='defis.php' class='defi_icon'></a>
@@ -64,18 +63,21 @@
                     <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
                     </div>
                     </nav>";
-
+                    
                 } else {
                     redirect('login.php');
                 }
-            ?>
+                ?>
         </nav>
-
+        
         <!-- Menu -->
         <?php
             require("ressources/menu.php");
-        ?>
+            ?>
 
+<main class="main_content">
+
+                <p>Les notifications arrivent bientôt !</p>
         </main>
 
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>

@@ -173,7 +173,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                 <!-- Constraints -->
                 <div class="defi_container">
                     <div class="defi_constraints">
-                        <p><b>Contraintes</b></p>
+                        <p><b>Consignes</b></p>
                         <p>
                             
                             <?php
@@ -307,7 +307,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <!-- Pop corn image -->
                                         <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
+                                        <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
@@ -326,7 +326,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <!-- Pop corn image -->
                                         <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
+                                        <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' onclick='popupConnexion()' >
@@ -455,7 +455,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                                 <!-- Pop corn image -->
                                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                                 <!-- Like\'s number -->
-                                                <p class='pop_corn_number'>515 J'aime</p>
+                                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
                                             </div>
                                             <!-- Comment icon -->
                                             <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
@@ -474,7 +474,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                                 <!-- Pop corn image -->
                                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                                 <!-- Like\'s number -->
-                                                <p class='pop_corn_number'>515 J'aime</p>
+                                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
                                             </div>
                                             <!-- Comment icon -->
                                             <div class='fb_jc ai-c' onclick='popupConnexion()' >
@@ -583,7 +583,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <!-- Pop corn image -->
                                         <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
+                                        <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
@@ -602,7 +602,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <!-- Pop corn image -->
                                         <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
+                                        <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' onclick='popupConnexion()' >
@@ -712,7 +712,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <!-- Pop corn image -->
                                         <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
+                                        <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
@@ -731,7 +731,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <!-- Pop corn image -->
                                         <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>515 J'aime</p>
+                                        <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' onclick='popupConnexion()' >

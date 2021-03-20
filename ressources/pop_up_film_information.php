@@ -110,7 +110,7 @@ echo "
                     <!-- Like section -->
                     <div class='fb_jsb'>
                         <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
-                        <p class='film_pop_corn_number'>515 J'aime</p>
+                        <p class='film_pop_corn_number'>".$row['video_like_number']." J'aime</p>
                     </div>
 
                     <!-- Share section -->

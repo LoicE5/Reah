@@ -34,7 +34,48 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
 
     $stmt->execute();
 
-    header('Location: settings.php?success=true');
+    $message_true = 'Ton profil a bien été modifié !';
+
+}
+
+// Changer son mdp
+if(isset($_GET["change_mdp_btn"])){
+
+    $user_id = $_COOKIE['userid'];
+    $query = "SELECT * FROM users WHERE user_id = '$user_id';";
+
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if(password_verify($_GET["prev_mdp"], $row['user_password'])){
+        if($_GET['new_mdp'] == $_GET['confirm_mdp']){
+
+            $sql = "INSERT INTO users (user_password) VALUES (:psw) WHERE user_id='{$_COOKIE['userid']}'";
+        
+            $attributes = array(
+              'psw' => $_GET['new_mdp'],
+            );
+        
+            $stmt = $db->prepare($sql);
+        
+            $stmt->execute($attributes);
+        
+            $db = null;
+        
+            header("Location: settings.php?success=true");
+            // $message_true = 'Ton mot de passe a bien été modifié !';
+        
+
+        } else {
+            $message_false = 'Verifiez que les deux mots de passe correspondent.';
+        }
+    } else{
+        $message_false = 'L\'ancien mot de passe choisi est incorrecte.';
+
+    }
+
 }
 ?>
 
@@ -45,7 +86,6 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>>REAH | Paramètres</title>
-    <link rel="stylesheet" href="assets/css/dark_mode.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
     <link rel="stylesheet" href="assets/css/profil.css">
@@ -58,12 +98,19 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
 
 
     <?php
-    if (isset($_GET['success'])) {
-        echo'
-        <div class="message_container">
-                Ton profil a bien été modifié !
-        </div>';
+
+    if (isset($message_true)) {
+        echo '<p class="message_true_container">'.$message_true.'</p>';
     }
+
+    if (isset($message_false)) {
+        echo '<p class="message_false_container">'.$message_false.'</p>';
+    }
+
+    if (isset($_GET['success'])) {
+        echo'<p class="message_true_container">Ton mot de passe a bien été modifié !</p>';
+    }
+  
     ?>
 
     <main class="main_content">
@@ -284,7 +331,7 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
 
                 <!-- Account -->
                 <div class="settings_container settings_account_container" number="2">
-                    <form action="">
+                    <form action="settings.php" method="GET">
                         <div class="change_mdp_container">
                             <h2 class="settings_title">
                                 <div class="red_line settings_title_line"></div>Changer de mot de passe
@@ -295,28 +342,28 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
                                 <div class="input_container">
                                     <label for="prev_mdp">
                                         <span>Ancien mot de passe</span>
-                                        <input type="text" class="input_connexion" id="prev_mdp" name="prev_mdp">
+                                        <input type="password" class="input_connexion" id="prev_mdp" name="prev_mdp" required>
                                     </label>
                                 </div>
 
 
                                 <div class="input_container">
-                                    <label for="prev_mdp">
+                                    <label for="new_mdp">
                                         <span>Nouveau mot de passe</span>
-                                        <input type="text" class="input_connexion" id="prev_mdp" name="prev_mdp">
+                                        <input type="password" class="input_connexion" id="new_mdp" name="new_mdp" required>
                                     </label>
                                 </div>
 
 
                                 <div class="input_container">
-                                    <label for="prev_mdp">
+                                    <label for="confirm_mdp">
                                         <span>Confirmer le nouveau mot de passe</span>
-                                        <input type="text" class="input_connexion" id="prev_mdp" name="prev_mdp">
+                                        <input type="password" class="input_connexion" id="confirm_mdp" name="confirm_mdp" required>
                                     </label>
                                 </div>
 
                             </div>
-                            <input type="submit" class="btn change_mdp_btn" value="Changer de mot de passe">
+                            <input type="submit" class="btn change_mdp_btn" name="change_mdp_btn" value="Changer de mot de passe">
                         </div>
 
                     </form>
@@ -325,14 +372,14 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
                         <h2 class="settings_title">
                             <div class="red_line settings_title_line"></div>Suspendre / désactiver mon compte
                         </h2>
-                        <p class="delete_link">Suspendre temporairement mon compte reah</p>
+                        <p class="delete_link" onclick='popupSuspendAccount()'>Suspendre temporairement mon compte reah</p>
                         <p>Les autres utilisateurs ne pourront plus voir vos œuvres ni voir votre profil mais vous
                             pourrez
                             récupérer votre compte à tout moment. </p>
                     </div>
 
                     <div>
-                        <p class="delete_link">Supprimer mon compte reah</p>
+                        <p class="delete_link" onclick='popupDeleteAccount()'>Supprimer mon compte reah</p>
                         <p>Les autres utilisateurs pourront plus voir vos œuvres ni voir votre profil. Vous ne pourrez
                             pas
                             récupérer votre compte. <br>
@@ -403,6 +450,35 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
 
 
     </main>
+
+    <!-- Delete account warning -->
+
+<div class='delete_dark_filter' onclick='closePopupSuspendAccount()'></div>
+
+
+<div class='pop_up_container suspend_account_container'>
+    <div class='pop_up_header'>
+        <h2>Suspendre son compte</h2>
+        <img src='sources/img/close_icon.svg' class='delete_close_icon' alt='' onclick='closePopupSupendAccount()'>
+    </div>
+    <p class='pop_up_text'>Es-tu sûr de vouloir suspendre ton compte ?</p>
+    <div class='btn pop_up_btn delete_btn'>Suspendre</div>
+</div>
+
+
+    <!-- Delete account warning -->
+
+<div class='delete_dark_filter' onclick='closePopupDeleteAccount();closePopupSuspendAccount()'></div>
+
+
+<div class='pop_up_container delete_account_container'>
+    <div class='pop_up_header'>
+        <h2>Supprimer son compte</h2>
+        <img src='sources/img/close_icon.svg' class='delete_close_icon' alt='' onclick='closePopupDeleteAccount()'>
+    </div>
+    <p class='pop_up_text'>Es-tu sûr de vouloir supprimer ton compte ?</p>
+    <div class='btn pop_up_btn delete_btn'>Supprimer</div>
+</div>
 
 
 

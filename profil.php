@@ -9,7 +9,7 @@
     if(!func::checkLoginState($db)){ # If the user isn't connected
         redirect('login.php');
     } else {
-        if(isset($_GET['id'])){
+        if(isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']){
             $query = "SELECT * FROM users WHERE user_id = ".$_GET['id'].";";
             $stmt = $db->prepare($query);
             $stmt->execute();
@@ -23,6 +23,9 @@
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }
+
+
+
 
 if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
 
@@ -113,6 +116,8 @@ if (isset($_GET["delete_subscriber"])){
     header('Refresh:0; url=profil.php?id='.$_GET['id']);
 
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -138,9 +143,9 @@ if (isset($_GET["delete_subscriber"])){
     <?php
     if (isset($_GET['success'])) {
         echo'
-        <div class="message_container">
+        <p class="message_true_container">
                 Ton profil a bien été modifié !
-        </div>';
+        </p>';
     }
     ?>
     <main class="main_content">
@@ -201,6 +206,21 @@ if (isset($_GET["delete_subscriber"])){
         <div class="banner_container">
             <div class="banner_flou_left"></div>
             <?php
+
+                if(isset($_GET['id'])){
+                    $query = "SELECT * FROM users WHERE user_id = ".$_GET['id'].";";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute();
+
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                } else {
+                $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
+                $stmt = $db->prepare($query);
+                $stmt->execute();
+
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                }
+
                     echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_banner']) .") no-repeat center/cover' alt=''  class='banner'></div>";
                 ?>
             <div class="banner_flou_right"></div>
@@ -219,7 +239,7 @@ if (isset($_GET["delete_subscriber"])){
                                 <!-- Nbr d'abonnés -->
                                 <?php
                             
-                            if(isset($_GET['id'])){ #if the profile is an other user's profile
+                            if(isset($_GET['id']) && isset($_GET['id']) == $_COOKIE['userid']){ #if the profile is an other user's profile
 
                             $query2 = "SELECT COUNT(subscription_subscriber_id) as subscriber_nb FROM subscription WHERE subscription_artist_id=".$_GET['id'].";";
                             $stmt2 = $db->prepare($query2);
@@ -253,7 +273,7 @@ if (isset($_GET["delete_subscriber"])){
 
                                 <?php
                             
-                            if(isset($_GET['id'])){ #if the profile is an other user's profile
+                            if(isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']){ #if the profile is an other user's profile
 
                             $query2 = "SELECT COUNT(subscription_artist_id) as subscription_nb FROM subscription WHERE subscription_subscriber_id=".$_GET['id'].";";
                             $stmt2 = $db->prepare($query2);
@@ -281,9 +301,9 @@ if (isset($_GET["delete_subscriber"])){
                     </div>
 
 
-                    <!-- Subcription btn -->
+                    <!-- Subscription btn -->
                     <?php
-                    if(isset($_GET['id'])){ #if the profile is an other user's profile
+                    if(isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']){ #if the profile is an other user's profile
                         $query = "SELECT * FROM users, subscription WHERE user_id = ".$_GET['id']." AND subscription_subscriber_id=".$_COOKIE['userid'].";";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
@@ -307,6 +327,8 @@ if (isset($_GET["delete_subscriber"])){
 
                 <!-- Profile photo + username -->
                 <?php
+                // Si on visite le profil d'un utilisateur
+
                     echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover' alt=''  class='profile_photo'></div>";
                 ?>
             </div>
@@ -331,7 +353,7 @@ if (isset($_GET["delete_subscriber"])){
                 <!-- Modify icon -->
 
                 <?php
-                    if(isset($_GET['id'])){ #if the profile is an other user's profile
+                    if(isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']){ #if the profile is an other user's profile
                         $query = "SELECT * FROM users WHERE user_id = ".$_GET['id'].";";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
@@ -409,7 +431,7 @@ if (isset($_GET["delete_subscriber"])){
                                 <!-- Pop corn image -->
                                 <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>515 J'aime</p>
+                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
                             </div>
 
                             <!-- Comment icon -->
@@ -686,7 +708,7 @@ if (isset($_GET["delete_subscriber"])){
 
                                 echo'
                                 <div class="subscription_user">
-                                <a href="profil.php?id='.$row['user_id'].'" class="subcription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
+                                <a href="profil.php?id='.$row['user_id'].'" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
                                         <a href="profil.php?id='.$row['user_id'].'" class="subscription_username_container">
                                             <div class="subscription_username">'.$row['user_username'].'</div>
                                             <div class="subscription_name">'.$row['user_name'].'</div>
@@ -706,7 +728,7 @@ if (isset($_GET["delete_subscriber"])){
                                 foreach($rows as $row){
                                     echo'
                                     <div class="subscription_user">
-                                    <a href="profil.php?id='.$row['user_id'].'" class="subcription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
+                                    <a href="profil.php?id='.$row['user_id'].'" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
                                             <a href="profil.php?id='.$row['user_id'].'" class="subscription_username_container">
                                                 <div class="subscription_username">'.$row['user_username'].'</div>
                                                 <div class="subscription_name">'.$row['user_name'].'</div>
@@ -738,7 +760,7 @@ if (isset($_GET["delete_subscriber"])){
                                 
                                 echo'
                                 <div class="subscription_user">
-                                    <a href="profil.php?id='.$row['user_id'].'" class="subcription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
+                                    <a href="profil.php?id='.$row['user_id'].'" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
                                         <a href="profil.php?id='.$row['user_id'].'" class="subscription_username_container">
                                             <div class="subscription_username">'.$row['user_username'].'</div>
                                             <div class="subscription_name">'.$row['user_name'].'</div>
@@ -760,7 +782,7 @@ if (isset($_GET["delete_subscriber"])){
                                     
                                 echo'
                                 <div class="subscription_user">
-                                <a href="profil.php?id='.$row['user_id'].'" class="subcription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
+                                <a href="profil.php?id='.$row['user_id'].'" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
                                         <a href="profil.php?id='.$row['user_id'].'" class="subscription_username_container">
                                             <div class="subscription_username">'.$row['user_username'].'</div>
                                             <div class="subscription_name">'.$row['user_name'].'</div>

@@ -17,7 +17,7 @@ $db_name = 'reah_new'; # MySQL Database name
 // $db_host = 'localhost:3306'; # MySQL Server
 // $db_name = 'reah'; # MySQL Database name
 
-$db = new PDO("mysql:host=$db_host;dbname=$db_name",$db_username,$db_password);
+$db = new PDO("mysql:host=$db_host;dbname=$db_name;charset=UTF8",$db_username,$db_password);
 
 $stmt = $db->prepare("SELECT * FROM users");
 $stmt->execute();

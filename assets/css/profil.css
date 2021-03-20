@@ -500,6 +500,11 @@
     margin-right: 50px;
 }
 
+.subscription_section{
+    margin-left: 50px;
+
+}
+
 .subscription_user {
     display: flex;
     width: 100%;
@@ -508,7 +513,7 @@
     margin-bottom: 20px;
 }
 
-.subcription_pp {
+.subscription_pp {
     height: 50px;
     width: 50px;
     background-color: #d60036;
@@ -520,6 +525,11 @@
     text-align: start;
     color: white;
     text-decoration: none;
+}
+
+
+.subscription_username {
+    color: var(--text);
 }
 
 .subscription_name {
@@ -592,14 +602,14 @@
     }
 
     100% {
-        transform: translateX(-450px);
+        transform: translateX(-500px);
 
     }
 }
 
 @keyframes subscriber_click2 {
     0% {
-        transform: translateX(-450px);
+        transform: translateX(-500px);
     }
 
     100% {

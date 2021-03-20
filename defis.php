@@ -58,6 +58,18 @@ if ($title == ' ') {
     <main class="main_content">
 
 
+    <?php if (isset($message)){
+        echo '<p class="message_true_container">'. $message .'</p>';
+        }
+
+        if (isset($_GET['success'])) {
+            echo'
+            <p class="message_true_container">
+                    Ton défi a bien été pris en compte !
+            </p>';
+        }
+        ?>
+
         <!-- Navigation menu -->
         <nav>
 
@@ -138,7 +150,9 @@ if ($title == ' ') {
                 <!-- Category title -->
                 <h1 id="title1">
                     <div class="red_line title_line"></div>
+                    <div id='days'></div>
                     DÉFIS DU MOMENT
+                    
                 </h1>
 
                 <!-- Add defi btn -->
@@ -290,11 +304,6 @@ if ($title == ' ') {
             </div>
             <div class="pop_up_text">
 
-                <?php if (isset($message)){
-        echo '<p class="message">'. $message .'</p>';
-        }
-        ?>
-
                 <!-- Inputs -->
                 <div class="add_defi_input">
                     <div class="input_container">
@@ -319,12 +328,7 @@ if ($title == ' ') {
     </div>
 
     <?php
-    if (isset($_GET['success'])) {
-        echo'
-        <div class="message_container">
-                Ton défi a bien été pris en compte !
-        </div>';
-    }
+   
     ?>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>

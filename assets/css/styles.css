@@ -434,6 +434,7 @@ nav,.nav_footer{
     cursor: pointer;
     margin-right: 20px;
     display: block;
+    background-color: #D60036;
 }
 
 
@@ -634,7 +635,7 @@ nav,.nav_footer{
     text-align: center;
 }
 
-.delete_warning,.unfollow_container,.delete_subscriber_container{
+.delete_warning,.unfollow_container,.delete_subscriber_container,.delete_account_container,.suspend_account_container{
     width: 400px;
     z-index: 400;
     line-height: 25px;
@@ -683,16 +684,21 @@ nav,.nav_footer{
     line-height: unset;
 }
 
-.message_container{
-    background-color: #d60035;
+.message_true_container,.message_false_container{
+    background-color: #66bd44;
     width: 100%;
     position: absolute;
-    top: 0;
+    top: -40px;
     z-index: 500;
     text-align: center;
     padding: 10px;
     animation: message 4s forwards;
     color: white;
+    height: 40px;
+}
+
+.message_false_container{
+    background-color: #c52e2e;
 }
 
 
@@ -701,10 +707,10 @@ nav,.nav_footer{
         transform: translateY(-40px);
     }
     10%{
-        transform: translateY(0px);
+        transform: translateY(23px);
     }
     90%{
-        transform: translateY(0px);
+        transform: translateY(23px);
     }
     100%{
         transform: translateY(-40px);

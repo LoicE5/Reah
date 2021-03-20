@@ -60,7 +60,7 @@ form{
 }
 
 .defi_constraints {
-    margin-right: 50px;
+    margin-right: 150px;
 }
 
 .defi_information>p>span {
@@ -339,6 +339,9 @@ form{
         margin-top: 30px;
     }
 
+    .defi_constraints{
+        margin-right: 0px;
+    }
 }
 
 @media screen and (max-width:800px) {

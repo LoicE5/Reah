@@ -370,4 +370,32 @@ function commentFilmSettings(e) {
     }
 }
 
+function popupDeleteAccount() {
+    $(".delete_account_container").fadeIn(500);
+    $(".delete_account_container").addClass("film_container_open").removeClass("film_container_close");
+    $(".delete_dark_filter").addClass("show fixed");
+    $(".main_content").addClass("scroll_none")
+}
+
+function closePopupDeleteAccount() {
+    $(".delete_account_container").fadeOut();
+    $(".delete_account_container").addClass("film_container_close").removeClass("film_container_open");
+    $(".delete_dark_filter").removeClass("show");
+    $(".main_content").removeClass("scroll_none")
+}
+
+
+function popupSuspendAccount() {
+    $(".suspend_account_container").fadeIn(500);
+    $(".suspend_account_container").addClass("film_container_open").removeClass("film_container_close");
+    $(".delete_dark_filter").addClass("show fixed");
+    $(".main_content").addClass("scroll_none")
+}
+
+function closePopupSuspendAccount() {
+    $(".suspend_account_container").fadeOut();
+    $(".suspend_account_container").addClass("film_container_close").removeClass("film_container_open");
+    $(".delete_dark_filter").removeClass("show");
+    $(".main_content").removeClass("scroll_none")
+}
 
