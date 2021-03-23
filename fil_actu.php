@@ -161,120 +161,97 @@ if(!isset($_GET['accueil'])){
                             <!-- All videos -->
                             <div class="all_video_container">
 
-                                <?php
+<?php
 
-                $query = "SELECT * FROM `videos`, `users` WHERE user_id=video_user_id";
-                $stmt = $db->prepare($query);
-                $stmt->execute();
+    $query = "SELECT * FROM `videos`";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
 
-                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                foreach($rows as $row){
-                    echo "<!-- Video container -->
-                    <div class='video_container'>
+    foreach($rows as $row){
+        echo "<!-- Video container -->
+        <div class='video_container'>
 
-                        <!-- Short film (class=video) -->
-                        <div class='video_content'>
-                        <div data-vimeo-id='".$row['video_url']."' data-vimeo-width='auto' id='video_".$row['video_id']."' class='video'></div>
-                        <script>
-                            let video_".$row['video_id']."_player = new Vimeo.Player('video_".$row['video_id']."');
-                        
-                            let video_".$row['video_id']."_div = video_".$row['video_id']."_player.element;
-                            let video_".$row['video_id']."_iframe;
-                            
-                            let video_".$row['video_id']."_interval = setInterval(()=>{
-                        
-                                if(video_".$row['video_id']."_div.firstChild){
-                        
-                                    video_".$row['video_id']."_iframe = video_".$row['video_id']."_div.firstChild;
-                        
-                                    let doc = video_".$row['video_id']."_iframe.contentDocument ? video_".$row['video_id']."_iframe.contentDocument :
-                                video_".$row['video_id']."_iframe.contentWindow.document;
-                        
-                                console.log(doc);
-                        
-                                clearInterval(video_".$row['video_id']."_interval);
-                                }
-                            });
-                        
-                        </script>
-                            <!-- Name + pp -->
-                            <a href='profil.php?id=".$row['user_id']."' class='user_container'>
-                            
-                            <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
-                            
-                                <p class='pseudo'>".$row['user_username']."</p>
-                                <div class='flou'></div>
-                            </a>
+            <!-- Short film (class=video) -->
+            <div class='video_content'>
+            <iframe src='https://player.vimeo.com/video/".$row['video_vimeo_id']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+                <!-- Name + pp -->
+                <div class='user_container'>
 
-                            <!-- Time -->
-                            <p class='time'>01:54</p>
-                        </div>
+                <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
 
-                        <!-- Short film\'s informations -->
-                        <div class='description_container'>
-                            <div class='fb_jsb'>
-                                <div class='synopsis_title_container' title=".$row['video_id']." onclick='popupFilm($(this))'>
-                                    <h3 class='synopsis_title'>".$row['video_title']."</h3>
-                                    <p class='see_more'>Voir plus
-                                        <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
-                                        </p>
-                                </div>";
+                    <p class='pseudo'>".$row['user_username']."</p>
+                    <div class='flou'></div>
+                </div>
 
-                                if(func::checkLoginState($db)){ # If the user is connected
-                                echo"
-                                <div class='reaction_container'>
-                                    <div class='fb_jsb like_container'>
-                                        <!-- Pop corn image -->
-                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this)); addLike($(this))'>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
-                                    </div>
-                                    <!-- Comment icon -->
-                                    <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
-                                        <div class='comment_icon'></div>
-                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                    </div>
+                <!-- Time -->
+                <p class='time'>01:54</p>
+            </div>
 
-                                    <!-- Share icon -->
-                                    <div class='share_icon' onclick='popupShare()'></div>
-
-                                </div>";
-                                } else { # If the user is an asshole
-                                    echo"
-                                    <div class='reaction_container'>
-                                    <div class='fb_jsb like_container'>
-                                        <!-- Pop corn image -->
-                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
-                                    </div>
-                                    <!-- Comment icon -->
-                                    <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
-                                        <div class='comment_icon'></div>
-                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                    </div>
-
-                                    <!-- Share icon -->
-                                    <div class='share_icon' onclick='popupConnexion()'></div>
-
-                                </div>";
-                                }
-
-                              echo"
-                            </div>
-                            <p>".$row['video_synopsis']."</p>
-                        </div>
-
-
+            <!-- Short film\'s informations -->
+            <div class='description_container'>
+                <div class='fb_jsb'>
+                    <div class='synopsis_title_container' onclick='popupFilm($(this))' >
+                        <h3 class='synopsis_title'>".$row['video_title']."</h3>
+                        <p class='see_more'>Voir plus
+                            <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                            </p>
                     </div>";
-                }
+                    if(func::checkLoginState($db)){ # If the user is connected
+                        echo"
+                        <div class='reaction_container'>
+                            <div class='fb_jsb like_container'>
+                                <!-- Pop corn image -->
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                <!-- Like\'s number -->
+                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                            </div>
+                            <!-- Comment icon -->
+                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>
+                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                            </div>
 
-                $stmt = null;
-                $query = null;
-                $rows = null;
+                            <!-- Share icon -->
+                            <div class='share_icon' onclick='popupShare()'></div>
 
-            ?>
+                        </div>";
+                        } else { # If the user is an asshole
+                            echo"
+                            <div class='reaction_container'>
+                            <div class='fb_jsb like_container'>
+                                <!-- Pop corn image -->
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+                                <!-- Like\'s number -->
+                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                            </div>
+                            <!-- Comment icon -->
+                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>
+                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                            </div>
+
+                            <!-- Share icon -->
+                            <div class='share_icon' onclick='popupConnexion()'></div>
+
+                        </div>";
+                        }
+
+                    echo"
+                </div>
+                <p>".$row['video_synopsis']."</p>
+            </div>
+
+
+        </div>";
+    }
+
+    $stmt = null;
+    $query = null;
+    $rows = null;
+
+?>
 
 
                             </div>
@@ -305,123 +282,97 @@ if(!isset($_GET['accueil'])){
                             <!-- All videos -->
                             <div class="all_video_container">
 
-                                <?php
+<?php
 
-                $query = "SELECT * FROM `videos`";
-                $stmt = $db->prepare($query);
-                $stmt->execute();
+    $query = "SELECT * FROM `videos`";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
 
-                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                foreach($rows as $row){
-                    echo "<!-- Video container -->
-                    <div class='video_container'>
+    foreach($rows as $row){
+        echo "<!-- Video container -->
+        <div class='video_container'>
 
-                        <!-- Short film (class=video) -->
-                        <div class='video_content'>
-                        <div data-vimeo-id='".$row['video_url']."' data-vimeo-width='auto' id='video_".$row['video_id']."' class='video'></div>
-                        <script>
-                            let video_".$row['video_id']."_player = new Vimeo.Player('video_".$row['video_id']."');
-                        
-                            let video_".$row['video_id']."_div = video_".$row['video_id']."_player.element;
-                            let video_".$row['video_id']."_iframe;
-                            
-                            let video_".$row['video_id']."_interval = setInterval(()=>{
-                        
-                                if(video_".$row['video_id']."_div.firstChild){
-                        
-                                    video_".$row['video_id']."_iframe = video_".$row['video_id']."_div.firstChild;
+            <!-- Short film (class=video) -->
+            <div class='video_content'>
+            <iframe src='https://player.vimeo.com/video/".$row['video_vimeo_id']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+                <!-- Name + pp -->
+                <div class='user_container'>
 
-                                    video_".$row['video_id']."_iframe.style.width = '100% !important';
-                                    
-                                    video_".$row['video_id']."_iframe.style.height = '100% !important';
+                <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
 
-                                    let doc = video_".$row['video_id']."_iframe.contentDocument ? video_".$row['video_id']."_iframe.contentDocument :
-                                video_".$row['video_id']."_iframe.contentWindow.document;
-                        
-                                console.log(doc);
-                        
-                                clearInterval(video_".$row['video_id']."_interval);
-                                }
-                            });
-                        
-                        </script>
-                            <!-- Name + pp -->
-                            <div class='user_container'>
+                    <p class='pseudo'>".$row['user_username']."</p>
+                    <div class='flou'></div>
+                </div>
 
-                            <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                <!-- Time -->
+                <p class='time'>01:54</p>
+            </div>
 
-                                <p class='pseudo'>".$row['user_username']."</p>
-                                <div class='flou'></div>
-                            </div>
-
-                            <!-- Time -->
-                            <p class='time'>01:54</p>
-                        </div>
-
-                        <!-- Short film\'s informations -->
-                        <div class='description_container'>
-                            <div class='fb_jsb'>
-                                <div class='synopsis_title_container' onclick='popupFilm($(this))' >
-                                    <h3 class='synopsis_title'>".$row['video_title']."</h3>
-                                    <p class='see_more'>Voir plus
-                                        <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
-                                        </p>
-                                </div>";
-                                if(func::checkLoginState($db)){ # If the user is connected
-                                    echo"
-                                    <div class='reaction_container'>
-                                        <div class='fb_jsb like_container'>
-                                            <!-- Pop corn image -->
-                                            <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
-                                            <!-- Like\'s number -->
-                                            <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
-                                        </div>
-                                        <!-- Comment icon -->
-                                        <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
-                                            <div class='comment_icon'></div>
-                                            <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                        </div>
-    
-                                        <!-- Share icon -->
-                                        <div class='share_icon' onclick='popupShare()'></div>
-    
-                                    </div>";
-                                    } else { # If the user is an asshole
-                                        echo"
-                                        <div class='reaction_container'>
-                                        <div class='fb_jsb like_container'>
-                                            <!-- Pop corn image -->
-                                            <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
-                                            <!-- Like\'s number -->
-                                            <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
-                                        </div>
-                                        <!-- Comment icon -->
-                                        <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
-                                            <div class='comment_icon'></div>
-                                            <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                        </div>
-    
-                                        <!-- Share icon -->
-                                        <div class='share_icon' onclick='popupConnexion()'></div>
-    
-                                    </div>";
-                                    }
-    
-                                  echo"
-                            </div>
-                            <p>".$row['video_synopsis']."</p>
-                        </div>
-
-
+            <!-- Short film\'s informations -->
+            <div class='description_container'>
+                <div class='fb_jsb'>
+                    <div class='synopsis_title_container' onclick='popupFilm($(this))' >
+                        <h3 class='synopsis_title'>".$row['video_title']."</h3>
+                        <p class='see_more'>Voir plus
+                            <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                            </p>
                     </div>";
-                }
+                    if(func::checkLoginState($db)){ # If the user is connected
+                        echo"
+                        <div class='reaction_container'>
+                            <div class='fb_jsb like_container'>
+                                <!-- Pop corn image -->
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                <!-- Like\'s number -->
+                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                            </div>
+                            <!-- Comment icon -->
+                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>
+                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                            </div>
 
-                $stmt = null;
-                $query = null;
-                $rows = null;
+                            <!-- Share icon -->
+                            <div class='share_icon' onclick='popupShare()'></div>
 
-            ?>
+                        </div>";
+                        } else { # If the user is an asshole
+                            echo"
+                            <div class='reaction_container'>
+                            <div class='fb_jsb like_container'>
+                                <!-- Pop corn image -->
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+                                <!-- Like\'s number -->
+                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                            </div>
+                            <!-- Comment icon -->
+                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>
+                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                            </div>
+
+                            <!-- Share icon -->
+                            <div class='share_icon' onclick='popupConnexion()'></div>
+
+                        </div>";
+                        }
+
+                        echo"
+                </div>
+                <p>".$row['video_synopsis']."</p>
+            </div>
+
+
+        </div>";
+    }
+
+    $stmt = null;
+    $query = null;
+    $rows = null;
+
+?>
 
                             </div>
                         </div>
@@ -447,120 +398,98 @@ if(!isset($_GET['accueil'])){
                             <!-- All videos -->
                             <div class="all_video_container">
 
-                                <?php
-                    $query = "SELECT * FROM `videos`";
-                    $stmt = $db->prepare($query);
-                    $stmt->execute();
+<?php
+    $query = "SELECT * FROM `videos`";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
 
-                    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    foreach($rows as $row){
-                        echo "<!-- Video container -->
-                        <div class='video_container'>
-    
-                            <!-- Short film (class=video) -->
-                            <div class='video_content'>
-                            <div data-vimeo-id='".$row['video_url']."' data-vimeo-width='auto' id='video_".$row['video_id']."' class='video'></div>
-                            <script>
-                                let video_".$row['video_id']."_player = new Vimeo.Player('video_".$row['video_id']."');
-                            
-                                let video_".$row['video_id']."_div = video_".$row['video_id']."_player.element;
-                                let video_".$row['video_id']."_iframe;
-                                
-                                let video_".$row['video_id']."_interval = setInterval(()=>{
-                            
-                                    if(video_".$row['video_id']."_div.firstChild){
-                            
-                                        video_".$row['video_id']."_iframe = video_".$row['video_id']."_div.firstChild;
-                            
-                                        let doc = video_".$row['video_id']."_iframe.contentDocument ? video_".$row['video_id']."_iframe.contentDocument :
-                                    video_".$row['video_id']."_iframe.contentWindow.document;
-                            
-                                    console.log(doc);
-                            
-                                    clearInterval(video_".$row['video_id']."_interval);
-                                    }
-                                });
-                            
-                            </script>
-                                <!-- Name + pp -->
-                                <div class='user_container'>
+    foreach($rows as $row){
+        echo "<!-- Video container -->
+        <div class='video_container'>
 
-                                <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
+            <!-- Short film (class=video) -->
+            <div class='video_content'>
+            <iframe src='https://player.vimeo.com/video/".$row['video_vimeo_id']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+                <!-- Name + pp -->
+                <div class='user_container'>
 
-                                <p class='pseudo'>".$row['user_username']."</p>
-                                    <div class='flou'></div>
-                                </div>
-    
-                                <!-- Time -->
-                                <p class='time'>01:54</p>
+                <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
+
+                <p class='pseudo'>".$row['user_username']."</p>
+                    <div class='flou'></div>
+                </div>
+
+                <!-- Time -->
+                <p class='time'>01:54</p>
+            </div>
+
+            <!-- Short film\'s informations -->
+            <div class='description_container'>
+                <div class='fb_jsb'>
+                    <div class='synopsis_title_container' onclick='popupFilm($(this))'>
+                        <h3 class='synopsis_title'>".$row['video_title']."</h3>
+                        <p class='see_more'>Voir plus
+                            <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                            </p>
+                    </div>";
+
+                    if(func::checkLoginState($db)){ # If the user is connected
+                        echo"
+                        <div class='reaction_container'>
+                            <div class='fb_jsb like_container'>
+                                <!-- Pop corn image -->
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                <!-- Like\'s number -->
+                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
                             </div>
-    
-                            <!-- Short film\'s informations -->
-                            <div class='description_container'>
-                                <div class='fb_jsb'>
-                                    <div class='synopsis_title_container' onclick='popupFilm($(this))'>
-                                      <h3 class='synopsis_title'>".$row['video_title']."</h3>
-                                        <p class='see_more'>Voir plus
-                                            <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
-                                            </p>
-                                    </div>";
-
-                                    if(func::checkLoginState($db)){ # If the user is connected
-                                        echo"
-                                        <div class='reaction_container'>
-                                            <div class='fb_jsb like_container'>
-                                                <!-- Pop corn image -->
-                                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
-                                                <!-- Like\'s number -->
-                                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
-                                            </div>
-                                            <!-- Comment icon -->
-                                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
-                                                <div class='comment_icon'></div>
-                                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                            </div>
-        
-                                            <!-- Share icon -->
-                                            <div class='share_icon' onclick='popupShare()'></div>
-        
-                                        </div>";
-
-                                        } else { # If the user is an asshole
-                                            echo"
-                                            <div class='reaction_container'>
-                                            <div class='fb_jsb like_container'>
-                                                <!-- Pop corn image -->
-                                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
-                                                <!-- Like\'s number -->
-                                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
-                                            </div>
-                                            <!-- Comment icon -->
-                                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
-                                                <div class='comment_icon'></div>
-                                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                                            </div>
-        
-                                            <!-- Share icon -->
-                                            <div class='share_icon' onclick='popupConnexion()'></div>
-        
-                                        </div>";
-                                        }
-        
-                                      echo"
-                                </div>
-                                <p>".$row['video_synopsis']."</p>
+                            <!-- Comment icon -->
+                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>
+                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
                             </div>
-    
-    
+
+                            <!-- Share icon -->
+                            <div class='share_icon' onclick='popupShare()'></div>
+
                         </div>";
-                    }
 
-                    $stmt = null;
-                    $query = null;
-                    $rows = null;
+                        } else { # If the user is an asshole
+                            echo"
+                            <div class='reaction_container'>
+                            <div class='fb_jsb like_container'>
+                                <!-- Pop corn image -->
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+                                <!-- Like\'s number -->
+                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                            </div>
+                            <!-- Comment icon -->
+                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>
+                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                            </div>
 
-                ?>
+                            <!-- Share icon -->
+                            <div class='share_icon' onclick='popupConnexion()'></div>
+
+                        </div>";
+                        }
+
+                        echo"
+                </div>
+                <p>".$row['video_synopsis']."</p>
+            </div>
+
+
+        </div>";
+    }
+
+    $stmt = null;
+    $query = null;
+    $rows = null;
+
+?>
                             </div>
                         </div>
 
