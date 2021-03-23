@@ -7,7 +7,7 @@
     min-width: 200px;
 }
 
-.menu_profile>form{
+.menu_profile>form {
     margin-bottom: 0;
 }
 
@@ -91,12 +91,12 @@
     position: relative;
 }
 
-.profile_website{
+.profile_website {
     color: #d60036;
     text-decoration: none;
 }
 
-.profile_website:hover{
+.profile_website:hover {
     text-decoration: underline;
 }
 
@@ -170,9 +170,10 @@
     margin-left: 20px;
 }
 
-.modify_icon2{
+.modify_icon2 {
     display: none;
 }
+
 .menu_nav {
     background-color: var(--nav-color);
 }
@@ -254,6 +255,7 @@
     padding-right: 3%;
     margin: auto;
     margin-top: 30px;
+    min-height: 10px;
 }
 
 
@@ -403,7 +405,8 @@
     flex-direction: column;
 }
 
-.modify_close_icon,.unfollow_close_icon {
+.modify_close_icon,
+.unfollow_close_icon {
     align-self: flex-start;
     float: right;
     width: 40px;
@@ -500,7 +503,7 @@
     margin-right: 50px;
 }
 
-.subscription_section{
+.subscription_section {
     margin-left: 50px;
 
 }
@@ -515,16 +518,17 @@
 
 .subscription_pp {
     height: 50px;
-    width: 50px;
+    min-width: 50px;
     background-color: #d60036;
     border-radius: 100px;
 }
 
 .subscription_username_container {
-    min-width: 200px;
     text-align: start;
     color: white;
     text-decoration: none;
+    margin-left: 20px;
+    margin-right: 20px;
 }
 
 
@@ -537,7 +541,8 @@
     color: var(--text-grey);
 }
 
-.subscription_user_btn,.subscriber_user_btn {
+.subscription_user_btn,
+.subscriber_user_btn {
     width: 100px;
     height: 30px;
     line-height: 30px;
@@ -568,6 +573,7 @@
     border-radius: 100px;
     background-color: var(--text-grey);
 }
+
 /* 
 .user_settings_icon:hover{
     background-color: #3f3f3f;
@@ -813,12 +819,11 @@
     .search_bar_focus {
         width: 250px;
         border-radius: 100px;
-        box-shadow: 0px 0px 15px #000000;
         color: white;
         padding: 5px;
         padding-left: 40px;
-        background: url(../../img/loupe_icon.svg) no-repeat 3%;
-        background-color: #500e1e;
+        background: url(../../sources/img/loupe_icon.svg) no-repeat 3%;
+        background-color: white;
         transform: translateX(-270px);
         transition: 0.5s ease;
     }
@@ -883,136 +888,170 @@
 
     @media screen and (max-width:550px) {
 
-    .modify_profile_photo{
-        height: 100px;
-        width: 100px;
-        top: 0px;
-    }
-
-    .modify_container{
-        min-width: 100%;
-    }
-    .modify_profile_photo{
-        margin-right: 20px;
-    }
-
-    .input_bio{
-        width: unset;
-        min-width: unset;
-    }
-
-    .subscription_container{
-        width: 100%;
-        height: 100%;
-    }
-
-    }
-
-    @media screen and (max-width:450px) {
-        .all_video_container{
-            flex-direction: column;
-            align-items: center;
-            padding-left: 0;
-        }
-        .video_container{
-            margin-bottom: 40px;
-            margin-right: 0px;
-            min-width: unset;
-        }
-        .video_content{
-            width: 100%;
-            height: 200px;
-            min-width: 100%;
-        }
-        .profile_comment_title{
-            display: none;
-        }
-        .comment_icon{
-            margin-right: 20px;
-            margin-left: 20px;
-        }
-        .reaction_container{
-            justify-content: start; 
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-        .description_container{
-            width: 90%;
-        }
-    
-        .all_category_container{
-            display: flex;
-            overflow: auto;
-        }
-        .first_category,.second_category,.third_category{
-            min-width: 100%;
-            margin-top: 80px;
-            align-items: unset;
-            margin-bottom: 0;
-        }
-    
-        .second_category,.third_category{
-            display: none;
-        }
-
-        .banner_container{
-            height: 230px;
-        }
-
-        .profile_subscription_number{
-            font-size: 2rem;
-        }
-
-        .profile_subscription_container{
-            min-width: 210px;
-        }
-
-        .profile_photo{
+        .modify_profile_photo {
             height: 100px;
             width: 100px;
             top: 0px;
         }
 
-        .profile_content1{
+        .modify_container {
+            min-width: 100%;
+        }
+
+        .modify_profile_photo {
+            margin-right: 20px;
+        }
+
+        .input_bio {
+            width: unset;
             min-width: unset;
         }
 
-        .modify_icon{
+        .subscription_container {
+            width: 100%;
+            height: 100%;
+        }
+
+        @keyframes subscriber_click {
+            0% {
+                transform: translateX(0px);
+            }
+
+            100% {
+                transform: translateX(-130%);
+
+            }
+        }
+
+        @keyframes subscriber_click2 {
+            0% {
+                transform: translateX(-130%);
+            }
+
+            100% {
+                transform: translateX(0);
+
+            }
+        }
+
+    }
+
+    @media screen and (max-width:450px) {
+        .all_video_container {
+            flex-direction: column;
+            align-items: center;
+            padding-left: 0;
+        }
+
+        .video_container {
+            margin-bottom: 40px;
+            margin-right: 0px;
+            min-width: unset;
+        }
+
+        .video_content {
+            width: 100%;
+            height: 200px;
+            min-width: 100%;
+        }
+
+        .profile_comment_title {
             display: none;
         }
 
-        .subscribe_btn_container{
+        .comment_icon {
+            margin-right: 20px;
+            margin-left: 20px;
+        }
+
+        .reaction_container {
+            justify-content: start;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .description_container {
+            width: 90%;
+        }
+
+        .all_category_container {
+            display: flex;
+            overflow: auto;
+        }
+
+        .first_category,
+        .second_category,
+        .third_category {
+            min-width: 100%;
+            margin-top: 80px;
+            align-items: unset;
+            margin-bottom: 0;
+        }
+
+        .second_category,
+        .third_category {
+            display: none;
+        }
+
+        .banner_container {
+            height: 230px;
+        }
+
+        .profile_subscription_number {
+            font-size: 2rem;
+        }
+
+        .profile_subscription_container {
+            min-width: 210px;
+        }
+
+        .profile_photo {
+            height: 100px;
+            min-width: 100px;
+            top: 0px;
+        }
+
+        .profile_content1 {
+            min-width: unset;
+        }
+
+        .modify_icon {
+            display: none;
+        }
+
+        .subscribe_btn_container {
             display: flex;
         }
 
-        .modify_icon2{
+        .modify_icon2 {
             display: flex;
             margin: 0;
         }
 
-        .profile_line{
+        .profile_line {
             left: -100px;
             width: unset;
         }
 
-        .subscribe_btn{
+        .subscribe_btn {
             margin-left: 0px;
         }
-        .form_search_bar{
+
+        .form_search_bar {
             margin-right: 20px;
         }
     }
 }
 
 @media (prefers-color-scheme: light) {
-    :root{
+    :root {
         --nav-color: #f5f5f59d;
     }
 }
 
 
 @media (prefers-color-scheme: dark) {
-    :root{
+    :root {
         --nav-color: #1414149d;
     }
 }

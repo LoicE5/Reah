@@ -389,9 +389,48 @@ if (isset($_GET["delete_subscriber"])){
         <div class="fb_jc realisation_number_container">
             <div class="fb_jsb realisation_number_content">
                 <p class="realisation_number_content_title realisation_number_content_title1" number="2"><span
-                        class="realisation_number_content_number ">20</span> réalisations </p>
+                        class="realisation_number_content_number ">
+                        
+                        <!-- Realisation number -->
+                        <?php
+                    if(isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']){ #if the profile is an other user's profile
+                        $requete="SELECT COUNT(video_id) as video_number FROM videos, users WHERE video_user_id = {$_GET['id']}";
+                        $stmt=$db->query($requete);
+                        $row=$stmt->fetch(PDO::FETCH_ASSOC);
+        
+                        echo $row['video_number'];
+                    }else{
+                        $requete="SELECT COUNT(video_id) as video_number FROM videos, users WHERE video_user_id = {$_COOKIE['userid']}";
+                        $stmt=$db->query($requete);
+                        $row=$stmt->fetch(PDO::FETCH_ASSOC);
+
+                        echo $row['video_number'];
+                        }
+                        ?>
+                        </span> réalisations </p>
                 <p class="realisation_number_content_title realisation_number_content_title2" number="1"><span
-                        class="realisation_number_content_number">80</span> identifiés </p>
+                        class="realisation_number_content_number">
+                    
+                        <!-- Identified number -->
+
+                        <?php
+                        if(isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']){ #if the profile is an other user's profile
+                            $requete="SELECT COUNT(video_id) as video_number FROM videos, users WHERE video_distribution = {$_GET['id']}";
+                            $stmt=$db->query($requete);
+                            $row=$stmt->fetch(PDO::FETCH_ASSOC);
+
+                            echo $row['video_number'];
+                        }else{
+                            $requete="SELECT COUNT(video_id) as video_number FROM videos, users WHERE video_distribution = {$_COOKIE['userid']}";
+                            $stmt=$db->query($requete);
+                            $row=$stmt->fetch(PDO::FETCH_ASSOC);
+
+                            echo $row['video_number'];
+                            }
+               
+                        ?>
+                    
+                    </span> identifiés </p>
                 <div class="red_line realisation_number_content_line"></div>
             </div>
         </div>
@@ -404,69 +443,136 @@ if (isset($_GET["delete_subscriber"])){
             <div class="realisation_container">
 
                 <?php
-                // $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
-                // $stmt=$db->query($requete);
-                // $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
-                // foreach($resultat as $films){
-                    echo "
 
-                <!-- Video container -->
-                <div class='video_container'>
-
-                    <!-- Short film -->
-                    <div class='video_content'>
-                        <video class='video' poster='{$films["poster"]}' muted>
-                            <source src='{$films["url"]}' type='video/mp4'>
-                        </video>
-
-                        <!-- Time -->
-                        <p class='time'>{$films["duration"]}</p>
-                    </div>
-
-                    <!-- Short film\'s informations -->
-                    <div class='description_container'>
-                        <div class='reaction_container'>
-                            <div class='fb_jsb'>
-
-                                <!-- Pop corn image -->
-                                <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                <!-- Like\'s number -->
-                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                if(isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']){ #if the profile is an other user's profile
+                    $requete="SELECT * FROM videos, users WHERE video_user_id = {$_GET['userid']}";
+                    $stmt=$db->query($requete);
+                    $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
+                    foreach($resultat as $row){
+                        echo "
+                        <!-- Video container -->
+                        <div class='video_container'>
+        
+                            <!-- Short film -->
+                            <div class='video_content'>
+                                            <iframe src='https://player.vimeo.com/video/".$row['video_url']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+        
+        
+                                <!-- Time -->
+                                <p class='time'>{$row["duration"]}</p>
                             </div>
-
-                            <!-- Comment icon -->
-                            <div class='fb_jc ai-c'>
-                                <div class='comment_icon'></div>
-                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+        
+                            <!-- Short film\'s informations -->
+                            <div class='description_container'>
+                                <div class='reaction_container'>
+                                    <div class='fb_jsb'>
+        
+                                        <!-- Pop corn image -->
+                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                                    </div>
+        
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c'>
+                                        <div class='comment_icon'></div>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
+        
+                                    <!-- Share icon -->
+                                    <div class='fb_jsb share_container'>
+                                        <div class='share_icon'></div>
+                                        <p class='share_title'>Partager</p>
+                                    </div>
+                                </div>
+        
+                                <div class='fb_c_jsb'>
+                                    <div class='synopsis_title_container' >
+                                        <h3 class='synopsis_title'>{$row["title"]}</h3>
+                                        <p class='see_more'>Voir plus
+                                        <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        </p>
+                                    </div>
+                            
+                                <p>{$row["synopsis"]}</p>
+        
+        
+                                </div>
                             </div>
-
-                            <!-- Share icon -->
-                            <div class='fb_jsb share_container'>
-                                <div class='share_icon'></div>
-                                <p class='share_title'>Partager</p>
-                            </div>
+        
+        
                         </div>
-
-                        <div class='fb_c_jsb'>
-                            <div class='synopsis_title_container' >
-                                <h3 class='synopsis_title'>{$films["title"]}</h3>
-                                <p class='see_more'>Voir plus
-                                <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
-                                </p>
+        
+                        ";
+                                            }
+                } else {
+                    $requete="SELECT * FROM videos, users WHERE video_user_id = {$_COOKIE['userid']}";
+                    $stmt=$db->query($requete);
+                    $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
+                    foreach($resultat as $row){
+                        echo "
+                        <!-- Video container -->
+                        <div class='video_container'>
+        
+                            <!-- Short film -->
+                            <div class='video_content'>
+                                            <iframe src='https://player.vimeo.com/video/".$row['video_url']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+        
+        
+                                <!-- Time -->
+                                <p class='time'>{$row["duration"]}</p>
                             </div>
-                    
-                        <p>{$films["synopsis"]}</p>
-
-
+        
+                            <!-- Short film\'s informations -->
+                            <div class='description_container'>
+                                <div class='reaction_container'>
+                                    <div class='fb_jsb'>
+        
+                                        <!-- Pop corn image -->
+                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                        <!-- Like\'s number -->
+                                        <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                                    </div>
+        
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c'>
+                                        <div class='comment_icon'></div>
+                                        <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                    </div>
+        
+                                    <!-- Share icon -->
+                                    <div class='fb_jsb share_container'>
+                                        <div class='share_icon'></div>
+                                        <p class='share_title'>Partager</p>
+                                    </div>
+                                </div>
+        
+                                <div class='fb_c_jsb'>
+                                    <div class='synopsis_title_container' >
+                                        <h3 class='synopsis_title'>{$row["title"]}</h3>
+                                        <p class='see_more'>Voir plus
+                                        <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                        </p>
+                                    </div>
+                            
+                                <p>{$row["synopsis"]}</p>
+        
+        
+                                </div>
+                            </div>
+        
+        
                         </div>
-                    </div>
+        
+                        ";
+                                            }
+                }
+               
 
-
-                </div>
-
-                ";
-                // }
-
+               
+                $stmt = null;
+                $query = null;
+                $rows = null;
                 ?>
             </div>
 
@@ -474,10 +580,12 @@ if (isset($_GET["delete_subscriber"])){
             <div class="identified_container">
 
                 <?php
-                // $requete="SELECT title,username,url,DATE_FORMAT(duration, '%imin %s' ) AS duration,synopsis,poster,photo FROM re_films, re_users, re_a_realise WHERE id_films=realise_ext_films AND id_users=realise_ext_users";
-                // $stmt=$db->query($requete);
-                // $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
-                // foreach($resultat as $films){
+             
+             if(isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']){ #if the profile is an other user's profile
+                $requete="SELECT * FROM videos, users WHERE video_distribution = {$_GET['userid']}";
+                $stmt=$db->query($requete);
+                $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
+                foreach($resultat as $row){
                 echo "
 
                 <!-- Video container -->
@@ -485,19 +593,18 @@ if (isset($_GET["delete_subscriber"])){
 
                     <!-- Short film -->
                     <div class='video_content'>
-                        <video class='video' poster='{$films["poster"]}' muted>
-                            <source src='{$films["url"]}' type='video/mp4'>
-                        </video>
+                                    <iframe src='https://player.vimeo.com/video/".$row['video_url']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+
 
                         <!-- Name + pp -->
                         <div class='user_container'>
-                            <img src='{$films["photo"]}' class='pp_profile' alt=''>
-                            <p class='pseudo'>{$films["username"]}</p>
+                            <img src='{$row["photo"]}' class='pp_profile' alt=''>
+                            <p class='pseudo'>{$row["username"]}</p>
                             <div class='flou'></div>
                         </div>
 
                         <!-- Time -->
-                        <p class='time'>{$films["duration"]}</p>
+                        <p class='time'>{$row["duration"]}</p>
                     </div>
 
                     <!-- Short film\'s informations -->
@@ -526,13 +633,13 @@ if (isset($_GET["delete_subscriber"])){
 
                         <div class='fb_c_jsb'>
                             <div class='synopsis_title_container' >
-                                <h3 class='synopsis_title'>{$films["title"]}</h3>
+                                <h3 class='synopsis_title'>{$row["title"]}</h3>
                                 <p class='see_more'>Voir plus
                                 <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                                 </p>
                             </div>
                     
-                        <p>{$films["synopsis"]}</p>
+                        <p>{$row["synopsis"]}</p>
 
 
                         </div>
@@ -542,7 +649,77 @@ if (isset($_GET["delete_subscriber"])){
                 </div>
 
                 ";
-                // }
+                }
+            } else {
+                $requete="SELECT * FROM videos, users WHERE video_distribution = {$_COOKIE['userid']}";
+                $stmt=$db->query($requete);
+                $resultat=$stmt->fetchall(PDO::FETCH_ASSOC);
+                foreach($resultat as $row){
+                    echo "
+
+                    <!-- Video container -->
+                    <div class='video_container'>
+    
+                        <!-- Short film -->
+                        <div class='video_content'>
+                                        <iframe src='https://player.vimeo.com/video/".$row['video_url']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+    
+    
+                            <!-- Name + pp -->
+                            <div class='user_container'>
+                                <img src='{$row["photo"]}' class='pp_profile' alt=''>
+                                <p class='pseudo'>{$row["username"]}</p>
+                                <div class='flou'></div>
+                            </div>
+    
+                            <!-- Time -->
+                            <p class='time'>{$row["duration"]}</p>
+                        </div>
+    
+                        <!-- Short film\'s informations -->
+                        <div class='description_container'>
+                            <div class='reaction_container'>
+                                <div class='fb_jsb'>
+    
+                                    <!-- Pop corn image -->
+                                    <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                    <!-- Like\'s number -->
+                                    <p class='pop_corn_number'>515 J'aime</p>
+                                </div>
+    
+                                <!-- Comment icon -->
+                                <div class='fb_jc ai-c'>
+                                    <div class='comment_icon'></div>
+                                    <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                                </div>
+    
+                                <!-- Share icon -->
+                                <div class='fb_jsb share_container'>
+                                    <div class='share_icon'></div>
+                                    <p class='share_title'>Partager</p>
+                                </div>
+                            </div>
+    
+                            <div class='fb_c_jsb'>
+                                <div class='synopsis_title_container' >
+                                    <h3 class='synopsis_title'>{$row["title"]}</h3>
+                                    <p class='see_more'>Voir plus
+                                    <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                                    </p>
+                                </div>
+                        
+                            <p>{$row["synopsis"]}</p>
+    
+    
+                            </div>
+                        </div>
+    
+    
+                    </div>
+    
+                    ";
+                                        }
+                                    }
                 ?>
             </div>
         </div>
@@ -708,12 +885,14 @@ if (isset($_GET["delete_subscriber"])){
 
                                 echo'
                                 <div class="subscription_user">
+                                <div class="fb ai-c">
                                 <a href="profil.php?id='.$row['user_id'].'" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
                                         <a href="profil.php?id='.$row['user_id'].'" class="subscription_username_container">
                                             <div class="subscription_username">'.$row['user_username'].'</div>
                                             <div class="subscription_name">'.$row['user_name'].'</div>
                                         </a>
-                                    <div class="btn subscriber_user_btn" onclick="deleteSubscriber()">Supprimer</div>
+                                </div>
+                                <div class="btn subscriber_user_btn" onclick="deleteSubscriber()">Supprimer</div>
                                 </div>';
 
                             }
@@ -728,12 +907,14 @@ if (isset($_GET["delete_subscriber"])){
                                 foreach($rows as $row){
                                     echo'
                                     <div class="subscription_user">
-                                    <a href="profil.php?id='.$row['user_id'].'" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
+                                <div class="fb ai-c">
+                                <a href="profil.php?id='.$row['user_id'].'" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
                                             <a href="profil.php?id='.$row['user_id'].'" class="subscription_username_container">
                                                 <div class="subscription_username">'.$row['user_username'].'</div>
                                                 <div class="subscription_name">'.$row['user_name'].'</div>
                                             </a>
-                                        <div class="btn subscriber_user_btn" onclick="deleteSubscriber()">Supprimer</div>
+                                </div>
+                                <div class="btn subscriber_user_btn" onclick="deleteSubscriber()">Supprimer</div>
                                     </div>';
                                 }
                             } 
@@ -760,12 +941,13 @@ if (isset($_GET["delete_subscriber"])){
                                 
                                 echo'
                                 <div class="subscription_user">
-                                    <a href="profil.php?id='.$row['user_id'].'" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
+                                <div class="fb ai-c">
+                                <a href="profil.php?id='.$row['user_id'].'" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
                                         <a href="profil.php?id='.$row['user_id'].'" class="subscription_username_container">
                                             <div class="subscription_username">'.$row['user_username'].'</div>
                                             <div class="subscription_name">'.$row['user_name'].'</div>
                                         </a>
-
+                                </div>
                                     <div class="btn subscriber_user_btn subscribe_btn_click" onclick="subscribe()">Abonné(e)</div>
                                 </div>';
 
@@ -782,11 +964,13 @@ if (isset($_GET["delete_subscriber"])){
                                     
                                 echo'
                                 <div class="subscription_user">
+                                <div class="fb ai-c">
                                 <a href="profil.php?id='.$row['user_id'].'" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) .') no-repeat center/cover"></a>
                                         <a href="profil.php?id='.$row['user_id'].'" class="subscription_username_container">
                                             <div class="subscription_username">'.$row['user_username'].'</div>
                                             <div class="subscription_name">'.$row['user_name'].'</div>
                                         </a>
+                                </div>
                                     <a class="btn subscriber_user_btn subscribe_btn_click" onclick="subscribe()">Abonné(e)</a>
                                 </div>';
                                 }

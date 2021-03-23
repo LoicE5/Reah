@@ -32,7 +32,6 @@ function deleteSubscriber() {
 
 $(document).ready(function () {
 
-
     // Modify icon animation hover
     $(".modify_icon").hover(function () {
         $(this).attr('src', 'sources/img/modify_icon_hover.svg');
@@ -259,7 +258,6 @@ $(document).ready(function () {
                 "transform": `translate(${subscriptionLeft.left}px)`,
                 "transition": "0.4s ease",
             });
-            console.log($(".subscription_line").width());
 
         } else if (number == "2") {
             $(".subscription_line").css({
@@ -270,4 +268,7 @@ $(document).ready(function () {
             });
         }
     })
+
+
+
 })

@@ -308,12 +308,12 @@
     .search_bar_focus {
         width: 250px;
         border-radius: 100px;
-        box-shadow: 0px 0px 15px #000000;
-        color: white;
+        /* box-shadow: 0px 0px 15px #000000; */
+        color: black;
         padding: 5px;
         padding-left: 40px;
-        background: url(../../img/loupe_icon.svg) no-repeat 3%;
-        background-color: #500e1e;
+        background: url(../../sources/img/loupe_icon.svg) no-repeat 3%;
+        background-color: white;
         transform: translateX(-270px);
         transition: 0.5s ease;
     }

@@ -43,6 +43,7 @@
 <!-- Films'informations -->
 
 <div class='dark_filter' onclick="closePopupFilm()"></div>
+
 <?php
 $query = "SELECT * FROM videos, defis WHERE defi_id=video_defi_id LIMIT 1";
                 $stmt = $db->prepare($query);
@@ -83,9 +84,8 @@ echo "
         </div>
 
         <!-- Film -->
-        <video class='film' poster='{$row["video_poster"]}' muted>
-            <source src='{$row["video_url"]}' type='video/mp4'>
-        </video>
+        <iframe src='https://player.vimeo.com/video/".$row['video_url']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='film'></iframe>
+
 
 
         <div class='film_informations'>

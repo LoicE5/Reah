@@ -163,7 +163,7 @@ if(!isset($_GET['accueil'])){
 
 <?php
 
-    $query = "SELECT * FROM `videos`";
+      $query = "SELECT * FROM `videos`, `users` WHERE user_id = video_user_id";
     $stmt = $db->prepare($query);
     $stmt->execute();
 
@@ -175,7 +175,7 @@ if(!isset($_GET['accueil'])){
 
             <!-- Short film (class=video) -->
             <div class='video_content'>
-            <iframe src='https://player.vimeo.com/video/".$row['video_vimeo_id']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+            <iframe src='https://player.vimeo.com/video/".$row['video_url']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
                 <!-- Name + pp -->
                 <div class='user_container'>
 
@@ -192,7 +192,7 @@ if(!isset($_GET['accueil'])){
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' onclick='popupFilm($(this))' >
+                    <div class='synopsis_title_container' title=".$row['video_id']." onclick='popupFilm($(this))' >
                         <h3 class='synopsis_title'>".$row['video_title']."</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -284,7 +284,7 @@ if(!isset($_GET['accueil'])){
 
 <?php
 
-    $query = "SELECT * FROM `videos`";
+      $query = "SELECT * FROM `videos`, `users` WHERE user_id = video_user_id";
     $stmt = $db->prepare($query);
     $stmt->execute();
 
@@ -296,7 +296,7 @@ if(!isset($_GET['accueil'])){
 
             <!-- Short film (class=video) -->
             <div class='video_content'>
-            <iframe src='https://player.vimeo.com/video/".$row['video_vimeo_id']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+            <iframe src='https://player.vimeo.com/video/".$row['video_url']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
                 <!-- Name + pp -->
                 <div class='user_container'>
 
@@ -313,7 +313,7 @@ if(!isset($_GET['accueil'])){
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' onclick='popupFilm($(this))' >
+                    <div class='synopsis_title_container' title=".$row['video_id']." onclick='popupFilm($(this))' >
                         <h3 class='synopsis_title'>".$row['video_title']."</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -399,7 +399,7 @@ if(!isset($_GET['accueil'])){
                             <div class="all_video_container">
 
 <?php
-    $query = "SELECT * FROM `videos`";
+    $query = "SELECT * FROM `videos`, `users` WHERE user_id = video_user_id";
     $stmt = $db->prepare($query);
     $stmt->execute();
 
@@ -411,7 +411,7 @@ if(!isset($_GET['accueil'])){
 
             <!-- Short film (class=video) -->
             <div class='video_content'>
-            <iframe src='https://player.vimeo.com/video/".$row['video_vimeo_id']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+            <iframe src='https://player.vimeo.com/video/".$row['video_url']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
                 <!-- Name + pp -->
                 <div class='user_container'>
 
@@ -428,7 +428,7 @@ if(!isset($_GET['accueil'])){
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' onclick='popupFilm($(this))'>
+                    <div class='synopsis_title_container' title=".$row['video_id']." onclick='popupFilm($(this))'>
                         <h3 class='synopsis_title'>".$row['video_title']."</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>

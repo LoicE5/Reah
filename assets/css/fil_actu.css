@@ -1034,15 +1034,28 @@ video:focus {
         padding-right: 0;
         width: 100%;
     }
-    
+
+    .accueil{
+        align-items: flex-start;
+    }
+
+    .accueil_text{
+        margin-top: 80px;
+    }
+
+    .accueil_text .h1{
+        font-size: 1.8rem;
+        margin-bottom: 0;
+    }
+    .accueil>a {
+        height: 50px;
+        width: 50px;
+        margin-left: 0;
+    }
 }
 
 @media screen and (max-width:400px) {
-    .accueil>a {
-        height: 75px;
-        width: 75px;
-        margin-left: 0;
-    }
+  
 
     .accueil_text>h1 {
         font-size: 2rem;
@@ -1167,12 +1180,12 @@ video:focus {
 
     .nav_footer{
         position: fixed;
-        bottom: 0px;
+        bottom: -1px;
         z-index: 300;
         font-size: 0.7rem;
-        height: 70px;
+        height: 90px;
         padding: 15px;
-        padding-bottom: 25px;
+        padding-bottom: 35px;
         padding-left: 15px;
         padding-right: 15px;
         display: none;
@@ -1310,12 +1323,12 @@ video:focus {
 
     .nav_footer{
         position: fixed;
-        bottom: 0px;
+        bottom: -1px;
         z-index: 300;
         font-size: 0.7rem;
-        height: 70px;
+        height: 90px;
         padding: 15px;
-        padding-bottom: 25px;
+        padding-bottom: 35px;
         padding-left: 15px;
         padding-right: 15px;
         display: none;

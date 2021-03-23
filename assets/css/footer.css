@@ -93,12 +93,10 @@ footer>div>div>a:hover{
 }
 
 @media screen and (max-width:700px) {
-    footer{
-        width: 90%;
-    }
     .section1{
         flex-wrap: wrap;
         justify-content: center;
+        width: 100%;
     }
     .section1>div{
         min-width: 250px;
@@ -114,6 +112,9 @@ footer>div>div>a:hover{
 @media screen and (max-width:450px) {
     .footer_reah_logo{
         display: block;
+    }
+    .section1{
+        flex-direction: column;
     }
 
 }
