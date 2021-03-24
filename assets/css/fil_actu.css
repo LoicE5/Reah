@@ -296,7 +296,7 @@ h1 {
     top: 10px;
     left: 10px;
     backdrop-filter: blur(5px);
-    border: 1px solid #141414;
+    border: 1px solid #d60035;
     border-radius: 100vh;
     height: 40px;
     padding-right: 15px;
@@ -320,8 +320,9 @@ h1 {
     z-index: 100;
 }
 
-.pseudo {
+.user_container>.pseudo {
     z-index: 100;
+    color: white;
 }
 
 .video_content {
@@ -588,6 +589,7 @@ video:focus {
     position: relative;
     width: 100%;
     background-color: black;
+    height: 562.5px;
 }
 
 .film_informations {
@@ -1206,7 +1208,9 @@ video:focus {
     .explorer_icon{
         background: url(../../sources/img/light_explorer_icon.svg) center/auto 100% no-repeat;
     }
-
+    .defi_constraints_icon{
+        background: url(../../sources/img/light_defi_icon.svg) center/auto 100% no-repeat;
+    }
 
     .classement_icon{
         background: url(../../sources/img/light_classement_icon.svg) center/auto 100% no-repeat;
@@ -1216,7 +1220,14 @@ video:focus {
         background: url(../../sources/img/light_short_film_icon.svg) center/auto 100% no-repeat;
     }
 
-
+    .comment_arrow,.comment_arrow_open{
+        background: url(../../sources/img/light_comment_arrow_close_icon.svg) center/100% auto no-repeat;
+        height: 35px;
+        width: 35px;
+    }
+    .comment_arrow_open{
+        background: url(../../sources/img/light_comment_arrow_open_icon.svg) center/100% auto no-repeat;
+    }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -1335,11 +1346,12 @@ video:focus {
         border-top: 1px solid #3f3f3f;
     }
     
-    .nouveaute_icon,.defi_moment_icon,.explorer_icon{
+    .nouveaute_icon,.defi_moment_icon,.explorer_icon, .defi_constraints_icon, .classement_icon, .short_film_icon{
         background: url(../../sources/img/dark_nouveaute_icon.svg) center/auto 100% no-repeat;
         height: 35px;
         cursor: pointer;
         width: 40px;
+        margin-bottom: 5px;
     }
 
     .defi_moment_icon{
@@ -1348,6 +1360,28 @@ video:focus {
 
     .explorer_icon{
         background: url(../../sources/img/dark_explorer_icon.svg) center/auto 100% no-repeat;
+    }
+    .defi_constraints_icon{
+        background: url(../../sources/img/dark_defi_icon.svg) center/auto 100% no-repeat;
+    }
+    .classement_icon{
+        background: url(../../sources/img/dark_classement_icon.svg) center/100% 100% no-repeat;
+        width: 40px;
+    }
+
+    .short_film_icon{
+        background: url(../../sources/img/dark_short_film_icon.svg) center/100% 100% no-repeat;
+        width: 40px;
+    }
+
+    .comment_arrow,.comment_arrow_open{
+        background: url(../../sources/img/dark_comment_arrow_close_icon.svg) center/100% auto no-repeat;
+        height: 35px;
+        width: 35px;
+    }
+
+    .comment_arrow_open{
+        background: url(../../sources/img/dark_comment_arrow_open_icon.svg) center/100% auto no-repeat;
     }
 
 }

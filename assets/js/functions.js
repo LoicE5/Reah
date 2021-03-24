@@ -293,7 +293,7 @@ function popupComment(e) {
     }, "1s");
 
     // Comment arrow animation
-    $(".comment_arrow").attr('src', 'sources/img/top_arrow.svg');
+    $(".comment_arrow").addClass("comment_arrow_open");
 }
 
 
@@ -307,7 +307,7 @@ function popupFilmComment() {
         }, "1s");
 
         // Comment arrow animation
-        $(".comment_arrow").attr('src', 'sources/img/bottom_arrow.svg');
+        $(".comment_arrow").removeClass("comment_arrow_open");
     } else {
         $(".comment_space_container").fadeIn(500).addClass("comment_space_container_open").removeClass("comment_space_container_close");
         $("html, body").animate({
@@ -315,7 +315,7 @@ function popupFilmComment() {
         }, "1s");
 
         // Comment arrow animation
-        $(".comment_arrow").attr('src', 'sources/img/top_arrow.svg');
+        $(".comment_arrow").addClass("comment_arrow_open");
     }
 }
 

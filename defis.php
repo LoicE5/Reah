@@ -1,42 +1,41 @@
 <?php
-    // ini_set('display_errors', 1);
-    // ini_set('display_startup_errors', 1);
-    include('assets/php/config.php');
-    // include("ressources/pop_up_film_information.php");
-    include("ressources/pop_up_connexion.php");
-    include("ressources/pop_up_share.php");
-    // include('vimeo_setup.php');
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+include('assets/php/config.php');
+// include("ressources/pop_up_film_information.php");
+include("ressources/pop_up_connexion.php");
+include("ressources/pop_up_share.php");
+// include('vimeo_setup.php');
 
 
 
 if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['constraints'])) {
     $title = $_GET['title'];
-if ($title == ' ') {
-    $message='Le nom choisi est invalide.';
-}else{
+    if ($title == ' ') {
+        $message = 'Le nom choisi est invalide.';
+    } else {
         // $title = $_GET['title'];
         // $constraints = $_GET['constraints'];
         // $requete = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_poster) VALUES ($title, $constraints, NULL, NULL)";
         // $stmt=$db->query($requete);
 
-    $sql = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_image, defi_user_id, defi_verified, defi_current) VALUES (:title, :constraints, NULL, NULL, :user, 0, 0)";
+        $sql = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_image, defi_user_id, defi_verified, defi_current) VALUES (:title, :constraints, NULL, NULL, :user, 0, 0)";
 
-    $attributes = array(
-      'title' => addslashes($_GET['title']),
-      'constraints' => addslashes($_GET['constraints']),
-      'user' => $_COOKIE['userid']
-    );
+        $attributes = array(
+            'title' => addslashes($_GET['title']),
+            'constraints' => addslashes($_GET['constraints']),
+            'user' => $_COOKIE['userid']
+        );
 
-    $stmt = $db->prepare($sql);
+        $stmt = $db->prepare($sql);
 
-    $stmt->execute($attributes);
+        $stmt->execute($attributes);
 
-    $db = null;
+        $db = null;
 
-    header('Location: defis.php?success=true');
-
-  }
-} 
+        header('Location: defis.php?success=true');
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -49,8 +48,7 @@ if ($title == ' ') {
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
     <link rel="stylesheet" href="assets/css/defis.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/fullpage.css" />
 </head>
 
@@ -58,12 +56,12 @@ if ($title == ' ') {
     <main class="main_content">
 
 
-    <?php if (isset($message)){
-        echo '<p class="message_true_container">'. $message .'</p>';
+        <?php if (isset($message)) {
+            echo '<p class="message_true_container">' . $message . '</p>';
         }
 
         if (isset($_GET['success'])) {
-            echo'
+            echo '
             <p class="message_true_container">
                     Ton défi a bien été pris en compte !
             </p>';
@@ -95,26 +93,25 @@ if ($title == ' ') {
                 </form>
 
                 <?php
-                    if(func::checkLoginState($db)){ # If the user is connected
-                        $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
-                        $stmt = $db->prepare($query);
-                        $stmt->execute();
-    
-                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-                        echo "<div class='menu_profile'>
+                if (func::checkLoginState($db)) { # If the user is connected
+                    $query = "SELECT * FROM users WHERE user_id = " . $_COOKIE['userid'] . ";";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute();
+
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    echo "<div class='menu_profile'>
                         <!-- Fil actu icon -->
                         <form action='fil_actu.php' method='GET'>
                             <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
                         </form>
                         <!-- Profile photo -->
-                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
+                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
                         </div>
                         </nav>";
-    
-                    } else {
-    
-                        echo "<div class='menu_profile'>
+                } else {
+
+                    echo "<div class='menu_profile'>
                         <!-- Fil actu icon -->
                         <form action='fil_actu.php' method='GET'>
                             <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
@@ -125,7 +122,7 @@ if ($title == ' ') {
                         </div>
                         </div>
                         </nav>";
-                    }
+                }
                 ?>
             </div>
         </nav>
@@ -152,19 +149,19 @@ if ($title == ' ') {
                     <div class="red_line title_line"></div>
                     <div id='days'></div>
                     DÉFIS DU MOMENT
-                    
+
                 </h1>
 
                 <!-- Add defi btn -->
                 <?php
-                if(func::checkLoginState($db)){ # If the user is connected
-                echo'
+                if (func::checkLoginState($db)) { # If the user is connected
+                    echo '
                 <div class="btn add_defi_btn" onclick="popupAddDefi()">
                     <img class="add_defi_icon" src="sources/img/add_defi_icon.svg" alt="">
                     Proposer un défi
                 </div>';
                 } else { # If the user is an asshole
-                    echo'
+                    echo '
                     <div class="btn add_defi_btn" onclick="popupConnexion()">
                         <img class="add_defi_icon" src="sources/img/add_defi_icon.svg" alt="">
                         Proposer un défi
@@ -176,8 +173,6 @@ if ($title == ' ') {
             <!-- Challenges container -->
             <div class="defi_container ">
 
-                <!-- Challenge n°1-->
-
                 <?php
                 $query = "SELECT * FROM defis WHERE defi_verified='1' AND defi_current='1'";
                 $stmt = $db->prepare($query);
@@ -186,9 +181,9 @@ if ($title == ' ') {
                 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-                foreach($rows as $row){
+                foreach ($rows as $row) {
                     echo '
-                        <a href="defi_details.php?defi='.$row['defi_id'].'" class="defi_content">
+                        <a href="defi_details.php?defi=' . $row['defi_id'] . '" class="defi_content">
                         <img class="defi_img defi1_img" src="data:image/png;base64,' . base64_encode($row['defi_image']) . '" alt="">
                         <p class="defi_time">Temps restant : 14h 30min</p>
                     </a>';
@@ -218,20 +213,20 @@ if ($title == ' ') {
                 <div class="defi_pop_container ">
 
                     <?php
-                $query = "SELECT * FROM defis WHERE defi_verified='1'";
-                $stmt = $db->prepare($query);
-                $stmt->execute();
+                    $query = "SELECT * FROM defis WHERE defi_verified='1' ORDER BY defi_id DESC";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute();
 
-                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-                foreach($rows as $row){
-                    echo '
-                        <a href="defi_details.php?defi='.$row['defi_id'].'" class="defi_pop_content">
+                    foreach ($rows as $row) {
+                        echo '
+                        <a href="defi_details.php?defi=' . $row['defi_id'] . '" class="defi_pop_content">
                         <img class="defi_img defi_pop_img" src="data:image/png;base64,' . base64_encode($row['defi_image']) . '" alt="">
                         </a>';
-                }
-                ?>
+                    }
+                    ?>
 
                 </div>
             </div>
@@ -260,16 +255,16 @@ if ($title == ' ') {
 
 
                     <?php
-                $query = "SELECT * FROM defis WHERE defi_verified='1'";
-                $stmt = $db->prepare($query);
-                $stmt->execute();
+                    $query = "SELECT * FROM defis WHERE defi_verified='1' ORDER BY RAND()";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute();
 
-                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
-                foreach($rows as $row){
-                    echo '
-                        <a href="defi_details.php?defi='.$row['defi_id'].'" class="defi_pop_content">
+                    foreach ($rows as $row) {
+                        echo '
+                        <a href="defi_details.php?defi=' . $row['defi_id'] . '" class="defi_pop_content">
                         <img class="defi_img defi_pop_img" src="data:image/png;base64,' . base64_encode($row['defi_image']) . '" alt="">
                         </a>';
                     }
@@ -285,7 +280,7 @@ if ($title == ' ') {
         </div>
 
         <?php
-            require("ressources/footer.php");
+        require("ressources/footer.php");
         ?>
     </main>
 
@@ -315,8 +310,7 @@ if ($title == ' ') {
                     <div class="input_container input_constraints_container">
                         <label for="constraints">
                             <span>Contraintes</span>
-                            <textarea class="input_connexion input_constraints" id="constraints" name="constraints"
-                                cols="30" rows="10" required></textarea>
+                            <textarea class="input_connexion input_constraints" id="constraints" name="constraints" cols="30" rows="10" required></textarea>
                         </label>
                     </div>
 
@@ -328,7 +322,7 @@ if ($title == ' ') {
     </div>
 
     <?php
-   
+
     ?>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>

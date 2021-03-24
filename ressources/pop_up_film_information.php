@@ -2,40 +2,41 @@
 
 
 // Ajout d'un commentaire
-    if(isset($_GET['comment_send'])){
-        $sql = "INSERT INTO comments (comment_content, comment_video_id, comment_user_id) VALUES (:content, :video_id, :user_id)";
+if (isset($_GET['comment_send'])) {
+    $sql = "INSERT INTO comments (comment_content, comment_video_id, comment_user_id) VALUES (:content, :video_id, :user_id)";
 
-        $attributes = array(
-          'content' => $_GET["comment_content"],
-          'video_id' => '1',
-          'user_id' => $_COOKIE['userid'],
-        );
-    
-        $stmt = $db->prepare($sql);
-    
-        $stmt->execute($attributes);
-    
-        $db = null;
+    $attributes = array(
+        'content' => $_GET["comment_content"],
+        'video_id' => '1',
+        'user_id' => $_COOKIE['userid'],
+    );
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute($attributes);
+
+    $db = null;
 
     header('Location: fil_actu.php?accueil=true');
-
-    }
+}
 
 // Supression d'un commentaire
-    if(isset($_GET['delete_comment'])){
+if (isset($_GET['delete_comment'])) {
 
-        $comment_id = $_GET['delete_comment'];
-        $user_id = $_COOKIE['userid'];
-        $sql = "DELETE FROM comments WHERE comment_user_id='$user_id' AND comment_id='$comment_id'";
+    $comment_id = $_GET['delete_comment'];
+    $user_id = $_COOKIE['userid'];
+    $sql = "DELETE FROM comments WHERE comment_user_id='$user_id' AND comment_id='$comment_id'";
 
-        $stmt = $db->prepare($sql);
+    $stmt = $db->prepare($sql);
 
-        $stmt->execute();
+    $stmt->execute();
 
-        $db = null;
+    $db = null;
 
-        header('Location: fil_actu.php?accueil=true');
-    }
+    header('Location: fil_actu.php?accueil=true');
+}
+
+
 ?>
 
 
@@ -45,14 +46,14 @@
 <div class='dark_filter' onclick="closePopupFilm()"></div>
 
 <?php
-$query = "SELECT * FROM videos, defis WHERE defi_id=video_defi_id LIMIT 1";
-                $stmt = $db->prepare($query);
-                $stmt->execute();
+$query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, defis WHERE defi_id=video_defi_id AND video_id = 1";
+$stmt = $db->prepare($query);
+$stmt->execute();
 
-                $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                foreach($rows as $row){
-echo "
+foreach ($rows as $row) {
+    echo "
 <div class='film_container' title='{$row["video_id"]}'>
     <div class='fb_c'>
         <div class='film_header'>
@@ -64,14 +65,15 @@ echo "
                     <div></div>
                 </div>";
 
-                if(func::checkLoginState($db)){ # If the user is connected
-                    echo'<img src="sources/img/film_saved_icon.svg" class="film_saved_icon" alt="" onclick="saveFilm($(this))">';
-                } else { # If the user is an asshole
-                    echo"
+    // Enregistrer un film
+    if (func::checkLoginState($db)) { # If the user is connected
+        echo '<img src="sources/img/film_saved_icon.svg" class="film_saved_icon" alt="" onclick="saveFilm($(this))">';
+    } else { # If the user is an asshole
+        echo "
                     <img src='sources/img/film_saved_icon.svg' class='film_saved_icon' alt='' onclick='popupConnexion()'>";
-                }
+    }
 
-        echo"
+    echo "
                 <div class='film_settings_container'>
                     <div>Signaler</div>
                     <div class='delete_option' onclick='popupDeleteFilm()'>Supprimer</div>
@@ -84,7 +86,7 @@ echo "
         </div>
 
         <!-- Film -->
-        <iframe src='https://player.vimeo.com/video/".$row['video_url']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='film'></iframe>
+        <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='film'></iframe>
 
 
 
@@ -100,17 +102,17 @@ echo "
                     </div>
 
                     <!-- Date + duration section -->
-                    <p class='film_time'>{$row["video_duration"]}</p>
+                    <p class='film_time'>{$row["time"]}</p>
                     <p class='film_date'>{$row["video_date"]}</p>
                 </div>";
 
-                if(func::checkLoginState($db)){ # If the user is connected
-                    echo"<div class='fb_jsb'>
+    if (func::checkLoginState($db)) { # If the user is connected
+        echo "<div class='fb_jsb'>
 
                     <!-- Like section -->
                     <div class='fb_jsb'>
                         <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
-                        <p class='film_pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                        <p class='film_pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                     </div>
 
                     <!-- Share section -->
@@ -119,13 +121,13 @@ echo "
                         <p class='share_title'>Partager</p>
                     </div>
                 </div>";
-                } else { # If the user is an asshole
-                    echo"<div class='fb_jsb'>
+    } else { # If the user is an asshole
+        echo "<div class='fb_jsb'>
 
                     <!-- Like section -->
                     <div class='fb_jsb' onclick='popupConnexion()'>
                         <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon'>
-                        <p class='film_pop_corn_number'>515 J'aime</p>
+                        <p class='film_pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                     </div>
 
                     <!-- Share section -->
@@ -134,9 +136,9 @@ echo "
                         <p class='share_title'>Partager</p>
                     </div>
                 </div>";
-                }
+    }
 
-            echo"
+    echo "
             </div>
 
             <p class='film_description'>{$row["video_synopsis"]}</p>
@@ -150,50 +152,49 @@ echo "
         <div class='fb_jc ai-c comment_title_container' onclick='popupFilmComment()'>
             <div class='comment_icon'></div>";
 
-            $query = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id";
-            $stmt = $db->prepare($query);
-            $stmt->execute();
-            
-            $rows = $stmt->fetch(PDO::FETCH_ASSOC);
+    $query = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
 
-            echo "<p class='comment_title'>". $rows['number'] ." commentaires</p>
-            <img src='sources/img/bottom_arrow.svg' class='comment_arrow' alt=''>
+    $rows = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    echo "<p class='comment_title'>" . $rows['number'] . " commentaires</p>
+            <div class='comment_arrow'></div>
         </div>
     </div>";
-    }
+}
 
-    $stmt = null;
-    $query = null;
-    $rows = null;
-    ?>
-    <!-- Comment -->
-    <div class='comment_space_container'>
-        
-        <!-- Write a comment -->
-        
-        <?php
-            if(func::checkLoginState($db)){ # If the user isn't connected
-                   
-                $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
-                $stmt = $db->prepare($query);
-                $stmt->execute();
+$stmt = null;
+$query = null;
+$rows = null;
+?>
+<!-- Comment -->
+<div class='comment_space_container'>
 
-                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    <!-- Write a comment -->
 
-                    echo"
+    <?php
+    if (func::checkLoginState($db)) { # If the user isn't connected
+
+        $query = "SELECT * FROM users WHERE user_id = " . $_COOKIE['userid'] . ";";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        echo "
                     <form action='fil_actu.php?accueil=true' method='GET'>
                         <div class='write_comment'>
-                            <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='pp_profile'></div>
+                            <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='pp_profile'></div>
                             <textarea class='comment_textarea' name='comment_content' placeholder='Écrire un commentaire...'></textarea>
                             <input type='submit' class='send_comment' name='comment_send' value=''>
                         </div>
                     </form>
 
                     ";
+    } else {
 
-                } else {
-
-                    echo"
+        echo "
                     <form>
                         <div class='write_comment'  onclick='popupConnexion()'>
                             <div class='se-connecter menu_pp_icon' onclick='redirect(`login.php`)' onload='SVGInject(this)'></div>
@@ -203,31 +204,31 @@ echo "
                     </form>
 
                     ";
-                }
-                $stmt = null;
-                $query = null;
-                $rows = null;
-        ?>
+    }
+    $stmt = null;
+    $query = null;
+    $rows = null;
+    ?>
 
-        <!-- All the comments -->
-        <?php
-        
-        $query = "SELECT * FROM comments, users, videos WHERE comment_video_id=video_id AND user_id=comment_user_id ORDER BY comment_date DESC";
-        $stmt = $db->prepare($query);
-        $stmt->execute();
-        
-        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        foreach($rows as $row){
-        
-            echo "
+    <!-- All the comments -->
+    <?php
+
+    $query = "SELECT * FROM comments, users, videos WHERE comment_video_id=video_id AND user_id=comment_user_id ORDER BY comment_date DESC";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    foreach ($rows as $row) {
+
+        echo "
             <div class='comment_content'>
                 <div class='fb_jsb position_r'>
                     <a href='profil.php?id={$row['user_id']}' class='fb'>
-                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='pp_profile'></div>
+                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='pp_profile'></div>
                         <div class='fb_c_jsb pseudo_date_comment'>
                             <p class='pseudo'>{$row["user_username"]}</p>
-                            <p class='comment_date'>". date('d-m-Y', strtotime($row["comment_date"])) ."</p>
+                            <p class='comment_date'>" . date('d-m-Y', strtotime($row["comment_date"])) . "</p>
                         </div>
                     </a>
                     <div class='comment_param_container' onclick='commentFilmSettings($(this))'>
@@ -238,19 +239,19 @@ echo "
 
                     <div class='comment_settings_container'>";
 
-                    if($row["comment_user_id"] == $_COOKIE["userid"]){
-                        echo"
-                            <a href='fil_actu.php?delete_comment=".$row["comment_id"]."'>Supprimer</a>";
-                    } else {
-                        echo"
+        if ($row["comment_user_id"] == $_COOKIE["userid"]) {
+            echo "
+                            <a href='fil_actu.php?delete_comment=" . $row["comment_id"] . "'>Supprimer</a>";
+        } else {
+            echo "
                         <div>Signaler</div>";
-                    }
+        }
 
-                    echo"
+        echo "
                     </div>
                 </div>
     
-                <p class='comment_text'>".$row["comment_content"]."</p>
+                <p class='comment_text'>" . $row["comment_content"] . "</p>
     
                 <div class='fb_jsa ai-c'>
                     <div class='fb_jsb'  onclick='popupConnexion()'>
@@ -267,14 +268,13 @@ echo "
                     </div>
                 </div>
             </div>";
-        
     }
-    
+
     $stmt = null;
     $query = null;
     $rows = null;
     ?>
-    </div>
+</div>
 </div>
 
 <!-- Delete warning -->

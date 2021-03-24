@@ -21,7 +21,7 @@ $(document).ready(function () {
         try {
             var result = document.execCommand('copy');
             if (result) {
-                $("body").prepend("<div class='message_container'>Lien copié dans le presse-papiers.</div>");
+                $("body").prepend("<p class='message_true_container'>Lien copié dans le presse-papiers.</p>");
             }
         } catch (err) {
             // Une erreur est surevnue lors de la tentative de copie

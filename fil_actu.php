@@ -1,11 +1,11 @@
 <?php
-    // ini_set('display_errors', 1);
-    // ini_set('display_startup_errors', 1);
-    include('assets/php/config.php');
-    include("ressources/pop_up_film_information.php");
-    include("ressources/pop_up_connexion.php");
-    include("ressources/pop_up_share.php");
-    include('vimeo_setup.php');
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+include('assets/php/config.php');
+include("ressources/pop_up_film_information.php");
+include("ressources/pop_up_connexion.php");
+include("ressources/pop_up_share.php");
+include('vimeo_setup.php');
 ?>
 
 <!DOCTYPE html>
@@ -20,17 +20,16 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
     <link rel="stylesheet" href="assets/css/fil_actu2.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <script src="assets/js/libraries/svg-inject-master/src/svg-inject.js"></script>
     <script src="https://player.vimeo.com/api/player.js"></script>
 </head>
 
 <body>
 
-<?php
-if(!isset($_GET['accueil'])){
- echo'
+    <?php
+    if (!isset($_GET['accueil'])) {
+        echo '
 
     <section class="accueil" id="accueil">
 
@@ -52,8 +51,8 @@ if(!isset($_GET['accueil'])){
         <img src="sources/img/accueil_arrow.svg" class="scroll_arrow" alt="">
 
     </section>';
-}
-?>
+    }
+    ?>
     <main class="main_content">
 
 
@@ -79,429 +78,484 @@ if(!isset($_GET['accueil'])){
 
                 <!-- Search bar -->
                 <form action="search.php" method="GET" class="form_search_bar">
-                    <input class="search_bar" name="research" type="text"
-                        placeholder="Défis, courts-métrages, utilisateurs..." oninput="searchEngine(this.value)">
+                    <input class="search_bar" name="research" type="text" placeholder="Défis, courts-métrages, utilisateurs..." oninput="searchEngine(this.value)">
                 </form>
 
                 <?php
-                    if(func::checkLoginState($db)){ # If the user is connected
-                        $query = "SELECT * FROM `users` WHERE user_id = ".$_COOKIE['userid'].";";
-                        $stmt = $db->prepare($query);
-                        $stmt->execute();
-    
-                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-                        echo "<div class='menu_profile'>
+                if (func::checkLoginState($db)) { # If the user is connected
+                    $query = "SELECT * FROM `users` WHERE user_id = " . $_COOKIE['userid'] . ";";
+                    $stmt = $db->prepare($query);
+                    $stmt->execute();
+
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    echo "<div class='menu_profile'>
                         <!-- Defi icon -->
                         <a href='defis.php' class='defi_icon'></a>
                         <!-- Profile photo -->
-                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
-                        </div>
-                        </nav>";
-    
-                    } else {
-    
-                        echo "<div class='menu_profile'>
+                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>";
+                } else {
+
+                    echo "<div class='menu_profile'>
                         <!-- Defi icon -->
                         <a href='defis.php' class='defi_icon'></a>
                         <!-- Profile photo -->
                             <div class='se-connecter menu_pp_icon' onclick='redirect(`login.php`)' onload='SVGInject(this)'>
-                            </div>
-                        </div>
-                        </nav>";
-                    }
+                            </div>";
+                }
                 ?>
+            </div>
+        </nav>
 
-                <!-- Category list  -->
-                <div class="category_list_container">
-                    <p class="category_list_category category_list_category1" number="1" number2="2" number3="3">Nouveautés</p>
-                    <p class="category_list_category category_list_category2" number="2" number2="1" number3="3">Défis du moment</p>
-                    <p class="category_list_category category_list_category3" number="3" number2="1" number3="2">Explorer</p>
-                </div>
+        <!-- Category list  -->
+        <div class="category_list_container">
+            <p class="category_list_category category_list_category1" number="1" number2="2" number3="3">
+                Nouveautés</p>
+            <p class="category_list_category category_list_category2" number="2" number2="1" number3="3">
+                Défis du moment</p>
+            <p class="category_list_category category_list_category3" number="3" number2="1" number3="2">
+                Explorer</p>
+        </div>
 
-                <!-- Menu -->
-                <?php
-                    require("ressources/menu.php");
-                ?>
+        <!-- Menu -->
+        <?php require("ressources/menu.php"); ?>
 
-                <!-- Nav footer -->
+        <!-- Nav footer -->
 
-                <div class="nav_footer">
-                    <div class="nav_footer_category" number="1" number2="2" number3="3">
-                        <div class="nouveaute_icon"></div>
-                        Nouveautés</div>
-                    <div class="nav_footer_category" number="2" number2="1" number3="3">
-                        <div class="defi_moment_icon"></div>
-                        Défis du moment</div>
-                    <div class="nav_footer_category" number="3" number2="1" number3="2">
-                        <div class="explorer_icon"></div>
-                        Explorer</div>
-                </div>
-
-
-
-                <div class="all_category_container">
+        <div class="nav_footer">
+            <div class="nav_footer_category" number="1" number2="2" number3="3">
+                <div class="nouveaute_icon"></div>
+                Nouveautés
+            </div>
+            <div class="nav_footer_category" number="2" number2="1" number3="3">
+                <div class="defi_moment_icon"></div>
+                Défis du moment
+            </div>
+            <div class="nav_footer_category" number="3" number2="1" number3="2">
+                <div class="explorer_icon"></div>
+                Explorer
+            </div>
+        </div>
 
 
-                    <!-- "Ajout récent" catégory -->
-                    <div class="first_category" id="category" number="1">
 
-                        <!-- prev arrow -->
-                        <div class="arrow_prev_container" onclick="prevArrowClick($(this))"></div>
+        <div class="all_category_container">
 
-                        <!-- Category content  -->
-                        <div class="category_content">
 
-                            <!-- Category title -->
-                            <h1 id="title1">
-                                <div class="red_line title_line"></div>
-                                NOUVEAUTÉS
-                            </h1>
+            <!-- "Ajout récent" catégory -->
+            <div class="first_category" id="category" number="1">
 
-                            <!-- All videos -->
-                            <div class="all_video_container">
+                <!-- prev arrow -->
+                <div class="arrow_prev_container" onclick="prevArrowClick($(this))"></div>
 
-<?php
+                <!-- Category content  -->
+                <div class="category_content">
 
-      $query = "SELECT * FROM `videos`, `users` WHERE user_id = video_user_id";
-    $stmt = $db->prepare($query);
-    $stmt->execute();
+                    <!-- Category title -->
+                    <h1 id="title1">
+                        <div class="red_line title_line"></div>
+                        NOUVEAUTÉS
+                    </h1>
 
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    <!-- All videos -->
+                    <div class="all_video_container">
 
-    foreach($rows as $row){
-        echo "<!-- Video container -->
+                        <?php
+
+                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users` WHERE user_id = video_user_id ORDER BY video_id DESC";
+                        $stmt = $db->prepare($query);
+                        $stmt->execute();
+
+                        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($rows as $row) {
+                            echo "<!-- Video container -->
         <div class='video_container'>
 
             <!-- Short film (class=video) -->
             <div class='video_content'>
-            <iframe src='https://player.vimeo.com/video/".$row['video_url']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+            <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
                 <!-- Name + pp -->
-                <div class='user_container'>
+                <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
                 <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
 
-                    <p class='pseudo'>".$row['user_username']."</p>
+                    <p class='pseudo'>" . $row['user_username'] . "</p>
                     <div class='flou'></div>
-                </div>
+                </a>
 
                 <!-- Time -->
-                <p class='time'>01:54</p>
+                <p class='time'>" . $row['time'] . "</p>
             </div>
 
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' title=".$row['video_id']." onclick='popupFilm($(this))' >
-                        <h3 class='synopsis_title'>".$row['video_title']."</h3>
+                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm($(this))' >
+                        <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                             </p>
                     </div>";
-                    if(func::checkLoginState($db)){ # If the user is connected
-                        echo"
+                            if (func::checkLoginState($db)) { # If the user is connected
+                                echo "
                         <div class='reaction_container'>
                             <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
-                                <div class='comment_icon'></div>
-                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                            </div>
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>";
 
+                                // Comment's number
+                                $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
+                                $stmt2 = $db->prepare($query2);
+                                $stmt2->execute();
+
+                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                                echo "
+                                        <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
+
+                                echo "
+                                        </div>
                             <!-- Share icon -->
                             <div class='share_icon' onclick='popupShare()'></div>
 
                         </div>";
-                        } else { # If the user is an asshole
-                            echo"
+                            } else { # If the user is an asshole
+                                echo "
                             <div class='reaction_container'>
                             <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
-                                <div class='comment_icon'></div>
-                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>";
+
+                                // Comment's number
+                                $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
+                                $stmt2 = $db->prepare($query2);
+                                $stmt2->execute();
+
+                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                                echo "
+                                        <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
+
+                                echo "
                             </div>
 
                             <!-- Share icon -->
                             <div class='share_icon' onclick='popupConnexion()'></div>
 
                         </div>";
-                        }
+                            }
 
-                    echo"
+                            echo "
                 </div>
-                <p>".$row['video_synopsis']."</p>
+                <p>" . $row['video_synopsis'] . "</p>
             </div>
 
 
         </div>";
-    }
+                        }
 
-    $stmt = null;
-    $query = null;
-    $rows = null;
+                        $stmt = null;
+                        $query = null;
+                        $rows = null;
 
-?>
+                        ?>
 
-
-                            </div>
-                        </div>
-
-
-
-                        <!-- next arrow -->
-                        <div class="arrow_next_container" onclick="nextArrowClick($(this))"></div>
 
                     </div>
+                </div>
 
 
-                    <div class="second_category" id="category" number="2">
 
-                        <!-- prev arrow -->
-                        <div class="arrow_prev_container" onclick="prevArrowClick($(this))"></div>
+                <!-- next arrow -->
+                <div class="arrow_next_container" onclick="nextArrowClick($(this))"></div>
 
-                        <!-- Category content  -->
-                        <div class="category_content">
+            </div>
 
-                            <!-- Category title -->
-                            <h1 class="title2" id="title2">
-                                <div class="red_line title_line"></div>
-                                DÉFIS DU MOMENT
-                            </h1>
 
-                            <!-- All videos -->
-                            <div class="all_video_container">
+            <div class="second_category" id="category" number="2">
 
-<?php
+                <!-- prev arrow -->
+                <div class="arrow_prev_container" onclick="prevArrowClick($(this))"></div>
 
-      $query = "SELECT * FROM `videos`, `users` WHERE user_id = video_user_id";
-    $stmt = $db->prepare($query);
-    $stmt->execute();
+                <!-- Category content  -->
+                <div class="category_content">
 
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    <!-- Category title -->
+                    <h1 class="title2" id="title2">
+                        <div class="red_line title_line"></div>
+                        DÉFIS DU MOMENT
+                    </h1>
 
-    foreach($rows as $row){
-        echo "<!-- Video container -->
+                    <!-- All videos -->
+                    <div class="all_video_container">
+
+                        <?php
+
+                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users`, `defis` WHERE user_id = video_user_id AND video_defi_id = defi_id AND defi_current = 1";
+                        $stmt = $db->prepare($query);
+                        $stmt->execute();
+
+                        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($rows as $row) {
+                            echo "<!-- Video container -->
         <div class='video_container'>
 
             <!-- Short film (class=video) -->
             <div class='video_content'>
-            <iframe src='https://player.vimeo.com/video/".$row['video_url']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+            <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
                 <!-- Name + pp -->
-                <div class='user_container'>
+                <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
                 <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
 
-                    <p class='pseudo'>".$row['user_username']."</p>
+                    <p class='pseudo'>" . $row['user_username'] . "</p>
                     <div class='flou'></div>
-                </div>
+                </a>
 
                 <!-- Time -->
-                <p class='time'>01:54</p>
+                <p class='time'>" . $row['time'] . "</p>
             </div>
 
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' title=".$row['video_id']." onclick='popupFilm($(this))' >
-                        <h3 class='synopsis_title'>".$row['video_title']."</h3>
+                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm($(this))' >
+                        <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                             </p>
                     </div>";
-                    if(func::checkLoginState($db)){ # If the user is connected
-                        echo"
+                            if (func::checkLoginState($db)) { # If the user is connected
+                                echo "
                         <div class='reaction_container'>
                             <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
-                                <div class='comment_icon'></div>
-                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                            </div>
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>";
 
+                                // Comment's number
+                                $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
+                                $stmt2 = $db->prepare($query2);
+                                $stmt2->execute();
+
+                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                                echo "
+                                        <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
+
+                                echo "
+                                        </div>
                             <!-- Share icon -->
                             <div class='share_icon' onclick='popupShare()'></div>
 
                         </div>";
-                        } else { # If the user is an asshole
-                            echo"
+                            } else { # If the user is an asshole
+                                echo "
                             <div class='reaction_container'>
                             <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
-                                <div class='comment_icon'></div>
-                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>";
+
+                                // Comment's number
+                                $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
+                                $stmt2 = $db->prepare($query2);
+                                $stmt2->execute();
+
+                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                                echo "
+                                        <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
+
+                                echo "
                             </div>
 
                             <!-- Share icon -->
                             <div class='share_icon' onclick='popupConnexion()'></div>
 
                         </div>";
-                        }
+                            }
 
-                        echo"
+                            echo "
                 </div>
-                <p>".$row['video_synopsis']."</p>
+                <p>" . $row['video_synopsis'] . "</p>
             </div>
 
 
         </div>";
-    }
+                        }
 
-    $stmt = null;
-    $query = null;
-    $rows = null;
+                        $stmt = null;
+                        $query = null;
+                        $rows = null;
 
-?>
+                        ?>
 
-                            </div>
-                        </div>
-
-                        <!-- next arrow -->
-                        <div class="arrow_next_container" onclick="nextArrowClick($(this))"></div>
                     </div>
+                </div>
 
-                    <div class="third_category" id="category" number="3">
+                <!-- next arrow -->
+                <div class="arrow_next_container" onclick="nextArrowClick($(this))"></div>
+            </div>
 
-                        <!-- prev arrow -->
-                        <div class="arrow_prev_container" onclick="prevArrowClick($(this))"></div>
+            <div class="third_category" id="category" number="3">
 
-                        <!-- Category content  -->
-                        <div class="category_content">
+                <!-- prev arrow -->
+                <div class="arrow_prev_container" onclick="prevArrowClick($(this))"></div>
 
-                            <!-- Category title -->
-                            <h1 id="title3">
-                                <div class="red_line title_line"></div>
-                                EXPLORER
-                            </h1>
+                <!-- Category content  -->
+                <div class="category_content">
 
-                            <!-- All videos -->
-                            <div class="all_video_container">
+                    <!-- Category title -->
+                    <h1 id="title3">
+                        <div class="red_line title_line"></div>
+                        EXPLORER
+                    </h1>
 
-<?php
-    $query = "SELECT * FROM `videos`, `users` WHERE user_id = video_user_id";
-    $stmt = $db->prepare($query);
-    $stmt->execute();
+                    <!-- All videos -->
+                    <div class="all_video_container">
 
-    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        <?php
+                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users` WHERE user_id = video_user_id ORDER BY RAND()";
+                        $stmt = $db->prepare($query);
+                        $stmt->execute();
 
-    foreach($rows as $row){
-        echo "<!-- Video container -->
+                        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($rows as $row) {
+                            echo "<!-- Video container -->
         <div class='video_container'>
 
             <!-- Short film (class=video) -->
             <div class='video_content'>
-            <iframe src='https://player.vimeo.com/video/".$row['video_url']."' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+            <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
                 <!-- Name + pp -->
-                <div class='user_container'>
+                <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
-                <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
+                <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
 
-                <p class='pseudo'>".$row['user_username']."</p>
+                <p class='pseudo'>" . $row['user_username'] . "</p>
                     <div class='flou'></div>
-                </div>
+                </a>
 
                 <!-- Time -->
-                <p class='time'>01:54</p>
+                <p class='time'>" . $row['time'] . "</p>
             </div>
 
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' title=".$row['video_id']." onclick='popupFilm($(this))'>
-                        <h3 class='synopsis_title'>".$row['video_title']."</h3>
+                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm($(this))'>
+                        <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                             </p>
                     </div>";
 
-                    if(func::checkLoginState($db)){ # If the user is connected
-                        echo"
+                            if (func::checkLoginState($db)) { # If the user is connected
+                                echo "
                         <div class='reaction_container'>
                             <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
-                                <div class='comment_icon'></div>
-                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
-                            </div>
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>";
 
+                                // Comment's number
+                                $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
+                                $stmt2 = $db->prepare($query2);
+                                $stmt2->execute();
+
+                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                                echo "
+                                        <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
+
+                                echo "
+                                        </div>
                             <!-- Share icon -->
                             <div class='share_icon' onclick='popupShare()'></div>
 
                         </div>";
-
-                        } else { # If the user is an asshole
-                            echo"
+                            } else { # If the user is an asshole
+                                echo "
                             <div class='reaction_container'>
                             <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>".$row['video_like_number']." J'aime</p>
+                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=".$row['video_id']." onclick='popupComment($(this))' >
-                                <div class='comment_icon'></div>
-                                <p class='profile_comment_title'><nobr>1 925 commentaires</nobr></p>
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>";
+
+                                // Comment's number
+                                $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
+                                $stmt2 = $db->prepare($query2);
+                                $stmt2->execute();
+
+                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                                echo "
+                                        <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
+                                echo "
                             </div>
 
                             <!-- Share icon -->
                             <div class='share_icon' onclick='popupConnexion()'></div>
 
                         </div>";
-                        }
+                            }
 
-                        echo"
+                            echo "
                 </div>
-                <p>".$row['video_synopsis']."</p>
+                <p>" . $row['video_synopsis'] . "</p>
             </div>
 
 
         </div>";
-    }
+                        }
 
-    $stmt = null;
-    $query = null;
-    $rows = null;
+                        $stmt = null;
+                        $query = null;
+                        $rows = null;
 
-?>
-                            </div>
-                        </div>
-
-                        <!-- next arrow -->
-                        <div class="arrow_next_container" onclick="nextArrowClick($(this))"></div>
+                        ?>
                     </div>
-
                 </div>
 
-                <?php
-                    require("ressources/footer.php");
-                ?>
+                <!-- next arrow -->
+                <div class="arrow_next_container" onclick="nextArrowClick($(this))"></div>
+            </div>
+
+        </div>
+
+        <?php
+        require("ressources/footer.php");
+        ?>
 
     </main>
 

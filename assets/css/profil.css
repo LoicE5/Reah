@@ -272,6 +272,10 @@
     align-items: center;
 }
 
+.description_container .fb_c_jsb{
+    width: 100%;
+}
+
 .reaction_container {
     width: 100%;
     min-width: 470px;
