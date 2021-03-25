@@ -4,6 +4,7 @@
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -22,9 +23,11 @@
             background: var(--background);
             /* padding-top: 60px; */
         }
+
         nav {
             position: unset;
         }
+
         .result>iframe {
             width: 200px;
             height: auto;
@@ -32,12 +35,15 @@
             margin-left: 15px;
             border-radius: 10px !important;
         }
-        .result h4,.result p {
+
+        .result h4,
+        .result p {
             width: max-content;
             height: max-content;
             margin: 0px;
             /* float: right; */
         }
+
         .result {
             display: flex;
             flex-flow: row wrap;
@@ -48,6 +54,7 @@
             margin-bottom: 15px;
             cursor: pointer;
         }
+
         .result>section {
             margin-left: 15px;
             height: max-content;
@@ -55,55 +62,50 @@
             margin-top: 15px;
             margin-bottom: 15px;
         }
+
         .omg_im_centered {
             width: 80%;
             margin-left: auto;
             margin-right: auto;
         }
+
         .horizontal_line {
             height: 1px;
             background: darkgray;
             margin-top: 15px;
             margin-bottom: 15px;
         }
+
         .result>.profile_picture {
             width: 100px;
             height: 100px;
             border-radius: 999px;
             margin: 15px;
         }
+
         .result .profile_description {
             max-width: 80%;
             word-wrap: break-word;
         }
+        .menu_nav{
+            padding-left: 0;
+        }
     </style>
 </head>
+
 <body>
-<?php
+    <?php
     include("ressources/pop_up_film_information.php");
     include("ressources/pop_up_connexion.php");
     include("ressources/pop_up_share.php");
 ?>
-<!-- Navigation menu -->
-<nav>
+    <!-- Navigation menu -->
 
-    <!-- Logo Réah -->
-    <a class="reah_logo_container" href="fil_actu.php"> <img src="sources/img/reah_logo_complet.png"
-            class="reah_logo" alt=""></a>
 
-    <div class="menu_nav">
-        <!-- Categories's title -->
-        <div class="menu_category">
-            <p class="category_title category_title1" number="1" number1="2" number2="3">Ajouts récents</p>
-            <p class="category_title category_title2" number="2" number1="1" number2="3">Défis du moment</p>
-            <p class="category_title category_title3" number="3" number1="1" number2="2">À découvrir</p>
-            <div class="red_line underline"></div>
-            <div class="fb_jsb ai-c category_list">
-                <p class="category_list_title">Catégories</p>
-                <div class="category_triangle"></div>
-            </div>
-        </div>
 
+    <nav class="menu_nav">
+        <!-- Logo Réah -->
+        <a href="fil_actu.php" class="reah_logo"></a>
 
         <!-- Search bar -->
         <form action="search.php" method="GET" class="form_search_bar">
@@ -111,64 +113,67 @@
         </form>
 
         <?php
-            if(func::checkLoginState($db)){ # If the user is connected
-                $query = "SELECT * FROM users WHERE user_id = ".$_COOKIE['userid'].";";
+            if (func::checkLoginState($db)) { # If the user is connected
+                $query = "SELECT * FROM users WHERE user_id = " . $_COOKIE['userid'] . ";";
                 $stmt = $db->prepare($query);
                 $stmt->execute();
 
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 echo "<div class='menu_profile'>
-                <!-- Defi icon -->
-                <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
-                <!-- Profile photo -->
-                <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
-                </div>
-                </nav>";
-
+                    <!-- Fil actu icon -->
+                    <form action='fil_actu.php' method='GET'>
+                    <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                    </form>
+                    <!-- Defi icon -->
+                    <a href='defis.php' class='defi_icon'></a>
+                    <!-- Profile photo -->
+                    <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
+                    </div>";
             } else {
-
                 echo "<div class='menu_profile'>
-                <!-- Defi icon -->
-                <a href='defis.php'> <img src='sources/img/defi_icon.svg' class='defi_icon' alt=''></a>
-                <!-- Profile photo -->
-                    <div class='se-connecter' onclick='redirect(`login.php`)'>
-                        <img src='sources/img/profil_icon.svg' class='menu_pp_icon' alt='Se connecter' onload='SVGInject(this)'>
-                    </div>
-                </div>
-                </nav>";
-            }
-        ?>
+                    <!-- Fil actu icon -->
+                    <form action='fil_actu.php' method='GET'>
+                    <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
+                    </form>
+                    <!-- Defi icon -->
+                    <a href='defis.php' class='defi_icon'></a>
+                    <!-- Profile photo -->
+                    <div class='se-connecter menu_pp_icon' onclick='redirect(`login.php`)' onload='SVGInject(this)'>
+                    </div>";
+                }
+                ?>
+    </nav>
 
-        <!-- Category list  -->
-        <div class="category_list_container">
-            <p class="category_list_category" number="1" number1="2" number2="3">Ajouts récents</p>
-            <p class="category_list_category" number="2" number1="1" number2="3">Défis du moment</p>
-            <p class="category_list_category" number="3" number1="1" number2="2">À découvrir</p>
-        </div>
+    <!-- Category list  -->
+    <div class="category_list_container">
+        <p class="category_list_category" number="1" number1="2" number2="3">Ajouts récents</p>
+        <p class="category_list_category" number="2" number1="1" number2="3">Défis du moment</p>
+        <p class="category_list_category" number="3" number1="1" number2="2">À découvrir</p>
+    </div>
 
-        <!-- Menu -->
-        <?php
+    <!-- Menu -->
+    <?php
             require("ressources/menu.php");
         ?>
 
-        <!-- Nav footer -->
+    <!-- Nav footer -->
 
-        <div class="nav_footer">
-            <div class="nav_footer_category" number="1" number2="2" number3="3">
-                <img src="sources/img/loupe_icon.svg" alt="">
-                Ajouts récents</div>
-            <div class="nav_footer_category" number="2" number2="1" number3="3">
-                <img src="sources/img/loupe_icon.svg" alt="">
-                Défis du moment</div>
-            <div class="nav_footer_category" number="3" number2="1" number3="2">
-                <img src="sources/img/loupe_icon.svg" alt="">
-                À découvrir</div>
-        </div>
-</nav>
-<main class="main_content">
-    <h2 class="omg_im_centered">Courts-métrages</h2>
-    <?php
+    <div class="nav_footer">
+        <div class="nav_footer_category" number="1" number2="2" number3="3">
+            <img src="sources/img/loupe_icon.svg" alt="">
+            Ajouts récents</div>
+        <div class="nav_footer_category" number="2" number2="1" number3="3">
+            <img src="sources/img/loupe_icon.svg" alt="">
+            Défis du moment</div>
+        <div class="nav_footer_category" number="3" number2="1" number3="2">
+            <img src="sources/img/loupe_icon.svg" alt="">
+            À découvrir</div>
+    </div>
+    </nav>
+    <main class="main_content">
+        <h2 class="omg_im_centered">Courts-métrages</h2>
+        <?php
         $research = htmlspecialchars($_GET['research']);
 
         # Non définitif, la requête finale incluera l'ensemble des tables.
@@ -193,10 +198,10 @@
 
     ?>
 
-    <div class="horizontal_line omg_im_centered"></div>
+        <div class="horizontal_line omg_im_centered"></div>
 
-    <h2 class="omg_im_centered">Membres</h2>
-    <?php
+        <h2 class="omg_im_centered">Membres</h2>
+        <?php
         $query = "SELECT user_username,user_profile_picture,user_profile_description FROM users WHERE user_username LIKE '%$research%';";
 
         $stmt = $db->prepare($query);
@@ -215,9 +220,13 @@
             </div>';
         }
     ?>
-</main>
-<?php
+    </main>
+    <?php
     require('ressources/footer.php');
 ?>
+    <script src="assets/js/app2.js"></script>
+    <script src="assets/js/functions.js"></script>
+
 </body>
+
 </html>

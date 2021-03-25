@@ -228,7 +228,7 @@ if (isset($_GET["delete_subscriber"])) {
                                 <!-- Nbr d'abonnés -->
                                 <?php
 
-                                if (isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']) { #if the profile is an other user's profile
+                                                    if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
 
                                     $query2 = "SELECT COUNT(subscription_subscriber_id) as subscriber_nb FROM subscription WHERE subscription_artist_id=" . $_GET['id'] . ";";
                                     $stmt2 = $db->prepare($query2);
@@ -261,7 +261,7 @@ if (isset($_GET["delete_subscriber"])) {
 
                                 <?php
 
-                                if (isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']) { #if the profile is an other user's profile
+                                                    if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
 
                                     $query2 = "SELECT COUNT(subscription_artist_id) as subscription_nb FROM subscription WHERE subscription_subscriber_id=" . $_GET['id'] . ";";
                                     $stmt2 = $db->prepare($query2);
@@ -292,17 +292,17 @@ if (isset($_GET["delete_subscriber"])) {
                     <?php
                     if (func::checkLoginState($db)) { # If the user is connected
 
-                        if (isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']) { #if the profile is an other user's profile
-                            $query = "SELECT * FROM users, subscription WHERE user_id = " . $_GET['id'] . " AND subscription_subscriber_id=" . $_COOKIE['userid'] . ";";
-                            $stmt = $db->prepare($query);
-                            $stmt->execute();
+                                            if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
+                            $query5 = "SELECT * FROM users, subscription WHERE user_id = " . $_GET['id'] . " AND subscription_subscriber_id=" . $_COOKIE['userid'] . ";";
+                            $stmt5 = $db->prepare($query5);
+                            $stmt5->execute();
 
-                            $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            $rows5 = $stmt5->fetchAll(PDO::FETCH_ASSOC);
 
-                            foreach ($rows as $row) {
+                            foreach ($rows5 as $row5) {
                             }
 
-                            if ($row['subscription_artist_id'] == $_GET['id']) {
+                            if ($row5['subscription_artist_id'] == $_GET['id']) {
                                 echo '
                             <div class="btn subscribe_btn subscribe_btn_click" onclick="subscribe()">Se désabonner</div>';
                             } else {
@@ -345,7 +345,7 @@ if (isset($_GET["delete_subscriber"])) {
                 <?php
                 if (func::checkLoginState($db)) { # If the user is connected
 
-                    if (isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']) { #if the profile is an other user's profile
+                    if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
                         $query = "SELECT * FROM users WHERE user_id = " . $_GET['id'] . ";";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
@@ -365,6 +365,7 @@ if (isset($_GET["delete_subscriber"])) {
                             <div>Bloquer</div>
                         </div>
                     </div>";
+                    
                     } else {
                         echo '
                         <img src="sources/img/modify_icon.svg" class="modify_icon" alt="">';
@@ -384,7 +385,7 @@ if (isset($_GET["delete_subscriber"])) {
 
                         <!-- Realisation number -->
                         <?php
-                        if (isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']) { #if the profile is an other user's profile
+                                            if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
                             $requete = "SELECT COUNT(video_id) as video_number FROM videos, users WHERE video_user_id = user_id AND user_id = {$_GET['id']}";
                             $stmt = $db->query($requete);
                             $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -404,7 +405,7 @@ if (isset($_GET["delete_subscriber"])) {
                         <!-- Identified number -->
 
                         <?php
-                        if (isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']) { #if the profile is an other user's profile
+                                            if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
                             $requete = "SELECT COUNT(video_id) as video_number FROM videos, users WHERE video_user_id = user_id AND video_distribution = {$_GET['id']}";
                             $stmt = $db->query($requete);
                             $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -434,7 +435,7 @@ if (isset($_GET["delete_subscriber"])) {
 
                 <?php
 
-                if (isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']) { #if the profile is an other user's profile
+                                    if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
                     $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, users WHERE video_user_id = user_id AND user_id = {$_GET['id']} ORDER BY video_id DESC";
                     $stmt = $db->query($requete);
                     $resultat = $stmt->fetchall(PDO::FETCH_ASSOC);
@@ -593,7 +594,7 @@ if (isset($_GET["delete_subscriber"])) {
 
                 <?php
 
-                if (isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']) { #if the profile is an other user's profile
+                                    if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
                     $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, users WHERE video_user_id = user_id AND video_distribution = {$_GET['id']} ORDER BY video_id DESC";
                     $stmt = $db->query($requete);
                     $resultat = $stmt->fetchall(PDO::FETCH_ASSOC);
@@ -1011,7 +1012,7 @@ if (isset($_GET["delete_subscriber"])) {
             <h2>Se désabonner</h2>
             <img src='sources/img/close_icon.svg' class='unfollow_close_icon' alt=''>
         </div>
-        <p class="pop_up_text">Se désabonner de <?php echo $row['user_username']; ?> ?</p>
+        <p class="pop_up_text">Se désabonner de <?php echo $row5['user_username']; ?> ?</p>
         <!-- <div class="btn pop_up_btn unfollow_btn">Se désabonner</div> -->
         <?php
 

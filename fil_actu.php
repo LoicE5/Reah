@@ -20,13 +20,15 @@ include('vimeo_setup.php');
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
     <link rel="stylesheet" href="assets/css/fil_actu2.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
     <script src="assets/js/libraries/svg-inject-master/src/svg-inject.js"></script>
     <script src="https://player.vimeo.com/api/player.js"></script>
 </head>
 
 <body>
 
+    <!-- Accueil -->
     <?php
     if (!isset($_GET['accueil'])) {
         echo '
@@ -78,7 +80,8 @@ include('vimeo_setup.php');
 
                 <!-- Search bar -->
                 <form action="search.php" method="GET" class="form_search_bar">
-                    <input class="search_bar" name="research" type="text" placeholder="Défis, courts-métrages, utilisateurs..." oninput="searchEngine(this.value)">
+                    <input class="search_bar" name="research" type="text"
+                        placeholder="Défis, courts-métrages, utilisateurs..." oninput="searchEngine(this.value)">
                 </form>
 
                 <?php
