@@ -1,39 +1,72 @@
 <?php
 
-if(!empty($_POST) && isset($_POST) &&  !empty($_POST['email']))
+include('assets/php/config.php');
+include("assets/PHPMailer/src/PHPmailer.php");
+include("assets/PHPMailer/src/SMTP.php");
+include("assets/PHPMailer/src/Exception.php");
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+if(isset($_POST['email']))
 
 {
 
-    require_once "db.php";
-    require_once "app.php";
+    // require_once "db.php";
+    // require_once "app.php";
 
-    $success = false;
+    // $success = false;
 
-    $stmt = $db -> prepare("SELECT * FROM ho_users WHERE email = :email AND confirmed_email IS NOT NULL");
-    $stmt -> execute(array(
+    // $stmt = $db -> prepare("SELECT * FROM users WHERE user_email = :email");
+    // $stmt -> execute(array(
 
-         'email' => $_POST['email']
+    //      'email' => $_POST['email']
 
-    ));
-    $userEmail = $stmt -> fetch();
+    // ));
+    // $userEmail = $stmt -> fetch();
 
-    if($userEmail)
+    // if($userEmail)
 
-    {
+    // {
 
-        $reset_key = bin2hex(random_bytes (30));
-        $db -> prepare("UPDATE ho_users SET reset_key = :reset_key, reset_at = NOW() WHERE id = :id") -> execute(array(
+    //     $reset_key = bin2hex(random_bytes (30));
+    //     $db -> prepare("UPDATE ho_users SET reset_key = :reset_key, reset_at = NOW() WHERE id = :id") -> execute(array(
 
-            'reset_key' => $reset_key,
-            'id' => $userEmail -> id
+    //         'reset_key' => $reset_key,
+    //         'id' => $userEmail -> id
 
-        ));
+    //     ));
 
-        mail($_POST['email'], 'Réinitialisation du mot de passe', "Voici le lien de réinitialisation de ton mot de passe :\n\n http://localhost/web-hovi/mdp_chgmt.php?id={$userEmail -> id}&key=$reset_key");
+    //     mail($_POST['email'], 'Réinitialisation du mot de passe', "Voici le lien de réinitialisation de ton mot de passe :\n\n http://localhost/web-hovi/mdp_chgmt.php?id={$userEmail -> id}&key=$reset_key");
         
-        $success = true;
+    //     $success = true;
 
-    }
+    // }
+    $email = $_POST['email'];
+    $query = "SELECT * FROM users WHERE user_email = '$email';";
+
+                $stmt = $db->prepare($query);
+                $stmt->execute();
+
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // Connecter avec son username
+                if($row['user_id'] > 0){ # If the user's form fields data matches the database informations
+
+                    // mail($email, 'Réinitialisation du mot de passe', "Voici le lien de réinitialisation de ton mot de passe :\n\n http://localhost:8888/Reah/mdp_chgmt.php?id={$email}");
+                    mail('reahapp.fr@gmail.com', 'Réinitialisation du mot de passe', 'oui');
+                   
+                    $message_true = 'Un mail a été envoyé à '.$email;
+
+                    redirect("mdp_chgmt.php?email={$email}");
+                    // var_dump(mail($email, 'Réinitialisation du mot de passe', "Voici le lien de réinitialisation de ton mot de passe :\n\n http://localhost:8888/Reah/mdp_chgmt.php?id={$email}"));
+
+                } else { 
+
+            $message_false = 'Aucun compte ne corrrespond à cette adresse mail.';
+
+                }
+
 
 }
 ?>
@@ -59,6 +92,17 @@ if(!empty($_POST) && isset($_POST) &&  !empty($_POST['email']))
     </a>
 
     <main class="main_content">
+
+    <?php
+    
+    if (isset($message_false)) {
+        echo '<p class="message_false_container">'.$message_false.'</p>';
+    }
+
+    if (isset($message_true)) {
+        echo '<p class="message_true_container">'.$message_true.'</p>';
+    }
+     ?>
 
         <!-- Background video -->
         <video class="background_video" poster="" autoplay loop muted>
@@ -110,7 +154,7 @@ if(!empty($_POST) && isset($_POST) &&  !empty($_POST['email']))
             </div>
 
             <!-- Button to send -->
-            <button class="btn btn_connexion cannot_click">Envoyer</button>
+            <button class="btn btn_connexion">Envoyer</button>
 
         </form>
     </main>

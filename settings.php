@@ -38,6 +38,20 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
 
 }
 
+// Vérifier le format du mdp
+function check_mdp_format($mdp)
+{
+	$majuscule = preg_match('@[A-Z]@', $mdp);
+	$minuscule = preg_match('@[a-z]@', $mdp);
+	
+	if(!$majuscule || !$minuscule || strlen($mdp) < 8)
+	{
+		return false;
+	}
+	else 
+		return true;
+}
+
 // Changer son mdp
 if(isset($_GET["change_mdp_btn"])){
 
@@ -52,22 +66,30 @@ if(isset($_GET["change_mdp_btn"])){
     if(password_verify($_GET["prev_mdp"], $row['user_password'])){
         if($_GET['new_mdp'] == $_GET['confirm_mdp']){
 
-            $sql = "INSERT INTO users (user_password) VALUES (:psw) WHERE user_id='{$_COOKIE['userid']}'";
-        
-            $attributes = array(
-              'psw' => $_GET['new_mdp'],
-            );
-        
-            $stmt = $db->prepare($sql);
-        
-            $stmt->execute($attributes);
-        
-            $db = null;
-        
-            header("Location: settings.php?success=true");
-            // $message_true = 'Ton mot de passe a bien été modifié !';
-        
+            // $sql = "UPDATE users (:user_lastname, :user_firstname, :user_username, :user_email, :user_password, :user_status, :user_CGU, :user_profile_picture, :user_banner, :user_name, :user_website, :user_bio) VALUES (NULL, NULL,NULL,NULL,:psw,NULL,NULL,NULL,NULL,NULL,NULL,NULL) WHERE user_id='11'";
+            // if(checkPassword($_GET['new_mdp'])){
 
+                if (check_mdp_format($_GET['new_mdp']) == true){
+    
+                $password = password_hash($_GET['new_mdp'], PASSWORD_DEFAULT);
+                $sql = "UPDATE users SET user_password='$password' WHERE user_id='$user_id'";
+            
+                // $attributes = array(
+                //   'psw' => password_hash($_GET['new_mdp'], PASSWORD_DEFAULT),
+                // );
+              
+            
+                $stmt = $db->prepare($sql);
+            
+                $stmt->execute($attributes);
+            
+                $db = null;
+            
+                header("Location: settings.php?success=true");
+            
+            } else{
+                $message_false = 'Votre mot de passe doit contenir au moins 8 caractères dont 1 majuscule et 1 minuscule';
+            }
         } else {
             $message_false = 'Verifiez que les deux mots de passe correspondent.';
         }
@@ -352,6 +374,7 @@ if(isset($_GET["change_mdp_btn"])){
                                         <span>Nouveau mot de passe</span>
                                         <input type="password" class="input_connexion" id="new_mdp" name="new_mdp" required>
                                     </label>
+                                        <p class="mdp_restriction">*8 caractères / 1 majuscule / 1 minuscule</p>
                                 </div>
 
 
@@ -485,6 +508,7 @@ if(isset($_GET["change_mdp_btn"])){
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script src="assets/js/settings.js"></script>
     <script src="assets/js/app2.js"></script>
+    <script src="assets/js/app.js"></script>
     <script src="assets/js/functions.js"></script>
 </body>
 

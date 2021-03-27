@@ -20,7 +20,7 @@
         .main_content {
             min-height: 100vh;
             height: max-content;
-            background: var(--background);
+            background: var(--first_color);
             /* padding-top: 60px; */
         }
 

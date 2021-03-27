@@ -1,3 +1,55 @@
+<?php
+    include('assets/php/config.php');
+
+
+    function check_mdp_format($mdp)
+{
+	$majuscule = preg_match('@[A-Z]@', $mdp);
+	$minuscule = preg_match('@[a-z]@', $mdp);
+	
+	if(!$majuscule || !$minuscule || strlen($mdp) < 8)
+	{
+		return false;
+	}
+	else 
+		return true;
+}
+
+$user_email = $_GET['email'];
+
+// Changer son mdp
+if(isset($_GET["change_mdp_btn"])){
+    
+        
+        
+        if($_GET['new_mdp'] == $_GET['confirm_mdp']){
+            
+            
+            if (check_mdp_format($_GET['new_mdp']) == true){
+                    
+        
+                    $password = password_hash($_GET['new_mdp'], PASSWORD_DEFAULT);
+                    $sql = "UPDATE users SET user_password='$password' WHERE user_email='$user_email'";
+                
+                
+                    $stmt = $db->prepare($sql);
+                
+                    $stmt->execute($attributes);
+                
+                    $db = null;
+                
+                    header("Location: login.php?mdp=true");
+                
+                } else{
+                    $message_false = 'Votre mot de passe doit contenir au moins 8 caractères dont 1 majuscule et 1 minuscule';
+                }
+            } else {
+                $message_false = 'Verifiez que les deux mots de passe correspondent.';
+            }
+}
+// }
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -19,13 +71,19 @@
 
     <main class="main_content">
 
+<?php
+    if (isset($message_false)) {
+        echo '<p class="message_false_container">'.$message_false.'</p>';
+    }
+    ?>
+
         <!-- Background video -->
         <video class="background_video" poster="" autoplay loop muted>
             <source src="sources/video/videobackPT.mp4" type="video/mp4">
         </video>
 
         <!-- Form -->
-        <form class="form_container" action="" method="POST">
+        <form class="form_container" action="mdp_chgmt.php" method="GET">
 
             <!-- Back arrow -->
             <a href="mdp_oublie.php" class="btn_prev_mdp_oublie">
@@ -51,8 +109,9 @@
             <div class="input_container">
                 <label for="input_mdp">
                     <span>Nouveau mot de passe</span>
-                    <input type="password" class="input_connexion input_mdp" id="input_mdp" name="pswd" required
+                    <input type="password" class="input_connexion input_mdp" id="input_mdp" name="new_mdp" required
                         autocomplete="off">
+                        <p class="mdp_restriction">*8 caractères / 1 majuscule / 1 minuscule</p>
                 </label>
             </div>
 
@@ -61,7 +120,7 @@
                 <label for="input_mdp_validation">
                     <span>Confirmer le nouveau mot de passe</span>
                     <input type="password" class="input_connexion mdp_confirm" id="input_mdp_validation"
-                        name="pswd_confirm" required autocomplete="off">
+                        name="confirm_mdp" required autocomplete="off">
                 </label>
             </div>
 
@@ -79,7 +138,7 @@
             </div>
 
             <!-- Button to send -->
-            <button class="btn btn_connexion cannot_click">Valider</button>
+            <input type='submit' class="btn btn_connexion" name="change_mdp_btn" value="Valider">
 
         </form>
     </main>

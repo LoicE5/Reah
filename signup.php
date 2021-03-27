@@ -14,6 +14,8 @@
 
 <body>
 
+
+
     <a href="fil_actu.php" class="reah_logo">
         <img src="sources/img/dark_reah_logo.png" alt="">
     </a>
@@ -26,6 +28,10 @@
                 $first_name = htmlspecialchars($_POST['first_name']);
                 $username = htmlspecialchars($_POST['username']);
                 $email = htmlspecialchars($_POST['email']);
+                $birth_day = htmlspecialchars($_POST['birth_day']);
+                $birth_month = htmlspecialchars($_POST['birth_month']);
+                $birth_year = htmlspecialchars($_POST['birth_year']);
+                $birthday = $birth_day.'/'.$birth_month.'/'.$birth_year;
                 $password = htmlspecialchars($_POST['pswd']);
                 $password_repeat = htmlspecialchars($_POST['pswd_confirm']);
 
@@ -35,12 +41,40 @@
                 if($password != $password_repeat){
                     redirect('signup.php');
                 } else {
-        
-                    $query = "INSERT INTO users (user_lastname,user_firstname,user_username,user_email,user_password,user_status,user_CGU,user_profile_picture) VALUES ('$last_name','$first_name','$username','$email','$hashed_password',0,1,'profile_pictures/default.jpg')";
+                    // $email=$_POST['email'];
+                    $query = "SELECT COUNT(*) AS nbr FROM users WHERE user_email = '$email'";
                     $stmt = $db->prepare($query);
                     $stmt->execute();
-                    
-                    redirect("email_verify.php?client_email=$email");
+
+                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                    // Si l'email est déjà pris
+                    if($row['nbr'] >= 1){
+                        redirect("signup.php?email=false");
+
+                    }else {
+
+                        // Si le pseudo est déjà pris
+                        $query = "SELECT COUNT(*) AS nbr FROM users WHERE user_username = '$username'";
+                        $stmt = $db->prepare($query);
+                        $stmt->execute();
+    
+                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    
+                        if($row['nbr'] >= 1){
+                            redirect("signup.php?pseudo=false");
+        
+
+                        }else{
+                            $query = "INSERT INTO users (user_lastname,user_firstname,user_username,user_email,user_password,user_birthday,user_status,user_CGU,user_profile_picture) VALUES ('$last_name','$first_name','$username','$email','$hashed_password','$birthday',0,1,'profile_pictures/default.jpg')";
+                            $stmt = $db->prepare($query);
+                            $stmt->execute();
+                            
+                            redirect("email_verify.php?client_email=$email");
+
+                        }
+                    }
         
                 }
                 
@@ -53,6 +87,18 @@
     ?>
 
     <main class="main_content" style="visibility:hidden;">
+
+
+    <?php
+
+    if (isset($_GET['email'])) {
+        echo'<p class="message_false_container">L\'email saisi est déjà utilisé.</p>';
+    }
+
+    if (isset($_GET['pseudo'])) {
+        echo'<p class="message_false_container">Le pseudo saisi est déjà pris.</p>';
+    }
+    ?>
         <!-- Background video -->
         <video class="background_video" poster="" autoplay loop muted>
             <source src="sources/video/videobackPT.mp4" type="video/mp4">
