@@ -46,7 +46,7 @@ if (isset($_GET['delete_comment'])) {
 <div class='dark_filter' onclick="closePopupFilm()"></div>
 
 <?php
-$query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, defis WHERE defi_id=video_defi_id AND video_id = 1";
+$query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, defis, users WHERE video_user_id=user_id AND defi_id=video_defi_id AND video_id = 1";
 $stmt = $db->prepare($query);
 $stmt->execute();
 
@@ -125,9 +125,9 @@ foreach ($rows as $row) {
         echo "<div class='fb_jsb'>
 
                     <!-- Like section -->
-                    <div class='fb_jsb'>
-                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
-                        <p class='film_pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                    <div class='fb_jsb like_container'>
+                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
+                        <p class='film_pop_corn_number pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                     </div>
 
                     <!-- Share section -->
@@ -160,7 +160,21 @@ foreach ($rows as $row) {
 
             <div class='fb_jsa genre_distribution_container'>
                 <p class='genre_container'><span>Genres</span> <br> {$row["video_genre"]}</p>
-                <p class='distribution_container'><span>Distribution</span> <br> {$row["video_distribution"]}</p>
+                <p class='distribution_container'><span>Distribution</span> <br>";
+                echo '<a href="profil.php?id='.$row['user_id'].'">@'.$row['user_username'].'</a> &emsp;&emsp;';
+                
+                $query2 = "SELECT * FROM videos, users, `distribution` WHERE distribution_user_id=user_id AND distribution_video_id = '{$row['video_id']}' AND video_id = '{$row['video_id']}'";
+                $stmt2 = $db->prepare($query2);
+                $stmt2->execute();
+
+                $rows2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($rows2 as $row2) {
+
+                    echo '<a href="profil.php?id='.$row2['user_id'].'">@'.$row2['user_username'].'</a> &emsp;&emsp;';
+                }
+
+                echo"
             </div>
 
         </div>
@@ -305,3 +319,4 @@ $rows = null;
     <p class='pop_up_text'>Es-tu sûr de vouloir supprimer ton court-métrage Je t'haine ?</p>
     <div class='btn pop_up_btn delete_btn'>Supprimer</div>
 </div>
+

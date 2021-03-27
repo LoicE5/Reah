@@ -281,7 +281,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 <div class='reaction_container'>
                                     <div class='fb_jsb like_container'>
                                         <!-- Pop corn image -->
-                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
                                         <!-- Like\'s number -->
                                         <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                                     </div>
@@ -431,7 +431,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <div class='reaction_container'>
                                             <div class='fb_jsb like_container'>
                                                 <!-- Pop corn image -->
-                                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
                                                 <!-- Like\'s number -->
                                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                                             </div>
@@ -561,7 +561,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 <div class='reaction_container'>
                                     <div class='fb_jsb like_container'>
                                         <!-- Pop corn image -->
-                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
                                         <!-- Like\'s number -->
                                         <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                                     </div>
@@ -692,7 +692,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 <div class='reaction_container'>
                                     <div class='fb_jsb like_container'>
                                         <!-- Pop corn image -->
-                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
                                         <!-- Like\'s number -->
                                         <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                                     </div>

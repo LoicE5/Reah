@@ -225,6 +225,7 @@ body {
     position: relative;
     flex-direction: column;
     width: 100%;
+    min-height: 300px;
 }
 
 h1 {
@@ -644,6 +645,16 @@ video:focus {
 .genre_container>span {
     color: var(--text-grey);
     font-weight: bold;
+    line-height: 40px;
+}
+
+.distribution_container a {
+    color: var(--text);
+    text-decoration: none;
+}
+
+.distribution_container a:hover {
+    text-decoration: underline;
 }
 
 .distribution_container,

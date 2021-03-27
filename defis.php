@@ -31,8 +31,6 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['constraints'])
 
         $stmt->execute($attributes);
 
-        $db = null;
-
         header('Location: defis.php?success=true');
     }
 }

@@ -135,26 +135,57 @@ function showLikesAsDisconnected(){
 }
 
 function addLike(element){
+ 
     let closest_iframe = element.closest('.video_container').querySelector('iframe');
     let video_url = closest_iframe.src;
     let video_vimeo_id = Number(video_url.split('https://player.vimeo.com/video/')[1]); // Basically, split returns an array like ["", "51831727"]
 
-    console.log(closest_iframe);
-    console.log(video_vimeo_id);
 
-    let fetch_url = `assets/php/actions.php?action=addLike&video=${video_vimeo_id}`;
-
-    fetch(fetch_url).then(response=>{
-        response.text().then(text=>{
-            let final_count = Number(text);
-            console.log(`final_count = ${final_count}`);
-
-            let target = element.querySelector('.pop_corn_number');
-            console.log(element);
-            console.log(target);
-            target.innerHTML = `${final_count} J'aime`;
+    if ($(element).attr('src') === 'sources/img/pop_corn_icon.svg'){
+        console.log(closest_iframe);
+        console.log(video_vimeo_id);
+    
+        let fetch_url = `assets/php/actions.php?action=addLike&video=${video_vimeo_id}`;
+    
+        fetch(fetch_url).then(response=>{
+            response.text().then(text=>{
+                let final_count = Number(text);
+                console.log(`final_count = ${final_count}`);
+    
+                let target = $(element).parent().children('.pop_corn_number');
+                console.log(element);
+                console.log(target);
+                $(target).text(`${final_count} J'aime`);
+            });
         });
-    });
+
+     $(element).attr('src', 'sources/img/pop_corn.png');
+
+    } else {
+
+        let fetch_url = `assets/php/actions.php?action=removeLike&video=${video_vimeo_id}`;
+    
+        fetch(fetch_url).then(response=>{
+            response.text().then(text=>{
+                let final_count = Number(text);
+                console.log(`final_count = ${final_count}`);
+    
+                let target = $(element).parent().children('.pop_corn_number');
+                console.log(element);
+                console.log(target);
+                $(target).text(`${final_count} J'aime`);
+            });
+        });
+
+     $(element).attr('src', 'sources/img/pop_corn_icon.svg');
+
+    }
+
+
+// Btn "J'aime" animation click
+// function likeBtn(element) {
+
+// }
 }
 
 
@@ -242,14 +273,6 @@ function prevArrowClick(e) {
 
 }
 
-// Btn "J'aime" animation click
-function likeBtn(e) {
-    let src = ($(e).attr('src') === 'sources/img/pop_corn_icon.svg') ?
-        'sources/img/pop_corn.png' :
-        'sources/img/pop_corn_icon.svg';
-    $(e).attr('src', src);
-
-}
 
 // Pop up information films
 function popupFilm(e) {

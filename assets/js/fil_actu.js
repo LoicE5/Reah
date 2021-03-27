@@ -88,5 +88,10 @@ $(document).ready(function () {
     // })
 
 
+    // Si le fil d'actualité est vide 
+    if($('#all_video_container').text().length <= '48'){
+        $('#all_video_container').append("<p>Ton fil d'actualité est vide. 😢 Abonne-toi à d'autres utilisateurs !</p>");
+    }
+
 
 })

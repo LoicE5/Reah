@@ -2,7 +2,9 @@
 // ini_set('display_errors',1);
 // ini_set('display_startup_errors',1);
 include('assets/php/config.php');
-require("ressources/pop_up_film_information.php");
+include("ressources/pop_up_film_information.php");
+include("ressources/pop_up_connexion.php");
+include("ressources/pop_up_share.php");
 ?>
 
 <?php
@@ -59,6 +61,7 @@ if (isset($_GET["modify_btn"]) && isset($_GET["username"])) {
 
 
 if (isset($_GET["add_subscription"])) {
+    // header('Refresh:0; url=fil_actu.php?id=' . $_GET['id']);
     $sql = "INSERT INTO subscription (subscription_subscriber_id, subscription_artist_id) VALUES (:subscriber_id, :artist_id)";
 
     $attributes = array(
@@ -70,26 +73,26 @@ if (isset($_GET["add_subscription"])) {
 
     $stmt->execute($attributes);
 
-    $db = null;
+    // header('Location: defis.php?success=true');
 
-    header('Refresh:0; url=profil.php?id=' . $_GET['id']);
+    redirect('fil_actu.php?id=' . $_GET['id']);
 }
 
 // Se désabonner 
 
 
 if (isset($_GET["delete_subscription"])) {
-    $subscriber_id = $_GET['delete_subscription'];
-    $artist_id = $_GET["id"];
-    $sql = "DELETE FROM subscription WHERE subscription_subscriber_id='$subscriber_id' AND subscription_artist_id='$artist_id'";
+    $subscription_id = $_GET['delete_subscription'];
+    $subscriber_id = $_GET['delete_subscriber'];
+    // $artist_id = $_GET["id"];
+    $sql = "DELETE FROM subscription WHERE subscription_subscriber_id='$subscriber_id' AND subscription_artist_id='$subscription_id'";
 
     $stmt = $db->prepare($sql);
 
     $stmt->execute();
 
-    $db = null;
 
-    header('Refresh:0; url=profil.php?id=' . $_GET['id']);
+    // header('Refresh:0; url=profil.php?id=1');
 }
 
 // Supprimer un utilisateur de ses abonnés
@@ -103,8 +106,7 @@ if (isset($_GET["delete_subscriber"])) {
 
     $stmt->execute();
 
-    $db = null;
-
+    
     header('Refresh:0; url=profil.php?id=' . $_GET['id']);
 }
 
@@ -406,13 +408,13 @@ if (isset($_GET["delete_subscriber"])) {
 
                         <?php
                                             if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
-                            $requete = "SELECT COUNT(video_id) as video_number FROM videos, users WHERE video_user_id = user_id AND video_distribution = {$_GET['id']}";
+                            $requete = "SELECT COUNT(video_id) as video_number FROM videos, users, `distribution` WHERE video_user_id = user_id AND distribution_video_id = video_id AND distribution_user_id = {$_GET['id']}";
                             $stmt = $db->query($requete);
                             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                             echo $row['video_number'];
                         } else {
-                            $requete = "SELECT COUNT(video_id) as video_number FROM videos, users WHERE video_user_id = user_id AND video_distribution = {$_COOKIE['userid']}";
+                            $requete = "SELECT COUNT(video_id) as video_number FROM videos, users, `distribution` WHERE video_user_id = user_id AND distribution_video_id = video_id AND distribution_user_id = {$_COOKIE['userid']}";
                             $stmt = $db->query($requete);
                             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -450,22 +452,19 @@ if (isset($_GET["delete_subscriber"])) {
         
         
                                 <!-- Time -->
-                                <p class='time'>{$row["time"]}</p>
+                                <p class='time'>{$row["video_duration"]}</p>
                             </div>
         
                             <!-- Short film\'s informations -->
                             <div class='description_container'>
                                 <div class='reaction_container'>
-                                    <div class='fb_jsb'>
-        
-                                        <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
-                                    </div>
+                                <div class='fb_jsb like_container'>
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
+                                <p class='film_pop_corn_number pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                            </div>
         
                                     <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
+                                    <div class='fb_jc ai-c' onclick='popupComment(this)'>
                                         <div class='comment_icon'></div>
                                         <p class='profile_comment_title'>";
 
@@ -482,14 +481,14 @@ if (isset($_GET["delete_subscriber"])) {
                                     </div>
         
                                     <!-- Share icon -->
-                                    <div class='fb_jsb share_container'>
+                                    <div class='fb_jsb share_container' onclick='popupShare(this)'>
                                         <div class='share_icon'></div>
                                         <p class='share_title'>Partager</p>
                                     </div>
                                 </div>
         
                                 <div class='fb_c_jsb'>
-                                    <div class='synopsis_title_container' >
+                                    <div class='synopsis_title_container' title=" . $row['video_id'] ." onclick='popupFilm(this)' >
                                         <h3 class='synopsis_title'>{$row["video_title"]}</h3>
                                         <p class='see_more'>Voir plus
                                         <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -522,7 +521,7 @@ if (isset($_GET["delete_subscriber"])) {
         
         
                                 <!-- Time -->
-                                <p class='time'>{$row["time"]}</p>
+                                <p class='time'>{$row["video_duration"]}</p>
                             </div>
         
                             <!-- Short film\'s informations -->
@@ -537,7 +536,7 @@ if (isset($_GET["delete_subscriber"])) {
                                     </div>
         
                                     <!-- Comment icon -->
-                                    <div class='fb_jc ai-c'>
+                                    <div class='fb_jc ai-c' onclick='popupComment(this)'>
                                         <div class='comment_icon'></div>
                                         <p class='profile_comment_title'>";
 
@@ -554,14 +553,14 @@ if (isset($_GET["delete_subscriber"])) {
                                     </div>
         
                                     <!-- Share icon -->
-                                    <div class='fb_jsb share_container'>
+                                    <div class='fb_jsb share_container' onclick='popupShare(this)'>
                                         <div class='share_icon'></div>
                                         <p class='share_title'>Partager</p>
                                     </div>
                                 </div>
         
                                 <div class='fb_c_jsb'>
-                                    <div class='synopsis_title_container' >
+                                    <div class='synopsis_title_container' title=" . $row['video_id'] ." onclick='popupFilm(this)' >
                                         <h3 class='synopsis_title'>{$row["video_title"]}</h3>
                                         <p class='see_more'>Voir plus
                                         <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -595,7 +594,7 @@ if (isset($_GET["delete_subscriber"])) {
                 <?php
 
                                     if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
-                    $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, users WHERE video_user_id = user_id AND video_distribution = {$_GET['id']} ORDER BY video_id DESC";
+                    $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, users, `distribution` WHERE video_user_id = user_id AND distribution_video_id = video_id AND distribution_user_id = {$_GET['id']} ORDER BY video_id DESC";
                     $stmt = $db->query($requete);
                     $resultat = $stmt->fetchall(PDO::FETCH_ASSOC);
                     foreach ($resultat as $row) {
@@ -611,28 +610,28 @@ if (isset($_GET["delete_subscriber"])) {
 
                         <!-- Name + pp -->
                         <div class='user_container'>
-                            <img src='{$row["photo"]}' class='pp_profile' alt=''>
-                            <p class='pseudo'>{$row["username"]}</p>
+                        <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                        <p class='pseudo'>{$row["user_username"]}</p>
                             <div class='flou'></div>
                         </div>
 
                         <!-- Time -->
-                        <p class='time'>{$row["time"]}</p>
+                        <p class='time'>{$row["video_duration"]}</p>
                     </div>
 
                     <!-- Short film\'s informations -->
                     <div class='description_container'>
                         <div class='reaction_container'>
-                            <div class='fb_jsb'>
+                            <div class='fb_jsb like_container'>
 
                                 <!-- Pop corn image -->
-                                <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                <img class='pop_corn_icon' src='sources/img/pop_corn_icon.svg' alt=''  onclick='addLike(this)'>
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>515 J'aime</p>
+                                <p class='pop_corn_number'>" . $row['video_like_number'] . "</p>
                             </div>
 
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c'>
+                            <div class='fb_jc ai-c' onclick='popupComment(this)'>
                                 <div class='comment_icon'></div>
                                 <p class='profile_comment_title'>";
 
@@ -649,14 +648,14 @@ if (isset($_GET["delete_subscriber"])) {
                             </div>
 
                             <!-- Share icon -->
-                            <div class='fb_jsb share_container'>
+                            <div class='fb_jsb share_container' onclick='popupShare(this)'>
                                 <div class='share_icon'></div>
                                 <p class='share_title'>Partager</p>
                             </div>
                         </div>
 
                         <div class='fb_c_jsb'>
-                            <div class='synopsis_title_container' >
+                            <div class='synopsis_title_container' title=" . $row['video_id'] ." onclick='popupFilm(this)' >
                                 <h3 class='synopsis_title'>{$row["video_title"]}</h3>
                                 <p class='see_more'>Voir plus
                                 <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -675,7 +674,7 @@ if (isset($_GET["delete_subscriber"])) {
                 ";
                     }
                 } else {
-                    $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, users WHERE video_user_id = user_id AND video_distribution = {$_COOKIE['userid']} ORDER BY video_id DESC";
+                    $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, `users`, `distribution` WHERE video_user_id = user_id AND distribution_video_id = video_id AND distribution_user_id = {$_COOKIE['userid']} ORDER BY video_id DESC";
                     $stmt = $db->query($requete);
                     $resultat = $stmt->fetchall(PDO::FETCH_ASSOC);
                     foreach ($resultat as $row) {
@@ -691,28 +690,28 @@ if (isset($_GET["delete_subscriber"])) {
     
                             <!-- Name + pp -->
                             <div class='user_container'>
-                                <img src='{$row["photo"]}' class='pp_profile' alt=''>
-                                <p class='pseudo'>{$row["username"]}</p>
+                            <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                            <p class='pseudo'>{$row["user_username"]}</p>
                                 <div class='flou'></div>
                             </div>
     
                             <!-- Time -->
-                            <p class='time'>{$row["time"]}</p>
+                            <p class='time'>{$row["video_duration"]}</p>
                         </div>
     
                         <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='reaction_container'>
-                                <div class='fb_jsb'>
+                                <div class='fb_jsb like_container'>
     
                                     <!-- Pop corn image -->
-                                    <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
+                                    <img class='pop_corn_icon' src='sources/img/pop_corn_icon.svg' alt='' onclick='addLike(this)'>
                                     <!-- Like\'s number -->
-                                    <p class='pop_corn_number'>515 J'aime</p>
+                                    <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                                 </div>
     
                                 <!-- Comment icon -->
-                                <div class='fb_jc ai-c'>
+                                <div class='fb_jc ai-c' onclick='popupComment(this)'>
                                     <div class='comment_icon'></div>
                                     <p class='profile_comment_title'>";
 
@@ -729,14 +728,14 @@ if (isset($_GET["delete_subscriber"])) {
                                 </div>
     
                                 <!-- Share icon -->
-                                <div class='fb_jsb share_container'>
+                                <div class='fb_jsb share_container' onclick='popupShare(this)'>
                                     <div class='share_icon'></div>
                                     <p class='share_title'>Partager</p>
                                 </div>
                             </div>
     
                             <div class='fb_c_jsb'>
-                                <div class='synopsis_title_container' >
+                                <div class='synopsis_title_container' title=" . $row['video_id'] ." onclick='popupFilm(this)' >
                                     <h3 class='synopsis_title'>{$row["video_title"]}</h3>
                                     <p class='see_more'>Voir plus
                                     <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -918,10 +917,17 @@ if (isset($_GET["delete_subscriber"])) {
                                             <div class="subscription_username">' . $row['user_username'] . '</div>
                                             <div class="subscription_name">' . $row['user_name'] . '</div>
                                         </a>
-                                </div>
-                                <div class="btn subscriber_user_btn" onclick="deleteSubscriber()">Supprimer</div>
                                 </div>';
-                    }
+
+                if ($_GET['id'] == $_COOKIE['userid']) { #if the profile is an other user's profile
+
+                    echo'
+                                <div class="btn subscriber_user_btn" onclick="deleteSubscriber()">Supprimer</div>';
+                            }
+
+                        echo'
+                            </div>';
+                        }
                 } else {
                     $query = "SELECT * FROM users, subscription WHERE subscription_artist_id=" . $_COOKIE['userid'] . " AND subscription_subscriber_id=user_id;";
                     $stmt = $db->prepare($query);
@@ -972,9 +978,17 @@ if (isset($_GET["delete_subscriber"])) {
                                             <div class="subscription_username">' . $row['user_username'] . '</div>
                                             <div class="subscription_name">' . $row['user_name'] . '</div>
                                         </a>
-                                </div>
-                                    <div class="btn subscriber_user_btn subscribe_btn_click" onclick="subscribe()">Abonné(e)</div>
                                 </div>';
+
+                                if ($_GET['id'] == $_COOKIE['userid']) { #if the profile is an other user's profile
+
+                                    echo'
+                                    <div class="btn subscriber_user_btn subscribe_btn_click" onclick="subscribe()">Abonné(e)</div>';
+                                            }
+                
+                                        echo'
+                                            </div>';
+                                        
                     }
                 } else {
                     $query = "SELECT * FROM users, subscription WHERE subscription_subscriber_id=" . $_COOKIE['userid'] . " AND subscription_artist_id=user_id;";
@@ -1012,15 +1026,15 @@ if (isset($_GET["delete_subscriber"])) {
             <h2>Se désabonner</h2>
             <img src='sources/img/close_icon.svg' class='unfollow_close_icon' alt=''>
         </div>
-        <p class="pop_up_text">Se désabonner de <?php echo $row5['user_username']; ?> ?</p>
+        <p class="pop_up_text">Se désabonner de <?php echo $row['user_username']; ?> ?</p>
         <!-- <div class="btn pop_up_btn unfollow_btn">Se désabonner</div> -->
         <?php
 
         $user_id = $row['user_id'];
-        if (isset($_GET['id'])) { #SI on se désabonne depuis le profil de l'utilisateur
-            echo '<a href="profil.php?id=' . $_GET['id'] . '&delete_subscription=' . $_COOKIE['userid'] . '" class="btn pop_up_btn unfollow_btn">Se désabonner</a>';
+        if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #SI on se désabonne depuis le profil de l'utilisateur
+            echo '<a href="profil.php?id=' . $_GET['id'] . '&delete_subscription='.$_GET['id'].'&delete_subscriber=' . $_COOKIE['userid'] . '" class="btn pop_up_btn unfollow_btn">Se désabonner</a>';
         } else { #si on se désabonne depuis notre profil
-            echo '<a href="profil.php?id=' . $user_id . '&delete_subscription=' . $_COOKIE['userid'] . '" class="btn pop_up_btn unfollow_btn">Se désabonner</a>';
+            echo '<a href="profil.php?id=' . $_GET['id'] . '&delete_subscription='.$row['user_id'].'&delete_subscriber=' . $_COOKIE['userid'] . '" class="btn pop_up_btn unfollow_btn">Se désabonner</a>';
         }
 
         ?>

@@ -67,7 +67,15 @@ include('assets/php/vimeo_setup.php');
             <div class="menu_nav">
                 <!-- Categories's title -->
                 <div class="menu_category">
-                    <p class="category_title category_title1" number="1" number1="2" number2="3">Nouveautés</p>
+                    <p class="category_title category_title1" number="1" number1="2" number2="3">
+                    <?php
+                    if (func::checkLoginState($db)) { #If the user is connected
+                        echo 'Fil d\'actualité';
+                    } else {
+                        echo 'Nouveautés';
+                    }
+                    ?>    
+                    </p>
                     <p class="category_title category_title2" number="2" number1="1" number2="3">Défis du moment</p>
                     <p class="category_title category_title3" number="3" number1="1" number2="2">Explorer</p>
                     <div class="red_line underline"></div>
@@ -113,7 +121,14 @@ include('assets/php/vimeo_setup.php');
         <!-- Category list  -->
         <div class="category_list_container">
             <p class="category_list_category category_list_category1" number="1" number2="2" number3="3">
-                Nouveautés</p>
+            <?php
+                    if (func::checkLoginState($db)) { #If the user is connected
+                        echo 'Fil d\'actualité';
+                    } else {
+                        echo 'Nouveautés';
+                    }
+                    ?>
+            </p>
             <p class="category_list_category category_list_category2" number="2" number2="1" number3="3">
                 Défis du moment</p>
             <p class="category_list_category category_list_category3" number="3" number2="1" number3="2">
@@ -128,7 +143,13 @@ include('assets/php/vimeo_setup.php');
         <div class="nav_footer">
             <div class="nav_footer_category" number="1" number2="2" number3="3">
                 <div class="nouveaute_icon"></div>
-                Nouveautés
+                <?php
+                    if (func::checkLoginState($db)) { #If the user is connected
+                        echo 'Fil d\'actualité';
+                    } else {
+                        echo 'Nouveautés';
+                    }
+                    ?>
             </div>
             <div class="nav_footer_category" number="2" number2="1" number3="3">
                 <div class="defi_moment_icon"></div>
@@ -157,14 +178,129 @@ include('assets/php/vimeo_setup.php');
                     <!-- Category title -->
                     <h1 id="title1">
                         <div class="red_line title_line"></div>
-                        NOUVEAUTÉS
+                        <?php
+
+                        if (func::checkLoginState($db)) { #If the user is connected
+                            echo"
+                                FIL D'ACTUALITÉ";
+                        }else {
+                            echo"
+                                NOUVEAUTÉS";
+                        }
+                        ?>
                     </h1>
 
                     <!-- All videos -->
-                    <div class="all_video_container">
+                    <div class="all_video_container" id="all_video_container">
 
                         <?php
 
+                if (func::checkLoginState($db)) { # If the user is connected
+
+                        $user_id = $_COOKIE['userid'];
+                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users`, `subscription` WHERE user_id = video_user_id AND subscription_subscriber_id = $user_id ORDER BY video_id DESC";
+                        $stmt = $db->prepare($query);
+                        $stmt->execute();
+
+                        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                        foreach ($rows as $row) {
+                            echo "<!-- Video container -->
+        <div class='video_container'>
+
+            <!-- Short film (class=video) -->
+            <div class='video_content'>
+            <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
+                <!-- Name + pp -->
+                <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
+
+                <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+
+                    <p class='pseudo'>" . $row['user_username'] . "</p>
+                    <div class='flou'></div>
+                </a>
+
+                <!-- Time -->
+                <p class='time'>" . $row['time'] . "</p>
+            </div>
+
+            <!-- Short film\'s informations -->
+            <div class='description_container'>
+                <div class='fb_jsb'>
+                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm($(this))' >
+                        <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
+                        <p class='see_more'>Voir plus
+                            <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
+                            </p>
+                    </div>";
+                            if (func::checkLoginState($db)) { # If the user is connected
+                                echo "
+                        <div class='reaction_container'>
+                            <div class='fb_jsb like_container'>
+                                <!-- Pop corn image -->
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon'  onclick='addLike(this)'>
+                                <!-- Like\'s number -->
+                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                            </div>
+                            <!-- Comment icon -->
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>";
+
+                                // Comment's number
+                                $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
+                                $stmt2 = $db->prepare($query2);
+                                $stmt2->execute();
+
+                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                                echo "
+                                        <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
+
+                                echo "
+                                        </div>
+                            <!-- Share icon -->
+                            <div class='share_icon' onclick='popupShare()'></div>
+
+                        </div>";
+                            } else { # If the user is an asshole
+                                echo "
+                            <div class='reaction_container'>
+                            <div class='fb_jsb like_container'>
+                                <!-- Pop corn image -->
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+                                <!-- Like\'s number -->
+                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                            </div>
+                            <!-- Comment icon -->
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                                <div class='comment_icon'></div>";
+
+                                // Comment's number
+                                $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
+                                $stmt2 = $db->prepare($query2);
+                                $stmt2->execute();
+
+                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                                echo "
+                                        <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
+
+                                echo "
+                            </div>
+
+                            <!-- Share icon -->
+                            <div class='share_icon' onclick='popupConnexion()'></div>
+
+                        </div>";
+                            }
+
+                            echo "
+                </div>
+                <p>" . $row['video_synopsis'] . "</p>
+            </div>
+
+
+        </div>";
+                        }
+                    } else {
                         $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users` WHERE user_id = video_user_id ORDER BY video_id DESC";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
@@ -203,9 +339,9 @@ include('assets/php/vimeo_setup.php');
                             if (func::checkLoginState($db)) { # If the user is connected
                                 echo "
                         <div class='reaction_container'>
-                            <div class='fb_jsb like_container' onclick='addLike(this)'>
+                            <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
-                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon'  onclick='addLike(this)'>
                                 <!-- Like\'s number -->
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
@@ -231,7 +367,7 @@ include('assets/php/vimeo_setup.php');
                             } else { # If the user is an asshole
                                 echo "
                             <div class='reaction_container'>
-                            <div class='fb_jsb like_container' onclick='addLike(this)'>
+                            <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                 <!-- Like\'s number -->
@@ -266,7 +402,8 @@ include('assets/php/vimeo_setup.php');
 
 
         </div>";
-                        }
+                    }
+                }
 
                         $stmt = null;
                         $query = null;
@@ -305,7 +442,7 @@ include('assets/php/vimeo_setup.php');
 
                         <?php
 
-                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users`, `defis` WHERE user_id = video_user_id AND video_defi_id = defi_id AND defi_current = 1";
+                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users`, `defis` WHERE user_id = video_user_id AND video_defi_id = defi_id AND defi_current = 1 ORDER BY video_id DESC";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
 
@@ -343,9 +480,9 @@ include('assets/php/vimeo_setup.php');
                             if (func::checkLoginState($db)) { # If the user is connected
                                 echo "
                         <div class='reaction_container'>
-                            <div class='fb_jsb like_container' onclick='addLike(this)'>
+                            <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
-                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
                                 <!-- Like\'s number -->
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
@@ -371,7 +508,7 @@ include('assets/php/vimeo_setup.php');
                             } else { # If the user is an asshole
                                 echo "
                             <div class='reaction_container'>
-                            <div class='fb_jsb like_container' onclick='addLike(this)'>
+                            <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                 <!-- Like\'s number -->
@@ -478,9 +615,9 @@ include('assets/php/vimeo_setup.php');
                             if (func::checkLoginState($db)) { # If the user is connected
                                 echo "
                         <div class='reaction_container'>
-                            <div class='fb_jsb like_container' onclick='addLike(this)'>
+                            <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
-                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon'  onclick='addLike(this)'>
                                 <!-- Like\'s number -->
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
@@ -506,7 +643,7 @@ include('assets/php/vimeo_setup.php');
                             } else { # If the user is an asshole
                                 echo "
                             <div class='reaction_container'>
-                            <div class='fb_jsb like_container' onclick='addLike(this)'>
+                            <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                 <!-- Like\'s number -->
