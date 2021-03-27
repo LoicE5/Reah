@@ -34,6 +34,25 @@ if($parameter == 'research'){
 
     $video_vimeo_id = htmlspecialchars($_GET['video']);
 
+    $query = "SELECT video_like_number FROM videos WHERE video_url = $video_vimeo_id";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $initial_count = $results[0]['video_like_number'];
+
+    $final_count = $initial_count+1;
+    echo $final_count;
+
+    $query = "UPDATE videos SET video_like_number = $final_count WHERE video_url = $video_vimeo_id";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+}
+
+function oldAddLike($onlyHereForArchivePurposes,$db){
+
+    $video_vimeo_id = htmlspecialchars($_GET['video']);
+
 
     /*⬇ COOKIE check phase ⬇*/
     $cookie_user_id = $_COOKIE['userid'];
@@ -128,7 +147,6 @@ if($parameter == 'research'){
     $rslt = $results[0]['video_like_counter'];
 
     echo $rslt;
-    
 }
 
 ?>

@@ -5,7 +5,7 @@ include('assets/php/config.php');
 include("ressources/pop_up_film_information.php");
 include("ressources/pop_up_connexion.php");
 include("ressources/pop_up_share.php");
-include('vimeo_setup.php');
+include('assets/php/vimeo_setup.php');
 ?>
 
 <!DOCTYPE html>
@@ -203,7 +203,7 @@ include('vimeo_setup.php');
                             if (func::checkLoginState($db)) { # If the user is connected
                                 echo "
                         <div class='reaction_container'>
-                            <div class='fb_jsb like_container'>
+                            <div class='fb_jsb like_container' onclick='addLike(this)'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                 <!-- Like\'s number -->
@@ -231,7 +231,7 @@ include('vimeo_setup.php');
                             } else { # If the user is an asshole
                                 echo "
                             <div class='reaction_container'>
-                            <div class='fb_jsb like_container'>
+                            <div class='fb_jsb like_container' onclick='addLike(this)'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                 <!-- Like\'s number -->
@@ -343,7 +343,7 @@ include('vimeo_setup.php');
                             if (func::checkLoginState($db)) { # If the user is connected
                                 echo "
                         <div class='reaction_container'>
-                            <div class='fb_jsb like_container'>
+                            <div class='fb_jsb like_container' onclick='addLike(this)'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                 <!-- Like\'s number -->
@@ -371,7 +371,7 @@ include('vimeo_setup.php');
                             } else { # If the user is an asshole
                                 echo "
                             <div class='reaction_container'>
-                            <div class='fb_jsb like_container'>
+                            <div class='fb_jsb like_container' onclick='addLike(this)'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                 <!-- Like\'s number -->
@@ -478,7 +478,7 @@ include('vimeo_setup.php');
                             if (func::checkLoginState($db)) { # If the user is connected
                                 echo "
                         <div class='reaction_container'>
-                            <div class='fb_jsb like_container'>
+                            <div class='fb_jsb like_container' onclick='addLike(this)'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='likeBtn($(this))'>
                                 <!-- Like\'s number -->
@@ -506,7 +506,7 @@ include('vimeo_setup.php');
                             } else { # If the user is an asshole
                                 echo "
                             <div class='reaction_container'>
-                            <div class='fb_jsb like_container'>
+                            <div class='fb_jsb like_container' onclick='addLike(this)'>
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                 <!-- Like\'s number -->

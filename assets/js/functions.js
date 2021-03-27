@@ -149,10 +149,10 @@ function addLike(element){
             let final_count = Number(text);
             console.log(`final_count = ${final_count}`);
 
-            let target = element.querySelector('.pop_corn_number>b');
+            let target = element.querySelector('.pop_corn_number');
             console.log(element);
             console.log(target);
-            target.innerHTML = final_count;
+            target.innerHTML = `${final_count} J'aime`;
         });
     });
 }
