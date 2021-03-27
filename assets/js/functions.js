@@ -285,7 +285,9 @@ function popupComment(e) {
     let title = $(e).attr("title");
     $(`.film_container[title="${title}"]`).fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
     $(".dark_filter").addClass("show fixed");
-    $(".main_content").addClass("scroll_none")
+    $(".main_content").addClass("scroll_none");
+
+    document.querySelector('.film_container').style.display = 'block';
 
     $(".comment_space_container").fadeIn(500).addClass("comment_space_container_open").removeClass("comment_space_container_close");
     $("html, body").animate({
@@ -296,6 +298,15 @@ function popupComment(e) {
     $(".comment_arrow").addClass("comment_arrow_open");
 }
 
+function getFilmComment(element){
+    let id = element.title;
+    fetch(`ressources/pop_up_film_information.php?id=${id}`).then(response=>{
+        response.text().then(text=>{
+            console.log(text);
+            document.body.innerHTML += text;
+        });
+    });
+}
 
 // Comment click animation
 function popupFilmComment() {

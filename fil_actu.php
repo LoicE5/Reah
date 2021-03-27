@@ -2,7 +2,7 @@
 // ini_set('display_errors', 1);
 // ini_set('display_startup_errors', 1);
 include('assets/php/config.php');
-include("ressources/pop_up_film_information.php");
+// include("ressources/pop_up_film_information.php");
 include("ressources/pop_up_connexion.php");
 include("ressources/pop_up_share.php");
 include('assets/php/vimeo_setup.php');
@@ -210,7 +210,7 @@ include('assets/php/vimeo_setup.php');
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
                                 <div class='comment_icon'></div>";
 
                                 // Comment's number
@@ -238,7 +238,7 @@ include('assets/php/vimeo_setup.php');
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
                                 <div class='comment_icon'></div>";
 
                                 // Comment's number
@@ -350,7 +350,7 @@ include('assets/php/vimeo_setup.php');
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
                                 <div class='comment_icon'></div>";
 
                                 // Comment's number
@@ -378,7 +378,7 @@ include('assets/php/vimeo_setup.php');
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
                                 <div class='comment_icon'></div>";
 
                                 // Comment's number
@@ -485,7 +485,7 @@ include('assets/php/vimeo_setup.php');
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
                                 <div class='comment_icon'></div>";
 
                                 // Comment's number
@@ -513,7 +513,7 @@ include('assets/php/vimeo_setup.php');
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
                                 <div class='comment_icon'></div>";
 
                                 // Comment's number
