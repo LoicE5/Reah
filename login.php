@@ -23,37 +23,42 @@
     <?php
         if( !func::checkLoginState($db) ){ # If the user isn't logged in
             
-            if( (isset($_POST['username']) && isset($_POST['password'])) && ($_POST['username'] != '' && $_POST['password'] != '')) { # If the username and password fields are filled in
+            if(isset($_POST['connexion_btn']) && isset($_POST['username']) && isset($_POST['password'])) { # If the username and password fields are filled in
 
                 $username = htmlspecialchars($_POST['username']);
                 $password = htmlspecialchars($_POST['password']);
 
                 # We get the matching username and passwords from the database
-                $query = "SELECT * FROM users WHERE user_username = '$username';";
+                $query = "SELECT * FROM users WHERE user_username = '$username' OR user_email = '$username';";
 
                 $stmt = $db->prepare($query);
                 $stmt->execute();
 
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+                // Connecter avec son username
                 if($row['user_id'] > 0){ # If the user's form fields data matches the database informations
 
                     if(password_verify($password, $row['user_password']) == true){
 
-                        echo '<h1>CONNECTED</h1>';
                         func::createRecord($db,$row['user_username'],$row['user_id']); # Deleting from sessions the previous username & user_id & creating new cookies & session.
                         redirect('fil_actu.php?accueil=true');
                     } else {
-                        echo '<h1 style="color:red">ERROR : password doesn"t match !</h1>';
+                        makeVisible('main.main_content',true);
+                        $message_false = 'Le mot de passe est incorrect.';
+        
                     }
 
                 } else { # if the credentials are unknwown from the database
 
-                    consoleLog($password);
-                    consoleLog($row['user_password']);
-                    consoleLog(password_verify($password, $row['user_password']));
+                    // consoleLog($password);
+                    // consoleLog($row['user_password']);
+                    // consoleLog(password_verify($password, $row['user_password']));
 
-                    echo 'error';
+                    // echo 'error';
+                makeVisible('main.main_content',true);
+                $message_false = 'Le pseudo ou l\'email est incorrect.';
+
                 }
 
             } else { # We display the form in order to make the user fill the fields
@@ -64,6 +69,16 @@
         }
     ?>
     <main class="main_content" style="visibility: hidden;">
+
+    <?php
+    
+    if (isset($_GET['mdp'])) {
+      echo '<p class="message_true_container">Votre mot de passe a bien été modifié.</p>';
+  }
+    if (isset($message_false)) {
+        echo '<p class="message_false_container">'.$message_false.'</p>';
+    }
+     ?>
 
         <!-- Background video -->
         <video class="background_video" poster="" autoplay loop>
@@ -109,7 +124,7 @@
             <a href="mdp_oublie.php" class="link">Mot de passe oublié ?</a>
 
             <!-- Button get logged -->
-            <button class="btn btn_connexion">Se connecter</button>
+            <button class="btn btn_connexion" name='connexion_btn'>Se connecter</button>
 
             <!-- Link to register  -->
             <a href="signup.php" class="link">S'inscrire</a>

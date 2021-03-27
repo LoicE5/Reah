@@ -58,14 +58,19 @@ foreach ($rows as $row) {
     <div class='fb_c'>
         <div class='film_header'>
 
-            <div class='film_settings'>
+        
+          <div class='film_settings'>";
+        
+        if (func::checkLoginState($db)) { # If the user is connected
+            echo"  
                 <div class='film_settings_icon' onclick='filmSettings()'>
                     <div></div>
                     <div></div>
                     <div></div>
                 </div>";
-
+    }
     // Enregistrer un film
+    
     if (func::checkLoginState($db)) { # If the user is connected
         echo '<img src="sources/img/film_saved_icon.svg" class="film_saved_icon" alt="" onclick="saveFilm($(this))">';
     } else { # If the user is an asshole
@@ -74,11 +79,21 @@ foreach ($rows as $row) {
     }
 
     echo "
-                <div class='film_settings_container'>
-                    <div>Signaler</div>
-                    <div class='delete_option' onclick='popupDeleteFilm()'>Supprimer</div>
-                    <div>Archiver</div>
-                    <div>Modifier</div>
+                <div class='film_settings_container'>";
+
+                if($row['video_user_id'] == $_COOKIE['userid']){
+                    echo "
+                        <div class='delete_option' onclick='popupDeleteFilm()'>Supprimer</div>
+                        <div>Archiver</div>
+                        <div>Modifier</div>
+                    ";
+                } else {
+                    echo"
+                        <div>Signaler</div>
+                    ";
+                }
+                    
+                echo"
                 </div>
             </div>
             <p class='film_title'>{$row["video_title"]}</p>
@@ -256,11 +271,11 @@ $rows = null;
                 <div class='fb_jsa ai-c'>
                     <div class='fb_jsb'  onclick='popupConnexion()'>
                         <img class='pop_corn_icon' src='sources/img/pop_corn_icon.svg' alt=''>
-                        <p class='pop_corn_number'>515 J'aime</p>
+                        <p class='pop_corn_number'>0 J'aime</p>
                     </div>
                     <div class='fb_jsb comment_container'  onclick='popupConnexion()'>
                         <div class='comment_icon'></div>
-                        <p class='comment_number'><nobr>8 réponses</nobr></p>
+                        <p class='comment_number'><nobr>0 réponses</nobr></p>
                     </div>
                     <div class='fb_jsb share_container' onclick='popupShare()'>
                         <div class='share_icon'></div>

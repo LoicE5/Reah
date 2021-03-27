@@ -271,6 +271,10 @@ a{
 a:hover{
     text-decoration: underline;
 }
+
+.mdp_restriction{
+    margin-left: 200px;
+}
 @keyframes notification_btn_click {
     0% {
         background-color: transparent;

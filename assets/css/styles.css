@@ -692,28 +692,35 @@ nav,.nav_footer{
     z-index: 500;
     text-align: center;
     padding: 10px;
-    animation: message 4s forwards;
+    animation: message 5s forwards;
     color: white;
     height: 40px;
+    margin: 0;
 }
 
 .message_false_container{
     background-color: #c52e2e;
 }
 
+.mdp_restriction{
+    font-size: 0.8rem ;
+    color: #D60036 ;
+    margin: 0;
+}
+
 
 @keyframes message{
     0%{
-        transform: translateY(-40px);
+        transform: translateY(0px);
     }
     10%{
-        transform: translateY(23px);
+        transform: translateY(40px);
     }
     90%{
-        transform: translateY(23px);
+        transform: translateY(40px);
     }
     100%{
-        transform: translateY(-40px);
+        transform: translateY(0px);
 
     }
 }
