@@ -1,6 +1,5 @@
 <?php
     include('assets/php/config.php');
-    require("ressources/pop_up_film_information.php");
 ?>
 <?php
     if(!func::checkLoginState($db)){ # If the user isn't connected
@@ -29,6 +28,13 @@
     <link rel="stylesheet" type="text/css" href="assets/css/fullpage.css" />
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script src="assets/js/functions.js" defer></script>
+
+    <style>
+
+        .main_content{
+            display:block;
+        }
+    </style>
 </head>
 
 <body>
@@ -41,9 +47,10 @@
             <a href="fil_actu.php" class="reah_logo"></a>
 
             <!-- Search bar -->
-            <form action="" class="form_search_bar">
-                <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
-            </form>
+            <form action="search.php" method="GET" class="form_search_bar">
+                    <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs..." oninput="searchEngine(this.value)">
+                </form>
+
 
             <?php
                  if(func::checkLoginState($db)){ # If the user is connected

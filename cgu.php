@@ -30,9 +30,9 @@
             <a href="fil_actu.php" class="reah_logo"></a>
 
             <!-- Search bar -->
-            <form action="" class="form_search_bar">
-                <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs...">
-            </form>
+            <form action="search.php" method="GET" class="form_search_bar">
+                    <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs..." oninput="searchEngine(this.value)">
+                </form>
 
             <?php
                  if(func::checkLoginState($db)){ # If the user is connected

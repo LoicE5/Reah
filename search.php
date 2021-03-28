@@ -38,7 +38,7 @@
 
         .result h4,
         .result p {
-            width: max-content;
+            /* width: max-content; */
             height: max-content;
             margin: 0px;
             /* float: right; */
@@ -53,6 +53,8 @@
             height: max-content;
             margin-bottom: 15px;
             cursor: pointer;
+            color: var(--text);
+            text-decoration: none;
         }
 
         .result>section {
@@ -84,7 +86,7 @@
         }
 
         .result .profile_description {
-            max-width: 80%;
+            /* max-width: 80%; */
             word-wrap: break-word;
         }
         .menu_nav{
@@ -128,7 +130,7 @@
                     <!-- Defi icon -->
                     <a href='defis.php' class='defi_icon'></a>
                     <!-- Profile photo -->
-                    <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
+                    <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu();'></div>
                     </div>";
             } else {
                 echo "<div class='menu_profile'>
@@ -144,13 +146,6 @@
                 }
                 ?>
     </nav>
-
-    <!-- Category list  -->
-    <div class="category_list_container">
-        <p class="category_list_category" number="1" number1="2" number2="3">Ajouts récents</p>
-        <p class="category_list_category" number="2" number1="1" number2="3">Défis du moment</p>
-        <p class="category_list_category" number="3" number1="1" number2="2">À découvrir</p>
-    </div>
 
     <!-- Menu -->
     <?php
@@ -178,7 +173,7 @@
 
         # Non définitif, la requête finale incluera l'ensemble des tables.
         # Se référer au modèle conceptuel sur le drive
-        $query = "SELECT video_title,video_username,video_url,video_id FROM videos WHERE video_title LIKE '%$research%' OR video_username LIKE '%$research%';";
+        $query = "SELECT * FROM videos, users WHERE video_title LIKE '%$research%' AND video_user_id = user_id;";
 
         $stmt = $db->prepare($query);
         $stmt->execute();
@@ -186,14 +181,16 @@
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach($rows as $row){
-            echo '<div class="result omg_im_centered">
+            echo '<a href="profil.php?id='.$row['video_user_id'].'" class="result omg_im_centered">
                 <iframe src="https://player.vimeo.com/video/'.$row['video_url'].'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen id="video_'.$row['video_id'].'"></iframe>
                 <section>
                     <h4>'.$row['video_title'].'</h4>
                     <br>
-                    <p>de : '.$row['video_username'].'</p>
+                    <p>'.$row['video_synopsis'].'</p>
+                    <br>
+                    <p> Réalisé par : '.$row['user_username'].'</p>
                 </section>
-            </div>';
+            </a>';
         }
 
     ?>
@@ -202,7 +199,7 @@
 
         <h2 class="omg_im_centered">Membres</h2>
         <?php
-        $query = "SELECT user_username,user_profile_picture,user_bio FROM users WHERE user_username LIKE '%$research%';";
+        $query = "SELECT * FROM users WHERE user_username LIKE '%$research%';";
 
         $stmt = $db->prepare($query);
         $stmt->execute();
@@ -210,20 +207,22 @@
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach($rows as $row){
-            echo '<div class="result omg_im_centered">
-                <img src="'.$row['user_profile_picture'].'" class="profile_picture" alt="Photo de profil">
+            echo '<a href="profil.php?id='.$row['user_id'].'" class="result omg_im_centered">
+                <div style="background: url(data:image/jpg;base64,' . base64_encode($row["user_profile_picture"]) . ') no-repeat center/cover"  class="profile_picture"></div>
+
                 <section>
                     <h4>'.$row['user_username'].'</h4>
                     <br>
                     <p class="profile_description">'.$row['user_bio'].'</p>
                 </section>
-            </div>';
-        }
+            </a>';
+        };
     ?>
     </main>
     <?php
     require('ressources/footer.php');
 ?>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script src="assets/js/app2.js"></script>
     <script src="assets/js/functions.js"></script>
 
