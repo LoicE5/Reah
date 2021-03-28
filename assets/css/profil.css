@@ -550,6 +550,7 @@
     width: 100px;
     height: 30px;
     line-height: 30px;
+    text-decoration: none;
 }
 
 
@@ -594,17 +595,20 @@
     left: -100px;
 }
 
-.user_settings_container>div {
+.user_settings_container>a {
     height: 35px;
     width: 100%;
     text-align: center;
     line-height: 35px;
     cursor: pointer;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
 }
-
-.user_settings_container>div:hover {
+.user_settings_container>a:hover {
     background-color: #af002c;
 }
+
 
 @keyframes subscriber_click {
     0% {

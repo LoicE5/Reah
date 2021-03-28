@@ -323,10 +323,10 @@ $(document).ready(function () {
         })
     })
 
-    // Synopsis title
-    $(".synopsis_title_container").hover(function () {
-        $(this).find(".see_more").toggleClass("see_more_hover");
-    })
+    // // Synopsis title
+    // $(".synopsis_title_container").hover(function () {
+    //     $(this).find(".see_more").toggleClass("see_more_hover");
+    // })
 
 
     // Close icon animation hover

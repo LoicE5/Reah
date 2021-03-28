@@ -5,7 +5,43 @@ include('assets/php/config.php');
 // include("ressources/pop_up_film_information.php");
 include("ressources/pop_up_connexion.php");
 include("ressources/pop_up_share.php");
-// include('assets/php/vimeo_setup.php');
+include('assets/php/comments.php');
+
+// Ajout d'un commentaire
+if (isset($_GET['comment_send'])) {
+
+    // var_dump($_GET["comment_content"]);
+    // var_dump($_COOKIE["userid"]);
+
+    $sql = "INSERT INTO comments (comment_content, comment_video_id, comment_user_id) VALUES (:content, :video_id, :user_id)";
+
+    $attributes = array(
+        'content' => addslashes($_GET["comment_content"]),
+        'video_id' => $_GET['comment_send'],
+        'user_id' => $_COOKIE['userid'],
+    );
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute($attributes);
+
+}
+
+
+// Supression d'un commentaire
+if (isset($_GET['delete_comment'])) {
+
+    $comment_id = $_GET['delete_comment'];
+    $user_id = $_COOKIE['userid'];
+    $sql = "DELETE FROM comments WHERE comment_user_id='$user_id' AND comment_id='$comment_id'";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+
+    // header('Location: fil_actu.php?accueil=true');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -31,6 +67,8 @@ include("ressources/pop_up_share.php");
     <!-- Accueil -->
     <?php
     if (!isset($_GET['accueil'])) {
+    if (!isset($_GET['comment_send'])) {
+
         echo '
 
     <section class="accueil" id="accueil">
@@ -54,8 +92,20 @@ include("ressources/pop_up_share.php");
 
     </section>';
     }
+}
     ?>
     <main class="main_content">
+
+
+    <!-- Signalement -->
+    <?php
+    if (isset($message_true)) {
+        echo '
+        <p class="message_true_container">
+                '.$message_true.'
+        </p>';
+    }
+    ?>
 
 
         <!-- Navigation menu -->
@@ -198,7 +248,7 @@ include("ressources/pop_up_share.php");
                 if (func::checkLoginState($db)) { # If the user is connected
 
                         $user_id = $_COOKIE['userid'];
-                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users`, `subscription` WHERE user_id = video_user_id AND subscription_subscriber_id = $user_id ORDER BY video_id DESC";
+                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM `videos`, `users`, `subscription` WHERE user_id = video_user_id AND subscription_subscriber_id = $user_id AND subscription_artist_id = user_id ORDER BY video_id DESC";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
 
@@ -227,14 +277,13 @@ include("ressources/pop_up_share.php");
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
+                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm(this)' >
                         <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
                             </p>
-                    </div>";
-                            if (func::checkLoginState($db)) { # If the user is connected
-                                echo "
+                    </div>
+                    
                         <div class='reaction_container'>
                             <div class='fb_jsb like_container'>
                                 <!-- Pop corn image -->
@@ -243,7 +292,7 @@ include("ressources/pop_up_share.php");
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
                                 <div class='comment_icon'></div>";
 
                                 // Comment's number
@@ -261,36 +310,7 @@ include("ressources/pop_up_share.php");
                             <div class='share_icon' onclick='popupShare()'></div>
 
                         </div>";
-                            } else { # If the user is an asshole
-                                echo "
-                            <div class='reaction_container'>
-                            <div class='fb_jsb like_container'>
-                                <!-- Pop corn image -->
-                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
-                                <!-- Like\'s number -->
-                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
-                            </div>
-                            <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
-                                <div class='comment_icon'></div>";
-
-                                // Comment's number
-                                $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
-                                $stmt2 = $db->prepare($query2);
-                                $stmt2->execute();
-
-                                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
-                                echo "
-                                        <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
-
-                                echo "
-                            </div>
-
-                            <!-- Share icon -->
-                            <div class='share_icon' onclick='popupConnexion()'></div>
-
-                        </div>";
-                            }
+                           
 
                             echo "
                 </div>
@@ -301,7 +321,7 @@ include("ressources/pop_up_share.php");
         </div>";
                         }
                     } else {
-                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users` WHERE user_id = video_user_id ORDER BY video_id DESC";
+                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM `videos`, `users` WHERE user_id = video_user_id ORDER BY video_id DESC";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
 
@@ -330,7 +350,7 @@ include("ressources/pop_up_share.php");
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
+                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm(this)' >
                         <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -374,7 +394,7 @@ include("ressources/pop_up_share.php");
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupConnexion()' >
                                 <div class='comment_icon'></div>";
 
                                 // Comment's number
@@ -442,7 +462,7 @@ include("ressources/pop_up_share.php");
 
                         <?php
 
-                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users`, `defis` WHERE user_id = video_user_id AND video_defi_id = defi_id AND defi_current = 1 ORDER BY video_id DESC";
+                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM `videos`, `users`, `defis` WHERE user_id = video_user_id AND video_defi_id = defi_id AND defi_current = 1 ORDER BY video_id DESC";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
 
@@ -471,7 +491,7 @@ include("ressources/pop_up_share.php");
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
+                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm(this)' >
                         <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -487,7 +507,7 @@ include("ressources/pop_up_share.php");
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
                                 <div class='comment_icon'></div>";
 
                                 // Comment's number
@@ -515,7 +535,7 @@ include("ressources/pop_up_share.php");
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupConnexion(this)' >
                                 <div class='comment_icon'></div>";
 
                                 // Comment's number
@@ -576,7 +596,7 @@ include("ressources/pop_up_share.php");
                     <div class="all_video_container">
 
                         <?php
-                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users` WHERE user_id = video_user_id ORDER BY RAND()";
+                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM `videos`, `users` WHERE user_id = video_user_id ORDER BY RAND()";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
 
@@ -605,7 +625,7 @@ include("ressources/pop_up_share.php");
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='getFilmComment(this)'>
+                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm(this)'>
                         <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -622,7 +642,7 @@ include("ressources/pop_up_share.php");
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
                                 <div class='comment_icon'></div>";
 
                                 // Comment's number
@@ -650,7 +670,7 @@ include("ressources/pop_up_share.php");
                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupConnexion(this)' >
                                 <div class='comment_icon'></div>";
 
                                 // Comment's number
@@ -697,6 +717,9 @@ include("ressources/pop_up_share.php");
         require("ressources/footer.php");
         ?>
 
+    <div class='dark_filter dark_filter_film_data' onclick="closePopupFilm(this)"></div>
+
+
     </main>
 
 
@@ -704,7 +727,7 @@ include("ressources/pop_up_share.php");
     <script src="assets/js/fil_actu.js"></script>
     <script src="assets/js/app2.js"></script>
     <script src="assets/js/functions.js"></script>
-    <script>console.log('bite');</script>
+    <!-- <script>console.log('bite');</script> -->
 </body>
 
 </html>
