@@ -282,10 +282,16 @@ function popupFilm(e) {
     $(".main_content").addClass("scroll_none")
 }
 
-function closePopupFilm() {
+function closePopupFilm(element) {
     $(".film_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
     $(".dark_filter").removeClass("show");
-    $(".main_content").removeClass("scroll_none")
+    $(".main_content").removeClass("scroll_none");
+    document.body.removeChild(element);
+    setTimeout(()=>{
+        for(let i=0;i<document.querySelectorAll('.film_container').length;i++){
+            document.body.removeChild(document.querySelectorAll('.film_container')[i]);
+        }
+    },1500);
 }
 
 
@@ -323,7 +329,7 @@ function popupComment(e) {
 
 function getFilmComment(element){
     let id = element.title;
-    fetch(`ressources/pop_up_film_information.php?id=${id}`).then(response=>{
+    fetch(`assets/php/film_data.php?id=${id}`).then(response=>{
         response.text().then(text=>{
             console.log(text);
             document.body.innerHTML += text;

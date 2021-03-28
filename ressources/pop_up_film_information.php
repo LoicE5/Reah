@@ -46,7 +46,7 @@ if (isset($_GET['delete_comment'])) {
 <div class='dark_filter' onclick="closePopupFilm()"></div>
 
 <?php
-$query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, defis, users WHERE video_user_id=user_id AND defi_id=video_defi_id AND video_id = 1";
+$query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, defis, users WHERE video_user_id=user_id AND defi_id=video_defi_id/*  AND video_id = 1*/";
 $stmt = $db->prepare($query);
 $stmt->execute();
 
