@@ -90,8 +90,8 @@ function searchEngine(input){
                     } else {
 
                         searchList.innerHTML += `<p class="search_list_result">
-                        <b>${videos[i].demo_video_title}</b>
-                        de <i>${videos[i].demo_video_author}</i>
+                        <b>${videos[i].video_title}</b>
+                        de <i>${videos[i].video_username}</i>
                         </p>`;
 
                     }

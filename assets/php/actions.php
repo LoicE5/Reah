@@ -7,7 +7,7 @@ if($parameter == 'research'){
 
     $research = htmlspecialchars($_GET['search']);
 
-    $query = "SELECT demo_video_title,demo_video_author,demo_video_url,demo_video_id FROM demo_videos WHERE demo_video_title LIKE '%$research%' OR demo_video_author LIKE '%$research%';";
+    $query = "SELECT video_title,video_username,video_url,video_id FROM videos WHERE video_title LIKE '%$research%' OR video_username LIKE '%$research%';";
 
     $stmt = $db->prepare($query);
     $stmt->execute();
@@ -20,7 +20,7 @@ if($parameter == 'research'){
 
     echo 'splitter';
 
-    $query = "SELECT user_username,user_profile_picture,user_profile_description FROM users WHERE user_username LIKE '%$research%';";
+    $query = "SELECT user_username,user_profile_picture,user_bio FROM users WHERE user_username LIKE '%$research%'";
 
     $stmt = $db->prepare($query);
     $stmt->execute();

@@ -95,7 +95,7 @@
 
 <body>
     <?php
-    include("ressources/pop_up_film_information.php");
+    // include("ressources/pop_up_film_information.php");
     include("ressources/pop_up_connexion.php");
     include("ressources/pop_up_share.php");
 ?>
@@ -178,7 +178,7 @@
 
         # Non définitif, la requête finale incluera l'ensemble des tables.
         # Se référer au modèle conceptuel sur le drive
-        $query = "SELECT demo_video_title,demo_video_author,demo_video_url,demo_video_id FROM demo_videos WHERE demo_video_title LIKE '%$research%' OR demo_video_author LIKE '%$research%';";
+        $query = "SELECT video_title,video_username,video_url,video_id FROM videos WHERE video_title LIKE '%$research%' OR video_username LIKE '%$research%';";
 
         $stmt = $db->prepare($query);
         $stmt->execute();
@@ -187,11 +187,11 @@
 
         foreach($rows as $row){
             echo '<div class="result omg_im_centered">
-                <iframe src="https://player.vimeo.com/video/'.$row['demo_video_url'].'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen id="video_'.$row['demo_video_id'].'"></iframe>
+                <iframe src="https://player.vimeo.com/video/'.$row['video_url'].'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen id="video_'.$row['video_id'].'"></iframe>
                 <section>
-                    <h4>'.$row['demo_video_title'].'</h4>
+                    <h4>'.$row['video_title'].'</h4>
                     <br>
-                    <p>de : '.$row['demo_video_author'].'</p>
+                    <p>de : '.$row['video_username'].'</p>
                 </section>
             </div>';
         }
@@ -202,7 +202,7 @@
 
         <h2 class="omg_im_centered">Membres</h2>
         <?php
-        $query = "SELECT user_username,user_profile_picture,user_profile_description FROM users WHERE user_username LIKE '%$research%';";
+        $query = "SELECT user_username,user_profile_picture,user_bio FROM users WHERE user_username LIKE '%$research%';";
 
         $stmt = $db->prepare($query);
         $stmt->execute();
@@ -215,7 +215,7 @@
                 <section>
                     <h4>'.$row['user_username'].'</h4>
                     <br>
-                    <p class="profile_description">'.$row['user_profile_description'].'</p>
+                    <p class="profile_description">'.$row['user_bio'].'</p>
                 </section>
             </div>';
         }
