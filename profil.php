@@ -2,14 +2,63 @@
 // ini_set('display_errors',1);
 // ini_set('display_startup_errors',1);
 include('assets/php/config.php');
-include("ressources/pop_up_film_information.php");
+// include("ressources/pop_up_film_information.php");
 include("ressources/pop_up_connexion.php");
 include("ressources/pop_up_share.php");
-?>
+include('assets/php/comments.php');
 
-<?php
+
+// Ajout d'un commentaire
+if (isset($_GET['comment_send'])) {
+
+    $query = "SELECT * FROM videos, comments WHERE comment_id = " . $_GET['comment_send'] . " AND comment_video_id = video_id;";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $sql = "INSERT INTO comments (comment_content, comment_video_id, comment_user_id) VALUES (:content, :video_id, :user_id)";
+    
+    $attributes = array(
+        'content' => addslashes($_GET["comment_content"]),
+        'video_id' => $_GET['comment_send'],
+        'user_id' => $_COOKIE['userid'],
+    );
+    
+    $stmt = $db->prepare($sql);
+    
+    $stmt->execute($attributes);
+    
+// echo $url; 
+
+    // header('Location: defi_details.php?defi='.$row['video_defi_id']);
+}
+
+
+// Supression d'un commentaire
+if (isset($_GET['delete_comment'])) {
+
+    $query = "SELECT * FROM videos, comments WHERE comment_id = " . $_GET['delete_comment'] . " AND comment_video_id = video_id;";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $comment_id = $_GET['delete_comment'];
+    $user_id = $_COOKIE['userid'];
+    $sql = "DELETE FROM comments WHERE comment_user_id='$user_id' AND comment_id='$comment_id'";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+
+    // header('Location: defi_details.php?defi='.$row['video_defi_id']);
+
+}
+
+
 if (!func::checkLoginState($db)) { # If the user isn't connected
-    redirect('login.php');
+    // redirect('login.php');
 } else {
     if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) {
         $query = "SELECT * FROM users WHERE user_id = " . $_GET['id'] . ";";
@@ -75,7 +124,7 @@ if (isset($_GET["add_subscription"])) {
 
     // header('Location: defis.php?success=true');
 
-    redirect('fil_actu.php?id=' . $_GET['id']);
+    // redirect('fil_actu.php?id=' . $_GET['id']);
 }
 
 // Se désabonner 
@@ -110,6 +159,30 @@ if (isset($_GET["delete_subscriber"])) {
     header('Refresh:0; url=profil.php?id=' . $_GET['id']);
 }
 
+// Signalement d'un utilisateur
+if (isset($_GET['report_user'])) {
+
+    $message_true = 'Ton signalement a bien été pris en compte.';
+
+    $user_report_id = $_GET['report_user'];
+    $user_id = $_COOKIE['userid'];
+
+    $query = "SELECT * FROM users WHERE user_id= $user_report_id";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $report_user_id = $row["user_report_id"].','.$user_id;
+
+    $sql = "UPDATE users SET user_report_id='$report_user_id' WHERE user_id='$user_report_id'";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+
+    // header('Location: fil_actu.php?accueil=true');
+}
 
 ?>
 
@@ -141,6 +214,19 @@ if (isset($_GET["delete_subscriber"])) {
     }
     ?>
     <main class="main_content">
+
+      <!-- Signalement -->
+  <?php
+    if (isset($message_true)) {
+        echo '
+        <p class="message_true_container">
+                '.$message_true.'
+        </p>';
+    }
+    ?>
+
+<div class='dark_filter' onclick="closePopupFilm(this)"></div>
+
 
         <!-- Navigation menu -->
         <nav class="menu_nav">
@@ -363,8 +449,8 @@ if (isset($_GET["delete_subscriber"])) {
 
                         echo "
                         <div class='user_settings_container'>
-                            <div>Signaler</div>
-                            <div>Bloquer</div>
+                            <a href='profil.php?id=".$_GET['id']."&report_user=". $_GET['id'] . "'>Signaler</a>
+                            <a>Bloquer</a>
                         </div>
                     </div>";
                     
@@ -438,7 +524,7 @@ if (isset($_GET["delete_subscriber"])) {
                 <?php
 
                                     if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
-                    $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, users WHERE video_user_id = user_id AND user_id = {$_GET['id']} ORDER BY video_id DESC";
+                    $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM videos, users WHERE video_user_id = user_id AND user_id = {$_GET['id']} ORDER BY video_id DESC";
                     $stmt = $db->query($requete);
                     $resultat = $stmt->fetchall(PDO::FETCH_ASSOC);
                     foreach ($resultat as $row) {
@@ -452,7 +538,7 @@ if (isset($_GET["delete_subscriber"])) {
         
         
                                 <!-- Time -->
-                                <p class='time'>{$row["video_duration"]}</p>
+                                <p class='time'>{$row["time"]}</p>
                             </div>
         
                             <!-- Short film\'s informations -->
@@ -464,7 +550,7 @@ if (isset($_GET["delete_subscriber"])) {
                             </div>
         
                                     <!-- Comment icon -->
-                                    <div class='fb_jc ai-c' onclick='popupComment(this)'>
+                                    <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)'>
                                         <div class='comment_icon'></div>
                                         <p class='profile_comment_title'>";
 
@@ -507,7 +593,7 @@ if (isset($_GET["delete_subscriber"])) {
                         ";
                     }
                 } else {
-                    $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, users WHERE video_user_id = user_id AND user_id = {$_COOKIE['userid']} ORDER BY video_id DESC";
+                    $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM videos, users WHERE video_user_id = user_id AND user_id = {$_COOKIE['userid']} ORDER BY video_id DESC";
                     $stmt = $db->query($requete);
                     $resultat = $stmt->fetchall(PDO::FETCH_ASSOC);
                     foreach ($resultat as $row) {
@@ -521,7 +607,7 @@ if (isset($_GET["delete_subscriber"])) {
         
         
                                 <!-- Time -->
-                                <p class='time'>{$row["video_duration"]}</p>
+                                <p class='time'>{$row["time"]}</p>
                             </div>
         
                             <!-- Short film\'s informations -->
@@ -536,7 +622,7 @@ if (isset($_GET["delete_subscriber"])) {
                                     </div>
         
                                     <!-- Comment icon -->
-                                    <div class='fb_jc ai-c' onclick='popupComment(this)'>
+                                    <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)'>
                                         <div class='comment_icon'></div>
                                         <p class='profile_comment_title'>";
 
@@ -594,7 +680,7 @@ if (isset($_GET["delete_subscriber"])) {
                 <?php
 
                                     if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
-                    $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, users, `distribution` WHERE video_user_id = user_id AND distribution_video_id = video_id AND distribution_user_id = {$_GET['id']} ORDER BY video_id DESC";
+                    $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM videos, users, `distribution` WHERE video_user_id = user_id AND distribution_video_id = video_id AND distribution_user_id = {$_GET['id']} ORDER BY video_id DESC";
                     $stmt = $db->query($requete);
                     $resultat = $stmt->fetchall(PDO::FETCH_ASSOC);
                     foreach ($resultat as $row) {
@@ -617,7 +703,7 @@ if (isset($_GET["delete_subscriber"])) {
                     <div class='flou'></div>
                 </a>
                         <!-- Time -->
-                        <p class='time'>{$row["video_duration"]}</p>
+                        <p class='time'>{$row["time"]}</p>
                     </div>
 
                     <!-- Short film\'s informations -->
@@ -632,7 +718,7 @@ if (isset($_GET["delete_subscriber"])) {
                             </div>
 
                             <!-- Comment icon -->
-                            <div class='fb_jc ai-c' onclick='popupComment(this)'>
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)'>
                                 <div class='comment_icon'></div>
                                 <p class='profile_comment_title'>";
 
@@ -675,7 +761,7 @@ if (isset($_GET["delete_subscriber"])) {
                 ";
                     }
                 } else {
-                    $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, `users`, `distribution` WHERE video_user_id = user_id AND distribution_video_id = video_id AND distribution_user_id = {$_COOKIE['userid']} ORDER BY video_id DESC";
+                    $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM videos, `users`, `distribution` WHERE video_user_id = user_id AND distribution_video_id = video_id AND distribution_user_id = {$_COOKIE['userid']} ORDER BY video_id DESC";
                     $stmt = $db->query($requete);
                     $resultat = $stmt->fetchall(PDO::FETCH_ASSOC);
                     foreach ($resultat as $row) {
@@ -699,7 +785,7 @@ if (isset($_GET["delete_subscriber"])) {
                             </a>
     
                             <!-- Time -->
-                            <p class='time'>{$row["video_duration"]}</p>
+                            <p class='time'>{$row["time"]}</p>
                         </div>
     
                         <!-- Short film\'s informations -->
@@ -714,7 +800,7 @@ if (isset($_GET["delete_subscriber"])) {
                                 </div>
     
                                 <!-- Comment icon -->
-                                <div class='fb_jc ai-c' onclick='popupComment(this)'>
+                                <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)'>
                                     <div class='comment_icon'></div>
                                     <p class='profile_comment_title'>";
 
@@ -761,6 +847,27 @@ if (isset($_GET["delete_subscriber"])) {
             </div>
         </div>
     </main>
+
+    <?php
+if (!func::checkLoginState($db)) { # If the user isn't connected
+    redirect('login.php');
+} else {
+    if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) {
+        $query = "SELECT * FROM users WHERE user_id = " . $_GET['id'] . ";";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    } else {
+        $query = "SELECT * FROM users WHERE user_id = " . $_COOKIE['userid'] . ";";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+}
+
+?>
 
     <!-- Modify btn -->
     <div class="pop_up_container modify_container">

@@ -1,7 +1,28 @@
 <?php 
     include('config.php');
     include('vimeo_setup.php');
+
+//     if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') 
+//     $url = "https"; 
+//   else
+//     $url = "http"; 
+    
+//   // Ajoutez // à l'URL.
+//   $url .= "://"; 
+    
+//   // Ajoutez l'hôte (nom de domaine, ip) à l'URL.
+//   $url .= $_SERVER['HTTP_HOST']; 
+    
+//   // Ajouter l'emplacement de la ressource demandée à l'URL
+//   $url .= $_SERVER['REQUEST_URI']; 
+      
+//   // Afficher l'URL
+//   echo $url; 
+
+//   var_dump($_GET['defi']);
 ?>
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -13,50 +34,12 @@
     <link rel="stylesheet" href="../css/fil_actu.css">
     <!-- <link rel="stylesheet" href="../css/fil_actu2.css"> -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js" defer></script>
+    <script src="../js/app2.js" defer></script>
     <script src="../js/functions.js" defer></script>
     <script src="../js/fil_actu.js" defer></script>
-    <script src="../js/app2.js" defer></script>
 </head>
-<?php
 
-    // Ajout d'un commentaire
-    if (isset($_GET['comment_send'])) {
-        $sql = "INSERT INTO comments (comment_content, comment_video_id, comment_user_id) VALUES (:content, :video_id, :user_id)";
-
-        $attributes = array(
-            'content' => $_GET["comment_content"],
-            'video_id' => '1',
-            'user_id' => $_COOKIE['userid'],
-        );
-
-        $stmt = $db->prepare($sql);
-
-        $stmt->execute($attributes);
-
-        $db = null;
-
-        header('Location: fil_actu.php?accueil=true');
-    }
-
-    // Supression d'un commentaire
-    if (isset($_GET['delete_comment'])) {
-
-        $comment_id = $_GET['delete_comment'];
-        $user_id = $_COOKIE['userid'];
-        $sql = "DELETE FROM comments WHERE comment_user_id='$user_id' AND comment_id='$comment_id'";
-
-        $stmt = $db->prepare($sql);
-
-        $stmt->execute();
-
-        $db = null;
-
-        header('Location: fil_actu.php?accueil=true');
-    }
-
-?>
-<body style="min-height: 100vh;">
-    <div class='dark_filter dark_filter_film_data' onclick="closePopupFilm(this)"></div>
+<body style="min-height: 100vh">
 <?php
     if(isset($_GET['id'])){
         $id = $_GET['id'];
@@ -66,7 +49,7 @@
         $id = 1;
     }
 
-    $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, defis, users WHERE video_user_id=user_id AND defi_id=video_defi_id  AND video_id = $id";
+    $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM videos, defis, users WHERE video_user_id=user_id AND defi_id=video_defi_id  AND video_id = $id";
     $stmt = $db->prepare($query);
     $stmt->execute();
 
@@ -92,10 +75,10 @@
         // Enregistrer un film
         
         if (func::checkLoginState($db)) { # If the user is connected
-            echo '<img src="../../sources/img/film_saved_icon.svg" class="film_saved_icon" alt="" onclick="saveFilm($(this))">';
+            echo '<img src="sources/img/film_saved_icon.svg" class="film_saved_icon" alt="" onclick="saveFilm($(this))">';
         } else { # If the user is an asshole
             echo "
-                        <img src='../../sources/img/film_saved_icon.svg' class='film_saved_icon' alt='' onclick='popupConnexion()'>";
+                        <img src='sources/img/film_saved_icon.svg' class='film_saved_icon' alt='' onclick='popupConnexion()'>";
         }
     
         echo "
@@ -103,21 +86,21 @@
     
                     if($row['video_user_id'] == $_COOKIE['userid']){
                         echo "
-                            <div class='delete_option' onclick='popupDeleteFilm()'>Supprimer</div>
-                            <div>Archiver</div>
-                            <div>Modifier</div>
+                            <a class='delete_option' onclick='popupDeleteFilm()'>Supprimer</a>
+                            <a>Archiver</a>
+                            <a>Modifier</a>
                         ";
                     } else {
                         echo"
-                            <div>Signaler</div>
-                        ";
+                            <a href='".$url."?accueil=true&report_video=". $row["video_id"] . "&defi=".$row['video_defi_id']."'>Signaler</a>";
+
                     }
                         
                     echo"
                     </div>
                 </div>
                 <p class='film_title'>{$row["video_title"]}</p>
-                <img src='../../sources/img/close_icon.svg' class='close_icon' alt='' onclick='closePopupFilm()'>
+                <img src='sources/img/close_icon.svg' class='close_icon' alt='' onclick='closePopupFilm(this)'>
             </div>
     
             <!-- Film -->
@@ -161,7 +144,7 @@
     
                         <!-- Like section -->
                         <div class='fb_jsb' onclick='popupConnexion()'>
-                            <img src='../../sources/img/pop_corn_icon.svg' class='pop_corn_icon'>
+                            <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon'>
                             <p class='film_pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                         </div>
     
@@ -201,7 +184,7 @@
             <div class='fb_jc ai-c comment_title_container' onclick='popupFilmComment()'>
                 <div class='comment_icon'></div>";
     
-        $query = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id";
+        $query = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id = $id";
         $stmt = $db->prepare($query);
         $stmt->execute();
     
@@ -210,15 +193,18 @@
         echo "<p class='comment_title'>" . $rows['number'] . " commentaires</p>
                 <div class='comment_arrow'></div>
             </div>
-        </div>";
+        </div>
+        
+        
+        <!-- Comment -->
+        <div class='comment_space_container' title='{$row["video_id"]}'>
+        ";
+
+
     }
-?>
-<!-- Comment -->
-<div class='comment_space_container'>
 
-    <!-- Write a comment -->
+    // <!-- Write a comment -->
 
-<?php
     if (func::checkLoginState($db)) { # If the user isn't connected
 
         $query = "SELECT * FROM users WHERE user_id = " . $_COOKIE['userid'] . ";";
@@ -228,15 +214,16 @@
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         echo "
-                    <form action='fil_actu.php?accueil=true' method='GET'>
+                    <form action='' method='GET'>
                         <div class='write_comment'>
                             <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='pp_profile'></div>
                             <textarea class='comment_textarea' name='comment_content' placeholder='Écrire un commentaire...'></textarea>
-                            <input type='submit' class='send_comment' name='comment_send' value=''>
+                            <input type='submit' class='send_comment' name='comment_send' value='".$_GET['id']."'>
                         </div>
                     </form>
 
                     ";
+
     } else {
 
         echo "
@@ -254,7 +241,7 @@
     <!-- All the comments -->
 <?php
 
-    $query = "SELECT * FROM comments, users, videos WHERE comment_video_id=video_id AND user_id=comment_user_id ORDER BY comment_date DESC";
+    $query = "SELECT * FROM comments, users, videos WHERE comment_video_id=video_id AND user_id=comment_user_id AND video_id = $id ORDER BY comment_date DESC";
     $stmt = $db->prepare($query);
     $stmt->execute();
 
@@ -282,32 +269,56 @@
 
         if ($row["comment_user_id"] == $_COOKIE["userid"]) {
             echo "
-                            <a href='fil_actu.php?delete_comment=" . $row["comment_id"] . "'>Supprimer</a>";
+                            <a href='".$url."?accueil=true&delete_comment=" . $row["comment_id"] . "&defi=".$_GET['defi']."'>Supprimer</a>";
         } else {
             echo "
-                        <div>Signaler</div>";
+                        <a href='".$url."?accueil=true&report_comment=". $row["comment_id"] . "&defi=".$row['video_defi_id']."'>Signaler</a>";
         }
 
         echo "
                     </div>
                 </div>
     
-                <p class='comment_text'>" . $row["comment_content"] . "</p>
+                <p class='comment_text'>" . $row["comment_content"] . "</p>";
     
+
+                if (func::checkLoginState($db)) { # If the user isn't connected
+
+                    echo"
                 <div class='fb_jsa ai-c'>
-                    <div class='fb_jsb'  onclick='popupConnexion()'>
+                    <div class='fb_jsb'  onclick='addLike(this)'>
                         <img class='pop_corn_icon' src='sources/img/pop_corn_icon.svg' alt=''>
                         <p class='pop_corn_number'>0 J'aime</p>
                     </div>
-                    <div class='fb_jsb comment_container'  onclick='popupConnexion()'>
+                    <div class='fb_jsb comment_container'  onclick=''>
                         <div class='comment_icon'></div>
                         <p class='comment_number'><nobr>0 réponses</nobr></p>
                     </div>
-                    <div class='fb_jsb share_container' onclick='popupShare()'>
+                    <div class='fb_jsb share_container' onclick=''>
                         <div class='share_icon'></div>
                         <p class='share_title'>Partager</p>
                     </div>
-                </div>
+                </div>";
+
+                } else {
+                    echo"
+                    <div class='fb_jsa ai-c'>
+                        <div class='fb_jsb'  onclick='popupConnexion()'>
+                            <img class='pop_corn_icon' src='sources/img/pop_corn_icon.svg' alt=''>
+                            <p class='pop_corn_number'>0 J'aime</p>
+                        </div>
+                        <div class='fb_jsb comment_container'  onclick='popupConnexion()'>
+                            <div class='comment_icon'></div>
+                            <p class='comment_number'><nobr>0 réponses</nobr></p>
+                        </div>
+                        <div class='fb_jsb share_container' onclick='popupConnexion()'>
+                            <div class='share_icon'></div>
+                            <p class='share_title'>Partager</p>
+                        </div>
+                    </div>";
+                }
+
+                echo"
             </div>";
     }
 

@@ -366,6 +366,10 @@ video:focus {
     display: flex;
 }
 
+.synopsis_title_container:hover .see_more{
+    animation: information_arrow_hover 0.5s ease forwards;
+}
+
 .synopsis_title {
     max-width: 320px;
     cursor: pointer;
@@ -479,11 +483,14 @@ video:focus {
     align-items: center;
     position: fixed;
 }
-
+.dark_filter{
+    z-index: 200;
+}
+/* 
 .dark_filter_film_data {
     display: block !important;
     position: fixed !important;
-}
+} */
 
 .delete_dark_filter,
 .unfollow_dark_filter,
@@ -558,7 +565,7 @@ video:focus {
     right: 0px;
 }
 
-.film_settings_container>div,.comment_settings_container>a {
+.film_settings_container>a,.comment_settings_container>a {
     height: 35px;
     width: 100%;
     text-align: center;
@@ -566,7 +573,7 @@ video:focus {
     cursor: pointer;
     color: white;
     text-decoration: none;
-    text-align: center;
+    display: inline-block;
 }
 
 .film_settings_container>div:hover,.comment_settings_container>a:hover {
@@ -760,6 +767,7 @@ video:focus {
     margin-left: 20px;
     cursor: pointer;
     padding: 0;
+    color: transparent;
 }
 
 .send_comment:hover {

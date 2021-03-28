@@ -40,7 +40,6 @@
 
 .settings_menu_option:hover {
     background-color: #d600354f;
-
 }
 
 .settings_menu_line {
@@ -53,6 +52,10 @@
 
 .settings_menu_option_click {
     font-weight: bold;
+}
+
+.menu_option:hover{
+    text-decoration: none;
 }
 
 .menu_shadow {

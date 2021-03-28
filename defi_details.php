@@ -1,9 +1,58 @@
 <?php
 include("assets/php/config.php");
-include("ressources/pop_up_film_information.php");
+// include("ressources/pop_up_film_information.php");
 include("ressources/pop_up_connexion.php");
 include("ressources/pop_up_share.php");
 include('vimeo_setup.php');
+include('assets/php/comments.php');
+
+
+
+// Ajout d'un commentaire
+if (isset($_GET['comment_send'])) {
+
+    $query = "SELECT * FROM videos, comments WHERE comment_id = " . $_GET['comment_send'] . " AND comment_video_id = video_id;";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $sql = "INSERT INTO comments (comment_content, comment_video_id, comment_user_id) VALUES (:content, :video_id, :user_id)";
+    
+    $attributes = array(
+        'content' => addslashes($_GET["comment_content"]),
+        'video_id' => $_GET['comment_send'],
+        'user_id' => $_COOKIE['userid'],
+    );
+    
+    $stmt = $db->prepare($sql);
+    
+    $stmt->execute($attributes);
+    
+    header('Location: defi_details.php?defi='.$row['video_defi_id']);
+}
+
+
+// Supression d'un commentaire
+if (isset($_GET['delete_comment'])) {
+
+    $query = "SELECT * FROM videos, comments WHERE comment_id = " . $_GET['delete_comment'] . " AND comment_video_id = video_id;";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $comment_id = $_GET['delete_comment'];
+    $user_id = $_COOKIE['userid'];
+    $sql = "DELETE FROM comments WHERE comment_user_id='$user_id' AND comment_id='$comment_id'";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+
+    header('Location: defi_details.php?defi='.$row['video_defi_id']);
+
+}
 
 
 if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) && isset($_GET['genre']) && isset($_GET['collab'])) {
@@ -44,10 +93,27 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
     <link rel="stylesheet" href="assets/css/defi_details.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/fullpage.css" />
+    <script src="assets/js/libraries/svg-inject-master/src/svg-inject.js"></script>
+    <script src="https://player.vimeo.com/api/player.js"></script>
 </head>
 
 <body>
+
+
+
+  <!-- Signalement -->
+  <?php
+    if (isset($message_true)) {
+        echo '
+        <p class="message_true_container">
+                '.$message_true.'
+        </p>';
+    }
+    ?>
     <main class="main_content">
+
+<div class='dark_filter' onclick="closePopupFilm(this)"></div>
+
         <!-- Navigation menu -->
         <nav>
             <!-- Logo Réah -->
@@ -239,7 +305,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
                         if (isset($_GET["defi"])) {
 
-                            $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, defis, users WHERE defi_id=video_defi_id AND video_user_id = user_id AND defi_id=" . $_GET["defi"] . " ORDER BY RAND()";
+                            $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM videos, defis, users WHERE defi_id=video_defi_id AND video_user_id = user_id AND defi_id=" . $_GET["defi"] . " ORDER BY RAND()";
                             $stmt = $db->prepare($query);
                             $stmt->execute();
 
@@ -269,7 +335,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                         <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='fb_jsb'>
-                                <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm($(this))'>
+                                <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm(this)'>
                                     <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                                     <p class='see_more'>Voir plus
                                         <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -286,7 +352,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
-                                    <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                                    <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
                                         <div class='comment_icon'></div>
                                         <p class='profile_comment_title'>";
 
@@ -389,7 +455,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
                         if (isset($_GET["defi"])) {
 
-                            $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, defis, users WHERE defi_id=video_defi_id AND video_user_id = user_id AND defi_id=" . $_GET["defi"] . " ORDER BY video_like_number DESC LIMIT 1";
+                            $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM videos, defis, users WHERE defi_id=video_defi_id AND video_user_id = user_id AND defi_id=" . $_GET["defi"] . " ORDER BY video_like_number DESC LIMIT 1";
                             $stmt = $db->prepare($query);
                             $stmt->execute();
 
@@ -419,7 +485,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 <!-- Short film\'s informations -->
                                 <div class='description_container'>
                                     <div class='fb_jsb'>
-                                        <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm($(this))'>
+                                        <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm(this)'>
                                             <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                                             <p class='see_more'>Voir plus
                                                 <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -436,7 +502,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                                 <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                                             </div>
                                             <!-- Comment icon -->
-                                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
                                                 <div class='comment_icon'></div>
                                                 <p class='profile_comment_title'>";
 
@@ -518,7 +584,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
                         if (isset($_GET["defi"])) {
 
-                            $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, defis, users WHERE defi_id=video_defi_id AND video_user_id = user_id AND defi_id=" . $_GET["defi"] . " ORDER BY video_like_number DESC LIMIT 1 OFFSET 1";
+                            $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM videos, defis, users WHERE defi_id=video_defi_id AND video_user_id = user_id AND defi_id=" . $_GET["defi"] . " ORDER BY video_like_number DESC LIMIT 1 OFFSET 1";
                             $stmt = $db->prepare($query);
                             $stmt->execute();
 
@@ -549,7 +615,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='fb_jsb'>
-                                <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm($(this))'>
+                                <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm(this)'>
                                     <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                                     <p class='see_more'>Voir plus
                                         <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -566,7 +632,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
-                                    <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                                    <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
                                         <div class='comment_icon'></div>
                                         <p class='profile_comment_title'>";
 
@@ -649,7 +715,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
                         if (isset($_GET["defi"])) {
 
-                            $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM videos, defis, users WHERE defi_id=video_defi_id AND video_user_id = user_id AND defi_id=" . $_GET["defi"] . " ORDER BY video_like_number DESC LIMIT 1 OFFSET 2";
+                            $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM videos, defis, users WHERE defi_id=video_defi_id AND video_user_id = user_id AND defi_id=" . $_GET["defi"] . " ORDER BY video_like_number DESC LIMIT 1 OFFSET 2";
                             $stmt = $db->prepare($query);
                             $stmt->execute();
 
@@ -680,7 +746,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='fb_jsb'>
-                                <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm($(this))'>
+                                <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm(this)'>
                                     <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                                     <p class='see_more'>Voir plus
                                         <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -697,7 +763,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
-                                    <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
+                                    <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
                                         <div class='comment_icon'></div>
                                         <p class='profile_comment_title'>";
 
@@ -853,6 +919,8 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
             </div>
         </form>
     </div>
+
+
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js">
     </script>

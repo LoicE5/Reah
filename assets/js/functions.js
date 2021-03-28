@@ -277,10 +277,30 @@ function prevArrowClick(e) {
 // Pop up information films
 function popupFilm(e) {
     let title = $(e).attr("title");
-    $(`.film_container[title="${title}"]`).fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+    // $(`.film_container[title="${title}"]`).fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
     $(".dark_filter").addClass("show fixed");
     $(".main_content").addClass("scroll_none")
+
+    let id = e.title;
+    fetch(`assets/php/film_data.php?id=${id}`).then(response=>{
+        response.text().then(text=>{
+            console.log(text);
+            document.body.innerHTML += text;
+        });
+    });
+
+
 }
+
+// function getFilmComment(element){
+//     // let id = element.title;
+//     // fetch(`assets/php/film_data.php?id=${id}`).then(response=>{
+//     //     response.text().then(text=>{
+//     //         console.log(text);
+//     //         document.body.innerHTML += text;
+//     //     });
+//     // });
+// }
 
 function closePopupFilm(element) {
     $(".film_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
@@ -312,30 +332,36 @@ function closePopupDeleteFilm() {
 
 function popupComment(e) {
     let title = $(e).attr("title");
-    $(`.film_container[title="${title}"]`).fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
-    $(".dark_filter").addClass("show fixed");
-    $(".main_content").addClass("scroll_none");
-
-    document.querySelector('.film_container').style.display = 'block';
-
-    $(".comment_space_container").fadeIn(500).addClass("comment_space_container_open").removeClass("comment_space_container_close");
+    
+    $(`.comment_space_container[title="${title}"]`).fadeIn(500).addClass("comment_space_container_open").removeClass("comment_space_container_close");
     $("html, body").animate({
         scrollTop: 800
     }, "1s");
 
-    // Comment arrow animation
-    $(".comment_arrow").addClass("comment_arrow_open");
-}
-
-function getFilmComment(element){
-    let id = element.title;
+    let id = e.title;
     fetch(`assets/php/film_data.php?id=${id}`).then(response=>{
         response.text().then(text=>{
             console.log(text);
             document.body.innerHTML += text;
         });
     });
+
+    // $(`.film_container[title="${title}"]`).fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+    $(".dark_filter").addClass("show fixed");
+    $(".main_content").addClass("scroll_none");
+
+    // document.querySelector('.film_container').style.display = 'block';
+
+
+    // Comment arrow animation
+    $(".comment_arrow").addClass("comment_arrow_open");
+    
+
+ 
+    
 }
+
+
 
 // Comment click animation
 function popupFilmComment() {
@@ -357,6 +383,7 @@ function popupFilmComment() {
         // Comment arrow animation
         $(".comment_arrow").addClass("comment_arrow_open");
     }
+    
 }
 
 
