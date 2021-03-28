@@ -60,7 +60,7 @@
         .result>section {
             margin-left: 15px;
             height: max-content;
-            max-width: 80%;
+            max-width: 79%;
             margin-top: 15px;
             margin-bottom: 15px;
         }
