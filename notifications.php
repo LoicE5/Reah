@@ -27,7 +27,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/fullpage.css" />
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/libraries/jquery/jquery.min.js"></script>
     <script src="assets/js/functions.js" defer></script>
 </head>
 
@@ -80,7 +80,7 @@
                 <p>Les notifications arrivent bientôt !</p>
         </main>
 
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+        <script type="text/javascript" src="assets/js/libraries/jquery/jquery.min.js"></script>
     <script src="assets/js/app2.js"></script>
     <script src="assets/js/functions.js"></script>
 </body>

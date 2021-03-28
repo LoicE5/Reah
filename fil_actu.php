@@ -723,7 +723,7 @@ if (isset($_GET['delete_comment'])) {
     </main>
 
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/libraries/jquery/jquery.min.js"></script>
     <script src="assets/js/fil_actu.js"></script>
     <script src="assets/js/app2.js"></script>
     <script src="assets/js/functions.js"></script>
