@@ -29,7 +29,7 @@
         <a href="#top">Fil d'actualité</a>
         <a href="defis.php">Défis</a>
         <a href="settings.php">Paramètres</a>
-        <a href="connexion.php">Connexion</a>
+        <a href="login.php">Connexion</a>
     </div>
 
 <!-- Social media -->

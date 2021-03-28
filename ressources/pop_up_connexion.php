@@ -13,22 +13,22 @@
 
     <div class="pop_up_container connexion_container">
         <div class="pop_up_header">
-            <h2>Tu n'es pas connecté !</h2>
+            <h2>Tu n'es pas connecté.e !</h2>
             <img src='sources/img/close_icon.svg' class='connexion_close_icon' alt='' onclick="closePopupConnexion()">
         </div>
-        <div class="pop_up_text">Connectes-toi afin de participer à la vie de REAH, tu pourras <nobr> ainsi : </nobr> <br>
+        <div class="pop_up_text">Connecte-toi afin de participer à la vie de REAH, tu pourras <nobr> ainsi : </nobr> <br>
             <ul class="connexion_list">
                 <li>
-                    interagir avec les autres utilisateurs
+                    Intéragir avec les autres utilisateurs
                 </li>
-                <li>aimer, commenter et partager des courts-métrages </li>
+                <li>Aimer, commenter et partager des courts-métrages </li>
                 <li>
-                    proposer des défis
+                    Proposer des défis
                 </li>
                 <li>
-                    avoir et personnaliser ton profil
+                    Avoir et personnaliser ton profil
                 </li>
-                <li>participer aux défis et déposer tes courts-métrages</li>
+                <li>Participer aux défis et déposer tes courts-métrages</li>
             </ul>
             <br> 
             Tente ta chance de te faire connaître ou contribue au succès des autres !

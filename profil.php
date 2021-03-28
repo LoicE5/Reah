@@ -715,7 +715,7 @@ if (isset($_GET['report_user'])) {
                                 <!-- Pop corn image -->
                                 <img class='pop_corn_icon' src='sources/img/pop_corn_icon.svg' alt=''  onclick='addLike(this)'>
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>" . $row['video_like_number'] . "</p>
+                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
 
                             <!-- Comment icon -->
