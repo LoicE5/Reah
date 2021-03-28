@@ -922,7 +922,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
 
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js">
+    <script type="text/javascript" src="assets/js/libraries/jquery/jquery.min.js">
     </script>
     <script src="assets/js/defi_details.js"></script>
     <script src="assets/js/app2.js"></script>
