@@ -2,10 +2,9 @@
 
 include('functions.php');
 
-// ini_set('display_errors',1);
-// ini_set('display_startup_errors',1);
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
 error_reporting(E_ALL);
-// mysql_query("SET NAMES ‘utf8′");
 
 $db_username = 'root'; # MySQL Username
 $db_password = 'root'; # MySQL Password
@@ -19,8 +18,8 @@ $db_name = 'reah_new'; # MySQL Database name
 
 $db = new PDO("mysql:host=$db_host;dbname=$db_name;charset=UTF8",$db_username,$db_password);
 
-$stmt = $db->prepare("SELECT * FROM users");
-$stmt->execute();
+// $stmt = $db->prepare("SELECT * FROM users");
+// $stmt->execute();
 
 
 ?>

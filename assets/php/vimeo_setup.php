@@ -1,5 +1,5 @@
 <?php
-require 'assets/vendor/autoload.php';
+require '../vendor/autoload.php';
 use Vimeo\Vimeo;
 
 $client_id = "credential";

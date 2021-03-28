@@ -5,7 +5,7 @@ include('assets/php/config.php');
 // include("ressources/pop_up_film_information.php");
 include("ressources/pop_up_connexion.php");
 include("ressources/pop_up_share.php");
-include('assets/php/vimeo_setup.php');
+// include('assets/php/vimeo_setup.php');
 ?>
 
 <!DOCTYPE html>
@@ -227,7 +227,7 @@ include('assets/php/vimeo_setup.php');
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm($(this))' >
+                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
                         <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -330,7 +330,7 @@ include('assets/php/vimeo_setup.php');
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm($(this))' >
+                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
                         <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -471,7 +471,7 @@ include('assets/php/vimeo_setup.php');
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm($(this))' >
+                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='getFilmComment(this)' >
                         <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -605,7 +605,7 @@ include('assets/php/vimeo_setup.php');
             <!-- Short film\'s informations -->
             <div class='description_container'>
                 <div class='fb_jsb'>
-                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='popupFilm($(this))'>
+                    <div class='synopsis_title_container' title=" . $row['video_id'] . " onclick='getFilmComment(this)'>
                         <h3 class='synopsis_title'>" . $row['video_title'] . "</h3>
                         <p class='see_more'>Voir plus
                             <img src='sources/img/see_more_arrow.svg' class='see_more_arrow' alt=''>
@@ -704,6 +704,7 @@ include('assets/php/vimeo_setup.php');
     <script src="assets/js/fil_actu.js"></script>
     <script src="assets/js/app2.js"></script>
     <script src="assets/js/functions.js"></script>
+    <script>console.log('bite');</script>
 </body>
 
 </html>

@@ -471,12 +471,18 @@ video:focus {
     left: 0;
     right: 0;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.7);
-    z-index: 102;
+    z-index: 1;
     display: none;
     justify-content: center;
     align-items: center;
+    position: fixed;
+}
+
+.dark_filter_film_data {
+    display: block !important;
+    position: fixed !important;
 }
 
 .delete_dark_filter,
@@ -494,7 +500,7 @@ video:focus {
     position: absolute;
     z-index: 200;
     margin-top: 2vw;
-    display: none;
+    /* display: none; */
     flex-direction: column;
     width: 1000px;
     box-shadow: black 0px 0px 20px;
