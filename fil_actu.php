@@ -198,7 +198,7 @@ include('assets/php/vimeo_setup.php');
                 if (func::checkLoginState($db)) { # If the user is connected
 
                         $user_id = $_COOKIE['userid'];
-                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users`, `subscription` WHERE user_id = video_user_id AND subscription_subscriber_id = $user_id ORDER BY video_id DESC";
+                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %s' ) as time FROM `videos`, `users`, `subscription` WHERE user_id = video_user_id AND subscription_subscriber_id = $user_id AND subscription_artist_id = user_id ORDER BY video_id DESC";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
 

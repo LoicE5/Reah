@@ -11,7 +11,7 @@ include("ressources/pop_up_share.php");
 if (!func::checkLoginState($db)) { # If the user isn't connected
     redirect('login.php');
 } else {
-    if (isset($_GET['id']) && !isset($_GET['id']) == $_COOKIE['userid']) {
+    if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) {
         $query = "SELECT * FROM users WHERE user_id = " . $_GET['id'] . ";";
         $stmt = $db->prepare($query);
         $stmt->execute();
@@ -294,17 +294,17 @@ if (isset($_GET["delete_subscriber"])) {
                     <?php
                     if (func::checkLoginState($db)) { # If the user is connected
 
-                                            if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
-                            $query5 = "SELECT * FROM users, subscription WHERE user_id = " . $_GET['id'] . " AND subscription_subscriber_id=" . $_COOKIE['userid'] . ";";
+                            if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
+                            $query5 = "SELECT user_username,COUNT(subscription_id) as nbr FROM users, subscription WHERE user_id = " . $_GET['id'] . " AND subscription_subscriber_id=" . $_COOKIE['userid'] ." AND subscription_artist_id = '{$_GET['id']}';";
                             $stmt5 = $db->prepare($query5);
                             $stmt5->execute();
 
                             $rows5 = $stmt5->fetchAll(PDO::FETCH_ASSOC);
 
                             foreach ($rows5 as $row5) {
+                                
                             }
-
-                            if ($row5['subscription_artist_id'] == $_GET['id']) {
+                            if ($row5['nbr'] >= 1) {
                                 echo '
                             <div class="btn subscribe_btn subscribe_btn_click" onclick="subscribe()">Se désabonner</div>';
                             } else {
@@ -609,12 +609,13 @@ if (isset($_GET["delete_subscriber"])) {
 
 
                         <!-- Name + pp -->
-                        <div class='user_container'>
-                        <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
-                        <p class='pseudo'>{$row["user_username"]}</p>
-                            <div class='flou'></div>
-                        </div>
+                        <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
+                <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+
+                    <p class='pseudo'>" . $row['user_username'] . "</p>
+                    <div class='flou'></div>
+                </a>
                         <!-- Time -->
                         <p class='time'>{$row["video_duration"]}</p>
                     </div>
@@ -689,11 +690,13 @@ if (isset($_GET["delete_subscriber"])) {
     
     
                             <!-- Name + pp -->
-                            <div class='user_container'>
+                            <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
+
                             <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
-                            <p class='pseudo'>{$row["user_username"]}</p>
+            
+                                <p class='pseudo'>" . $row['user_username'] . "</p>
                                 <div class='flou'></div>
-                            </div>
+                            </a>
     
                             <!-- Time -->
                             <p class='time'>{$row["video_duration"]}</p>
@@ -919,10 +922,11 @@ if (isset($_GET["delete_subscriber"])) {
                                         </a>
                                 </div>';
 
-                if ($_GET['id'] == $_COOKIE['userid']) { #if the profile is an other user's profile
+                if ($_GET['id'] == $_COOKIE['userid']) { #if the profile is the user's profile
 
                     echo'
-                                <div class="btn subscriber_user_btn" onclick="deleteSubscriber()">Supprimer</div>';
+                    <a href="profil.php?id=' . $_GET['id'] . '&delete_subscriber=' . $row['user_id'] . '" class="btn subscriber_user_btn">Supprimer</a>';
+
                             }
 
                         echo'
@@ -945,7 +949,8 @@ if (isset($_GET["delete_subscriber"])) {
                                                 <div class="subscription_name">' . $row['user_name'] . '</div>
                                             </a>
                                 </div>
-                                <div class="btn subscriber_user_btn" onclick="deleteSubscriber()">Supprimer</div>
+                    <a href="profil.php?delete_subscriber=' . $row['user_id'] . '" class="btn subscriber_user_btn">Supprimer</a>
+
                                     </div>';
                     }
                 }
@@ -982,8 +987,9 @@ if (isset($_GET["delete_subscriber"])) {
 
                                 if ($_GET['id'] == $_COOKIE['userid']) { #if the profile is an other user's profile
 
-                                    echo'
-                                    <div class="btn subscriber_user_btn subscribe_btn_click" onclick="subscribe()">Abonné(e)</div>';
+                                    echo '<a href="profil.php?id=' . $_GET['id'] . '&delete_subscription='.$row['user_id'].'&delete_subscriber=' . $_COOKIE['userid'] . '" class="btn subscriber_user_btn subscribe_btn_click">Abonné(e)</a>';
+                         
+        
                                             }
                 
                                         echo'
@@ -1008,7 +1014,7 @@ if (isset($_GET["delete_subscriber"])) {
                                             <div class="subscription_name">' . $row['user_name'] . '</div>
                                         </a>
                                 </div>
-                                    <a class="btn subscriber_user_btn subscribe_btn_click" onclick="subscribe()">Abonné(e)</a>
+                                <a href="profil.php?delete_subscription='.$row['user_id'].'&delete_subscriber=' . $_COOKIE['userid'] . '" class="btn subscriber_user_btn subscribe_btn_click">Abonné(e)</a>
                                 </div>';
                     }
                 }
@@ -1026,7 +1032,7 @@ if (isset($_GET["delete_subscriber"])) {
             <h2>Se désabonner</h2>
             <img src='sources/img/close_icon.svg' class='unfollow_close_icon' alt=''>
         </div>
-        <p class="pop_up_text">Se désabonner de <?php echo $row['user_username']; ?> ?</p>
+        <p class="pop_up_text">Se désabonner de <?php echo $row5['user_username']; ?> ?</p>
         <!-- <div class="btn pop_up_btn unfollow_btn">Se désabonner</div> -->
         <?php
 
