@@ -4,7 +4,7 @@
 include('assets/php/config.php');
 // include("ressources/pop_up_film_information.php");
 include("ressources/pop_up_connexion.php");
-include("ressources/pop_up_share.php");
+// include("ressources/pop_up_share.php");
 include('assets/php/comments.php');
 
 
@@ -78,24 +78,62 @@ if (!func::checkLoginState($db)) { # If the user isn't connected
 
 
 
-if (isset($_GET["modify_btn"]) && isset($_GET["username"])) {
+if (isset($_POST["modify_btn"])) {
 
     $id = $_COOKIE['userid'];
-    $username = addslashes($_GET['username']);
-    $profile_picture = $_GET['profile_picture'];
-    $banner = $_GET['banner'];
-    $name = addslashes($_GET['name']);
-    $website = $_GET['website'];
-    $bio = addslashes($_GET['bio']);
+    $username = addslashes($_POST['username']);
+    // $profile_picture = $_POST['profile_picture'];
+    // $banner = $_POST['banner'];
+    $name = addslashes($_POST['name']);
+    $website = $_POST['website'];
+    $bio = addslashes($_POST['bio']);
 
-    if (isset($_GET["profile_picture"]) && isset($_GET["banner"])) {
-        $sql = "UPDATE users SET user_username='$username', user_profile_picture='$profile_picture', user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
-    } else if (isset($_GET["profile_picture"])) {
-        $sql = "UPDATE users SET user_username='$username', user_profile_picture='$profile_picture', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
-    } else if (isset($_GET["banner"])) {
-        $sql = "UPDATE users SET user_username='$username', user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+    $content_dir_picture = 'database/profile_pictures/';
+    $tmp_file_picture = $_FILES['profile_picture']['tmp_name'];
+    $name_file_picture = basename($_FILES['profile_picture']['name']);
+
+    $content_dir_banner = 'database/banners/';
+    $tmp_file_banner = $_FILES['banner']['tmp_name'];
+    $name_file_banner = basename($_FILES['banner']['name']);
+
+    if ($_FILES["profile_picture"]['error'] == 0 && $_FILES["banner"]['error'] == 0 ) {
+
+        if(!is_uploaded_file($tmp_file_picture) || !is_uploaded_file($tmp_file_banner)) {
+            echo "Le fichier est introuvable.";
+        }
+    
+        if(!move_uploaded_file($tmp_file_picture, $content_dir_picture . $name_file_picture) || !move_uploaded_file($tmp_file_banner, $content_dir_banner . $name_file_banner)){
+            echo "Impossible de copier le fichier dans notre dossier.";
+        }
+
+        $sql = "UPDATE users SET user_profile_picture='$name_file_picture', user_banner='$name_file_banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+
+    } else if ($_FILES["profile_picture"]['error'] == 0 ) {
+    
+
+        if(!is_uploaded_file($tmp_file_picture)) {
+            echo "Le fichier est introuvable.";
+        }
+    
+        if(!move_uploaded_file($tmp_file_picture, $content_dir_picture . $name_file_picture)){
+            echo "Impossible de copier le fichier dans notre dossier.";
+        }
+
+        $sql = "UPDATE users SET user_profile_picture='$name_file_picture', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+
+    } else if ($_FILES["banner"]['error'] == 0 ) {
+
+        if(!is_uploaded_file($tmp_file_banner)) {
+            echo "Le fichier est introuvable.";
+        }
+    
+        if(!move_uploaded_file($tmp_file_banner, $content_dir_banner . $name_file_banner)){
+            echo "Impossible de copier le fichier dans notre dossier.";
+        }
+
+        $sql = "UPDATE users SET user_banner='$name_file_banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
     } else {
-        $sql = "UPDATE users SET user_username='$username', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+        $sql = "UPDATE users SET user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
     }
 
     $stmt = $db->prepare($sql);
@@ -103,6 +141,7 @@ if (isset($_GET["modify_btn"]) && isset($_GET["username"])) {
     $stmt->execute();
 
     header('Location: profil.php?success=true');
+    // header("Refresh: 1;url=profil.php?success=true");
 }
 
 
@@ -141,12 +180,12 @@ if (isset($_GET["delete_subscription"])) {
     $stmt->execute();
 
 
-    // header('Refresh:0; url=profil.php?id=1');
+    // header('Refresh:0; url=profil.php?id=11');
 }
 
 // Supprimer un utilisateur de ses abonnés
 
-if (isset($_GET["delete_subscriber"])) {
+if (isset($_GET["delete_subscriber"]) && !isset($_GET["delete_subscription"])) {
     $subscriber_id = $_GET['delete_subscriber'];
     $artist_id = $_COOKIE['userid'];
     $sql = "DELETE FROM subscription WHERE subscription_subscriber_id='$subscriber_id' AND subscription_artist_id='$artist_id'";
@@ -197,7 +236,8 @@ if (isset($_GET['report_user'])) {
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
     <link rel="stylesheet" href="assets/css/profil.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/fullpage.css" />
     <script type="text/javascript" src="assets/js/libraries/jquery/jquery.min.js"></script>
     <script src="assets/js/functions.js" defer></script>
@@ -215,8 +255,8 @@ if (isset($_GET['report_user'])) {
     ?>
     <main class="main_content">
 
-      <!-- Signalement -->
-  <?php
+        <!-- Signalement -->
+        <?php
     if (isset($message_true)) {
         echo '
         <p class="message_true_container">
@@ -225,7 +265,10 @@ if (isset($_GET['report_user'])) {
     }
     ?>
 
-<div class='dark_filter' onclick="closePopupFilm(this)"></div>
+<div class="share_dark_filter" onclick="closePopupShare()"></div>
+        <div class='dark_filter' onclick="closePopupFilm(this)"></div>
+        <div class='subscription_dark_filter' onclick="closePopupSubscription()"></div>
+        <div class="like_dark_filter" onclick="closePopupUserLike()"></div>
 
 
         <!-- Navigation menu -->
@@ -236,8 +279,9 @@ if (isset($_GET['report_user'])) {
 
             <!-- Search bar -->
             <form action="search.php" method="GET" class="form_search_bar">
-                    <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs..." oninput="searchEngine(this.value)">
-                </form>
+                <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs..."
+                    oninput="searchEngine(this.value)">
+            </form>
 
 
             <?php
@@ -256,8 +300,8 @@ if (isset($_GET['report_user'])) {
                     <!-- Defi icon -->
                     <a href='defis.php' class='defi_icon'></a>
                     <!-- Profile photo -->
-                    <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
-                    </div>
+                        <img src='database/profile_pictures/".$row['user_profile_picture']."' class='menu_pp' onclick='toggleBurgerMenu()'>
+                        </div>
                     </nav>";
             } else {
                 echo "<div class='menu_profile'>
@@ -299,7 +343,8 @@ if (isset($_GET['report_user'])) {
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
             }
 
-            echo "<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_banner']) . ") no-repeat center/cover' alt=''  class='banner'></div>";
+            echo "<div style='background: url(database/banners/".$row['user_banner'] . ") no-repeat center/cover' alt=''  class='banner'></div>";
+
             ?>
             <div class="banner_flou_right"></div>
         </div>
@@ -310,7 +355,7 @@ if (isset($_GET['report_user'])) {
                 <!-- Subscription section -->
                 <div class="fb_c ai-c">
                     <div class="fb_jsb profile_subscription_container">
-                        <div class="profile_subscription_content" number="1">
+                        <div class="profile_subscription_content" number="1" onclick="popupSubscription(this)">
                             <p class="fb profile_subscription_number">
 
 
@@ -342,7 +387,7 @@ if (isset($_GET['report_user'])) {
                             <p class="profile_subscription_title">Abonnés</p>
                         </div>
 
-                        <div class="profile_subscription_content" number="2">
+                        <div class="profile_subscription_content" number="2" onclick="popupSubscription(this)">
                             <p class="fb profile_subscription_number">
 
 
@@ -408,7 +453,8 @@ if (isset($_GET['report_user'])) {
                 <?php
                 // Si on visite le profil d'un utilisateur
 
-                echo "<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover' alt=''  class='profile_photo'></div>";
+                echo "<img src='database/profile_pictures/".$row['user_profile_picture'] . "' alt=''  class='profile_photo'>";
+
                 ?>
             </div>
 
@@ -422,7 +468,7 @@ if (isset($_GET['report_user'])) {
                     echo '<p class="profile_name">' . $row['user_name'] . '</p>';
                     ?>
                     <?php
-                    echo '<p class="profile_bio">' . $row['user_bio'] . '</p>';
+                    echo '<p class="profile_bio">' . nl2br($row['user_bio']) . '</p>';
                     ?>
                     <?php
                     echo '<a target="_blank" href="https://' . $row['user_website'] . '" class="profile_website">' . $row['user_website'] . '</a>';
@@ -470,7 +516,8 @@ if (isset($_GET['report_user'])) {
 
         <div class="fb_jc realisation_number_container">
             <div class="fb_jsb realisation_number_content">
-                <p class="realisation_number_content_title realisation_number_content_title1" number="2"><span class="realisation_number_content_number ">
+                <p class="realisation_number_content_title realisation_number_content_title1" number="2"><span
+                        class="realisation_number_content_number ">
 
                         <!-- Realisation number -->
                         <?php
@@ -489,7 +536,8 @@ if (isset($_GET['report_user'])) {
                         }
                         ?>
                     </span> réalisations </p>
-                <p class="realisation_number_content_title realisation_number_content_title2" number="1"><span class="realisation_number_content_number">
+                <p class="realisation_number_content_title realisation_number_content_title2" number="1"><span
+                        class="realisation_number_content_number">
 
                         <!-- Identified number -->
 
@@ -524,7 +572,7 @@ if (isset($_GET['report_user'])) {
 
                 <?php
 
-                                    if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
+                    if (isset($_GET['id']) && $_GET['id'] != $_COOKIE['userid']) { #if the profile is an other user's profile
                     $requete = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM videos, users WHERE video_user_id = user_id AND user_id = {$_GET['id']} ORDER BY video_id DESC";
                     $stmt = $db->query($requete);
                     $resultat = $stmt->fetchall(PDO::FETCH_ASSOC);
@@ -543,11 +591,32 @@ if (isset($_GET['report_user'])) {
                             </div>
         
                             <!-- Short film\'s informations -->
-                            <div class='description_container'>
+                            <div class='description_container'>";
+
+                            if (func::checkLoginState($db)) { # If the user is connected
+                                echo "
+                            
                                 <div class='reaction_container'>
-                                <div class='fb_jsb like_container'>
-                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
-                                <p class='film_pop_corn_number pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                <div class='fb_jsb like_container'>";
+
+                                // <!-- Pop corn image -->
+
+                                $query10 = "SELECT COUNT(*) as nbr FROM liked WHERE liked_user_id={$_COOKIE['userid']} AND liked_video_id={$row['video_id']}";
+                                $stmt10 = $db->prepare($query10);
+                                $stmt10->execute();
+
+                                $row10 = $stmt10->fetch(PDO::FETCH_ASSOC);
+
+                                if ($row10['nbr'] >= 1) {
+                                    echo"
+                                    <img src='sources/img/pop_corn.png' class='pop_corn_icon' onclick='addLike(this)'>";
+                                } else {
+                                    echo"
+                                    <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>";
+                                }
+
+                                echo"
+                                <p class='film_pop_corn_number pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
         
                                     <!-- Comment icon -->
@@ -568,12 +637,46 @@ if (isset($_GET['report_user'])) {
                                     </div>
         
                                     <!-- Share icon -->
-                                    <div class='fb_jsb share_container' onclick='popupShare(this)'>
+                                    <div class='fb_jsb share_container' title='".$row['video_id']."' onclick='popupShare(this)'>
                                         <div class='share_icon'></div>
                                         <p class='share_title'>Partager</p>
                                     </div>
-                                </div>
+                                </div>";
+                            }else {
+                                echo "
+                            
+                                <div class='reaction_container'>
+                                <div class='fb_jsb like_container'>
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+
+                                <p class='film_pop_corn_number pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
+                            </div>
         
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)'>
+                                        <div class='comment_icon'></div>
+                                        <p class='profile_comment_title'>";
+
+                        // Comment's number
+                        $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
+                        $stmt2 = $db->prepare($query2);
+                        $stmt2->execute();
+
+                        $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                        echo "
+                                                <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
+
+                        echo "
+                                    </div>
+        
+                                    <!-- Share icon -->
+                                    <div class='fb_jsb share_container' onclick='popupConnexion()'>
+                                        <div class='share_icon'></div>
+                                        <p class='share_title'>Partager</p>
+                                    </div>
+                                </div>";
+                            }
+                            echo"
                                 <div class='fb_c_jsb'>
                                     <div class='synopsis_title_container' title=" . $row['video_id'] ." onclick='popupFilm(this)' >
                                         <h3 class='synopsis_title'>{$row["video_title"]}</h3>
@@ -582,7 +685,7 @@ if (isset($_GET['report_user'])) {
                                         </p>
                                     </div>
                             
-                                <p>{$row["video_synopsis"]}</p>
+                                <p>".nl2br($row["video_synopsis"])."</p>
         
         
                                 </div>
@@ -612,15 +715,68 @@ if (isset($_GET['report_user'])) {
                             </div>
         
                             <!-- Short film\'s informations -->
-                            <div class='description_container'>
+                            <div class='description_container'>";
+
+                            if (func::checkLoginState($db)) { # If the user is connected
+                                echo "
+                            
                                 <div class='reaction_container'>
-                                    <div class='fb_jsb'>
+                                <div class='fb_jsb like_container'>";
+
+                                // <!-- Pop corn image -->
+
+                                $query10 = "SELECT COUNT(*) as nbr FROM liked WHERE liked_user_id={$_COOKIE['userid']} AND liked_video_id={$row['video_id']}";
+                                $stmt10 = $db->prepare($query10);
+                                $stmt10->execute();
+
+                                $row10 = $stmt10->fetch(PDO::FETCH_ASSOC);
+
+                                if ($row10['nbr'] >= 1) {
+                                    echo"
+                                    <img src='sources/img/pop_corn.png' class='pop_corn_icon' onclick='addLike(this)'>";
+                                } else {
+                                    echo"
+                                    <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>";
+                                }
+
+                                echo"
+                                <p class='film_pop_corn_number pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
+                            </div>
         
-                                        <!-- Pop corn image -->
-                                        <img class='pop_corn_icon' src='sources/img/pop_corn.png' alt=''>
-                                        <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                    <!-- Comment icon -->
+                                    <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)'>
+                                        <div class='comment_icon'></div>
+                                        <p class='profile_comment_title'>";
+
+
+                        // Comment's number
+                        $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
+                        $stmt2 = $db->prepare($query2);
+                        $stmt2->execute();
+
+                        $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                        echo "
+                                                <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
+
+                        echo "
                                     </div>
+        
+                                    <!-- Share icon -->
+                                    <div class='fb_jsb share_container' title='".$row['video_id']."' onclick='popupShare(this)'>
+                                        <div class='share_icon'></div>
+                                        <p class='share_title'>Partager</p>
+                                    </div>
+                                </div>";
+        
+                            }else {
+                                echo "
+                            
+                                <div class='reaction_container'>
+                                <div class='fb_jsb like_container'>
+                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+
+                                <p class='film_pop_corn_number pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
+                            </div>
         
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)'>
@@ -640,12 +796,13 @@ if (isset($_GET['report_user'])) {
                                     </div>
         
                                     <!-- Share icon -->
-                                    <div class='fb_jsb share_container' onclick='popupShare(this)'>
+                                    <div class='fb_jsb share_container' onclick='popupConnexion()'>
                                         <div class='share_icon'></div>
                                         <p class='share_title'>Partager</p>
                                     </div>
-                                </div>
-        
+                                </div>";
+                            }
+                            echo"
                                 <div class='fb_c_jsb'>
                                     <div class='synopsis_title_container' title=" . $row['video_id'] ." onclick='popupFilm(this)' >
                                         <h3 class='synopsis_title'>{$row["video_title"]}</h3>
@@ -654,7 +811,7 @@ if (isset($_GET['report_user'])) {
                                         </p>
                                     </div>
                             
-                                <p>{$row["video_synopsis"]}</p>
+                                <p>".nl2br($row["video_synopsis"])."</p>
         
         
                                 </div>
@@ -698,7 +855,7 @@ if (isset($_GET['report_user'])) {
                         <!-- Name + pp -->
                         <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
-                <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                <img src='database/profile_pictures/".$row['user_profile_picture'] . "' alt=''  class='pp_profile'>
 
                     <p class='pseudo'>" . $row['user_username'] . "</p>
                     <div class='flou'></div>
@@ -708,39 +865,94 @@ if (isset($_GET['report_user'])) {
                     </div>
 
                     <!-- Short film\'s informations -->
-                    <div class='description_container'>
-                        <div class='reaction_container'>
-                            <div class='fb_jsb like_container'>
+                    <div class='description_container'>";
 
-                                <!-- Pop corn image -->
-                                <img class='pop_corn_icon' src='sources/img/pop_corn_icon.svg' alt=''  onclick='addLike(this)'>
-                                <!-- Like\'s number -->
-                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
-                            </div>
+                    if (func::checkLoginState($db)) { # If the user is connected
+                        echo "
+                    
+                        <div class='reaction_container'>
+                        <div class='fb_jsb like_container'>";
+
+                        // <!-- Pop corn image -->
+
+                        $query10 = "SELECT COUNT(*) as nbr FROM liked WHERE liked_user_id={$_COOKIE['userid']} AND liked_video_id={$row['video_id']}";
+                        $stmt10 = $db->prepare($query10);
+                        $stmt10->execute();
+
+                        $row10 = $stmt10->fetch(PDO::FETCH_ASSOC);
+
+                        if ($row10['nbr'] >= 1) {
+                            echo"
+                            <img src='sources/img/pop_corn.png' class='pop_corn_icon' onclick='addLike(this)'>";
+                        } else {
+                            echo"
+                            <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>";
+                        }
+
+                        echo"
+                        <p class='film_pop_corn_number pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
+                    </div>
 
                             <!-- Comment icon -->
                             <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)'>
                                 <div class='comment_icon'></div>
                                 <p class='profile_comment_title'>";
 
-                        // Comment's number
-                        $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
-                        $stmt2 = $db->prepare($query2);
-                        $stmt2->execute();
 
-                        $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
-                        echo "
+                // Comment's number
+                $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
+                $stmt2 = $db->prepare($query2);
+                $stmt2->execute();
+
+                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                echo "
                                         <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
 
-                        echo "
+                echo "
                             </div>
 
                             <!-- Share icon -->
-                            <div class='fb_jsb share_container' onclick='popupShare(this)'>
+                            <div class='fb_jsb share_container' title='".$row['video_id']."' onclick='popupShare(this)'>
                                 <div class='share_icon'></div>
                                 <p class='share_title'>Partager</p>
                             </div>
-                        </div>
+                        </div>";
+
+                    }else {
+                        echo "
+                    
+                        <div class='reaction_container'>
+                        <div class='fb_jsb like_container'>
+                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
+
+                        <p class='film_pop_corn_number pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
+                    </div>
+
+                            <!-- Comment icon -->
+                            <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)'>
+                                <div class='comment_icon'></div>
+                                <p class='profile_comment_title'>";
+
+                // Comment's number
+                $query2 = "SELECT COUNT(*) as number FROM comments, videos WHERE comment_video_id=video_id AND video_id={$row['video_id']}";
+                $stmt2 = $db->prepare($query2);
+                $stmt2->execute();
+
+                $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+                echo "
+                                        <p class='profile_comment_title'><nobr>" . $row2['number'] . " commentaires</nobr></p>";
+
+                echo "
+                            </div>
+
+                            <!-- Share icon -->
+                            <div class='fb_jsb share_container' onclick='popupConnexion()'>
+                                <div class='share_icon'></div>
+                                <p class='share_title'>Partager</p>
+                            </div>
+                        </div>";
+                    }
+                    echo"
 
                         <div class='fb_c_jsb'>
                             <div class='synopsis_title_container' title=" . $row['video_id'] ." onclick='popupFilm(this)' >
@@ -750,7 +962,7 @@ if (isset($_GET['report_user'])) {
                                 </p>
                             </div>
                     
-                        <p>{$row["video_synopsis"]}</p>
+                        <p>".nl2br($row["video_synopsis"])."</p>
 
 
                         </div>
@@ -779,7 +991,7 @@ if (isset($_GET['report_user'])) {
                             <!-- Name + pp -->
                             <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
-                            <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                            <img src='database/profile_pictures/".$row['user_profile_picture'] . "' alt=''  class='pp_profile'>
             
                                 <p class='pseudo'>" . $row['user_username'] . "</p>
                                 <div class='flou'></div>
@@ -792,12 +1004,27 @@ if (isset($_GET['report_user'])) {
                         <!-- Short film\'s informations -->
                         <div class='description_container'>
                             <div class='reaction_container'>
-                                <div class='fb_jsb like_container'>
-    
-                                    <!-- Pop corn image -->
-                                    <img class='pop_corn_icon' src='sources/img/pop_corn_icon.svg' alt='' onclick='addLike(this)'>
+                                <div class='fb_jsb like_container'>";
+
+                                // <!-- Pop corn image -->
+        
+                                $query10 = "SELECT COUNT(*) as nbr FROM liked WHERE liked_user_id={$_COOKIE['userid']} AND liked_video_id={$row['video_id']}";
+                                $stmt10 = $db->prepare($query10);
+                                $stmt10->execute();
+        
+                                $row10 = $stmt10->fetch(PDO::FETCH_ASSOC);
+        
+                                if ($row10['nbr'] >= 1) {
+                                    echo"
+                                    <img src='sources/img/pop_corn.png' class='pop_corn_icon' onclick='addLike(this)'>";
+                                } else {
+                                    echo"
+                                    <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>";
+                                }
+        
+                                echo"
                                     <!-- Like\'s number -->
-                                    <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                    <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                                 </div>
     
                                 <!-- Comment icon -->
@@ -818,7 +1045,7 @@ if (isset($_GET['report_user'])) {
                                 </div>
     
                                 <!-- Share icon -->
-                                <div class='fb_jsb share_container' onclick='popupShare(this)'>
+                                <div class='fb_jsb share_container' title='".$row['video_id']."' onclick='popupShare(this)'>
                                     <div class='share_icon'></div>
                                     <p class='share_title'>Partager</p>
                                 </div>
@@ -832,7 +1059,7 @@ if (isset($_GET['report_user'])) {
                                     </p>
                                 </div>
                         
-                            <p>{$row["video_synopsis"]}</p>
+                            <p>".nl2br($row["video_synopsis"])."</p>
     
     
                             </div>
@@ -872,19 +1099,19 @@ if (!func::checkLoginState($db)) { # If the user isn't connected
 
     <!-- Modify btn -->
     <div class="pop_up_container modify_container">
-        <form action="profil.php" method="get">
+        <form action="" method="post" enctype='multipart/form-data'>
             <!-- Close icon -->
             <img src='sources/img/close_icon.svg' class='modify_close_icon' alt=''>
 
             <!-- Banner -->
             <?php
-            echo "<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_banner']) . ") no-repeat center/100%' alt=''  class='modify_banner'></div>";
+            echo "<div style='background: url(database/banners/".$row['user_banner'] . ") no-repeat center/100%' alt=''  class='modify_banner'></div>";
             ?>
 
             <div class="modify_profile_photo_container">
                 <!-- Profile photo -->
                 <?php
-                echo "<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover' alt=''  class='modify_profile_photo'></div>";
+                echo "<img src='database/profile_pictures/".$row['user_profile_picture'] . "' alt=''  class='modify_profile_photo'>";
                 ?>
 
                 <div class="modify_file_container">
@@ -904,27 +1131,24 @@ if (!func::checkLoginState($db)) { # If the user isn't connected
             <!-- Inputs username, name, bio.. -->
             <div class="modify_input_container">
                 <div class="input_container">
-                    <label for="username">
-                        <span>Nom d'utilisateur</span>
-                        <input type="text" class="input_connexion" id="username" name="username" value="<?php echo $row['user_username']; ?>" required>
-                    </label>
-                </div>
-                <div class="input_container">
                     <label for="name">
                         <span>Nom</span>
-                        <input type="text" class="input_connexion" id="name" name="name" value="<?php echo $row['user_name']; ?>">
+                        <input type="text" class="input_connexion" id="name" name="name"
+                            value="<?php echo $row['user_name']; ?>">
                     </label>
                 </div>
                 <div class="input_container">
                     <label for="website">
                         <span>Site web</span>
-                        <input type="text" class="input_connexion" id="website" name="website" value="<?php echo $row['user_website']; ?>">
+                        <input type="text" class="input_connexion" id="website" name="website"
+                            value="<?php echo $row['user_website']; ?>">
                     </label>
                 </div>
                 <div class="input_container">
                     <label for="bio">
                         <span>Bio</span>
-                        <textarea class="input_connexion input_bio" id="bio" name="bio" cols="30" rows="6"><?php echo $row['user_bio']; ?></textarea>
+                        <textarea class="input_connexion input_bio" id="bio" name="bio" cols="30"
+                            rows="6"><?php echo $row['user_bio']; ?></textarea>
                     </label>
                 </div>
 
@@ -939,12 +1163,13 @@ if (!func::checkLoginState($db)) { # If the user isn't connected
             <!-- Username -->
             <h2><?php echo $row['user_username']; ?></h2>
             <!-- Close icon -->
-            <img src='sources/img/close_icon.svg' class='close_icon' alt=''>
+            <img src='sources/img/close_icon.svg' class='close_icon' alt='' onclick="closePopupSubscription()">
         </div>
 
         <!-- Title -->
-        <div class="subsciption_title_container">
-            <div class="subscription_title1 subscriber_title" number="2"><span class="realisation_number_content_number ">
+        <div class="subscription_title_container">
+            <div class="subscription_title1 subscriber_title" number="2"><span
+                    class="realisation_number_content_number ">
 
                     <!-- Nombre d'abonnés -->
                     <?php
@@ -972,7 +1197,8 @@ if (!func::checkLoginState($db)) { # If the user isn't connected
 
 
                 </span> Abonnés</div>
-            <div class="subscription_title2 subscription_title" number="1"><span class="realisation_number_content_number ">
+            <div class="subscription_title2 subscription_title" number="1"><span
+                    class="realisation_number_content_number ">
 
                     <!-- Nbr d'abonnements -->
 
@@ -1023,7 +1249,7 @@ if (!func::checkLoginState($db)) { # If the user isn't connected
                         echo '
                                 <div class="subscription_user">
                                 <div class="fb ai-c">
-                                <a href="profil.php?id=' . $row['user_id'] . '" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) . ') no-repeat center/cover"></a>
+                                <a href="profil.php?id=' . $row['user_id'] . '"><img src="database/profile_pictures/'.$row["user_profile_picture"] . '" alt="" class="subscription_pp"></a>
                                         <a href="profil.php?id=' . $row['user_id'] . '" class="subscription_username_container">
                                             <div class="subscription_username">' . $row['user_username'] . '</div>
                                             <div class="subscription_name">' . $row['user_name'] . '</div>
@@ -1051,7 +1277,7 @@ if (!func::checkLoginState($db)) { # If the user isn't connected
                         echo '
                                     <div class="subscription_user">
                                 <div class="fb ai-c">
-                                <a href="profil.php?id=' . $row['user_id'] . '" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) . ') no-repeat center/cover"></a>
+                                <a href="profil.php?id=' . $row['user_id'] . '"><img src="database/profile_pictures/'.$row["user_profile_picture"] . '" alt="" class="subscription_pp"></a>
                                             <a href="profil.php?id=' . $row['user_id'] . '" class="subscription_username_container">
                                                 <div class="subscription_username">' . $row['user_username'] . '</div>
                                                 <div class="subscription_name">' . $row['user_name'] . '</div>
@@ -1086,7 +1312,7 @@ if (!func::checkLoginState($db)) { # If the user isn't connected
                         echo '
                                 <div class="subscription_user">
                                 <div class="fb ai-c">
-                                <a href="profil.php?id=' . $row['user_id'] . '" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) . ') no-repeat center/cover"></a>
+                                <a href="profil.php?id=' . $row['user_id'] . '"><img src="database/profile_pictures/'.$row["user_profile_picture"] . '" alt="" class="subscription_pp"></a>
                                         <a href="profil.php?id=' . $row['user_id'] . '" class="subscription_username_container">
                                             <div class="subscription_username">' . $row['user_username'] . '</div>
                                             <div class="subscription_name">' . $row['user_name'] . '</div>
@@ -1116,7 +1342,7 @@ if (!func::checkLoginState($db)) { # If the user isn't connected
                         echo '
                                 <div class="subscription_user">
                                 <div class="fb ai-c">
-                                <a href="profil.php?id=' . $row['user_id'] . '" class="subscription_pp" style="background: url(data:image/jpg;base64,' . base64_encode($row['user_profile_picture']) . ') no-repeat center/cover"></a>
+                                <a href="profil.php?id=' . $row['user_id'] . '"><img src="database/profile_pictures/'.$row["user_profile_picture"] . '" alt="" class="subscription_pp"></a>
                                         <a href="profil.php?id=' . $row['user_id'] . '" class="subscription_username_container">
                                             <div class="subscription_username">' . $row['user_username'] . '</div>
                                             <div class="subscription_name">' . $row['user_name'] . '</div>

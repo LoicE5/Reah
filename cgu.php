@@ -1,6 +1,6 @@
 <?php
     include('assets/php/config.php');
-    require("ressources/pop_up_film_information.php");
+    // require("ressources/pop_up_film_information.php");
 ?>
 
 <!DOCTYPE html>
@@ -50,8 +50,8 @@
                     <!-- Defi icon -->
                     <a href='defis.php' class='defi_icon'></a>
                     <!-- Profile photo -->
-                    <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
-                    </div>
+                        <img src='database/profile_pictures/".$row['user_profile_picture']."' class='menu_pp' onclick='toggleBurgerMenu()'>
+                        </div>
                     </nav>";
 
                 } else {

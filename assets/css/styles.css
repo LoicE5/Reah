@@ -438,6 +438,7 @@ nav,.nav_footer{
 }
 
 
+
 .menu_container,
 .category_list_container {
     /* height: 260px; */
@@ -644,8 +645,8 @@ nav,.nav_footer{
 
 .share_film_container{
     width: 600px;
-    display: none;
-    z-index: 400;
+    /* display: none; */
+    z-index: 300;
 }
 .logo_container{
     display: flex;
@@ -849,15 +850,43 @@ nav,.nav_footer{
     min-height: 10px;
     max-height: 400px;
     overflow-y: scroll;
-    background: darkslategrey;
+    background: var(--first_color);
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     z-index: 999;
+    border-right: 2px solid #141414;
+    border-left: 2px solid #141414;
+    border-bottom: 2px solid #141414;
 }
 
 .search_list_result {
+    display: flex;
+    color: var(--text);
+    text-decoration: none;
+    align-items: center;
     cursor: pointer;
-    margin-left: 10px;
-    margin-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    
 }
 
+.search_list_result:hover{
+    background-color: #d6003577;
+    text-decoration: none;
+}
+
+#search_list::-webkit-scrollbar {
+    background: transparent;
+    width: 4px;
+    }
+#search_list::-webkit-scrollbar-thumb {
+    background: #d60036;
+    width: 4px;
+    }
+    #search_list::-webkit-scrollbar-thumb:hover {
+        background: #d6003573;
+        width: 4px;
+        }
+#search_list::-webkit-scrollbar-track {
+    width: 4px;
+    }

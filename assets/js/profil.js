@@ -1,5 +1,6 @@
 // Subcribe button
 function subscribe(e) {
+    // e.preventDefault();
     if ($(e).text() == "S'abonner") {
         $(e).text("Abonné(e)")
         $(e).addClass("subscribe_btn_click");
@@ -168,41 +169,6 @@ $(document).ready(function () {
     })
 
 
-    // Subscription pop up
-
-    $(".profile_subscription_content").click(function () {
-        $(".subscription_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
-        $(".dark_filter").addClass("show fixed");
-        $(".main_content").addClass("scroll_none")
-
-        if ($(this).attr("number") == "1") {
-
-            // Subscriber section translate
-            $(".subscriber_section,.subscription_section").addClass("subscriber_click2").removeClass("subscriber_click");
-            // Line position and width
-            let subscriberLeft = $(".subscriber_title").position();
-            let subscriberLenght = $(".subscriber_title").width();
-            $(".subscription_line").css({
-                "width": `${subscriberLenght}px`,
-                "transform": `translate(${subscriberLeft.left}px)`
-            })
-        } else {
-            // Subscription section translate
-            $(".subscriber_section,.subscription_section").addClass("subscriber_click").removeClass("subscriber_click2");
-            // Line position and width
-            let subscriptionLeft = $(".subscription_title").position();
-            let subscriptionLenght = $(".subscription_title").width();
-            $(".subscription_line").css({
-                "width": `${subscriptionLenght}px`,
-                "transform": `translate(${subscriptionLeft.left}px)`
-            })
-        }
-    })
-    $(".dark_filter,.close_icon").click(function () {
-        $(".subscription_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
-        $(".dark_filter").removeClass("show");
-        $(".main_content").removeClass("scroll_none")
-    })
 
     // Subscription / subscriber translate
     $(".subscription_title").click(function () {

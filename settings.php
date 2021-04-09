@@ -3,7 +3,7 @@
 
 
 // Modifier son profil
-if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
+if(isset($_GET["modify_btn"])){
 
     $id = $_COOKIE['userid'];
     $username = addslashes($_GET['username']);
@@ -14,19 +14,19 @@ if(isset($_GET["modify_btn"]) && isset($_GET["username"])){
       $bio = addslashes($_GET['bio']);
 
     if(isset($_GET["profile_picture"]) && isset($_GET["banner"])){
-        $sql = "UPDATE users SET user_username='$username', user_profile_picture='$profile_picture', user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+        $sql = "UPDATE users SET user_profile_picture='$profile_picture', user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
       }
 
     else if(isset($_GET["profile_picture"])){
-        $sql = "UPDATE users SET user_username='$username', user_profile_picture='$profile_picture', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+        $sql = "UPDATE users SET user_profile_picture='$profile_picture', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
     }
 
     else if(isset($_GET["banner"])){
-        $sql = "UPDATE users SET user_username='$username', user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+        $sql = "UPDATE users SET user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
     }
 
     else {
-        $sql = "UPDATE users SET user_username='$username', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+        $sql = "UPDATE users SET user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
 
     }
 
@@ -165,8 +165,8 @@ if(isset($_GET["change_mdp_btn"])){
                     <!-- Defi icon -->
                     <a href='defis.php' class='defi_icon'></a>
                     <!-- Profile photo -->
-                    <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
-                    </div>
+                        <img src='database/profile_pictures/".$row['user_profile_picture']."' class='menu_pp' onclick='toggleBurgerMenu()'>
+                        </div>
                     </nav>";
 
                 } else {
@@ -196,13 +196,13 @@ if(isset($_GET["change_mdp_btn"])){
                 <div class="settings_container settings_profile_container" number="0">
                     <!-- Banner -->
                     <?php
-                        echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_banner']) .") no-repeat center/100%' alt=''  class='modify_banner'></div>";
+                        echo"<div style='background: url(database/banners/".$row['user_banner'].") no-repeat center/100%' alt=''  class='modify_banner'></div>";
                     ?>
 
                     <div class="modify_profile_photo_container">
                         <!-- Profile photo -->
                         <?php
-                            echo"<div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover' alt=''  class='modify_profile_photo'></div>";
+                            echo"<img src='database/profile_pictures/".$row['user_profile_picture'] ."' alt=''  class='modify_profile_photo'>";
                         ?>
 
                         <div class="modify_file_container">
@@ -223,13 +223,6 @@ if(isset($_GET["change_mdp_btn"])){
                     <div class="modify_input_container">
                         <form action="settings.php" method="GET">
                             <div class="all_input_container">
-                                <div class="input_container">
-                                    <label for="username">
-                                        <span>Nom d'utilisateur</span>
-                                        <input type="text" class="input_connexion" id="username" name="username"
-                                            value="<?php echo $row['user_username'];?>">
-                                    </label>
-                                </div>
                                 <div class="input_container">
                                     <label for="name">
                                         <span>Nom</span>

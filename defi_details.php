@@ -2,8 +2,8 @@
 include("assets/php/config.php");
 // include("ressources/pop_up_film_information.php");
 include("ressources/pop_up_connexion.php");
-include("ressources/pop_up_share.php");
-include('vimeo_setup.php');
+// include("ressources/pop_up_share.php");
+// include('vimeo_setup.php');
 include('assets/php/comments.php');
 
 
@@ -55,29 +55,67 @@ if (isset($_GET['delete_comment'])) {
 }
 
 
-if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) && isset($_GET['genre']) && isset($_GET['collab'])) {
+    // use Vimeo\Vimeo;
+    
+    // $client = new Vimeo("credential", "credential", "XXXXXXXXXX2b3f");
 
-    $sql = "INSERT INTO videos (video_url, video_title, video_user_id, video_synopsis, video_poster, video_genre, video_defi_id) VALUES (:url, :title, :user_id, :synopsis, :poster, :genre, :collab, :defi_id)";
+    
+    if (isset($_POST["video_send"])){
+        
+        // Vimeo
+        $file_name = $_FILES['video']['tmp_name'];
+    $uri = $client->upload($file_name, array(
+      "name" => "Untitled",
+      "description" => "The description goes here."
+    ));
+    
+    echo "Your video URI is: " . $uri;
 
-    $attributes = array(
-        'url' => $_GET['video'],
-        'title' => $_GET['title'],
-        'user_id' => $_COOKIE['userid'],
-        'synopsis' => $_GET['synopsis'],
-        'poster' => $_GET['poster'],
-        'genre' => $_GET['genre'],
-        'collab' => $_GET['collab'],
-        'video' => $_GET['video'],
-        'defi_id' => $_GET['defi'],
-    );
 
-    $stmt = $db->prepare($sql);
+    $response = $client->request($uri . '?fields=transcode.status');
+    if ($response['body']['transcode']['status'] === 'complete') {
+    print 'Your video finished transcoding.';
+    } elseif ($response['body']['transcode']['status'] === 'in_progress') {
+    print 'Your video is still transcoding.';
+    } else {
+    print 'Your video encountered an error during transcoding.';
+    }
 
-    $stmt->execute($attributes);
+    $response = $client->request($uri . '?fields=link');
+    echo "Your video link is: " . $response['body']['link'];
 
-    $db = null;
+    $content_dir_video = 'database/videos/';
+    $tmp_file_video = $_FILES['video']['tmp_name'];
+    $name_file_video = basename($_FILES['video']['name']);
 
-    header('Location: defis.php?success=true');
+    // if ($_FILES["video"]['error'] == 0) {
+
+        if(!is_uploaded_file($tmp_file_video)) {
+            echo "Le fichier est introuvable.";
+        }
+    
+        if(!move_uploaded_file($tmp_file_video, $content_dir_video . $name_file_video)){
+            echo "Impossible de copier le fichier dans notre dossier.";
+        }
+    // }
+        $sql = "INSERT INTO videos (video_url, video_title, video_user_id, video_synopsis, video_poster, video_genre, video_defi_id) VALUES (:url, :title, :user_id, :synopsis, :poster, :genre, :collab, :defi_id)";
+
+        $attributes = array(
+            'url' => $name_file_video,
+            'title' => $_POST['title'],
+            'user_id' => $_COOKIE['userid'],
+            'synopsis' => $_POST['synopsis'],
+            'poster' => $_POST['poster'],
+            'genre' => $_POST['genre'],
+            'collab' => $_POST['collab'],
+            'video' => $_POST['video'],
+            'defi_id' => $_GET['defi'],
+        );
+    
+        $stmt = $db->prepare($sql);
+    
+        $stmt->execute($attributes);
+    
 }
 ?>
 <!DOCTYPE html>
@@ -91,7 +129,8 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
     <link rel="stylesheet" href="assets/css/defi_details.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/fullpage.css" />
     <script src="assets/js/libraries/svg-inject-master/src/svg-inject.js"></script>
     <script src="https://player.vimeo.com/api/player.js"></script>
@@ -101,8 +140,8 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
 
 
-  <!-- Signalement -->
-  <?php
+    <!-- Signalement -->
+    <?php
     if (isset($message_true)) {
         echo '
         <p class="message_true_container">
@@ -112,7 +151,9 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
     ?>
     <main class="main_content">
 
-<div class='dark_filter' onclick="closePopupFilm(this)"></div>
+        <div class='dark_filter' onclick="closePopupFilm(this)"></div>
+        <div class="share_dark_filter" onclick="closePopupShare()"></div>
+        <div class="like_dark_filter" onclick="closePopupUserLike()"></div>
 
         <!-- Navigation menu -->
         <nav>
@@ -134,7 +175,8 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
                 <!-- Search bar -->
                 <form action="search.php" method="GET" class="form_search_bar">
-                    <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs..." oninput="searchEngine(this.value)">
+                    <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs..."
+                        oninput="searchEngine(this.value)">
                 </form>
 
                 <?php
@@ -153,7 +195,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                         <!-- Defi icon -->
                         <a href='defis.php' class='defi_icon'></a>
                         <!-- Profile photo -->
-                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
+                        <img src='database/profile_pictures/".$row['user_profile_picture']."' class='menu_pp' onclick='toggleBurgerMenu()'>
                         </div>
                         </nav>";
                 } else {
@@ -243,7 +285,8 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                             ?>
 
                         </p>
-                        <p style="color:#d60036">*Nous vous rappelons que tout contenu inapproprié se verra retiré de la plateforme.</p>
+                        <p style="color:#d60036">*Nous vous rappelons que tout contenu inapproprié se verra retiré de la
+                            plateforme.</p>
                         <p><b>À vos marques, prêt·e·s, tournez !</b></p>
                     </div>
 
@@ -322,7 +365,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                             <!-- Name + pp -->
                             <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
-                <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                                <img src='database/profile_pictures/".$row['user_profile_picture'] . "' alt=''  class='pp_profile'>
 
                     <p class='pseudo'>" . $row['user_username'] . "</p>
                     <div class='flou'></div>
@@ -345,11 +388,27 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 if (func::checkLoginState($db)) { # If the user is connected
                                     echo "
                                 <div class='reaction_container'>
-                                    <div class='fb_jsb like_container'>
-                                        <!-- Pop corn image -->
-                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
+                                    <div class='fb_jsb like_container'>";
+
+                                // <!-- Pop corn image -->
+
+                                $query10 = "SELECT COUNT(*) as nbr FROM liked WHERE liked_user_id={$_COOKIE['userid']} AND liked_video_id={$row['video_id']}";
+                                $stmt10 = $db->prepare($query10);
+                                $stmt10->execute();
+
+                                $row10 = $stmt10->fetch(PDO::FETCH_ASSOC);
+
+                                if ($row10['nbr'] >= 1) {
+                                    echo"
+                                    <img src='sources/img/pop_corn.png' class='pop_corn_icon' onclick='addLike(this)'>";
+                                } else {
+                                    echo"
+                                    <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>";
+                                }
+
+                                echo"
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                        <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
@@ -369,7 +428,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                     </div>
 
                                     <!-- Share icon -->
-                                    <div class='share_icon' onclick='popupShare()'></div>
+                                    <div class='share_icon' title=" . $row['video_id'] . " onclick='popupShare(this)'></div>
 
                                 </div>";
                                 } else { # If the user is an asshole
@@ -379,7 +438,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <!-- Pop corn image -->
                                         <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                        <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' onclick='popupConnexion()' >
@@ -406,7 +465,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
                                 echo "
                             </div>
-                            <p>" . $row['video_synopsis'] . "</p>
+                            <p>" . nl2br($row['video_synopsis']) . "</p>
                         </div>
 
 
@@ -472,7 +531,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                     <!-- Name + pp -->
                                     <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
-                <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                                <img src='database/profile_pictures/".$row['user_profile_picture'] . "' alt=''  class='pp_profile'>
 
                     <p class='pseudo'>" . $row['user_username'] . "</p>
                     <div class='flou'></div>
@@ -495,11 +554,27 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 if (func::checkLoginState($db)) { # If the user is connected
                                     echo "
                                         <div class='reaction_container'>
-                                            <div class='fb_jsb like_container'>
-                                                <!-- Pop corn image -->
-                                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
+                                            <div class='fb_jsb like_container'>";
+
+                                            // <!-- Pop corn image -->
+            
+                                            $query10 = "SELECT COUNT(*) as nbr FROM liked WHERE liked_user_id={$_COOKIE['userid']} AND liked_video_id={$row['video_id']}";
+                                            $stmt10 = $db->prepare($query10);
+                                            $stmt10->execute();
+            
+                                            $row10 = $stmt10->fetch(PDO::FETCH_ASSOC);
+            
+                                            if ($row10['nbr'] >= 1) {
+                                                echo"
+                                                <img src='sources/img/pop_corn.png' class='pop_corn_icon' onclick='addLike(this)'>";
+                                            } else {
+                                                echo"
+                                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>";
+                                            }
+            
+                                            echo"
                                                 <!-- Like\'s number -->
-                                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                                <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                                             </div>
                                             <!-- Comment icon -->
                                             <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
@@ -519,7 +594,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                             </div>
         
                                             <!-- Share icon -->
-                                            <div class='share_icon' onclick='popupShare()'></div>
+                                            <div class='share_icon' title=" . $row['video_id'] . " onclick='popupShare(this)'></div>
         
                                         </div>";
                                 } else { # If the user is an asshole
@@ -529,7 +604,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                                 <!-- Pop corn image -->
                                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                                 <!-- Like\'s number -->
-                                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                                <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                                             </div>
                                             <!-- Comment icon -->
                                             <div class='fb_jc ai-c' onclick='popupConnexion()' >
@@ -556,7 +631,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
                                 echo "
                                     </div>
-                                    <p>" . $row['video_synopsis'] . "</p>
+                                    <p>" . nl2br($row['video_synopsis']) . "</p>
                                 </div>
         
         
@@ -602,7 +677,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                     <!-- Name + pp -->
                                     <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
-                <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                                <img src='database/profile_pictures/".$row['user_profile_picture'] . "' alt=''  class='pp_profile'>
 
                     <p class='pseudo'>" . $row['user_username'] . "</p>
                     <div class='flou'></div>
@@ -625,11 +700,27 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 if (func::checkLoginState($db)) { # If the user is connected
                                     echo "
                                 <div class='reaction_container'>
-                                    <div class='fb_jsb like_container'>
-                                        <!-- Pop corn image -->
-                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
+                                    <div class='fb_jsb like_container'>";
+
+                                // <!-- Pop corn image -->
+
+                                $query10 = "SELECT COUNT(*) as nbr FROM liked WHERE liked_user_id={$_COOKIE['userid']} AND liked_video_id={$row['video_id']}";
+                                $stmt10 = $db->prepare($query10);
+                                $stmt10->execute();
+
+                                $row10 = $stmt10->fetch(PDO::FETCH_ASSOC);
+
+                                if ($row10['nbr'] >= 1) {
+                                    echo"
+                                    <img src='sources/img/pop_corn.png' class='pop_corn_icon' onclick='addLike(this)'>";
+                                } else {
+                                    echo"
+                                    <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>";
+                                }
+
+                                echo"
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                        <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
@@ -649,7 +740,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                     </div>
 
                                     <!-- Share icon -->
-                                    <div class='share_icon' onclick='popupShare()'></div>
+                                    <div class='share_icon' title=" . $row['video_id'] . " onclick='popupShare(this)'></div>
 
                                 </div>";
                                 } else { # If the user is an asshole
@@ -659,7 +750,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <!-- Pop corn image -->
                                         <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                        <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' onclick='popupConnexion()' >
@@ -686,7 +777,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
                                 echo "
                             </div>
-                            <p>" . $row['video_synopsis'] . "</p>
+                            <p>" . nl2br($row['video_synopsis']) . "</p>
                         </div>
         
         
@@ -733,7 +824,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                     <!-- Name + pp -->
                                     <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
-                <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                                <img src='database/profile_pictures/".$row['user_profile_picture'] . "' alt=''  class='pp_profile'>
 
                     <p class='pseudo'>" . $row['user_username'] . "</p>
                     <div class='flou'></div>
@@ -756,11 +847,27 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                 if (func::checkLoginState($db)) { # If the user is connected
                                     echo "
                                 <div class='reaction_container'>
-                                    <div class='fb_jsb like_container'>
-                                        <!-- Pop corn image -->
-                                        <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
+                                    <div class='fb_jsb like_container'>";
+
+                                // <!-- Pop corn image -->
+
+                                $query10 = "SELECT COUNT(*) as nbr FROM liked WHERE liked_user_id={$_COOKIE['userid']} AND liked_video_id={$row['video_id']}";
+                                $stmt10 = $db->prepare($query10);
+                                $stmt10->execute();
+
+                                $row10 = $stmt10->fetch(PDO::FETCH_ASSOC);
+
+                                if ($row10['nbr'] >= 1) {
+                                    echo"
+                                    <img src='sources/img/pop_corn.png' class='pop_corn_icon' onclick='addLike(this)'>";
+                                } else {
+                                    echo"
+                                    <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>";
+                                }
+
+                                echo"
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                        <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
@@ -780,7 +887,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                     </div>
 
                                     <!-- Share icon -->
-                                    <div class='share_icon' onclick='popupShare()'></div>
+                                    <div class='share_icon' title=" . $row['video_id'] . " onclick='popupShare(this)'></div>
 
                                 </div>";
                                 } else { # If the user is an asshole
@@ -790,7 +897,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                                         <!-- Pop corn image -->
                                         <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                         <!-- Like\'s number -->
-                                        <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                        <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                                     </div>
                                     <!-- Comment icon -->
                                     <div class='fb_jc ai-c' onclick='popupConnexion()' >
@@ -817,7 +924,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
                                 echo "
                             </div>
-                            <p>" . $row['video_synopsis'] . "</p>
+                            <p>" . nl2br($row['video_synopsis']) . "</p>
                         </div>
         
         
@@ -841,15 +948,25 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
 
     <!-- Pop up upload films -->
     <div class="pop_up_container upload_container">
-        <form action="">
+        <form action="" method="POST" enctype='multipart/form-data'>
 
             <div class="pop_up_header upload_header">
                 <h2>Déposer un court-métrage</h2>
                 <img src='sources/img/close_icon.svg' class='close_icon' alt='' onclick="closePopupAddFilm()">
             </div>
 
+            <?php 
+            $query = "SELECT * FROM defis WHERE defi_id = {$_GET['defi']}";
+            $stmt = $db->prepare($query);
+            $stmt->execute();
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo'
+                <p class="defi_title">Défi : '.$row["defi_name"].'</p>
+
+                ';
+            ?>
             <!-- Challenge's name -->
-            <p class="defi_title">Défi : Saint-Valentin</p>
 
             <div class="pop_up_text upload_content">
 
@@ -864,7 +981,8 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                     <div class="input_container input_synopsis">
                         <label for="synopsis">
                             <span>Synopsis</span>
-                            <textarea class="input_connexion input_synopsis" id="synopsis" name="synopsis" cols="30" rows="10" required></textarea>
+                            <textarea class="input_connexion input_synopsis" id="synopsis" name="synopsis" cols="30"
+                                rows="10" required></textarea>
                         </label>
                     </div>
                     <div class="input_container">
@@ -914,7 +1032,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['synopsis']) &&
                     Veillez à ne pas enfreindre les droits d’auteur ni les droits à la vie privée d’autrui.
                 </p>
 
-                <button class="btn btn_send" name="send">Valider</button>
+                <button class="btn btn_send" name="video_send">Valider</button>
 
             </div>
         </form>

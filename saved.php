@@ -22,12 +22,13 @@
     <title>>REAH | Profil</title>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
-    <link rel="stylesheet" href="assets/css/notifications.css">
+    <link rel="stylesheet" href="assets/css/saved.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/fullpage.css" />
     <script type="text/javascript" src="assets/js/libraries/jquery/jquery.min.js"></script>
     <script src="assets/js/functions.js" defer></script>
+    <script src="assets/js/fil_actu.js" defer></script>
 
     <style>
 
@@ -68,8 +69,8 @@
                     <!-- Defi icon -->
                     <a href='defis.php' class='defi_icon'></a>
                     <!-- Profile photo -->
-                    <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
-                    </div>
+                        <img src='database/profile_pictures/".$row['user_profile_picture']."' class='menu_pp' onclick='toggleBurgerMenu()'>
+                        </div>
                     </nav>";
 
                 } else {
@@ -82,6 +83,37 @@
         <?php
             require("ressources/menu.php");
         ?>
+
+<h2 class="omg_im_centered">Courts-métrages enregistrés</h2>
+
+<div id="saved_container"> 
+        <?php
+        $research = htmlspecialchars($_GET['research']);
+
+        # Non définitif, la requête finale incluera l'ensemble des tables.
+        # Se référer au modèle conceptuel sur le drive
+        $query = "SELECT * FROM videos, users, saved WHERE saved_user_id = user_id AND saved_video_id = video_id";
+
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+       
+        foreach($rows as $row){
+                echo '<a href="profil.php?id='.$row['video_user_id'].'" class="result omg_im_centered">
+                    <iframe src="https://player.vimeo.com/video/'.$row['video_url'].'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen id="video_'.$row['video_id'].'"></iframe>
+                    <section>
+                        <h4>'.$row['video_title'].'</h4>
+                        <p class="video_synopsis">'.nl2br($row['video_synopsis']).'</p>
+                        <p> Réalisé par '.$row['user_username'].'</p>
+                    </section>
+                </a>';
+            } 
+
+    ?>
+
+        </div>
 
         </main>
 

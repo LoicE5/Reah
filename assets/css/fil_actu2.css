@@ -99,11 +99,15 @@
     }
 
     .menu_nav{
-        justify-content: flex-end;
+        /* justify-content: flex-end; */
         padding-left: 0;
     }
 
     .section2{
         padding-bottom: 100px !important;
     }
+
+  
+
+    
 }

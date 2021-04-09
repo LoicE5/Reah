@@ -31,9 +31,9 @@
 
     <style>
 
-.main_content{
+/* .main_content{
     display:block;
-}
+} */
 </style>
 </head>
 
@@ -67,8 +67,8 @@
                     <!-- Defi icon -->
                     <a href='defis.php' class='defi_icon'></a>
                     <!-- Profile photo -->
-                    <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) .") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
-                    </div>
+                        <img src='database/profile_pictures/".$row['user_profile_picture']."' class='menu_pp' onclick='toggleBurgerMenu()'>
+                        </div>
                     </nav>";
                     
                 } else {

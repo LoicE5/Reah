@@ -93,5 +93,9 @@ $(document).ready(function () {
         $('#all_video_container').append("<p>Ton fil d'actualité est vide. 😢 Abonne-toi à d'autres utilisateurs !</p>");
     }
 
+    // Si l'user n'a pas d'enregistré
+    if($('#saved_container').text().length <= '48'){
+        $('#saved_container').append("<p class='void'>Tu n'as pas enregistré de court-métrage.</p>");
+    }
 
 })

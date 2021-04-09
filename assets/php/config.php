@@ -9,7 +9,7 @@ error_reporting(E_ALL);
 $db_username = 'root'; # MySQL Username
 $db_password = 'root'; # MySQL Password
 $db_host = 'localhost'; # MySQL Server
-$db_name = 'reah_new'; # MySQL Database name
+$db_name = 'reah'; # MySQL Database name
 
 // $db_username = 'reah'; # MySQL Username
 // $db_password = 'credential'; # MySQL Password

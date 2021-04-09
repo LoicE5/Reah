@@ -4,7 +4,7 @@
 include('assets/php/config.php');
 // include("ressources/pop_up_film_information.php");
 include("ressources/pop_up_connexion.php");
-include("ressources/pop_up_share.php");
+// include("ressources/pop_up_share.php");
 // include('vimeo_setup.php');
 
 
@@ -104,7 +104,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['constraints'])
                             <button type='submit' name='accueil' class='fil_actu_icon' value='true'></button>
                         </form>
                         <!-- Profile photo -->
-                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
+                        <img src='database/profile_pictures/".$row['user_profile_picture']."' class='menu_pp' onclick='toggleBurgerMenu()'>
                         </div>
                         </nav>";
                 } else {

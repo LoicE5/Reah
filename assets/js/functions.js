@@ -1,33 +1,68 @@
-function scrollLeft(selector,distance) {
+// Share btn -> copy btn
+function docopy(e) {
+    var range = document.createRange();
+    var target = e.dataset.target;
+    var fromElement = document.querySelector(target);
+    var selection = window.getSelection();
+
+    range.selectNode(fromElement);
+    selection.removeAllRanges();
+    selection.addRange(range);
+
+    try {
+        var result = document.execCommand('copy');
+        if (result) {
+            $("body").prepend("<p class='message_true_container'>Lien copié dans le presse-papiers.</p>");
+        }
+    } catch (err) {
+        // Une erreur est surevnue lors de la tentative de copie
+        alert(err);
+    }
+
+    selection = window.getSelection();
+
+    if (typeof selection.removeRange === 'function') {
+        selection.removeRange(range);
+    } else if (typeof selection.removeAllRanges === 'function') {
+        selection.removeAllRanges();
+    }
+}
+
+// PreventDefault
+function prevent(e) {
+    e.preventDefault();
+}
+
+function scrollLeft(selector, distance) {
     let element;
-    if(typeof selector == "string"){
+    if (typeof selector == "string") {
         element = document.querySelector(selector);
     } else {
         element = selector;
     }
     console.log('ÇA MARCHE ZEBI');
     element.scrollBy({
-      left: -distance,
-      behavior: 'smooth'
+        left: -distance,
+        behavior: 'smooth'
     });
 }
 
-function scrollRight(selector,distance) {
+function scrollRight(selector, distance) {
     let element;
-    if(typeof selector == "string"){
+    if (typeof selector == "string") {
         element = document.querySelector(selector);
     } else {
         element = selector;
     }
     console.log('ÇA MARCHE ZEBI');
     element.scrollBy({
-      left: distance,
-      behavior: 'smooth'
+        left: distance,
+        behavior: 'smooth'
     });
 }
 
-function redirect(url){
-    if(typeof url == "string"){
+function redirect(url) {
+    if (typeof url == "string") {
         window.location = url;
     } else {
         console.log(`Error : wrong redirect input. You entered : ${url}.`)
@@ -42,18 +77,18 @@ function toggleBurgerMenu() {
     }
 }
 
-function searchEngine(input){
+function searchEngine(input) {
     console.log('triggered');
     let url = `assets/php/actions.php?action=research&search=${input}`;
     let searchbar = document.querySelector('input.search_bar');
 
-    if((input == null || input == '' || input == undefined) && document.querySelector('#search_list')){
+    if ((input == null || input == '' || input == undefined) && document.querySelector('#search_list')) {
         console.log('YES TRIGGERED');
         document.querySelector('body').removeChild(document.querySelector('#search_list'));
     } else {
 
-        fetch(url).then(response=>{
-            response.text().then(text=>{
+        fetch(url).then(response => {
+            response.text().then(text => {
                 let splitted = text.split('splitter');
 
                 let videos = JSON.parse(splitted[0]);
@@ -61,13 +96,13 @@ function searchEngine(input){
 
                 let coordinates = {
                     left: searchbar.offsetLeft,
-                    top: Number(searchbar.offsetTop+searchbar.offsetHeight),
+                    top: Number(searchbar.offsetTop + searchbar.offsetHeight),
                     width: searchbar.offsetWidth
                 };
 
                 console.log(coordinates);
 
-                if(!document.querySelector('#search_list')){
+                if (!document.querySelector('#search_list')) {
                     let list = document.createElement('div');
                     list.id = 'search_list';
                     list.style = `left: ${coordinates.left}px; top: ${coordinates.top}px; width: ${coordinates.width}px;`;
@@ -81,36 +116,35 @@ function searchEngine(input){
 
                 searchList.innerHTML += `<h4 style="text-align: center;">Courts-métrages</h4>`;
 
-                for(let i=0;i<videos.length;i++){
+                for (let i = 0; i < videos.length; i++) {
 
-                    if(videos.length == 0){
+                    if (videos.length == 0) {
 
                         searchList.innerHTML += `<p>Aucun résultat</p>`;
 
                     } else {
 
-                        searchList.innerHTML += `<p class="search_list_result">
-                        <b>${videos[i].video_title}</b>
-                        de <i>${videos[i].video_username}</i>
-                        </p>`;
+                        searchList.innerHTML += `<a href="profil.php?id=${videos[i].video_user_id}" class="search_list_result">
+                        <p><b><i>${videos[i].video_title}</i></b> de ${videos[i].user_username}</p>
+                        </a>`;
 
                     }
                 }
 
                 searchList.innerHTML += `<h4 style="text-align: center;">Membres</h4>`;
 
-                for(let i=0;i<users.length;i++){
+                for (let i = 0; i < users.length; i++) {
 
-                    if(users.length == 0){
+                    if (users.length == 0) {
 
                         searchList.innerHTML += `<p>Aucun résultat</p>`;
 
                     } else {
 
-                        searchList.innerHTML += `<p class="search_list_result">
-                        <img style="float: left; width: 20px; height: 20px; border-radius: 999px; margin-right: 15px;" src="${users[i].user_profile_picture}" alt="">
-                        <b>${users[i].user_username}</b>
-                        </p>`;
+                        searchList.innerHTML += `<a href="profil.php?id=${users[i].user_id}" class="search_list_result">
+                        <img style="float: left; width: 20px; height: 20px; border-radius: 999px; margin-right: 15px;" src="database/profile_pictures/${users[i].user_profile_picture}" alt="">
+                        <p>${users[i].user_username}</p>
+                        </a>`;
 
                     }
                 }
@@ -121,37 +155,37 @@ function searchEngine(input){
     }
 }
 
-function showLikesAsDisconnected(){
+function showLikesAsDisconnected() {
 
     $(".connexion_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
     $(".dark_filter").addClass("show fixed");
     $(".main_content").addClass("scroll_none");
 
-    $(".dark_filter,.connexion_close_icon").click(function (){
+    $(".dark_filter,.connexion_close_icon").click(function () {
         $(".connexion_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
         $(".dark_filter").removeClass("show");
         $(".main_content").removeClass("scroll_none");
     })
 }
 
-function addLike(element){
- 
+function addLike(element) {
+
     let closest_iframe = element.closest('.video_container').querySelector('iframe');
     let video_url = closest_iframe.src;
     let video_vimeo_id = Number(video_url.split('https://player.vimeo.com/video/')[1]); // Basically, split returns an array like ["", "51831727"]
 
 
-    if ($(element).attr('src') === 'sources/img/pop_corn_icon.svg'){
+    if ($(element).attr('src') === 'sources/img/pop_corn_icon.svg') {
         console.log(closest_iframe);
         console.log(video_vimeo_id);
-    
+
         let fetch_url = `assets/php/actions.php?action=addLike&video=${video_vimeo_id}`;
-    
-        fetch(fetch_url).then(response=>{
-            response.text().then(text=>{
+
+        fetch(fetch_url).then(response => {
+            response.text().then(text => {
                 let final_count = Number(text);
                 console.log(`final_count = ${final_count}`);
-    
+
                 let target = $(element).parent().children('.pop_corn_number');
                 console.log(element);
                 console.log(target);
@@ -159,17 +193,17 @@ function addLike(element){
             });
         });
 
-     $(element).attr('src', 'sources/img/pop_corn.png');
+        $(element).attr('src', 'sources/img/pop_corn.png');
 
     } else {
 
         let fetch_url = `assets/php/actions.php?action=removeLike&video=${video_vimeo_id}`;
-    
-        fetch(fetch_url).then(response=>{
-            response.text().then(text=>{
+
+        fetch(fetch_url).then(response => {
+            response.text().then(text => {
                 let final_count = Number(text);
                 console.log(`final_count = ${final_count}`);
-    
+
                 let target = $(element).parent().children('.pop_corn_number');
                 console.log(element);
                 console.log(target);
@@ -177,15 +211,15 @@ function addLike(element){
             });
         });
 
-     $(element).attr('src', 'sources/img/pop_corn_icon.svg');
+        $(element).attr('src', 'sources/img/pop_corn_icon.svg');
 
     }
 
 
-// Btn "J'aime" animation click
-// function likeBtn(element) {
+    // Btn "J'aime" animation click
+    // function likeBtn(element) {
 
-// }
+    // }
 }
 
 
@@ -195,38 +229,121 @@ function popupConnexion() {
     $(".connexion_dark_filter").addClass("show fixed");
     $(".main_content").addClass("scroll_none")
     $("body,.html").animate({
-        scrollTop:0
-    },"1s")
+        scrollTop: 0
+    }, "1s")
 }
 
 function closePopupConnexion() {
     $(".connexion_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
     $(".connexion_dark_filter").removeClass("show");
-    if($(".dark_filter").css('display') == 'none'){
+    if ($(".dark_filter").css('display') == 'none') {
         $(".main_content").removeClass("scroll_none")
-    } 
+    }
 }
 
 
 // Pop up share
-function popupShare() {
-    $(".share_film_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+function popupShare(e) {
+    // $(".share_film_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
     $(".share_dark_filter").addClass("show fixed");
     $(".main_content").addClass("scroll_none")
+    let id = e.title;
+    console.log(id)
+    fetch(`assets/php/pop_up_share.php?id=${id}`).then(response => {
+        response.text().then(text => {
+            console.log(text);
+            document.body.innerHTML += text;
+        });
+    });
+}
+
+function popupUserLike(e) {
+    let title = $(e).attr("title");
+    // $(`.film_container[title="${title}"]`).fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+    $(".like_dark_filter").addClass("show fixed");
+    $(".main_content").addClass("scroll_none")
+
+    let id = e.title;
+    fetch(`assets/php/pop_up_user_like.php?id=${id}`).then(response => {
+        response.text().then(text => {
+            console.log(text);
+            document.body.innerHTML += text;
+        });
+    });
+
+
+}
+
+function closePopupUserLike() {
+    $(".user_like_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+    $(".like_dark_filter").removeClass("show");
+    if ($(".dark_filter").hasClass("show") == false) {
+        $(".main_content").removeClass("scroll_none")
+
+    }
 }
 
 function closePopupShare() {
     $(".share_film_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
     $(".share_dark_filter").removeClass("show");
-    $(".main_content").removeClass("scroll_none")
+    console.log($(".dark_filter").hasClass("show"));
+    if ($(".dark_filter").hasClass("show") == false) {
+        $(".main_content").removeClass("scroll_none")
+
+    }
 }
 
 // Saved icon animation click
-function saveFilm(e) {
-    if ($(e).attr('src') == 'sources/img/film_saved_icon_click.svg') {
-        $(e).attr('src', 'sources/img/film_saved_icon.svg');
+function saveFilm(element) {
+    // if ($(element).attr('src') == 'sources/img/film_saved_icon_click.svg') {
+    //     $(element).attr('src', 'sources/img/film_saved_icon.svg');
+    // } else {
+    //     $(element).attr('src', 'sources/img/film_saved_icon_click.svg');
+
+    // }
+
+    // let closest_iframe = element.closest('.video_container').querySelector('iframe');
+    // let video_url = closest_iframe.src;
+    // let video_vimeo_id = Number(video_url.split('https://player.vimeo.com/video/')[1]); // Basically, split returns an array like ["", "51831727"]
+    let video_id = $(element).attr('title');
+
+    if ($(element).attr('src') === 'sources/img/film_saved_icon.svg') {
+        // console.log(closest_iframe);
+        // console.log(video_vimeo_id);
+
+        let fetch_url = `assets/php/actions.php?action=save&video=${video_id}`;
+
+        fetch(fetch_url).then(response => {
+        //     response.text().then(text => {
+        //         let final_count = Number(text);
+        //         console.log(`final_count = ${final_count}`);
+
+        //         let target = $(element).parent().children('.pop_corn_number');
+        //         console.log(element);
+        //         console.log(target);
+        //         $(target).text(`${final_count} J'aime`);
+        //     });
+        });
+
+        $(element).attr('src', 'sources/img/film_saved_icon_click.svg');
+
     } else {
-        $(e).attr('src', 'sources/img/film_saved_icon_click.svg');
+
+        let fetch_url = `assets/php/actions.php?action=unsave&video=${video_id}`;
+
+        fetch(fetch_url).then(response => {
+        //     response.text().then(text => {
+        //         let final_count = Number(text);
+        //         console.log(`final_count = ${final_count}`);
+
+        //         let target = $(element).parent().children('.pop_corn_number');
+        //         console.log(element);
+        //         console.log(target);
+        //         $(target).text(`${final_count} J'aime`);
+        //     });
+        });
+
+        $(element).attr('src', 'sources/img/film_saved_icon.svg');
 
     }
 }
@@ -282,8 +399,8 @@ function popupFilm(e) {
     $(".main_content").addClass("scroll_none")
 
     let id = e.title;
-    fetch(`assets/php/film_data.php?id=${id}`).then(response=>{
-        response.text().then(text=>{
+    fetch(`assets/php/film_data.php?id=${id}`).then(response => {
+        response.text().then(text => {
             console.log(text);
             document.body.innerHTML += text;
         });
@@ -292,26 +409,17 @@ function popupFilm(e) {
 
 }
 
-// function getFilmComment(element){
-//     // let id = element.title;
-//     // fetch(`assets/php/film_data.php?id=${id}`).then(response=>{
-//     //     response.text().then(text=>{
-//     //         console.log(text);
-//     //         document.body.innerHTML += text;
-//     //     });
-//     // });
-// }
 
 function closePopupFilm(element) {
     $(".film_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
     $(".dark_filter").removeClass("show");
     $(".main_content").removeClass("scroll_none");
     document.body.removeChild(element);
-    setTimeout(()=>{
-        for(let i=0;i<document.querySelectorAll('.film_container').length;i++){
+    setTimeout(() => {
+        for (let i = 0; i < document.querySelectorAll('.film_container').length; i++) {
             document.body.removeChild(document.querySelectorAll('.film_container')[i]);
         }
-    },1500);
+    }, 1500);
 }
 
 
@@ -332,15 +440,15 @@ function closePopupDeleteFilm() {
 
 function popupComment(e) {
     let title = $(e).attr("title");
-    
+
     $(`.comment_space_container[title="${title}"]`).fadeIn(500).addClass("comment_space_container_open").removeClass("comment_space_container_close");
     $("html, body").animate({
         scrollTop: 800
     }, "1s");
 
     let id = e.title;
-    fetch(`assets/php/film_data.php?id=${id}`).then(response=>{
-        response.text().then(text=>{
+    fetch(`assets/php/film_data.php?id=${id}`).then(response => {
+        response.text().then(text => {
             console.log(text);
             document.body.innerHTML += text;
         });
@@ -355,10 +463,10 @@ function popupComment(e) {
 
     // Comment arrow animation
     $(".comment_arrow").addClass("comment_arrow_open");
-    
 
- 
-    
+
+
+
 }
 
 
@@ -383,7 +491,7 @@ function popupFilmComment() {
         // Comment arrow animation
         $(".comment_arrow").addClass("comment_arrow_open");
     }
-    
+
 }
 
 
@@ -429,7 +537,7 @@ function userSettings() {
 function commentFilmSettings(e) {
     let parent = $(e).parent();
     let commentSettings = $(parent).children(".comment_settings_container");
-    
+
     if ($(commentSettings).hasClass("flex")) {
         $(commentSettings).removeClass("flex").addClass("hide"); //Adds 'b', removes 'a'
     } else {
@@ -466,3 +574,41 @@ function closePopupSuspendAccount() {
     $(".main_content").removeClass("scroll_none")
 }
 
+
+// Subscription pop up
+
+function popupSubscription(e) {
+    $(".subscription_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+    $(".subscription_dark_filter").addClass("show fixed");
+    $(".main_content").addClass("scroll_none")
+
+    if ($(e).attr("number") == "1") {
+
+        // Subscriber section translate
+        $(".subscriber_section,.subscription_section").addClass("subscriber_click2").removeClass("subscriber_click");
+        // Line position and width
+        let subscriberLeft = $(".subscriber_title").position();
+        let subscriberLenght = $(".subscriber_title").width();
+        $(".subscription_line").css({
+            "width": `${subscriberLenght}px`,
+            "transform": `translate(${subscriberLeft.left}px)`
+        })
+    } else {
+        // Subscription section translate
+        $(".subscriber_section,.subscription_section").addClass("subscriber_click").removeClass("subscriber_click2");
+        // Line position and width
+        let subscriptionLeft = $(".subscription_title").position();
+        let subscriptionLenght = $(".subscription_title").width();
+        $(".subscription_line").css({
+            "width": `${subscriptionLenght}px`,
+            "transform": `translate(${subscriptionLeft.left}px)`
+        })
+    }
+}
+
+
+function closePopupSubscription() {
+    $(".subscription_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+    $(".subscription_dark_filter").removeClass("show");
+    $(".main_content").removeClass("scroll_none");
+}

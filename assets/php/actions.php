@@ -5,9 +5,9 @@ $parameter = htmlspecialchars($_GET['action']);
 
 if($parameter == 'research'){
 
-    $research = htmlspecialchars($_GET['search']);
+    $research = htmlspecialchars(addslashes($_GET['search']));
 
-    $query = "SELECT video_title,video_username,video_url,video_id FROM videos WHERE video_title LIKE '%$research%' OR video_username LIKE '%$research%';";
+    $query = "SELECT * FROM videos, users WHERE video_user_id = user_id AND video_title LIKE '%$research%';";
 
     $stmt = $db->prepare($query);
     $stmt->execute();
@@ -20,7 +20,7 @@ if($parameter == 'research'){
 
     echo 'splitter';
 
-    $query = "SELECT user_username,user_profile_picture,user_bio FROM users WHERE user_username LIKE '%$research%'";
+    $query = "SELECT * FROM users WHERE user_username LIKE '%$research%'";
 
     $stmt = $db->prepare($query);
     $stmt->execute();
@@ -30,39 +30,60 @@ if($parameter == 'research'){
     $json = json_encode($results);
 
     echo $json;
+    
 } else if($parameter == 'addLike'){
 
     $video_vimeo_id = htmlspecialchars($_GET['video']);
+    $cookie_user_id = $_COOKIE['userid'];
 
-    $query = "SELECT video_like_number FROM videos WHERE video_url = $video_vimeo_id";
+    $query = "SELECT video_like_number, video_id FROM videos WHERE video_url = $video_vimeo_id";
     $stmt = $db->prepare($query);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $initial_count = $results[0]['video_like_number'];
+    $video_id = $results[0]['video_id'];
 
     $final_count = $initial_count+1;
     echo $final_count;
 
-    $query = "UPDATE videos SET video_like_number = $final_count WHERE video_url = $video_vimeo_id";
+    $query = "UPDATE videos SET video_like_number = $final_count  WHERE video_url = $video_vimeo_id; INSERT INTO liked(liked_user_id, liked_video_id) VALUE ('$cookie_user_id', '$video_id');";
     $stmt = $db->prepare($query);
     $stmt->execute();
 
 }
  else if($parameter == 'removeLike') {
     $video_vimeo_id = htmlspecialchars($_GET['video']);
+    $cookie_user_id = $_COOKIE['userid'];
 
-    $query = "SELECT video_like_number FROM videos WHERE video_url = $video_vimeo_id";
+    $query = "SELECT video_like_number, video_id FROM videos WHERE video_url = $video_vimeo_id";
     $stmt = $db->prepare($query);
     $stmt->execute();
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     $initial_count = $results[0]['video_like_number'];
+    $video_id = $results[0]['video_id'];
 
     $final_count = $initial_count-1;
     echo $final_count;
 
-    $query = "UPDATE videos SET video_like_number = $final_count WHERE video_url = $video_vimeo_id";
+    $query = "UPDATE videos SET video_like_number = $final_count WHERE video_url = $video_vimeo_id; DELETE FROM liked WHERE liked_user_id = '$cookie_user_id' AND liked_video_id ='$video_id';";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+}
+else if($parameter == 'save') {
+    $video_id = htmlspecialchars($_GET['video']);
+    $cookie_user_id = $_COOKIE['userid'];
+
+    $query = "INSERT INTO saved(saved_user_id, saved_video_id) VALUE ('$cookie_user_id', '$video_id');";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+}
+else if($parameter == 'unsave') {
+    $video_id = htmlspecialchars($_GET['video']);
+    $cookie_user_id = $_COOKIE['userid'];
+
+    $query = "DELETE FROM saved WHERE saved_user_id = '$cookie_user_id' AND saved_video_id ='$video_id';";
     $stmt = $db->prepare($query);
     $stmt->execute();
 }

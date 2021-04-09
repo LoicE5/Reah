@@ -111,6 +111,7 @@ if( !func::checkLoginState($db) ){
 
             <!-- Input validation code -->
             <p id="mail">Entre le code de validation envoyé à <?php echo $client_email; ?> : <span class="mailcontainer"></span> </p>
+            <p>Cette partie ne marche pas mais tu es bel et bien inscrit, va te connecter !</p>
             <div class="input_confirm_container">
                 <input class="input_connexion input_confirm third_form" type="text" pattern="[0-9]{1}" name="code1"
                     required>

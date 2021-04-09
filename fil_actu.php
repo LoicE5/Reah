@@ -4,7 +4,7 @@
 include('assets/php/config.php');
 // include("ressources/pop_up_film_information.php");
 include("ressources/pop_up_connexion.php");
-include("ressources/pop_up_share.php");
+// include("ressources/pop_up_share.php");
 include('assets/php/comments.php');
 
 // Ajout d'un commentaire
@@ -154,7 +154,7 @@ if (isset($_GET['delete_comment'])) {
                         <!-- Defi icon -->
                         <a href='defis.php' class='defi_icon'></a>
                         <!-- Profile photo -->
-                        <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>";
+                        <img src='database/profile_pictures/".$row['user_profile_picture']."' class='menu_pp' onclick='toggleBurgerMenu()'>";
                 } else {
 
                     echo "<div class='menu_profile'>
@@ -264,7 +264,7 @@ if (isset($_GET['delete_comment'])) {
                 <!-- Name + pp -->
                 <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
-                <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                <img src='database/profile_pictures/".$row['user_profile_picture'] . "' alt=''  class='pp_profile'>
 
                     <p class='pseudo'>" . $row['user_username'] . "</p>
                     <div class='flou'></div>
@@ -285,11 +285,27 @@ if (isset($_GET['delete_comment'])) {
                     </div>
                     
                         <div class='reaction_container'>
-                            <div class='fb_jsb like_container'>
-                                <!-- Pop corn image -->
-                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon'  onclick='addLike(this)'>
+                            <div class='fb_jsb like_container'>";
+
+                                // <!-- Pop corn image -->
+
+                                $query10 = "SELECT COUNT(*) as nbr FROM liked WHERE liked_user_id={$_COOKIE['userid']} AND liked_video_id={$row['video_id']}";
+                                $stmt10 = $db->prepare($query10);
+                                $stmt10->execute();
+
+                                $row10 = $stmt10->fetch(PDO::FETCH_ASSOC);
+
+                                if ($row10['nbr'] >= 1) {
+                                    echo"
+                                    <img src='sources/img/pop_corn.png' class='pop_corn_icon' onclick='addLike(this)'>";
+                                } else {
+                                    echo"
+                                    <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>";
+                                }
+
+                                echo"
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
                             <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
@@ -307,14 +323,14 @@ if (isset($_GET['delete_comment'])) {
                                 echo "
                                         </div>
                             <!-- Share icon -->
-                            <div class='share_icon' onclick='popupShare()'></div>
+                            <div class='share_icon' title=".$row['video_id']." onclick='popupShare(this)'></div>
 
                         </div>";
                            
 
                             echo "
                 </div>
-                <p>" . $row['video_synopsis'] . "</p>
+                <p>" . nl2br($row['video_synopsis']) . "</p>
             </div>
 
 
@@ -337,7 +353,7 @@ if (isset($_GET['delete_comment'])) {
                 <!-- Name + pp -->
                 <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
-                <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                <img src='database/profile_pictures/".$row['user_profile_picture'] . "' alt=''  class='pp_profile'>
 
                     <p class='pseudo'>" . $row['user_username'] . "</p>
                     <div class='flou'></div>
@@ -359,11 +375,27 @@ if (isset($_GET['delete_comment'])) {
                             if (func::checkLoginState($db)) { # If the user is connected
                                 echo "
                         <div class='reaction_container'>
-                            <div class='fb_jsb like_container'>
-                                <!-- Pop corn image -->
-                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon'  onclick='addLike(this)'>
+                            <div class='fb_jsb like_container'>";
+
+                                // <!-- Pop corn image -->
+
+                                $query10 = "SELECT COUNT(*) as nbr FROM liked WHERE liked_user_id={$_COOKIE['userid']} AND liked_video_id={$row['video_id']}";
+                                $stmt10 = $db->prepare($query10);
+                                $stmt10->execute();
+
+                                $row10 = $stmt10->fetch(PDO::FETCH_ASSOC);
+
+                                if ($row10['nbr'] >= 1) {
+                                    echo"
+                                    <img src='sources/img/pop_corn.png' class='pop_corn_icon' onclick='addLike(this)'>";
+                                } else {
+                                    echo"
+                                    <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>";
+                                }
+
+                                echo"
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
                             <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment($(this))' >
@@ -381,7 +413,7 @@ if (isset($_GET['delete_comment'])) {
                                 echo "
                                         </div>
                             <!-- Share icon -->
-                            <div class='share_icon' onclick='popupShare()'></div>
+                            <div class='share_icon' title=".$row['video_id']." onclick='popupShare(this)'></div>
 
                         </div>";
                             } else { # If the user is an asshole
@@ -391,7 +423,7 @@ if (isset($_GET['delete_comment'])) {
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
                             <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupConnexion()' >
@@ -417,7 +449,7 @@ if (isset($_GET['delete_comment'])) {
 
                             echo "
                 </div>
-                <p>" . $row['video_synopsis'] . "</p>
+                <p>" . nl2br($row['video_synopsis']) . "</p>
             </div>
 
 
@@ -462,7 +494,7 @@ if (isset($_GET['delete_comment'])) {
 
                         <?php
 
-                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM `videos`, `users`, `defis` WHERE user_id = video_user_id AND video_defi_id = defi_id AND defi_current = 1 ORDER BY video_id DESC";
+                        $query = "SELECT *, DATE_FORMAT(video_duration, '%imin %ss' ) as time FROM `videos`, `users`, `defis` WHERE user_id = video_user_id AND video_defi_id = defi_id AND defi_current = 1 ORDER BY RAND()";
                         $stmt = $db->prepare($query);
                         $stmt->execute();
 
@@ -478,7 +510,7 @@ if (isset($_GET['delete_comment'])) {
                 <!-- Name + pp -->
                 <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
-                <img src='data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . "' alt=''  class='pp_profile'>
+                <img src='database/profile_pictures/".$row['user_profile_picture'] . "' alt=''  class='pp_profile'>
 
                     <p class='pseudo'>" . $row['user_username'] . "</p>
                     <div class='flou'></div>
@@ -500,11 +532,27 @@ if (isset($_GET['delete_comment'])) {
                             if (func::checkLoginState($db)) { # If the user is connected
                                 echo "
                         <div class='reaction_container'>
-                            <div class='fb_jsb like_container'>
-                                <!-- Pop corn image -->
-                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>
+                            <div class='fb_jsb like_container'>";
+
+                                // <!-- Pop corn image -->
+
+                                $query10 = "SELECT COUNT(*) as nbr FROM liked WHERE liked_user_id={$_COOKIE['userid']} AND liked_video_id={$row['video_id']}";
+                                $stmt10 = $db->prepare($query10);
+                                $stmt10->execute();
+
+                                $row10 = $stmt10->fetch(PDO::FETCH_ASSOC);
+
+                                if ($row10['nbr'] >= 1) {
+                                    echo"
+                                    <img src='sources/img/pop_corn.png' class='pop_corn_icon' onclick='addLike(this)'>";
+                                } else {
+                                    echo"
+                                    <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>";
+                                }
+
+                                echo"
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
                             <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
@@ -522,7 +570,7 @@ if (isset($_GET['delete_comment'])) {
                                 echo "
                                         </div>
                             <!-- Share icon -->
-                            <div class='share_icon' onclick='popupShare()'></div>
+                            <div class='share_icon' title=".$row['video_id']." onclick='popupShare(this)'></div>
 
                         </div>";
                             } else { # If the user is an asshole
@@ -532,7 +580,7 @@ if (isset($_GET['delete_comment'])) {
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
                             <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupConnexion(this)' >
@@ -558,7 +606,7 @@ if (isset($_GET['delete_comment'])) {
 
                             echo "
                 </div>
-                <p>" . $row['video_synopsis'] . "</p>
+                <p>" . nl2br($row['video_synopsis']) . "</p>
             </div>
 
 
@@ -612,7 +660,8 @@ if (isset($_GET['delete_comment'])) {
                 <!-- Name + pp -->
                 <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
 
-                <div style='background: url(data:image/jpg;base64," . base64_encode($row['user_profile_picture']) . ") no-repeat center/cover'  class='menu_pp' onclick='toggleBurgerMenu()'></div>
+                <img src='database/profile_pictures/".$row['user_profile_picture'] . "' alt=''  class='pp_profile'>
+
 
                 <p class='pseudo'>" . $row['user_username'] . "</p>
                     <div class='flou'></div>
@@ -635,11 +684,27 @@ if (isset($_GET['delete_comment'])) {
                             if (func::checkLoginState($db)) { # If the user is connected
                                 echo "
                         <div class='reaction_container'>
-                            <div class='fb_jsb like_container'>
-                                <!-- Pop corn image -->
-                                <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon'  onclick='addLike(this)'>
+                            <div class='fb_jsb like_container'>";
+
+                                // <!-- Pop corn image -->
+
+                                $query10 = "SELECT COUNT(*) as nbr FROM liked WHERE liked_user_id={$_COOKIE['userid']} AND liked_video_id={$row['video_id']}";
+                                $stmt10 = $db->prepare($query10);
+                                $stmt10->execute();
+
+                                $row10 = $stmt10->fetch(PDO::FETCH_ASSOC);
+
+                                if ($row10['nbr'] >= 1) {
+                                    echo"
+                                    <img src='sources/img/pop_corn.png' class='pop_corn_icon' onclick='addLike(this)'>";
+                                } else {
+                                    echo"
+                                    <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='addLike(this)'>";
+                                }
+
+                                echo"
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
                             <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupComment(this)' >
@@ -657,7 +722,7 @@ if (isset($_GET['delete_comment'])) {
                                 echo "
                                         </div>
                             <!-- Share icon -->
-                            <div class='share_icon' onclick='popupShare()'></div>
+                            <div class='share_icon' title=".$row['video_id']." onclick='popupShare(this)'></div>
 
                         </div>";
                             } else { # If the user is an asshole
@@ -667,7 +732,7 @@ if (isset($_GET['delete_comment'])) {
                                 <!-- Pop corn image -->
                                 <img src='sources/img/pop_corn_icon.svg' class='pop_corn_icon' onclick='popupConnexion()'>
                                 <!-- Like\'s number -->
-                                <p class='pop_corn_number'>" . $row['video_like_number'] . " J'aime</p>
+                                <p class='pop_corn_number' title='".$row["video_id"]."' onclick='popupUserLike(this)'>" . $row['video_like_number'] . " J'aime</p>
                             </div>
                             <!-- Comment icon -->
                             <div class='fb_jc ai-c' title=" . $row['video_id'] . " onclick='popupConnexion(this)' >
@@ -692,7 +757,7 @@ if (isset($_GET['delete_comment'])) {
 
                             echo "
                 </div>
-                <p>" . $row['video_synopsis'] . "</p>
+                <p>" . nl2br($row['video_synopsis']) . "</p>
             </div>
 
 
@@ -718,6 +783,8 @@ if (isset($_GET['delete_comment'])) {
         ?>
 
     <div class='dark_filter dark_filter_film_data' onclick="closePopupFilm(this)"></div>
+    <div class="share_dark_filter" onclick="closePopupShare()"></div>
+    <div class="like_dark_filter" onclick="closePopupUserLike()"></div>
 
 
     </main>
