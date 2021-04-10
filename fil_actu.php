@@ -52,10 +52,10 @@ if (isset($_GET['delete_comment'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <meta http-equiv= »Content-Type » content= »text/html; charset=utf-8″ /> -->
     <title>REAH | Fil d'actualité</title>
-    <link rel="icon" type="image/png" href="sources/img/reah_logo.png">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
     <link rel="stylesheet" href="assets/css/fil_actu2.css">
+    <link rel="icon" type="image/png" href="sources/img/iconejs.png">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
         rel="stylesheet">
     <script src="assets/js/libraries/svg-inject-master/src/svg-inject.js"></script>
@@ -104,6 +104,10 @@ if (isset($_GET['delete_comment'])) {
         <p class="message_true_container">
                 '.$message_true.'
         </p>';
+    }
+
+    if (isset($_GET['delete_account'])) {
+        echo '<p class="message_true_container">Votre compte a bien été supprimé.</p>';
     }
     ?>
 

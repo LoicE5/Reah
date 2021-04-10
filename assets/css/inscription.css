@@ -19,7 +19,8 @@ form {
 
 .form_container3 {
     display: none;
-    min-height: 250px;
+    min-height: 350px;
+    /* min-height: 250px; */
 }
 
 /* Animations translate forms */

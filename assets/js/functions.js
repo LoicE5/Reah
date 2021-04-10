@@ -194,6 +194,7 @@ function addLike(element) {
         });
 
         $(element).attr('src', 'sources/img/pop_corn.png');
+        $(element).addClass('pop_corn_icon_click');
 
     } else {
 
@@ -212,6 +213,7 @@ function addLike(element) {
         });
 
         $(element).attr('src', 'sources/img/pop_corn_icon.svg');
+        $(element).removeClass('pop_corn_icon_click');
 
     }
 

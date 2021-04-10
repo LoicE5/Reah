@@ -95,7 +95,7 @@ $(document).ready(function () {
 
     // Si l'user n'a pas d'enregistré
     if($('#saved_container').text().length <= '48'){
-        $('#saved_container').append("<p class='void'>Tu n'as pas enregistré de court-métrage.</p>");
+        $('#saved_container').append("<p class='void'>Tu n'as enregistré aucun court-métrage.</p>");
     }
 
 })

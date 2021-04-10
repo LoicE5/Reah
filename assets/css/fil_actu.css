@@ -929,6 +929,11 @@ video:focus {
     width: 4px;
 }
 
+
+.pop_corn_icon_click {
+    animation: pop_corn_icon_click 0.5s ease forwards;
+}
+
 @keyframes comment_space_container_open {
     0% {
         transform: translateY(-200px);
@@ -968,6 +973,21 @@ video:focus {
         transform: translateY(-100px);
     }
 }
+
+@keyframes pop_corn_icon_click{
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+
+    }  
+}
+
 
 @media screen and (max-width:800px) {
     .main_content {
@@ -1266,6 +1286,8 @@ video:focus {
         background: none;
         width: unset;
     }
+
+
 
     .defi_icon,
     .fil_actu_icon,

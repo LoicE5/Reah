@@ -90,6 +90,7 @@
 
 
     <?php
+   
 
     if (isset($_GET['email'])) {
         echo'<p class="message_false_container">L\'email saisi est déjà utilisé.</p>';

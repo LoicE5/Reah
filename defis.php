@@ -19,7 +19,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['constraints'])
         // $requete = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_poster) VALUES ($title, $constraints, NULL, NULL)";
         // $stmt=$db->query($requete);
 
-        $sql = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_image, defi_user_id, defi_verified, defi_current) VALUES (:title, :constraints, NULL, NULL, :user, 0, 0)";
+        $sql = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_image, defi_user_id, defi_verified, defi_current) VALUES (:title, :constraints, default, NULL, :user, 0, 0)";
 
         $attributes = array(
             'title' => addslashes($_GET['title']),
@@ -182,7 +182,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['constraints'])
                 foreach ($rows as $row) {
                     echo '
                         <a href="defi_details.php?defi=' . $row['defi_id'] . '" class="defi_content">
-                        <img class="defi_img defi1_img" src="data:image/png;base64,' . base64_encode($row['defi_image']) . '" alt="">
+                        <img src="database/defis_img/'.$row['defi_image'].'" alt="" class="defi_img defi1_img">
                         <p class="defi_time">Temps restant : 14h 30min</p>
                     </a>';
                 }
@@ -221,7 +221,8 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['constraints'])
                     foreach ($rows as $row) {
                         echo '
                         <a href="defi_details.php?defi=' . $row['defi_id'] . '" class="defi_pop_content">
-                        <img class="defi_img defi_pop_img" src="data:image/png;base64,' . base64_encode($row['defi_image']) . '" alt="">
+                                                <img src="database/defis_img/'.$row['defi_image'].'" alt="" class="defi_img defi1_img">
+
                         </a>';
                     }
                     ?>
@@ -263,7 +264,8 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['constraints'])
                     foreach ($rows as $row) {
                         echo '
                         <a href="defi_details.php?defi=' . $row['defi_id'] . '" class="defi_pop_content">
-                        <img class="defi_img defi_pop_img" src="data:image/png;base64,' . base64_encode($row['defi_image']) . '" alt="">
+                                                <img src="database/defis_img/'.$row['defi_image'].'" alt="" class="defi_img defi1_img">
+
                         </a>';
                     }
                     ?>

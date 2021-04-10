@@ -36,29 +36,35 @@
 
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                // Connecter avec son username
-                if($row['user_id'] > 0){ # If the user's form fields data matches the database informations
+                if($row['user_suspended'] == 0){
 
-                    if(password_verify($password, $row['user_password']) == true){
-
-                        func::createRecord($db,$row['user_username'],$row['user_id']); # Deleting from sessions the previous username & user_id & creating new cookies & session.
-                        redirect('fil_actu.php?accueil=true');
-                    } else {
-                        makeVisible('main.main_content',true);
-                        $message_false = 'Le mot de passe est incorrect.';
-        
+                    // Connecter avec son username
+                    if($row['user_id'] > 0){ # If the user's form fields data matches the database informations
+    
+                        if(password_verify($password, $row['user_password']) == true){
+    
+                            func::createRecord($db,$row['user_username'],$row['user_id']); # Deleting from sessions the previous username & user_id & creating new cookies & session.
+                            redirect('fil_actu.php?accueil=true');
+                        } else {
+                            makeVisible('main.main_content',true);
+                            $message_false = 'Le mot de passe est incorrect.';
+            
+                        }
+    
+                    } else { # if the credentials are unknwown from the database
+    
+                        // consoleLog($password);
+                        // consoleLog($row['user_password']);
+                        // consoleLog(password_verify($password, $row['user_password']));
+    
+                        // echo 'error';
+                    makeVisible('main.main_content',true);
+                    $message_false = 'Le pseudo ou l\'email est incorrect.';
+    
                     }
-
-                } else { # if the credentials are unknwown from the database
-
-                    // consoleLog($password);
-                    // consoleLog($row['user_password']);
-                    // consoleLog(password_verify($password, $row['user_password']));
-
-                    // echo 'error';
+                } else {
                 makeVisible('main.main_content',true);
-                $message_false = 'Le pseudo ou l\'email est incorrect.';
-
+                $message_false = 'Votre compte a été suspendu.';
                 }
 
             } else { # We display the form in order to make the user fill the fields
@@ -70,8 +76,7 @@
     ?>
     <main class="main_content" style="visibility: hidden;">
 
-    <?php
-    
+    <?php   
     if (isset($_GET['mdp'])) {
       echo '<p class="message_true_container">Votre mot de passe a bien été modifié.</p>';
   }

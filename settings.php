@@ -3,31 +3,62 @@
 
 
 // Modifier son profil
-if(isset($_GET["modify_btn"])){
+if(isset($_POST["modify_btn"])){
 
     $id = $_COOKIE['userid'];
-    $username = addslashes($_GET['username']);
-      $profile_picture = $_GET['profile_picture'];
-      $banner = $_GET['banner'];
-      $name = addslashes($_GET['name']);
-      $website = $_GET['website'];
-      $bio = addslashes($_GET['bio']);
+    $username = addslashes($_POST['username']);
+    // $profile_picture = $_POST['profile_picture'];
+    // $banner = $_POST['banner'];
+    $name = addslashes($_POST['name']);
+    $website = $_POST['website'];
+    $bio = addslashes($_POST['bio']);
 
-    if(isset($_GET["profile_picture"]) && isset($_GET["banner"])){
-        $sql = "UPDATE users SET user_profile_picture='$profile_picture', user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
-      }
+    $content_dir_picture = 'database/profile_pictures/';
+    $tmp_file_picture = $_FILES['profile_picture']['tmp_name'];
+    $name_file_picture = basename($_FILES['profile_picture']['name']);
 
-    else if(isset($_GET["profile_picture"])){
-        $sql = "UPDATE users SET user_profile_picture='$profile_picture', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
-    }
+    $content_dir_banner = 'database/banners/';
+    $tmp_file_banner = $_FILES['banner']['tmp_name'];
+    $name_file_banner = basename($_FILES['banner']['name']);
 
-    else if(isset($_GET["banner"])){
-        $sql = "UPDATE users SET user_banner='$banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
-    }
+    if ($_FILES["profile_picture"]['error'] == 0 && $_FILES["banner"]['error'] == 0 ) {
 
-    else {
+        if(!is_uploaded_file($tmp_file_picture) || !is_uploaded_file($tmp_file_banner)) {
+            echo "Le fichier est introuvable.";
+        }
+    
+        if(!move_uploaded_file($tmp_file_picture, $content_dir_picture . $name_file_picture) || !move_uploaded_file($tmp_file_banner, $content_dir_banner . $name_file_banner)){
+            echo "Impossible de copier le fichier dans notre dossier.";
+        }
+
+        $sql = "UPDATE users SET user_profile_picture='$name_file_picture', user_banner='$name_file_banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+
+    } else if ($_FILES["profile_picture"]['error'] == 0 ) {
+    
+
+        if(!is_uploaded_file($tmp_file_picture)) {
+            echo "Le fichier est introuvable.";
+        }
+    
+        if(!move_uploaded_file($tmp_file_picture, $content_dir_picture . $name_file_picture)){
+            echo "Impossible de copier le fichier dans notre dossier.";
+        }
+
+        $sql = "UPDATE users SET user_profile_picture='$name_file_picture', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+
+    } else if ($_FILES["banner"]['error'] == 0 ) {
+
+        if(!is_uploaded_file($tmp_file_banner)) {
+            echo "Le fichier est introuvable.";
+        }
+    
+        if(!move_uploaded_file($tmp_file_banner, $content_dir_banner . $name_file_banner)){
+            echo "Impossible de copier le fichier dans notre dossier.";
+        }
+
+        $sql = "UPDATE users SET user_banner='$name_file_banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
+    } else {
         $sql = "UPDATE users SET user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
-
     }
 
     $stmt = $db->prepare($sql);
@@ -99,6 +130,60 @@ if(isset($_GET["change_mdp_btn"])){
     }
 
 }
+
+// Supression d'un utilisateur
+if (isset($_GET['delete_account'])) {
+
+    $user_id = $_GET['delete_account'];
+    
+    $sql = "DELETE FROM users WHERE user_id='$user_id'";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+    
+    header('Location: ressources/logout.php?delete_account=true');
+
+}
+
+
+// // Suspension d'un utilisateur
+// if (isset($_GET['user_suspend'])) {
+
+//     $user_id = $_GET['user_suspend'];
+
+//     $query = "SELECT * FROM users WHERE user_id = '$user_id';";
+//     $stmt = $db->prepare($query);
+//     $stmt->execute();
+//     $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    
+//     $query = "UPDATE users SET user_suspended='1' WHERE user_id = '$user_id';";
+//     $stmt = $db->prepare($query);
+//     $stmt->execute();
+    
+    
+//     $message_true='L\'utilisateur '.$row['user_username'].' a bien été suspendu.';
+// }
+
+// // Désuspension d'un utilisateur
+// if (isset($_GET['user_suspend_true'])) {
+
+//     $user_id = $_GET['user_suspend_true'];
+
+//     $query = "SELECT * FROM users WHERE user_id = '$user_id';";
+//     $stmt = $db->prepare($query);
+//     $stmt->execute();
+//     $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    
+//     $query = "UPDATE users SET user_suspended='0' WHERE user_id = '$user_id';";
+//     $stmt = $db->prepare($query);
+//     $stmt->execute();
+    
+    
+//     $message_true='L\'utilisateur '.$row['user_username'].' a bien été désuspendu.';
+// }
 ?>
 
 <!DOCTYPE html>
@@ -145,8 +230,9 @@ if(isset($_GET["change_mdp_btn"])){
 
             <!-- Search bar -->
             <form action="search.php" method="GET" class="form_search_bar">
-                    <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs..." oninput="searchEngine(this.value)">
-                </form>
+                <input class="search_bar" type="text" placeholder="Défis, courts-métrages, utilisateurs..."
+                    oninput="searchEngine(this.value)">
+            </form>
 
 
             <?php
@@ -198,30 +284,30 @@ if(isset($_GET["change_mdp_btn"])){
                     <?php
                         echo"<div style='background: url(database/banners/".$row['user_banner'].") no-repeat center/100%' alt=''  class='modify_banner'></div>";
                     ?>
+                    <form action="settings.php" method="post" enctype='multipart/form-data'>
 
-                    <div class="modify_profile_photo_container">
-                        <!-- Profile photo -->
-                        <?php
+                        <div class="modify_profile_photo_container">
+                            <!-- Profile photo -->
+                            <?php
                             echo"<img src='database/profile_pictures/".$row['user_profile_picture'] ."' alt=''  class='modify_profile_photo'>";
                         ?>
 
-                        <div class="modify_file_container">
-                            <!-- Input banner -->
-                            <div class="modify_file_banner btn">
-                                <button class="btn modify_btn_banner">Modifier la bannière</button>
-                                <input type="file" accept=".png,.jpeg,.jpg" class="">
-                            </div>
-                            <!-- Input profile photo -->
-                            <div class="modify_file_profile_photo btn">
-                                <button class="btn modify_btn_profile_photo">Modifier la photo de profil</button>
-                                <input type="file" accept=".png,.jpeg,.jpg" class="">
-                            </div>
+                            <div class="modify_file_container">
+                                <!-- Input banner -->
+                                <div class="modify_file_banner btn">
+                                    <button class="btn modify_btn_banner">Modifier la bannière</button>
+                                    <input type="file" name="banner" accept=".png,.jpeg,.jpg" class="">
+                                </div>
+                                <!-- Input profile photo -->
+                                <div class="modify_file_profile_photo btn">
+                                    <button class="btn modify_btn_profile_photo">Modifier la photo de profil</button>
+                                    <input type="file" name="profile_picture" accept=".png,.jpeg,.jpg" class="">
+                                </div>
 
+                            </div>
                         </div>
-                    </div>
-                    <!-- Inputs username, name, bio.. -->
-                    <div class="modify_input_container">
-                        <form action="settings.php" method="GET">
+                        <!-- Inputs username, name, bio.. -->
+                        <div class="modify_input_container">
                             <div class="all_input_container">
                                 <div class="input_container">
                                     <label for="name">
@@ -247,8 +333,8 @@ if(isset($_GET["change_mdp_btn"])){
                             </div>
 
                             <input type="submit" class="btn modify_btn" name="modify_btn" value="Modifier">
-                        </form>
-                    </div>
+                        </div>
+                    </form>
 
                 </div>
 
@@ -358,7 +444,8 @@ if(isset($_GET["change_mdp_btn"])){
                                 <div class="input_container">
                                     <label for="prev_mdp">
                                         <span>Ancien mot de passe</span>
-                                        <input type="password" class="input_connexion" id="prev_mdp" name="prev_mdp" required>
+                                        <input type="password" class="input_connexion" id="prev_mdp" name="prev_mdp"
+                                            required>
                                     </label>
                                 </div>
 
@@ -366,21 +453,24 @@ if(isset($_GET["change_mdp_btn"])){
                                 <div class="input_container">
                                     <label for="new_mdp">
                                         <span>Nouveau mot de passe</span>
-                                        <input type="password" class="input_connexion" id="new_mdp" name="new_mdp" required>
+                                        <input type="password" class="input_connexion" id="new_mdp" name="new_mdp"
+                                            required>
                                     </label>
-                                        <p class="mdp_restriction">*8 caractères / 1 majuscule / 1 minuscule</p>
+                                    <p class="mdp_restriction">*8 caractères / 1 majuscule / 1 minuscule</p>
                                 </div>
 
 
                                 <div class="input_container">
                                     <label for="confirm_mdp">
                                         <span>Confirmer le nouveau mot de passe</span>
-                                        <input type="password" class="input_connexion" id="confirm_mdp" name="confirm_mdp" required>
+                                        <input type="password" class="input_connexion" id="confirm_mdp"
+                                            name="confirm_mdp" required>
                                     </label>
                                 </div>
 
                             </div>
-                            <input type="submit" class="btn change_mdp_btn" name="change_mdp_btn" value="Changer de mot de passe">
+                            <input type="submit" class="btn change_mdp_btn" name="change_mdp_btn"
+                                value="Changer de mot de passe">
                         </div>
 
                     </form>
@@ -389,10 +479,10 @@ if(isset($_GET["change_mdp_btn"])){
                         <h2 class="settings_title">
                             <div class="red_line settings_title_line"></div>Suspendre / désactiver mon compte
                         </h2>
-                        <p class="delete_link" onclick='popupSuspendAccount()'>Suspendre temporairement mon compte reah</p>
+                        <p class="delete_link" onclick='popupSuspendAccount()'>Suspendre temporairement mon compte reah
+                        </p>
                         <p>Les autres utilisateurs ne pourront plus voir vos œuvres ni voir votre profil mais vous
-                            pourrez
-                            récupérer votre compte à tout moment. </p>
+                            pourrez récupérer votre compte à tout moment. </p>
                     </div>
 
                     <div>
@@ -470,32 +560,33 @@ if(isset($_GET["change_mdp_btn"])){
 
     <!-- Delete account warning -->
 
-<div class='delete_dark_filter' onclick='closePopupSuspendAccount()'></div>
+    <div class='delete_dark_filter' onclick='closePopupSuspendAccount()'></div>
 
 
-<div class='pop_up_container suspend_account_container'>
-    <div class='pop_up_header'>
-        <h2>Suspendre son compte</h2>
-        <img src='sources/img/close_icon.svg' class='delete_close_icon' alt='' onclick='closePopupSupendAccount()'>
+    <div class='pop_up_container suspend_account_container'>
+        <div class='pop_up_header'>
+            <h2>Suspendre son compte</h2>
+            <img src='sources/img/close_icon.svg' class='delete_close_icon' alt='' onclick='closePopupSupendAccount()'>
+        </div>
+        <p class='pop_up_text'>Es-tu sûr de vouloir suspendre ton compte ?</p>
+        <div class='btn pop_up_btn delete_btn'>Suspendre</div>
     </div>
-    <p class='pop_up_text'>Es-tu sûr de vouloir suspendre ton compte ?</p>
-    <div class='btn pop_up_btn delete_btn'>Suspendre</div>
-</div>
 
 
     <!-- Delete account warning -->
 
-<div class='delete_dark_filter' onclick='closePopupDeleteAccount();closePopupSuspendAccount()'></div>
+    <div class='delete_dark_filter' onclick='closePopupDeleteAccount();closePopupSuspendAccount()'></div>
 
 
-<div class='pop_up_container delete_account_container'>
-    <div class='pop_up_header'>
-        <h2>Supprimer son compte</h2>
-        <img src='sources/img/close_icon.svg' class='delete_close_icon' alt='' onclick='closePopupDeleteAccount()'>
+    <div class='pop_up_container delete_account_container'>
+        <div class='pop_up_header'>
+            <h2>Supprimer son compte</h2>
+            <img src='sources/img/close_icon.svg' class='delete_close_icon' alt='' onclick='closePopupDeleteAccount()'>
+        </div>
+        <p class='pop_up_text'>Es-tu sûr de vouloir supprimer ton compte ?</p>
+        <a href='settings.php?delete_account=<?php echo $_COOKIE['userid']?>'
+            class='btn pop_up_btn delete_btn'>Supprimer</a>
     </div>
-    <p class='pop_up_text'>Es-tu sûr de vouloir supprimer ton compte ?</p>
-    <div class='btn pop_up_btn delete_btn'>Supprimer</div>
-</div>
 
 
 

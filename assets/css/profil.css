@@ -632,6 +632,10 @@
     background-color: #af002c;
 }
 
+.unfollow_btn{
+    display: block;
+}
+
 
 @keyframes subscriber_click {
     0% {

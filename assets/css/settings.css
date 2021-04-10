@@ -278,6 +278,14 @@ a:hover{
 .mdp_restriction{
     margin-left: 200px;
 }
+
+.delete_btn{
+    display: block;
+}
+.delete_btn:hover{
+    text-decoration: none;
+}
+
 @keyframes notification_btn_click {
     0% {
         background-color: transparent;

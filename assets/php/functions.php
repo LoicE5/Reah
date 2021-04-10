@@ -45,6 +45,7 @@ class func {
 
     }
 
+
     public static function createString($len){
         $string = "1qay2wsx3edc4rnrenjfne7374Bhh3jef7vve667384bdb6dbh";
         

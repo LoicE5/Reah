@@ -6,6 +6,11 @@ if (isset($_POST["modify_btn"])) {
 if ($_FILES["image"]['error'] == 0) {
 echo "dog";
 }
+
+
+$hashed_password = password_hash($_POST["psw"],PASSWORD_DEFAULT);
+
+echo $hashed_password;
     // $content_dir = 'database/profile_pictures/';
     // $tmp_file = $_FILES['image']['tmp_name'];
     // var_dump($tmp_file);
@@ -45,9 +50,27 @@ echo "dog";
 }
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="assets/js/libraries/jquery/jquery.min.js"></script>
+    <script src="assets/js/test.js"></script>
+</head>
+<body>
+    
+    <form action="" method="post" enctype='multipart/form-data'>
+        <input type="file" accept=".png,.jpeg,.jpg" class="" name="image">
+    
+        <input type="text" name="psw" id="">
+        <input type="submit" name="modify_btn" value="Envoyer">
+    </form>
+    
+    <a href="test.php?id=2">la</a>
+    <div class="ok">a</div>
 
-<form action="" method="post" enctype='multipart/form-data'>
-    <input type="file" accept=".png,.jpeg,.jpg" class="" name="image">
-
-    <input type="submit" name="modify_btn" value="Envoyer">
-</form>
+    
+</body>
+</html>
