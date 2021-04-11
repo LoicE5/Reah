@@ -269,6 +269,7 @@ if (isset($_GET['report_user'])) {
         <div class='dark_filter' onclick="closePopupFilm(this)"></div>
         <div class='subscription_dark_filter' onclick="closePopupSubscription()"></div>
         <div class="like_dark_filter" onclick="closePopupUserLike()"></div>
+        <div class="delete_dark_filter" onclick="closePopupDeleteFilm()"></div>
 
 
         <!-- Navigation menu -->

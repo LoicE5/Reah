@@ -1,7 +1,6 @@
 <?php 
     include('config.php');
     include('vimeo_setup.php');
-
 ?>
 
 
@@ -220,16 +219,16 @@
 
     if (func::checkLoginState($db)) { # If the user isn't connected
 
-        $query = "SELECT * FROM users WHERE user_id = " . $_COOKIE['userid'] . ";";
-        $stmt = $db->prepare($query);
-        $stmt->execute();
+        $query2 = "SELECT * FROM users WHERE user_id = " . $_COOKIE['userid'] . ";";
+        $stmt2 = $db->prepare($query2);
+        $stmt2->execute();
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
 
         echo "
                     <form action='' method='GET'>
                         <div class='write_comment'>
-                            <img src='database/profile_pictures/".$row['user_profile_picture']."' alt='' class='pp_profile'>
+                            <img src='database/profile_pictures/".$row2['user_profile_picture']."' alt='' class='pp_profile'>
                             <textarea class='comment_textarea' name='comment_content' placeholder='Écrire un commentaire...'></textarea>
                             <input type='submit' class='send_comment' name='comment_send' value='".$_GET['id']."'>
                         </div>
@@ -281,7 +280,7 @@
 
                     <div class='comment_settings_container'>";
 
-        if ($row["comment_user_id"] == $_COOKIE["userid"]) {
+        if ($row["comment_user_id"] == $_COOKIE["userid"] || $row2['user_admin'] > 0) {
             echo "
                             <a href='".$url."?accueil=true&delete_comment=" . $row["comment_id"] . "&defi=".$_GET['defi']."'>Supprimer</a>";
         } else {
@@ -345,8 +344,11 @@
             <h2>Supprimer</h2>
             <img src='sources/img/close_icon.svg' class='delete_close_icon' alt='' onclick='closePopupDeleteFilm()'>
         </div>
-        <p class='pop_up_text'>Es-tu sûr de vouloir supprimer ton court-métrage Je t'haine ?</p>
-        <div class='btn pop_up_btn delete_btn'>Supprimer</div>
+        <p class='pop_up_text'>Es-tu sûr de vouloir supprimer ton court-métrage <?php echo $row['video_title']?> ?</p>
+        <form action="" method='POST'>
+            <button type="submit" name="video_delete" value="<?php echo $id ?>" class='btn pop_up_btn delete_btn'>Supprimer</button>
+        </form>
+        <!-- <a href="<?php echo $url."?video_delete=".$id?>" class='btn pop_up_btn delete_btn'>Supprimer</a> -->
     </div>
 </body>
 

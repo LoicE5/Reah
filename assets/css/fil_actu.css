@@ -586,7 +586,7 @@ video:focus {
     display: inline-block;
 }
 
-.film_settings_container>div:hover,
+.film_settings_container>a:hover,
 .comment_settings_container>a:hover {
     background-color: #af002c;
 }
@@ -1034,6 +1034,7 @@ video:focus {
 
     .film {
         width: unset;
+        height: 53vw;
     }
 
     .film_informations_header>div {
@@ -1061,6 +1062,7 @@ video:focus {
         width: unset;
         margin-left: 0;
     }
+
 }
 
 @media screen and (max-width:800px) {

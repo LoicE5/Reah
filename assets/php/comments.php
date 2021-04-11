@@ -53,4 +53,24 @@ if (isset($_GET['report_video'])) {
 
     // header('Location: fil_actu.php?accueil=true');
 }
+
+// Supression d'un court-métrage
+if (isset($_POST['video_delete'])) {
+
+    $video_id = $_POST['video_delete'];
+    
+    $query = "SELECT video_title FROM videos WHERE video_id = '$video_id';";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $sql = "DELETE FROM videos WHERE video_id='$video_id'";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+    
+    $message_true='Ton court-métrage '.$row['video_title'].' a bien été supprimé.';
+
+}
 ?>

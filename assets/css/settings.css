@@ -279,12 +279,7 @@ a:hover{
     margin-left: 200px;
 }
 
-.delete_btn{
-    display: block;
-}
-.delete_btn:hover{
-    text-decoration: none;
-}
+
 
 @keyframes notification_btn_click {
     0% {

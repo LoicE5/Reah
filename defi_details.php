@@ -154,6 +154,7 @@ if (isset($_GET['delete_comment'])) {
         <div class='dark_filter' onclick="closePopupFilm(this)"></div>
         <div class="share_dark_filter" onclick="closePopupShare()"></div>
         <div class="like_dark_filter" onclick="closePopupUserLike()"></div>
+        <div class="delete_dark_filter" onclick="closePopupDeleteFilm()"></div>
 
         <!-- Navigation menu -->
         <nav>
