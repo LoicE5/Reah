@@ -190,4 +190,40 @@ function transformToArray($str){
     return $array;
 }
 
+function uploadFile($file,$path){
+
+    $fileName = $file['name'];
+    $fileTmpName = $file['tmp_name'];
+    $fileSize = $file['size'];
+    $fileError = $file['error'];
+    $fileType = $file['type'];
+
+    $fileExt = explode('.',$fileName);
+    $fileLoweredExt = strtolower(end($fileExt));
+    $fileExt = $fileLoweredExt;
+    
+    $allowed = array('jpg','jpeg','png','tiff','pdf','psd','mp4','mov');
+
+    if(in_array($fileExt, $allowed)){
+        if($fileError == 0){
+
+            if($fileSize < 500000000 /* 500 MB */){
+
+                $fileNameNew = uniqid('',true).".".$fileExt; // Unused for this case
+                $fileDestination = $path.$fileName;
+
+                move_uploaded_file($fileTmpName,$fileDestination);
+                echo "success";
+
+            } else {
+                echo "FILE TOO HEAVY";
+            }
+        } else {
+            echo "ERROR";
+        }
+    } else {
+        echo "WRONG";
+    }
+}
+
 ?>

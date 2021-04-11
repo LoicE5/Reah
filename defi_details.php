@@ -949,7 +949,7 @@ if (isset($_GET['delete_comment'])) {
 
     <!-- Pop up upload films -->
     <div class="pop_up_container upload_container">
-        <form action="" method="POST" enctype='multipart/form-data'>
+        <form action="assets/php/upload.php" method="POST" enctype='multipart/form-data'>
 
             <div class="pop_up_header upload_header">
                 <h2>Déposer un court-métrage</h2>
@@ -1032,8 +1032,10 @@ if (isset($_GET['delete_comment'])) {
                     Règlement de la communauté de REAH. <br>
                     Veillez à ne pas enfreindre les droits d’auteur ni les droits à la vie privée d’autrui.
                 </p>
+                
+                <?php # echo '<input type="text" value="'.$_GET['defi'].'" name="defi" style="display: none;">'; ?>
 
-                <button class="btn btn_send" name="video_send">Valider</button>
+                <button class="btn btn_send" name="video_send" value="<?php echo $_GET['defi']; ?>">Valider</button>
 
             </div>
         </form>
