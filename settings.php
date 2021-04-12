@@ -24,11 +24,11 @@ if(isset($_POST["modify_btn"])){
     if ($_FILES["profile_picture"]['error'] == 0 && $_FILES["banner"]['error'] == 0 ) {
 
         if(!is_uploaded_file($tmp_file_picture) || !is_uploaded_file($tmp_file_banner)) {
-            echo "Le fichier est introuvable.";
+            $message_false = "Le fichier est introuvable.";
         }
     
         if(!move_uploaded_file($tmp_file_picture, $content_dir_picture . $name_file_picture) || !move_uploaded_file($tmp_file_banner, $content_dir_banner . $name_file_banner)){
-            echo "Impossible de copier le fichier dans notre dossier.";
+            $message_false = "Impossible de copier le fichier dans notre dossier.";
         }
 
         $sql = "UPDATE users SET user_profile_picture='$name_file_picture', user_banner='$name_file_banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
@@ -37,11 +37,11 @@ if(isset($_POST["modify_btn"])){
     
 
         if(!is_uploaded_file($tmp_file_picture)) {
-            echo "Le fichier est introuvable.";
+            $message_false = "Le fichier est introuvable.";
         }
     
         if(!move_uploaded_file($tmp_file_picture, $content_dir_picture . $name_file_picture)){
-            echo "Impossible de copier le fichier dans notre dossier.";
+            $message_false = "Impossible de copier le fichier dans notre dossier.";
         }
 
         $sql = "UPDATE users SET user_profile_picture='$name_file_picture', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";
@@ -49,11 +49,11 @@ if(isset($_POST["modify_btn"])){
     } else if ($_FILES["banner"]['error'] == 0 ) {
 
         if(!is_uploaded_file($tmp_file_banner)) {
-            echo "Le fichier est introuvable.";
+            $message_false = "Le fichier est introuvable.";
         }
     
         if(!move_uploaded_file($tmp_file_banner, $content_dir_banner . $name_file_banner)){
-            echo "Impossible de copier le fichier dans notre dossier.";
+            $message_false = "Impossible de copier le fichier dans notre dossier.";
         }
 
         $sql = "UPDATE users SET user_banner='$name_file_banner', user_name='$name', user_website='$website', user_bio='$bio' WHERE user_id='$id'";

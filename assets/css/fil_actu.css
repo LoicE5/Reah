@@ -288,6 +288,12 @@ h1 {
     margin-right: 100px;
 }
 
+.video_poster{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
 .user_container {
     display: flex;
     align-items: center;

@@ -6,31 +6,19 @@ include("ressources/pop_up_connexion.php");
 // include('vimeo_setup.php');
 include('assets/php/comments.php');
 
-
-
-// Ajout d'un commentaire
-if (isset($_GET['comment_send'])) {
-
-    $query = "SELECT * FROM videos, comments WHERE comment_id = " . $_GET['comment_send'] . " AND comment_video_id = video_id;";
-    $stmt = $db->prepare($query);
-    $stmt->execute();
-
-    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+// Vérification de l'existance du défi
+if(isset($_GET['defi'])){
+    $query = "SELECT COUNT(*) as nbr FROM defis WHERE defi_id = '{$_GET['defi']}'";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
     
-    $sql = "INSERT INTO comments (comment_content, comment_video_id, comment_user_id) VALUES (:content, :video_id, :user_id)";
-    
-    $attributes = array(
-        'content' => addslashes($_GET["comment_content"]),
-        'video_id' => $_GET['comment_send'],
-        'user_id' => $_COOKIE['userid'],
-    );
-    
-    $stmt = $db->prepare($sql);
-    
-    $stmt->execute($attributes);
-    
-    header('Location: defi_details.php?defi='.$row['video_defi_id']);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($row['nbr'] <= 0) {
+            redirect('defis.php');
+        }
 }
+
+
 
 
 // Supression d'un commentaire
@@ -91,11 +79,11 @@ if (isset($_GET['delete_comment'])) {
     // if ($_FILES["video"]['error'] == 0) {
 
         if(!is_uploaded_file($tmp_file_video)) {
-            echo "Le fichier est introuvable.";
+            $message_false = "Le fichier est introuvable.";
         }
     
         if(!move_uploaded_file($tmp_file_video, $content_dir_video . $name_file_video)){
-            echo "Impossible de copier le fichier dans notre dossier.";
+            $message_false = "Impossible de copier le fichier dans notre dossier.";
         }
     // }
         $sql = "INSERT INTO videos (video_url, video_title, video_user_id, video_synopsis, video_poster, video_genre, video_defi_id) VALUES (:url, :title, :user_id, :synopsis, :poster, :genre, :collab, :defi_id)";
@@ -147,6 +135,18 @@ if (isset($_GET['delete_comment'])) {
         <p class="message_true_container">
                 '.$message_true.'
         </p>';
+    }
+    if (isset($_GET['upload'])) {
+        echo '
+        <p class="message_true_container">
+                Ton court-métrage a bien été déposé.
+        </p>';
+    }
+    if (isset($message_false)) {
+        echo '
+        <p class="message_false_container">'
+                .$message_false.
+        '</p>';
     }
     ?>
     <main class="main_content">
@@ -360,7 +360,13 @@ if (isset($_GET['delete_comment'])) {
                     <div class='video_container'>
 
                         <!-- Short film (class=video) -->
-                        <div class='video_content'>
+                        <div class='video_content'>";
+            if($row['video_poster'] != ''){
+                echo"
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+            }
+
+            echo"
                         <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
 
                             <!-- Name + pp -->
@@ -526,7 +532,13 @@ if (isset($_GET['delete_comment'])) {
                                 echo "<div class='video_container'>
         
                                 <!-- Short film (class=video) -->
-                                <div class='video_content'>
+                                <div class='video_content'>";
+            if($row['video_poster'] != ''){
+                echo"
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+            }
+
+            echo"
                                 <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
 
                                     <!-- Name + pp -->
@@ -672,7 +684,13 @@ if (isset($_GET['delete_comment'])) {
                             <div class='video_container'>
         
                                 <!-- Short film (class=video) -->
-                                <div class='video_content'>
+                                <div class='video_content'>";
+            if($row['video_poster'] != ''){
+                echo"
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+            }
+
+            echo"
                                 <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
 
                                     <!-- Name + pp -->
@@ -819,7 +837,13 @@ if (isset($_GET['delete_comment'])) {
                             <div class='video_container'>
         
                                 <!-- Short film (class=video) -->
-                                <div class='video_content'>
+                                <div class='video_content'>";
+            if($row['video_poster'] != ''){
+                echo"
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+            }
+
+            echo"
                                 <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
 
                                     <!-- Name + pp -->
@@ -989,18 +1013,53 @@ if (isset($_GET['delete_comment'])) {
                     <div class="input_container">
                         <label for="genre">
                             <span>Genres</span>
-                            <div class="input_tag_container">
-                                <p class="input_tag">Action X</p>
-                                <p class="input_tag">Thriller X</p>
+                            <div class="input_tag_container_genre">
 
                             </div>
-                            <input type="text" class="input_connexion" id="genre" name="genre" required>
+                            <input type="text" class="input_connexion" id="genre" name="genre" value="" required
+                                style="display:none">
+
+                            <select id="genre_select" required>
+                                <option id="option_genre_selected" value="" selected disabled>Choisis des genres
+                                </option>
+                                <option id="option_genre" value="Action">Action</option>
+                                <option id="option_genre" value="Comédie">Comédie</option>
+                                <option id="option_genre" value="Documentaire">Documentaire</option>
+                                <option id="option_genre" value="Drame">Drame</option>
+                                <option id="option_genre" value="Horreur">Horreur</option>
+                                <option id="option_genre" value="Intrigues">Intrigues</option>
+                                <option id="option_genre" value="Policier">Policier</option>
+                                <option id="option_genre" value="Romance">Romance</option>
+                                <option id="option_genre" value="Science-fiction">Science-fiction</option>
+                                <option id="option_genre" value="Fantastique">Fantastique</option>
+                                <option id="option_genre" value="Thriller">Thriller</option>
+                            </select>
                         </label>
                     </div>
                     <div class="input_container">
                         <label for="collab">
                             <span>Collaborateurs</span>
-                            <input type="text" class="input_connexion" id="collab" name="collab" required>
+                            <input type="text" class="input_connexion" id="collab" name="collab" style="display:none">
+                            <div class="input_tag_container_collab">
+
+                            </div>
+                            <select id="collab_select">
+                                <option id="option_collab_selected" value="" selected disabled>Choisis des
+                                    collaborateurs</option>
+
+                                <?php
+                                 $query = "SELECT * FROM users WHERE user_id != " . $_COOKIE['userid'] . ";";
+                                 $stmt = $db->prepare($query);
+                                 $stmt->execute();
+                 
+                                 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                 foreach($rows as $row){
+                                     echo'
+                                        <option id="option_collab" value="'.$row['user_username'].'" user_id="'.$row['user_id'].'">'.$row['user_username'].'</option>
+                                     ';
+                                 }
+                                ?>
+                            </select>
                         </label>
                     </div>
                 </div>
@@ -1010,7 +1069,7 @@ if (isset($_GET['delete_comment'])) {
                     <!-- Input upload video -->
                     <div class="file_video btn">
                         <button class="btn file_video_btn">Sélectionner un fichier</button>
-                        <input type="file" name="video" class="">
+                        <input type="file" name="video" class="" accept="video/*" required>
                     </div>
 
                     <!-- Video preview -->
@@ -1019,7 +1078,7 @@ if (isset($_GET['delete_comment'])) {
                     <!-- Input upload poster -->
                     <div class="file_poster btn">
                         <button class="btn file_poster_btn">Sélectionner une miniature</button>
-                        <input type="file" name="poster" class="">
+                        <input type="file" name="poster" class="" accept='.jpg,.jpeg,.png'>
                     </div>
                 </div>
 
@@ -1032,7 +1091,7 @@ if (isset($_GET['delete_comment'])) {
                     Règlement de la communauté de REAH. <br>
                     Veillez à ne pas enfreindre les droits d’auteur ni les droits à la vie privée d’autrui.
                 </p>
-                
+
                 <?php # echo '<input type="text" value="'.$_GET['defi'].'" name="defi" style="display: none;">'; ?>
 
                 <button class="btn btn_send" name="video_send" value="<?php echo $_GET['defi']; ?>">Valider</button>

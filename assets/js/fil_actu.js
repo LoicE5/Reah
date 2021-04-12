@@ -98,4 +98,11 @@ $(document).ready(function () {
         $('#saved_container').append("<p class='void'>Tu n'as enregistré aucun court-métrage.</p>");
     }
 
+    // $(".video_poster").hover(function(){
+    //     $(this).fadeOut(500);
+    // })
+    // $(".video_poster").mouseout(function(){
+    //     $(this).fadeIn(500);
+    // })
+
 })

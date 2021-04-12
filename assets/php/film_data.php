@@ -178,7 +178,7 @@
                     <p class='distribution_container'><span>Distribution</span> <br>";
                     echo '<a href="profil.php?id='.$row['user_id'].'">@'.$row['user_username'].'</a> &emsp;&emsp;';
                     
-                    $query2 = "SELECT * FROM videos, users, `distribution` WHERE distribution_user_id=user_id AND distribution_video_id = '{$row['video_id']}' AND video_id = '{$row['video_id']}'";
+                    $query2 = "SELECT * FROM videos, users, `distribution` WHERE distribution_user_id=user_id AND distribution_video_id = '{$row['video_url']}' AND video_id = '{$row['video_id']}'";
                     $stmt2 = $db->prepare($query2);
                     $stmt2->execute();
     
@@ -226,7 +226,7 @@
         $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
 
         echo "
-                    <form action='' method='GET'>
+                    <form action='' method='POST'>
                         <div class='write_comment'>
                             <img src='database/profile_pictures/".$row2['user_profile_picture']."' alt='' class='pp_profile'>
                             <textarea class='comment_textarea' name='comment_content' placeholder='Écrire un commentaire...'></textarea>

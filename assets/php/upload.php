@@ -7,7 +7,6 @@ ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 error_reporting(E_ALL);
 
-
 $title = $_POST['title'];
 $synopsis = $_POST['synopsis'];
 $genre = $_POST['genre'];
@@ -16,6 +15,12 @@ $defi_id = $_POST['video_send'];
 
 $user_id = $_COOKIE['userid'];
 
+// Poster
+$content_dir_poster = '../../database/videos_posters/';
+$tmp_file_poster = $_FILES['poster']['tmp_name'];
+$name_file_poster = basename($_FILES['poster']['name']);
+
+// Video
 $video = $_FILES['video'];
 $video_name = $video['name'];
 $temp_path = "../../temp/";
@@ -36,13 +41,41 @@ echo "Your video URI is: $uri";
 $vimeo_url_array = explode("/videos/",$uri);
 $vimeo_url = $vimeo_url_array[1];
 
-$query = "INSERT INTO videos(video_vimeo_id,video_url,video_title,video_user_id,video_synopsis,video_genre,video_defi_id) VALUES ('$vimeo_url','$vimeo_url','$title',$user_id,'$synopsis','$genre',$defi_id);";
+$collab_array = explode(", ", $collab);
+
+// Si l'utilisateur a ajouté un poster
+if ($_FILES["poster"]['error'] == 0 ) {
+    
+
+    if(!is_uploaded_file($tmp_file_poster)) {
+        echo "Le fichier est introuvable.";
+    }
+
+    if(!move_uploaded_file($tmp_file_poster, $content_dir_poster . $name_file_poster)){
+        echo "Impossible de copier le fichier dans notre dossier.";
+    }
+
+    $query = "INSERT INTO videos(video_vimeo_id,video_url,video_title,video_user_id,video_synopsis,video_poster,video_genre,video_defi_id, video_distribution) VALUES ('$vimeo_url','$vimeo_url','$title',$user_id,'$synopsis','$name_file_poster','$genre','$defi_id','$collab')"; 
+
+}else {
+    
+    $query = "INSERT INTO videos(video_vimeo_id,video_url,video_title,video_user_id,video_synopsis,video_genre,video_defi_id, video_distribution) VALUES ('$vimeo_url','$vimeo_url','$title',$user_id,'$synopsis','$genre','$defi_id','$collab')"; 
+}
+
 $stmt = $db->prepare($query);
 $stmt->execute();
+
+foreach($collab_array as $collab_id){
+    $query2 = "INSERT INTO distribution(distribution_user_id, distribution_video_id) VALUES ('$collab_id', $vimeo_url)";
+    $stmt2 = $db->prepare($query2);
+    $stmt2->execute();
+
+}
+
 
 exec("rm -rf ../../temp/*");
 
 sleep(2);
-redirect("../../defi_details.php?defi=$defi_id");
+redirect("../../defi_details.php?defi=$defi_id&upload=true");
 
 ?>

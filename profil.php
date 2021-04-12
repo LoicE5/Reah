@@ -7,6 +7,17 @@ include("ressources/pop_up_connexion.php");
 // include("ressources/pop_up_share.php");
 include('assets/php/comments.php');
 
+// Vérification de l'existance du profil
+if(isset($_GET['id'])){
+    $query = "SELECT COUNT(*) as nbr FROM users WHERE user_id = '{$_GET['id']}'";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+    
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        if($row['nbr'] <= 0) {
+            redirect('login.php');
+        }
+}
 
 // Ajout d'un commentaire
 if (isset($_GET['comment_send'])) {
@@ -179,8 +190,11 @@ if (isset($_GET["delete_subscription"])) {
 
     $stmt->execute();
 
-
-    // header('Refresh:0; url=profil.php?id=11');
+    if(isset($_GET['id'])){
+        redirect('?id='.$_GET['id']);
+    } else {
+        redirect('profil.php');
+    }
 }
 
 // Supprimer un utilisateur de ses abonnés
@@ -194,8 +208,7 @@ if (isset($_GET["delete_subscriber"]) && !isset($_GET["delete_subscription"])) {
 
     $stmt->execute();
 
-    
-    header('Refresh:0; url=profil.php?id=' . $_GET['id']);
+    redirect('profil.php');
 }
 
 // Signalement d'un utilisateur
@@ -220,7 +233,9 @@ if (isset($_GET['report_user'])) {
 
     $stmt->execute();
 
-    // header('Location: fil_actu.php?accueil=true');
+    if(isset($_GET['id'])){
+        redirect('?id='.$_GET['id']);
+    }
 }
 
 ?>
@@ -265,7 +280,7 @@ if (isset($_GET['report_user'])) {
     }
     ?>
 
-<div class="share_dark_filter" onclick="closePopupShare()"></div>
+        <div class="share_dark_filter" onclick="closePopupShare()"></div>
         <div class='dark_filter' onclick="closePopupFilm(this)"></div>
         <div class='subscription_dark_filter' onclick="closePopupSubscription()"></div>
         <div class="like_dark_filter" onclick="closePopupUserLike()"></div>
@@ -583,7 +598,13 @@ if (isset($_GET['report_user'])) {
                         <div class='video_container'>
         
                             <!-- Short film -->
-                            <div class='video_content'>
+                            <div class='video_content'>";
+            if($row['video_poster'] != ''){
+                echo"
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+            }
+
+            echo"
                                             <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
         
         
@@ -707,7 +728,13 @@ if (isset($_GET['report_user'])) {
                         <div class='video_container'>
         
                             <!-- Short film -->
-                            <div class='video_content'>
+                            <div class='video_content'>";
+            if($row['video_poster'] != ''){
+                echo"
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+            }
+
+            echo"
                                             <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
         
         
@@ -849,7 +876,13 @@ if (isset($_GET['report_user'])) {
                 <div class='video_container'>
 
                     <!-- Short film -->
-                    <div class='video_content'>
+                    <div class='video_content'>";
+            if($row['video_poster'] != ''){
+                echo"
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+            }
+
+            echo"
                                     <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
 
 
@@ -985,7 +1018,13 @@ if (isset($_GET['report_user'])) {
                     <div class='video_container'>
     
                         <!-- Short film -->
-                        <div class='video_content'>
+                        <div class='video_content'>";
+            if($row['video_poster'] != ''){
+                echo"
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+            }
+
+            echo"
                                         <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
     
     

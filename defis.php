@@ -9,21 +9,21 @@ include("ressources/pop_up_connexion.php");
 
 
 
-if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['constraints'])) {
-    $title = $_GET['title'];
+if (isset($_POST['send']) && isset($_POST['title']) && isset($_POST['constraints'])) {
+    $title = $_POST['title'];
     if ($title == ' ') {
         $message = 'Le nom choisi est invalide.';
     } else {
-        // $title = $_GET['title'];
-        // $constraints = $_GET['constraints'];
+        // $title = $_POST['title'];
+        // $constraints = $_POST['constraints'];
         // $requete = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_poster) VALUES ($title, $constraints, NULL, NULL)";
         // $stmt=$db->query($requete);
 
         $sql = "INSERT INTO defis (defi_name, defi_description, defi_timestamp, defi_image, defi_user_id, defi_verified, defi_current) VALUES (:title, :constraints, default, NULL, :user, 0, 0)";
 
         $attributes = array(
-            'title' => addslashes($_GET['title']),
-            'constraints' => addslashes($_GET['constraints']),
+            'title' => addslashes($_POST['title']),
+            'constraints' => addslashes($_POST['constraints']),
             'user' => $_COOKIE['userid']
         );
 
@@ -32,6 +32,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['constraints'])
         $stmt->execute($attributes);
 
         header('Location: defis.php?success=true');
+        
     }
 }
 
@@ -292,7 +293,7 @@ if (isset($_GET['send']) && isset($_GET['title']) && isset($_GET['constraints'])
     <div class="dark_filter" onclick="closePopupAddDefi()"></div>
 
     <div class="pop_up_container add_defi_container">
-        <form action="defis.php?success=true" method=GET>
+        <form action="defis.php" method=POST>
             <div class="pop_up_header">
                 <h2>Proposer un défi</h2>
                 <img src='sources/img/close_icon.svg' class='close_icon' alt='' onclick="closePopupAddDefi()">

@@ -7,26 +7,6 @@ include("ressources/pop_up_connexion.php");
 // include("ressources/pop_up_share.php");
 include('assets/php/comments.php');
 
-// Ajout d'un commentaire
-if (isset($_GET['comment_send'])) {
-
-    // var_dump($_GET["comment_content"]);
-    // var_dump($_COOKIE["userid"]);
-
-    $sql = "INSERT INTO comments (comment_content, comment_video_id, comment_user_id) VALUES (:content, :video_id, :user_id)";
-
-    $attributes = array(
-        'content' => addslashes($_GET["comment_content"]),
-        'video_id' => $_GET['comment_send'],
-        'user_id' => $_COOKIE['userid'],
-    );
-
-    $stmt = $db->prepare($sql);
-
-    $stmt->execute($attributes);
-
-}
-
 
 // Supression d'un commentaire
 if (isset($_GET['delete_comment'])) {
@@ -263,7 +243,13 @@ if (isset($_GET['delete_comment'])) {
         <div class='video_container'>
 
             <!-- Short film (class=video) -->
-            <div class='video_content'>
+            <div class='video_content'>";
+            if($row['video_poster'] != ''){
+                echo"
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+            }
+
+            echo"
             <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
                 <!-- Name + pp -->
                 <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
@@ -350,9 +336,14 @@ if (isset($_GET['delete_comment'])) {
                         foreach ($rows as $row) {
                             echo "<!-- Video container -->
         <div class='video_container'>
+        <!-- Short film (class=video) -->
+            <div class='video_content'>";
+            if($row['video_poster'] != ''){
+                echo"
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+            }
 
-            <!-- Short film (class=video) -->
-            <div class='video_content'>
+            echo"
             <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
                 <!-- Name + pp -->
                 <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
@@ -509,7 +500,13 @@ if (isset($_GET['delete_comment'])) {
         <div class='video_container'>
 
             <!-- Short film (class=video) -->
-            <div class='video_content'>
+            <div class='video_content'>";
+            if($row['video_poster'] != ''){
+                echo"
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+            }
+
+            echo"
             <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
                 <!-- Name + pp -->
                 <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>
@@ -659,7 +656,13 @@ if (isset($_GET['delete_comment'])) {
         <div class='video_container'>
 
             <!-- Short film (class=video) -->
-            <div class='video_content'>
+            <div class='video_content'>";
+            if($row['video_poster'] != ''){
+                echo"
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+            }
+
+            echo"
             <iframe src='https://player.vimeo.com/video/" . $row['video_url'] . "' frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen class='video'></iframe>
                 <!-- Name + pp -->
                 <a href='profil.php?id=" . $row['user_id'] . "' class='user_container'>

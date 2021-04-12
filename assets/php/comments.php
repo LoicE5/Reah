@@ -1,8 +1,31 @@
 <?php
 
-
-
 // --------------------------------- Commentaires --------------------------------
+
+// Ajout d'un commentaire
+if (isset($_POST['comment_send'])) {
+
+    $query = "SELECT * FROM videos, comments WHERE comment_id = " . $_POST['comment_send'] . " AND comment_video_id = video_id;";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    $sql = "INSERT INTO comments (comment_content, comment_video_id, comment_user_id) VALUES (:content, :video_id, :user_id)";
+    
+    $attributes = array(
+        'content' => addslashes($_POST["comment_content"]),
+        'video_id' => $_POST['comment_send'],
+        'user_id' => $_COOKIE['userid'],
+    );
+    
+    $stmt = $db->prepare($sql);
+    
+    $stmt->execute($attributes);
+    
+    // header('Location: defi_details.php?defi='.$row['video_defi_id']);
+}
+
 
 // Signalement d'un commentaire
 if (isset($_GET['report_comment'])) {

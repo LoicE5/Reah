@@ -47,11 +47,11 @@ if (isset($_POST['modify_btn'])) {
     if ($_FILES["image"]['error'] == 0 ) {
 
         if(!is_uploaded_file($tmp_file_image)) {
-            echo "Le fichier est introuvable.";
+            $message_false = "Le fichier est introuvable.";
         }
     
         if(!move_uploaded_file($tmp_file_image, $content_dir_image . $name_file_image)){
-            echo "Impossible de copier le fichier dans notre dossier.";
+            $message_false = "Impossible de copier le fichier dans notre dossier.";
         }
 
         $query = "UPDATE defis SET defi_name='$name', defi_description='$description', defi_timestamp='$date', defi_image='$name_file_image', defi_user_id='$user' WHERE defi_id = '$defi_id';";
@@ -97,6 +97,12 @@ if (isset($message_true)) {
         echo '
         <p class="message_true_container">'
                 .$message_true.
+        '</p>';
+    }
+    if (isset($message_false)) {
+        echo '
+        <p class="message_false_container">'
+                .$message_false.
         '</p>';
     }
     ?>

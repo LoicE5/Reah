@@ -308,9 +308,11 @@ $(document).ready(function () {
         let videoParent = $(this).parent();
         const video = document.querySelector('.video');
         let user_container = $(videoParent).find(".user_container");
+        let video_poster = $(videoParent).find(".video_poster");
         $(user_container).addClass("user_container_mouseout");
         $(videoParent).find(".time").fadeOut();
         this.setAttribute("controls", "controls");
+        // $(video_poster).addClass('fadeOut0to100');
 
         $(this).mouseout(function () {
             const video = document.querySelector('.video');
@@ -318,16 +320,15 @@ $(document).ready(function () {
             $(user_container).addClass("user_container_hover").removeClass("user_container_mouseout");
             $(videoParent).find(".time").fadeIn();
             this.removeAttribute("controls", "controls");
+            // $(video_poster).removeClass('fadeOut0to100');
+
         })
+
     })
 
-    // Film hover
-    $(".film").hover(function toggleControls() {
-        this.setAttribute("controls", "controls");
 
-        $(this).mouseout(function () {
-            this.removeAttribute("controls", "controls");
-        })
+    $(".video_poster").click(function(){
+        $(this).hide();
     })
 
 })

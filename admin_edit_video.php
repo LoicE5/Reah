@@ -43,8 +43,28 @@ if (isset($_POST['modify_btn'])) {
     $distribution = addslashes($_POST['distribution']);
     $like = addslashes($_POST['like']);
     $report = addslashes($_POST['report']);
+
+    $content_dir_poster = 'database/videos_posters/';
+    $tmp_file_poster = $_FILES['poster']['tmp_name'];
+    $name_file_poster = basename($_FILES['poster']['name']);
+
+    if ($_FILES["poster"]['error'] == 0 ) {
+
+        if(!is_uploaded_file($tmp_file_poster)) {
+            $message_false = "Le fichier est introuvable.";
+        }
     
-    $query = "UPDATE videos SET video_url='$url', video_title='$title', video_user_id='$realisateur', video_synopsis='$synopsis', video_genre='$genre', video_defi_id='$defi', video_duration='$duration', video_date='$date', video_distribution='$distribution', video_like_number='$like', video_report_id='$report' WHERE video_id = '$video_id';";
+        if(!move_uploaded_file($tmp_file_poster, $content_dir_poster . $name_file_poster)){
+            $message_false = "Impossible de copier le fichier dans notre dossier.";
+        }
+
+        $query = "UPDATE videos SET video_url='$url', video_title='$title', video_user_id='$realisateur', video_synopsis='$synopsis', video_poster='$name_file_poster', video_genre='$genre', video_defi_id='$defi', video_duration='$duration', video_date='$date', video_distribution='$distribution', video_like_number='$like', video_report_id='$report' WHERE video_id = '$video_id';";
+
+    } else {
+        $query = "UPDATE videos SET video_url='$url', video_title='$title', video_user_id='$realisateur', video_synopsis='$synopsis', video_genre='$genre', video_defi_id='$defi', video_duration='$duration', video_date='$date', video_distribution='$distribution', video_like_number='$like', video_report_id='$report' WHERE video_id = '$video_id';";
+        
+    }
+    
     $stmt = $db->prepare($query);
     $stmt->execute();
     
@@ -81,6 +101,13 @@ if (isset($message_true)) {
         echo '
         <p class="message_true_container">'
                 .$message_true.
+        '</p>';
+    }
+
+    if (isset($message_false)) {
+        echo '
+        <p class="message_false_container">'
+                .$message_false.
         '</p>';
     }
     ?>
@@ -160,7 +187,7 @@ if (isset($_GET['id'])) {
         ?>
         </h1>
 
-        <form action="" method="POST">
+        <form action="" method="POST" enctype='multipart/form-data'>
             <div class="all_input_container">
                 <div class="input_container">
                     <label for="url">URL </label>
@@ -212,10 +239,11 @@ if (isset($_GET['id'])) {
                         value="<?php echo $row['video_date'];?>">
 
                 </div>
-                
-                    <?php 
+
+                <?php 
                         
-                        $query2 = "SELECT distribution_user_id, user_username FROM videos,distribution, users WHERE distribution_video_id = '$video_id' AND video_id = '$video_id' AND distribution_user_id = user_id;";
+                        $video_url = $row['video_url'];
+                        $query2 = "SELECT distribution_user_id, user_username FROM videos,distribution, users WHERE distribution_video_id = '1' AND video_id = '$video_id' AND distribution_user_id = user_id;";
                         $stmt2 = $db->prepare($query2);
                         $stmt2->execute();
                         $rows2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
@@ -230,7 +258,7 @@ if (isset($_GET['id'])) {
                         
                         
                         ?>
-                
+
 
                 <div class="input_container">
                     <label for="like">Likes</label>
@@ -245,6 +273,13 @@ if (isset($_GET['id'])) {
                         value="<?php echo $row['video_report_id'];?>">
 
                 </div>
+
+                <div class="input_container">
+                    <label for="poster">Poster </label>
+                    <img src="database/videos_posters/<?php echo $row['video_poster'];?>" alt="" class="defi_img">
+                    <input type="file" name="poster" id="poster" accept='.jpeg,.jpg,.png'>
+                </div>
+
             </div>
 
             <input type="submit" class="btn modify_btn" name="modify_btn" value="Modifier">
