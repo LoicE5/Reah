@@ -8,20 +8,6 @@ include("ressources/pop_up_connexion.php");
 include('assets/php/comments.php');
 
 
-// Supression d'un commentaire
-if (isset($_GET['delete_comment'])) {
-
-    $comment_id = $_GET['delete_comment'];
-    $user_id = $_COOKIE['userid'];
-    $sql = "DELETE FROM comments WHERE comment_user_id='$user_id' AND comment_id='$comment_id'";
-
-    $stmt = $db->prepare($sql);
-
-    $stmt->execute();
-
-    // header('Location: fil_actu.php?accueil=true');
-}
-
 ?>
 
 <!DOCTYPE html>

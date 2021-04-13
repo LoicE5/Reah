@@ -328,5 +328,105 @@ $(document).ready(function () {
         $(this).hide();
     })
 
+
+
+    $('#genre_select').change(function () {
+        let genreTitle = $(this).find("option:selected").attr("value");
+        const op = document.querySelectorAll("#genre_select option#option_genre");
+
+        // Ajout d'un genre
+        $(".input_tag_container_genre").append(`<p class="input_tag_genre" value="${genreTitle}">${genreTitle} X</p>`);
+
+        for (let i = 0; i < op.length; i++) {
+            (op[i].value == genreTitle || op[i].disabled == true) ?
+                op[i].disabled = true : op[i].disabled = false;
+            
+        }
+
+        // Qd on supprime un ge re
+        $(".input_tag_genre").click(function () {
+            let inputTitle = $(this).attr("value");
+            $(this).remove();
+
+            for (let i = 0; i < op.length; i++) {
+                (op[i].value == inputTitle || op[i].disabled == false) ?
+                op[i].disabled = false : op[i].disabled = true;
+            }
+
+
+            if ($('.input_tag_genre').text().length == 0) {
+                const op = document.querySelectorAll("#genre_select option#option_genre_selected");
+                for (let i = 0; i < op.length; i++) {
+                    op[i].selected = true;
+                }
+            }
+        })
+    })
+
+    $('#collab_select').change(function () {
+        let collabTitle = $(this).find("option:selected").attr("value");
+        let arraycollab = [];
+        const op = document.querySelectorAll("#collab_select option#option_collab");
+
+        // Ajout d'un collab
+        $(".input_tag_container_collab").append(`<p class="input_tag_collab" value="${collabTitle}">@${collabTitle} X</p>`);
+
+        for (let i = 0; i < op.length; i++) {
+            (op[i].value == collabTitle || op[i].disabled == true) ?
+                op[i].disabled = true : op[i].disabled = false;
+            
+        }
+
+        // Qd on supprime un collab
+        $(".input_tag_collab").click(function () {
+            let inputTitle = $(this).attr("value");
+            $(this).remove();
+
+            for (let i = 0; i < op.length; i++) {
+                (op[i].value == inputTitle || op[i].disabled == false) ?
+                op[i].disabled = false: op[i].disabled = true;
+            }
+
+            if ($('.input_tag_collab').text().length == 0) {
+                const op = document.querySelectorAll("#collab_select option#option_collab_selected");
+                for (let i = 0; i < op.length; i++) {
+                    op[i].selected = true;
+                }
+            }
+
+        })
+    })
+
+    $(".btn_send").click(function(){
+        let arrayCollab = [];
+        let arrayGenre = [];
+        const op_collab = document.querySelectorAll("#collab_select option#option_collab");
+        const op_genre = document.querySelectorAll("#genre_select option#option_genre");
+
+        // Collab
+        for (let i = 0; i < op_collab.length; i++) {
+            if (op_collab[i].disabled == true) {
+                let user_id = $(op_collab[i]).attr('user_id');
+                let arrayPush = arrayCollab.push(user_id);
+                // console.log(op_collab[i].value)
+            } 
+        }
+
+        // Genre
+        for (let i = 0; i < op_genre.length; i++) {
+            if (op_genre[i].disabled == true) {
+                let arrayPush = arrayGenre.push(op_genre[i].value);
+                // console.log(op_genre[i].value)
+            } 
+        }
+        // console.log(arraygenre)
+        let collabList = arrayCollab.join(', ');
+            $("#collab").attr('value', collabList);
+        console.log($("#collab").attr('value'))
+
+            let genreList = arrayGenre.join(', ');
+            $("#genre").attr('value', genreList);
+        console.log($("#genre").attr('value'))
+    })
 })
 

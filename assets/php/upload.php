@@ -7,8 +7,8 @@ ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
 error_reporting(E_ALL);
 
-$title = $_POST['title'];
-$synopsis = $_POST['synopsis'];
+$title = addslashes($_POST['title']);
+$synopsis = addslashes($_POST['synopsis']);
 $genre = $_POST['genre'];
 $collab = $_POST['collab'];
 $defi_id = $_POST['video_send'];
@@ -23,6 +23,7 @@ $name_file_poster = basename($_FILES['poster']['name']);
 // Video
 $video = $_FILES['video'];
 $video_name = $video['name'];
+$video_size = $video['size'];
 $temp_path = "../../temp/";
 
 uploadFile($video,$temp_path);
@@ -43,23 +44,31 @@ $vimeo_url = $vimeo_url_array[1];
 
 $collab_array = explode(", ", $collab);
 
+$duration = $file['playtime_string'];
+
 // Si l'utilisateur a ajouté un poster
 if ($_FILES["poster"]['error'] == 0 ) {
-    
 
-    if(!is_uploaded_file($tmp_file_poster)) {
-        echo "Le fichier est introuvable.";
+    if($video_size < 990000000){
+
+        
+        
+        if(!is_uploaded_file($tmp_file_poster)) {
+        $message_false = "Le fichier est introuvable.";
     }
-
-    if(!move_uploaded_file($tmp_file_poster, $content_dir_poster . $name_file_poster)){
-        echo "Impossible de copier le fichier dans notre dossier.";
+        
+        if(!move_uploaded_file($tmp_file_poster, $content_dir_poster . $name_file_poster)){
+        $message_false = "Impossible de copier le fichier dans notre dossier.";
     }
-
-    $query = "INSERT INTO videos(video_vimeo_id,video_url,video_title,video_user_id,video_synopsis,video_poster,video_genre,video_defi_id, video_distribution) VALUES ('$vimeo_url','$vimeo_url','$title',$user_id,'$synopsis','$name_file_poster','$genre','$defi_id','$collab')"; 
-
+        
+        $query = "INSERT INTO videos(video_vimeo_id,video_url,video_title,video_user_id,video_synopsis,video_poster,video_genre,video_defi_id, video_distribution, video_duration) VALUES ('$vimeo_url','$vimeo_url','$title',$user_id,'$synopsis','$name_file_poster','$genre','$defi_id','$collab', '00:$duration')"; 
+        
+    } else {
+        $message_false = "La vidéo est trop lourde.";
+    }
 }else {
     
-    $query = "INSERT INTO videos(video_vimeo_id,video_url,video_title,video_user_id,video_synopsis,video_genre,video_defi_id, video_distribution) VALUES ('$vimeo_url','$vimeo_url','$title',$user_id,'$synopsis','$genre','$defi_id','$collab')"; 
+    $query = "INSERT INTO videos(video_vimeo_id,video_url,video_title,video_user_id,video_synopsis,video_genre,video_defi_id, video_distribution, video_duration) VALUES ('$vimeo_url','$vimeo_url','$title',$user_id,'$synopsis','$genre','$defi_id','$collab', '00:$duration')"; 
 }
 
 $stmt = $db->prepare($query);

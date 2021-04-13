@@ -324,11 +324,11 @@ h1 {
     min-height: 38px;
     width: 38px;
     min-width: 38px;
-    z-index: 100;
+    z-index: 99;
 }
 
 .user_container>.pseudo {
-    z-index: 100;
+    z-index: 99;
     color: white;
 }
 
@@ -436,6 +436,47 @@ video:focus {
 .video_content_click {
     transform: translate(-500px);
     transition: ease 2s;
+}
+
+.modify_film_container{
+    display: none;
+    width: 600px;
+}
+
+
+.modify_film_input_container{
+    padding: 50px;
+    padding-top: 0;
+    display: flex;
+align-items: center;
+flex-direction: column;
+
+}
+
+.modify_film_container .modify_close_icon{
+    margin: 0;
+}
+
+.modify_film_input_container .input_connexion{
+    width: 450px;
+}
+
+.modify_film_input_container .modify_file_banner{
+    margin-top: 40px;
+}
+
+.input_synopsis{
+    max-width: 450px;
+}
+
+.modify_film_btn{
+    display: block;
+    font-size: 1rem;
+    border: none;
+width: 250px;
+margin-top: 50px;
+font-family: 'Montserrat', sans-serif;
+line-height: unset;
 }
 
 @keyframes information_arrow_hover {

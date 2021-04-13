@@ -614,3 +614,21 @@ function closePopupSubscription() {
     $(".subscription_dark_filter").removeClass("show");
     $(".main_content").removeClass("scroll_none");
 }
+
+    // Pop up to modify film
+   function popupEditFilm() {
+        $(".modify_film_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+        $(".dark_filter").addClass("show fixed");
+        $(".main_content").addClass("scroll_none")
+    }
+    function closePopupEditFilm() {
+        $(".modify_film_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+        $(".dark_filter").removeClass("show");
+        $(".main_content").removeClass("scroll_none")
+    }
+
+
+
+ function posterHide(e){
+        $(e).hide();
+    }

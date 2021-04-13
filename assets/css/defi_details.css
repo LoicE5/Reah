@@ -223,34 +223,7 @@ form {
     color: var(--text);
 }
 
-.input_tag_container_genre,.input_tag_container_collab {
-    display: flex;
-    max-width: 300px;
-    flex-wrap: wrap;
-}
 
-.input_tag_genre,.input_tag_collab {
-    /* border-radius: 100px; */
-    border: 1px #D60036 solid;
-    font-size: 0.8rem;
-    padding: 2px;
-    padding-left: 5px;
-    padding-right: 5px;
-    margin-right: 5px;
-    margin-bottom: 0;
-}
-
-.input_tag_genre:hover,.input_tag_collab:hover {
-    background-color: #d60035;
-    cursor: pointer;
-}
-
-#genre_select,#collab_select{
-    margin-top: 10px;
-    background-color: #D60036;
-    width: 300px;
-    height: 30px;
-}
 
 .upload_video {
     display: flex;

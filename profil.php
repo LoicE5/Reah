@@ -254,8 +254,6 @@ if (isset($_GET['report_user'])) {
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/fullpage.css" />
-    <script type="text/javascript" src="assets/js/libraries/jquery/jquery.min.js"></script>
-    <script src="assets/js/functions.js" defer></script>
 </head>
 
 <body>
@@ -601,7 +599,7 @@ if (isset($_GET['report_user'])) {
                             <div class='video_content'>";
             if($row['video_poster'] != ''){
                 echo"
-                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster' onclick='posterHide(this)'>";
             }
 
             echo"
@@ -731,7 +729,7 @@ if (isset($_GET['report_user'])) {
                             <div class='video_content'>";
             if($row['video_poster'] != ''){
                 echo"
-                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster' onclick='posterHide(this)'>";
             }
 
             echo"
@@ -879,7 +877,7 @@ if (isset($_GET['report_user'])) {
                     <div class='video_content'>";
             if($row['video_poster'] != ''){
                 echo"
-                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster' onclick='posterHide(this)'>";
             }
 
             echo"
@@ -1021,7 +1019,7 @@ if (isset($_GET['report_user'])) {
                         <div class='video_content'>";
             if($row['video_poster'] != ''){
                 echo"
-                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster'>";
+                <img src='database/videos_posters/".$row['video_poster']."' class='video_poster' onclick='posterHide(this)'>";
             }
 
             echo"
@@ -1141,7 +1139,7 @@ if (!func::checkLoginState($db)) { # If the user isn't connected
     <div class="pop_up_container modify_container">
         <form action="" method="post" enctype='multipart/form-data'>
             <!-- Close icon -->
-            <img src='sources/img/close_icon.svg' class='modify_close_icon' alt=''>
+            <img src='sources/img/close_icon.svg' class='modify_film_close_icon' alt=''>
 
             <!-- Banner -->
             <?php
@@ -1436,6 +1434,7 @@ if (!func::checkLoginState($db)) { # If the user isn't connected
         ?>
     </div>
 
+    <script type="text/javascript" src="assets/js/libraries/jquery/jquery.min.js"></script>
     <script src="assets/js/profil.js"></script>
     <script src="assets/js/app2.js"></script>
     <script src="assets/js/functions.js"></script>

@@ -96,4 +96,40 @@ if (isset($_POST['video_delete'])) {
     $message_true='Ton court-métrage '.$row['video_title'].' a bien été supprimé.';
 
 }
+
+// Signalement d'un film
+if (isset($_POST['modify_film_btn'])) {
+
+
+    $video_id = $_POST['modify_film_btn'];
+    $video_title = addslashes($_POST['title']);
+    $video_synopsis = addslashes($_POST['synopsis']);
+
+    $content_dir_poster = 'database/videos_posters/';
+    $tmp_file_poster = $_FILES['poster']['tmp_name'];
+    $name_file_poster = basename($_FILES['poster']['name']);
+
+    $message_true = 'Ton court-métrage a bien été modifié.';
+
+
+    if ($_FILES["poster"]['error'] == 0 ) {
+
+        if(!is_uploaded_file($tmp_file_poster)) {
+            $message_false = "Le fichier est introuvable.";
+        }
+    
+        if(!move_uploaded_file($tmp_file_poster, $content_dir_poster . $name_file_poster)){
+            $message_false = "Impossible de copier le fichier dans notre dossier.";
+        }
+
+        $sql = "UPDATE videos SET video_poster='$name_file_poster', video_title='$video_title', video_synopsis='$video_synopsis' WHERE video_id='$video_id'";
+    } else {
+        $sql = "UPDATE videos SET video_title='$video_title', video_synopsis='$video_synopsis' WHERE video_id='$video_id'";
+
+    }
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+}
 ?>

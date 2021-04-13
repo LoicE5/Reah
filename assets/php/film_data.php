@@ -83,7 +83,7 @@
                         echo "
                             <a class='delete_option' onclick='popupDeleteFilm()'>Supprimer</a>
                             <a>Archiver</a>
-                            <a>Modifier</a>
+                            <a onclick='popupEditFilm()'>Modifier</a>
                         ";
                     } else {
                         echo"
@@ -346,9 +346,49 @@
         </div>
         <p class='pop_up_text'>Es-tu sûr de vouloir supprimer ton court-métrage <?php echo $row['video_title']?> ?</p>
         <form action="" method='POST'>
-            <button type="submit" name="video_delete" value="<?php echo $id ?>" class='btn pop_up_btn delete_btn'>Supprimer</button>
+            <button type="submit" name="video_delete" value="<?php echo $id ?>"
+                class='btn pop_up_btn delete_btn'>Supprimer</button>
         </form>
         <!-- <a href="<?php echo $url."?video_delete=".$id?>" class='btn pop_up_btn delete_btn'>Supprimer</a> -->
+    </div>
+
+
+    <!-- Modify film -->
+    <div class="pop_up_container modify_film_container">
+        <form action="" method="post" enctype='multipart/form-data'>
+            <!-- Close icon -->
+            <div class="pop_up_header">
+                <h2>Modifier les informations</h2>
+                <img src='sources/img/close_icon.svg' class='modify_close_icon' alt='' onclick='closePopupEditFilm()'>
+
+            </div>
+
+            <div class="modify_film_input_container">
+                <div class="input_container">
+                    <label for="title">
+                        <span>Titre</span>
+                        <input type="text" class="input_connexion" id="title" name="title"
+                            value="<?php echo $row['video_title']; ?>" required>
+                    </label>
+                </div>
+                <div class="input_container">
+                    <label for="synopsis">
+                        <span>Synopsis</span>
+                        <textarea class="input_connexion input_synopsis" id="synopsis" name="synopsis" cols="30"
+                            rows="6" required><?php echo $row['video_synopsis']; ?></textarea>
+                    </label>
+                </div>
+
+                
+                <!-- Input poster -->
+                <div class="modify_file_banner btn">
+                    <button class="btn modify_btn_banner">Modifier le poster</button>
+                    <input type="file" accept=".png,.jpeg,.jpg" class="" name="poster">
+                </div>
+
+                <button type="submit" class="btn modify_film_btn" name="modify_film_btn" value="<?php echo $row['video_id']; ?>">Modifier</button>
+            </div>
+        </form>
     </div>
 </body>
 
