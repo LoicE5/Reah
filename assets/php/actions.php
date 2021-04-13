@@ -50,7 +50,6 @@ if($parameter == 'research'){
     $query = "UPDATE videos SET video_like_number = $final_count  WHERE video_url = $video_vimeo_id; INSERT INTO liked(liked_user_id, liked_video_id) VALUE ('$cookie_user_id', '$video_id');";
     $stmt = $db->prepare($query);
     $stmt->execute();
-
 }
  else if($parameter == 'removeLike') {
     $video_vimeo_id = htmlspecialchars($_GET['video']);

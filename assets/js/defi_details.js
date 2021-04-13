@@ -66,11 +66,16 @@ $(document).ready(function () {
 
     $('#genre_select').change(function () {
         let genreTitle = $(this).find("option:selected").attr("value");
-        let arrayGenre = [];
         const op = document.querySelectorAll("#genre_select option#option_genre");
 
         // Ajout d'un genre
         $(".input_tag_container_genre").append(`<p class="input_tag_genre" value="${genreTitle}">${genreTitle} X</p>`);
+
+        for (let i = 0; i < op.length; i++) {
+            (op[i].value == genreTitle || op[i].disabled == true) ?
+                op[i].disabled = true : op[i].disabled = false;
+            
+        }
 
         // Qd on supprime un ge re
         $(".input_tag_genre").click(function () {
@@ -79,58 +84,32 @@ $(document).ready(function () {
 
             for (let i = 0; i < op.length; i++) {
                 (op[i].value == inputTitle || op[i].disabled == false) ?
-                op[i].disabled = false: op[i].disabled = true;
+                op[i].disabled = false : op[i].disabled = true;
             }
 
 
-            for (let i = 0; i < arrayGenre.length; i++) {
-                // console.log(arrayGenre[i])
-
-                if (arrayGenre[i] == inputTitle) {
-                    let arraySlice = arrayGenre.splice(i, 1);
-                    // console.log(arrayGenre.join(', '));
-
-                }
-            }
             if ($('.input_tag_genre').text().length == 0) {
                 const op = document.querySelectorAll("#genre_select option#option_genre_selected");
                 for (let i = 0; i < op.length; i++) {
                     op[i].selected = true;
                 }
             }
-            // console.log(arrayGenre)
         })
-
-
-        for (let i = 0; i < op.length; i++) {
-            if (op[i].value == genreTitle || op[i].disabled == true) {
-                op[i].disabled = true;
-                let arrayPush = arrayGenre.push(op[i].value);
-
-            } else {
-                op[i].disabled = false;
-
-            }
-        }
-
-        // On insère les genres dans l'input
-        // console.log(arrayGenre)
-        const genreList = arrayGenre.join(', ');
-        // console.log(genreList);
-
-        $("#genre").attr('value', genreList);
-
-        // console.log($("#genre").attr('value'));
-
     })
 
     $('#collab_select').change(function () {
         let collabTitle = $(this).find("option:selected").attr("value");
         let arraycollab = [];
         const op = document.querySelectorAll("#collab_select option#option_collab");
-        // console.log(user_id);
+
         // Ajout d'un collab
         $(".input_tag_container_collab").append(`<p class="input_tag_collab" value="${collabTitle}">@${collabTitle} X</p>`);
+
+        for (let i = 0; i < op.length; i++) {
+            (op[i].value == collabTitle || op[i].disabled == true) ?
+                op[i].disabled = true : op[i].disabled = false;
+            
+        }
 
         // Qd on supprime un collab
         $(".input_tag_collab").click(function () {
@@ -142,47 +121,45 @@ $(document).ready(function () {
                 op[i].disabled = false: op[i].disabled = true;
             }
 
-
-            for (let i = 0; i < arraycollab.length; i++) {
-                // console.log(arraycollab[i])
-
-                if (arraycollab[i] == inputTitle) {
-                    let arraySlice = arraycollab.splice(i, 1);
-                    // console.log(arraycollab.join(', '));
-
-                }
-            }
             if ($('.input_tag_collab').text().length == 0) {
                 const op = document.querySelectorAll("#collab_select option#option_collab_selected");
                 for (let i = 0; i < op.length; i++) {
                     op[i].selected = true;
                 }
             }
-            // console.log(arraycollab)
+
         })
+    })
 
+    $(".btn_send").click(function(){
+        let arrayCollab = [];
+        let arrayGenre = [];
+        const op_collab = document.querySelectorAll("#collab_select option#option_collab");
+        const op_genre = document.querySelectorAll("#genre_select option#option_genre");
 
-        for (let i = 0; i < op.length; i++) {
-            if (op[i].value == collabTitle || op[i].disabled == true) {
-                op[i].disabled = true;
-                let user_id = $(op[i]).attr('user_id');
-                let arrayPush = arraycollab.push(user_id);
-
-            } else {
-                op[i].disabled = false;
-
-            }
+        // Collab
+        for (let i = 0; i < op_collab.length; i++) {
+            if (op_collab[i].disabled == true) {
+                let user_id = $(op_collab[i]).attr('user_id');
+                let arrayPush = arrayCollab.push(user_id);
+                // console.log(op_collab[i].value)
+            } 
         }
 
-        // On insère les collabs dans l'input
-        // console.log(arraycollab)
-        const collabList = arraycollab.join(', ');
-        // console.log(collabList);
-        console.log(collabList.split(', '));
+        // Genre
+        for (let i = 0; i < op_genre.length; i++) {
+            if (op_genre[i].disabled == true) {
+                let arrayPush = arrayGenre.push(op_genre[i].value);
+                // console.log(op_genre[i].value)
+            } 
+        }
+        // console.log(arraygenre)
+        let collabList = arrayCollab.join(', ');
+            $("#collab").attr('value', collabList);
+        console.log($("#collab").attr('value'))
 
-        $("#collab").attr('value', collabList);
-
-        // console.log($("#collab").attr('value'));
-
+            let genreList = arrayGenre.join(', ');
+            $("#genre").attr('value', genreList);
+        console.log($("#genre").attr('value'))
     })
 })

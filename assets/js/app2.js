@@ -110,15 +110,6 @@ $(document).ready(function () {
     // console.log(titlePosition2);
     // console.log(titlePosition);
 
-    // Category title
-    $(".category_title,.category_list_category").click(function () {
-
-        let title1Lenght = $(".category_title1").width();
-        let title2Lenght = $(".category_title2").width();
-        let title3Lenght = $(".category_title3").width();
-        let title1Left = $(".category_title1").position();
-        let title2Left = $(".category_title2").position();
-        let title3Left = $(".category_title3").position();
 
     // Pop up connexion
     // $(".like_container").click(function () {
@@ -165,15 +156,29 @@ $(document).ready(function () {
             $('.film_settings_container').removeClass("hide").addClass("show"); //Adds 'a', removes 'b'
         }
     });
-        let titlePosition = $("#title2").offset().top - 100;
-        let titlePosition2 = $("#title3").offset().top - 100;
+
+
+
+    let title1Lenght = $(".category_title1").width();
+    let title2Lenght = $(".category_title2").width();
+    let title3Lenght = $(".category_title3").width();
+    let title1Left = $(".category_title1").position();
+    let title2Left = $(".category_title2").position();
+    let title3Left = $(".category_title3").position();
+
+    let titlePosition = $("#title2").offset().top - 100;
+    let titlePosition2 = $("#title3").offset().top - 100;
+
+    // Category title
+    $(".category_title,.category_list_category").click(function () {
 
         let number = $(this).attr("number");
         let number1 = $(this).attr("number1");
         let number2 = $(this).attr("number2");
+        let number3 = $(this).attr("number3");
         console.log("number");
         // $(".category_title").removeClass("category_title_click");
-        $(".category_title" + number1 + ",.category_title" + number2 + "").css({
+        $(".category_title" + number1 + ",.category_title" + number2).css({
             "color": "var(--text-grey)",
             "font-weight": "400",
         });
@@ -217,15 +222,6 @@ $(document).ready(function () {
     // Category title and underline animation scroll
     $(document).scroll(function () {
 
-        let title1Lenght = $(".category_title1").width();
-        let title2Lenght = $(".category_title2").width();
-        let title3Lenght = $(".category_title3").width();
-        let title1Left = $(".category_title1").position();
-        let title2Left = $(".category_title2").position();
-        let title3Left = $(".category_title3").position();
-
-        let titlePosition = $("#title2").offset().top - 100;
-        let titlePosition2 = $("#title3").offset().top - 100;
 
         if ($(document).scrollTop() >= 0) {
             $(".category_title,.category_list_category").removeClass("category_title_click").css({
@@ -272,6 +268,7 @@ $(document).ready(function () {
                 "transition": "0.5s ease",
             });
         }
+       
 
     })
 

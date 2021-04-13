@@ -136,7 +136,7 @@ if (isset($_GET['delete_account'])) {
 
     $user_id = $_GET['delete_account'];
     
-    $sql = "DELETE FROM users WHERE user_id='$user_id'";
+    $sql = "DELETE FROM users WHERE user_id='$user_id'; DELETE FROM videos WHERE video_user_id='$user_id'; DELETE FROM distribution WHERE distribution_user_id = '$user_id'; DELETE FROM comments WHERE comment_user_id = '$user_id'; DELETE FROM saved WHERE saved_user_id = '$user_id'; DELETE FROM liked WHERE liked_user_id = '$user_id'; DELETE FROM subscription WHERE subscription_subscriber_id = '$user_id'; DELETE FROM subscription WHERE subscription_artist_id = '$user_id'";
 
     $stmt = $db->prepare($sql);
 

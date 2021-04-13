@@ -243,7 +243,7 @@ if (isset($_GET['id'])) {
                 <?php 
                         
                         $video_url = $row['video_url'];
-                        $query2 = "SELECT distribution_user_id, user_username FROM videos,distribution, users WHERE distribution_video_id = '1' AND video_id = '$video_id' AND distribution_user_id = user_id;";
+                        $query2 = "SELECT distribution_user_id, user_username FROM videos,distribution, users WHERE distribution_video_id = '$video_url' AND video_id = '$video_id' AND distribution_user_id = user_id;";
                         $stmt2 = $db->prepare($query2);
                         $stmt2->execute();
                         $rows2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);

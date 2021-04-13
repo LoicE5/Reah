@@ -82,12 +82,12 @@ if (isset($_POST['video_delete'])) {
 
     $video_id = $_POST['video_delete'];
     
-    $query = "SELECT video_title FROM videos WHERE video_id = '$video_id';";
+    $query = "SELECT video_title, video_url FROM videos WHERE video_id = '$video_id';";
     $stmt = $db->prepare($query);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    $sql = "DELETE FROM videos WHERE video_id='$video_id'";
+    $sql = "DELETE FROM videos WHERE video_id='$video_id'; DELETE FROM distribution WHERE distribution_video_id = '{$row['video_url']}'; DELETE FROM comments WHERE comment_video_id = '$video_id'; DELETE FROM saved WHERE saved_video_id = '$video_id'; DELETE FROM liked WHERE liked_video_id = '$video_id'";
 
     $stmt = $db->prepare($sql);
 

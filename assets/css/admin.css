@@ -11,6 +11,10 @@ body{
     align-items: center;
 }
 
+.menu_category{
+    min-width: 500px;
+}
+
 .back_office_title{
     color: var(--text);
     text-align: center;
@@ -53,7 +57,7 @@ a{
     color: var(--text);
 }
 
-button{
+td button{
     cursor: pointer;
     font-size: 1rem;
     font-family: 'Montserrat';
@@ -64,7 +68,7 @@ button{
     margin-bottom: 4px;
 }
 
-button:hover{
+td button:hover{
    background-color: #d600352f;
 }
 
@@ -128,6 +132,24 @@ form{
 
 .defi_img{
     width: 500px;
+}
+@media screen and (max-width: 1200px){
+.menu_category{
+    min-width: 120px;
+}
+.category_list,.category_list_container{
+    display: flex;
+}
+
+.category_title{
+    display: none;
+}
+}
+
+@media screen and (max-width: 750px){
+    .search_bar{
+        margin-left: 100%;
+    }
 }
 
 @media (prefers-color-scheme: light) {

@@ -67,14 +67,13 @@ if (isset($_GET['user_delete'])) {
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    $sql = "DELETE FROM users WHERE user_id='$user_id'";
+    $sql = "DELETE FROM users WHERE user_id='$user_id'; DELETE FROM videos WHERE video_user_id='$user_id'; DELETE FROM distribution WHERE distribution_user_id = '$user_id'; DELETE FROM comments WHERE comment_user_id = '$user_id'; DELETE FROM saved WHERE saved_user_id = '$user_id'; DELETE FROM liked WHERE liked_user_id = '$user_id'; DELETE FROM subscription WHERE subscription_subscriber_id = '$user_id'; DELETE FROM subscription WHERE subscription_artist_id = '$user_id'";
 
     $stmt = $db->prepare($sql);
 
     $stmt->execute();
     
     $message_true='L\'utilisateur '.$row['user_username'].' a bien été supprimé.';
-
 }
 
 
@@ -83,12 +82,12 @@ if (isset($_GET['video_delete'])) {
 
     $video_id = $_GET['video_delete'];
     
-    $query = "SELECT video_title FROM videos WHERE video_id = '$video_id';";
+    $query = "SELECT video_title, video_url FROM videos WHERE video_id = '$video_id';";
     $stmt = $db->prepare($query);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    $sql = "DELETE FROM videos WHERE video_id='$video_id'";
+    $sql = "DELETE FROM videos WHERE video_id='$video_id'; DELETE FROM distribution WHERE distribution_video_id = '{$row['video_url']}' AND DELETE FROM comments WHERE comment_video_id = '$video_id'; DELETE FROM saved WHERE saved_video_id = '$video_id'; DELETE FROM liked WHERE liked_video_id = '$video_id'";
 
     $stmt = $db->prepare($sql);
 
@@ -193,6 +192,22 @@ if (isset($_GET['defi_current_true'])) {
     
     $message_true='Le défi '.$row['defi_name'].' a bien été enlevé des défis du moment.';
 }
+
+
+// Supression d'un commentaire
+if (isset($_GET['comment_delete'])) {
+
+    $comment_id = $_GET['comment_delete'];
+    
+    $sql = "DELETE FROM comments WHERE comment_id='$comment_id'";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+    
+    $message_true='Le commentaire a bien été supprimé.';
+
+}
 ?>
 
 <!DOCTYPE html>
@@ -236,9 +251,10 @@ if (isset($_GET['defi_current_true'])) {
         <div class="menu_nav">
             <!-- Categories's title -->
             <div class="menu_category">
-                <p class="category_title category_title1" number="1" number1="2" number2="3">Utilisateurs</p>
-                <p class="category_title category_title2" number="2" number1="1" number2="3">Courts-métrages</p>
-                <p class="category_title category_title3" number="3" number1="1" number2="2">Défis</p>
+                <p class="category_title category_title1" number="1" number1="2" number2="3" number3="4">Utilisateurs</p>
+                <p class="category_title category_title2" number="2" number1="1" number2="3" number3="4">Courts-métrages</p>
+                <p class="category_title category_title3" number="3" number1="1" number2="2" number3="4">Défis</p>
+                <p class="category_title category_title4" number="4" number1="1" number2="2" number3="3">Commentaires</p>
                 <div class="red_line underline"></div>
                 <div class="fb_jsb ai-c category_list">
                     <p class="category_list_title">Catégories</p>
@@ -280,9 +296,10 @@ if (isset($_GET['defi_current_true'])) {
 
     <!-- Category list  -->
     <div class="category_list_container">
-        <p class="category_list_category category_list_category1" number="1" number1="2" number2="3">Utilisateurs</p>
-        <p class="category_list_category category_list_category2" number="2" number1="1" number2="3">Courts-métrages</p>
-        <p class="category_list_category category_list_category3" number="3" number1="1" number2="2">Défis</p>
+        <p class="category_list_category category_list_category1" number="1" number1="2" number2="3" number3="4">Utilisateurs</p>
+        <p class="category_list_category category_list_category2" number="2" number1="1" number2="3" number3="4">Courts-métrages</p>
+        <p class="category_list_category category_list_category3" number="3" number1="1" number2="2" number3="4">Défis</p>
+        <p class="category_list_category category_list_category4" number="4" number1="2" number2="3" number3="1">Commentaires</p>
     </div>
 
     <!-- Menu -->
@@ -552,10 +569,79 @@ if (isset($_GET['defi_current_true'])) {
                     ?>
             </tbody>
         </table>
+
+
+
+        <!-- COMMENTAIRES -->
+
+        <!-- Category title -->
+        <h1 class="title4" id="title4">
+            <div class="red_line title_line"></div>
+            COMMENTAIRES
+
+                <!-- Nbr de défis -->
+                <?php 
+                        
+                        $query = "SELECT COUNT(*) as nbr FROM comments;";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        echo '('.$row['nbr'].')'
+        ?>
+        </h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Court-métrage</th>
+                    <th>Date</th>
+                    <th>Contenu</th>
+                    <th>Utilisateur</th>
+                    <th>Report</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <?php
+                $query = "SELECT * FROM comments, videos, users WHERE video_id = comment_video_id AND comment_user_id = user_id;";
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($rows as $row){
+            echo'
+            <tr id="'.$row['comment_id'].'">
+           
+                        <td>'.$row['comment_id'].'</td>
+                        <td>'.$row['video_title'].'</td>
+                        <td>'.date('d/m/Y à H\hm\ms\s', strtotime($row['comment_date'])).'</td>
+                        <td>'.$row['comment_content'].'</td>
+                        <td> <a href="profil.php?id='.$row['user_id'].'">'.$row['user_username'].' </a></td>
+                        <td>'.$row['comment_report_id'].'</td>
+                        <td>
+                            <form method="GET">
+                                <button type="submit" name="comment_delete" value="'.$row['comment_id'].'" class="action_delete">Supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                    ';
+
+        }
+                   
+
+                    ?>
+            </tbody>
+        </table>
     </main>
 
     <script type="text/javascript" src="assets/js/libraries/jquery/jquery.min.js"></script>
     <script src="assets/js/app2.js"></script>
+    <script src="assets/js/admin.js"></script>
     <script src="assets/js/functions.js"></script>
 </body>
 
