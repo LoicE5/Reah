@@ -1,4 +1,7 @@
 <?php
+
+#Gitignored
+
 require '../vendor/autoload.php';
 require_once('../getid3/getid3.php');
 
