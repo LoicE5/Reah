@@ -292,7 +292,7 @@
                     </div>
                 </div>
     
-                <p class='comment_text'>" . $row["comment_content"] . "</p>";
+                <p class='comment_text'>" .  nl2br($row["comment_content"]) . "</p>";
     
 
                 if (func::checkLoginState($db)) { # If the user isn't connected

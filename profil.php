@@ -1139,7 +1139,7 @@ if (!func::checkLoginState($db)) { # If the user isn't connected
     <div class="pop_up_container modify_container">
         <form action="" method="post" enctype='multipart/form-data'>
             <!-- Close icon -->
-            <img src='sources/img/close_icon.svg' class='modify_film_close_icon' alt=''>
+            <img src='sources/img/close_icon.svg' class='modify_close_icon' alt=''>
 
             <!-- Banner -->
             <?php

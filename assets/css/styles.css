@@ -741,7 +741,11 @@ nav,.nav_footer{
     margin-top: 10px;
     background-color: #D60036;
     width: 300px;
-    height: 30px;
+    height: 35px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 20px #d6003577;
+    border-bottom: none;
+    padding: 5px;
 }
 
 @keyframes message{
