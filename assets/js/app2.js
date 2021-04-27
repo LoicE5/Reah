@@ -1,6 +1,11 @@
 $(document).ready(function () {
 
 
+    $(".search_bar").keypress(function(){
+        $("html, body").animate({
+            scrollTop: 0
+        }, "1s");
+    })
 
     // Search bar animation
     if ($(window).width() <= "750") {
@@ -23,7 +28,19 @@ $(document).ready(function () {
         })
     }
 
-
+    $(".defi_content").hover(function () {
+        // let number = $(this).attr("defi");
+        // let img = $(this).children(".defi_img");
+        if ($('.defi_title:hover').length == 0 || $('.defi_content:hover').length == 0) {
+            $(this).removeClass("defi_img_hover").addClass("defi_img_mouseout");
+            // $(".defi" + number + "_title").removeClass("defi_title_hover").addClass("defi_title_mouseout");
+        }
+        if ($('.defi_title:hover').length != 0 || $('.defi_content:hover').length != 0) {
+            $(this).addClass("defi_img_hover").removeClass("defi_img_mouseout");
+            // $(".defi" + number + "_title").addClass("defi_title_hover").removeClass("defi_title_mouseout");
+        }
+        
+    })
     
     // Menu opacity
     let lastScrollTop = 0;
@@ -428,5 +445,19 @@ $(document).ready(function () {
             $("#genre").attr('value', genreList);
         console.log($("#genre").attr('value'))
     })
+
+
+    
+
+    $(".help_icon").hover(function(){
+        let message = $(this).next();
+        // console.log(message)
+        $(message).fadeIn(300);
+    })
+    $(".help_icon").mouseout(function(){
+        $(".help_message").fadeOut(300);
+
+    })
+
 })
 

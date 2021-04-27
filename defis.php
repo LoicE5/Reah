@@ -76,9 +76,8 @@ if (isset($_POST['send']) && isset($_POST['title']) && isset($_POST['constraints
             <div class="menu_nav">
                 <!-- Categories's title -->
                 <div class="menu_category">
-                    <p class="category_title category_title1" number="1" number1="2" number2="3">Défis du moment</p>
-                    <p class="category_title category_title2" number="2" number1="1" number2="3">Défis populaires</p>
-                    <p class="category_title category_title3" number="3" number1="1" number2="2">Défis à découvrir</p>
+                    <p class="category_title category_title1" number="1" number1="2">Défis du moment</p>
+                    <p class="category_title category_title2" number="2" number1="1">Défis à découvrir</p>
                     <div class="red_line underline"></div>
                     <div class="fb_jsb ai-c category_list">
                         <p class="category_list_title">Catégories</p>
@@ -128,9 +127,8 @@ if (isset($_POST['send']) && isset($_POST['title']) && isset($_POST['constraints
 
         <!-- Category list  -->
         <div class="category_list_container">
-            <p class="category_list_category category_list_category1" number="1" number1="2" number2="3">Défis du moment</p>
-            <p class="category_list_category category_list_category2" number="2" number1="1" number2="3">Défis populaires</p>
-            <p class="category_list_category category_list_category3" number="3" number1="1" number2="2">Défis à découvrir</p>
+            <p class="category_list_category category_list_category1" number="1" number1="2">Défis du moment</p>
+            <p class="category_list_category category_list_category2" number="2" number1="1">Défis à découvrir</p>
         </div>
 
         <!-- Menu -->
@@ -148,7 +146,10 @@ if (isset($_POST['send']) && isset($_POST['title']) && isset($_POST['constraints
                     <div class="red_line title_line"></div>
                     <div id='days'></div>
                     DÉFIS DU MOMENT
-
+                    <div class='help_icon_container'>
+                            <img src='sources/img/help_icon.png' alt='' class='help_icon'>
+                            <p class='help_message'>La catégorie "Défis du moment" présente les deux défis auxquels tu peux participer. Les défis du moment changent tous les mois.</p>
+                        </div>
                 </h1>
 
                 <!-- Add defi btn -->
@@ -184,7 +185,7 @@ if (isset($_POST['send']) && isset($_POST['title']) && isset($_POST['constraints
                     echo '
                         <a href="defi_details.php?defi=' . $row['defi_id'] . '" class="defi_content">
                         <img src="database/defis_img/'.$row['defi_image'].'" alt="" class="defi_img defi1_img">
-                        <p class="defi_time">Temps restant : 14h 30min</p>
+                        <p class="defi_time">Temps restant : <span id="time" time='.$row['defi_date_end'].'></span></p>
                     </a>';
                 }
                 ?>
@@ -192,7 +193,7 @@ if (isset($_POST['send']) && isset($_POST['title']) && isset($_POST['constraints
             </div>
         </div>
 
-        <!-- "Défis populaires" catégory -->
+
         <div class="second_category" id="category">
 
             <!-- prev arrow -->
@@ -205,50 +206,11 @@ if (isset($_POST['send']) && isset($_POST['title']) && isset($_POST['constraints
                 <!-- Category title -->
                 <h1 id="title2">
                     <div class="red_line title_line"></div>
-                    DÉFIS POPULAIRES
-                </h1>
-
-                <!-- Challenges container -->
-                <div class="defi_pop_container ">
-
-                    <?php
-                    $query = "SELECT * FROM defis WHERE defi_verified='1' ORDER BY defi_id DESC";
-                    $stmt = $db->prepare($query);
-                    $stmt->execute();
-
-                    $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-
-                    foreach ($rows as $row) {
-                        echo '
-                        <a href="defi_details.php?defi=' . $row['defi_id'] . '" class="defi_pop_content">
-                                                <img src="database/defis_img/'.$row['defi_image'].'" alt="" class="defi_img defi1_img">
-
-                        </a>';
-                    }
-                    ?>
-
-                </div>
-            </div>
-
-            <!-- next arrow -->
-            <div class="arrow_next_container fp-controlArrow fp-next">
-            </div>
-        </div>
-
-        <div class="third_category" id="category">
-
-            <!-- prev arrow -->
-            <div class="arrow_prev_container fp-controlArrow fp-prev">
-            </div>
-
-            <!-- Category content  -->
-            <div class="category_content">
-
-                <!-- Category title -->
-                <h1 id="title3">
-                    <div class="red_line title_line"></div>
                     À DÉCOUVRIR
+                    <div class='help_icon_container'>
+                            <img src='sources/img/help_icon.png' alt='' class='help_icon'>
+                            <p class='help_message'>La catégorie "À découvrir" présente tous les défis de REAH.</p>
+                        </div>
                 </h1>
 
                 <div class="defi_pop_container ">

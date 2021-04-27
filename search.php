@@ -78,42 +78,65 @@
 
 
     <main class="main_content">
-        <h2 class="omg_im_centered">Courts-métrages</h2>
         <?php
         $research = htmlspecialchars($_GET['research']);
 
         # Non définitif, la requête finale incluera l'ensemble des tables.
         # Se référer au modèle conceptuel sur le drive
+
+        $query = "SELECT * FROM defis WHERE defi_name LIKE '%$research%' AND defi_verified = '1';";
+
+        $stmt = $db->prepare($query);
+        $stmt->execute();
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        if(count($rows) > 0 ){
+            
+        echo '<h2 class="omg_im_centered">Défis</h2>';
+            foreach($rows as $row){
+                echo '<a href="defi_details.php?defi='.$row['defi_id'].'" class="result omg_im_centered">
+                <img src="database/defis_img/'.$row['defi_image'].'" alt="" class="defi_img">
+    
+                    <section>
+                        <h4>'.$row['defi_name'].'</h4>
+                    </section>
+                </a>';
+            }
+        }
+
+
         $query = "SELECT * FROM videos, users WHERE video_title LIKE '%$research%' AND video_user_id = user_id;";
 
         $stmt = $db->prepare($query);
         $stmt->execute();
 
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        foreach($rows as $row){
-            echo '<a href="profil.php?id='.$row['video_user_id'].'" class="result omg_im_centered">
-                <iframe src="https://player.vimeo.com/video/'.$row['video_url'].'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen id="video_'.$row['video_id'].'"></iframe>
-                <section>
-                    <h4>'.$row['video_title'].'</h4>
-                    <p class="video_synopsis">'.nl2br($row['video_synopsis']).'</p>
-                    <p> Réalisé par '.$row['user_username'].'</p>
-                </section>
-            </a>';
+        
+        if(count($rows) > 0 ){
+            
+        echo '<h2 class="omg_im_centered" style="margin-top: 50px;">Courts-métrages</h2>';
+            foreach($rows as $row){
+                echo '<a href="profil.php?id='.$row['video_user_id'].'" class="result omg_im_centered">
+                    <iframe src="https://player.vimeo.com/video/'.$row['video_url'].'" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen id="video_'.$row['video_id'].'"></iframe>
+                    <section>
+                        <h4>'.$row['video_title'].'</h4>
+                        <p class="video_synopsis">'.nl2br($row['video_synopsis']).'</p>
+                        <p> Réalisé par '.$row['user_username'].'</p>
+                    </section>
+                </a>';
+            }
         }
 
-    ?>
-
-        <div class="horizontal_line omg_im_centered"></div>
-
-        <h2 class="omg_im_centered">Membres</h2>
-        <?php
         $query = "SELECT * FROM users WHERE user_username LIKE '%$research%';";
-
+        
         $stmt = $db->prepare($query);
         $stmt->execute();
-
+        
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        
+        if(count($rows) > 0 ){
+           echo' <h2 class="omg_im_centered" style="margin-top: 50px;">Membres</h2>';
 
         foreach($rows as $row){
             echo '<a href="profil.php?id='.$row['user_id'].'" class="result omg_im_centered">
@@ -126,15 +149,17 @@
                 </section>
             </a>';
         };
+    }
     ?>
     </main>
-    <?php
-    require('ressources/footer.php');
-?>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
     <script src="assets/js/app2.js"></script>
     <script src="assets/js/functions.js"></script>
-
+    <script>
+           if($('.main_content').text().length <= '48'){
+        $('.main_content').append("<p class='void'>Aucun résultat trouvé.</p>");
+    }
+    </script>
 </body>
 
 </html>

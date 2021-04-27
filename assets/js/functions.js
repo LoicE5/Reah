@@ -28,6 +28,36 @@ function docopy(e) {
     }
 }
 
+const timeAttrList = document.querySelectorAll("#time");
+// console.log(timeAttr1);
+
+function countdownTimer() {
+    // let timeAttr = $
+    // console.log(timeAttr);
+    for (let i in timeAttrList) {
+
+        const difference = +new Date(timeAttrList[i].getAttribute('time')) - +new Date();
+    // console.log(difference);
+
+        let remaining = "Défi terminé";
+
+        if (difference > 0) {
+            const parts = {
+                j: Math.floor(difference / (1000 * 60 * 60 * 24)),
+                h: Math.floor((difference / (1000 * 60 * 60)) % 24),
+                min: Math.floor((difference / 1000 / 60) % 60),
+            };
+            remaining = Object.keys(parts).map(part => {
+                return `${parts[part]}${part}`;
+            }).join(" ");
+
+            timeAttrList[i].innerHTML = remaining;
+        } 
+        i++
+    }
+}
+setInterval(countdownTimer, 1000);
+
 // PreventDefault
 function prevent(e) {
     e.preventDefault();
@@ -93,6 +123,7 @@ function searchEngine(input) {
 
                 let videos = JSON.parse(splitted[0]);
                 let users = JSON.parse(splitted[1]);
+                let defis = JSON.parse(splitted[2]);
 
                 let coordinates = {
                     left: searchbar.offsetLeft,
@@ -114,15 +145,25 @@ function searchEngine(input) {
                 // reset du innerHTML
                 searchList.innerHTML = '';
 
-                searchList.innerHTML += `<h4 style="text-align: center;">Courts-métrages</h4>`;
+                if (defis.length > 0) {
 
-                for (let i = 0; i < videos.length; i++) {
+                    searchList.innerHTML += `<h4 style="text-align: center; margin-bottom:0;">Défis</h4>`;
 
-                    if (videos.length == 0) {
+                    for (let i = 0; i < defis.length; i++) {
 
-                        searchList.innerHTML += `<p>Aucun résultat</p>`;
+                        searchList.innerHTML += `<a href="defi_details.php?defi=${defis[i].defi_id}" class="search_list_result">
+                            <img style="float: left; height: 20px; margin-right: 15px;" src="database/defis_img/${defis[i].defi_image}" alt="">
+                            <p>${defis[i].defi_name}</p>
+                            </a>`;
 
-                    } else {
+                    }
+                }
+
+                if (videos.length > 0) {
+
+                    searchList.innerHTML += `<h4 style="text-align: center; margin-bottom:0;">Courts-métrages</h4>`;
+
+                    for (let i = 0; i < videos.length; i++) {
 
                         searchList.innerHTML += `<a href="profil.php?id=${videos[i].video_user_id}" class="search_list_result">
                         <p><b><i>${videos[i].video_title}</i></b> de ${videos[i].user_username}</p>
@@ -131,15 +172,12 @@ function searchEngine(input) {
                     }
                 }
 
-                searchList.innerHTML += `<h4 style="text-align: center;">Membres</h4>`;
 
-                for (let i = 0; i < users.length; i++) {
+                if (users.length > 0) {
 
-                    if (users.length == 0) {
+                    searchList.innerHTML += `<h4 style="text-align: center; margin-bottom:0;">Membres</h4>`;
 
-                        searchList.innerHTML += `<p>Aucun résultat</p>`;
-
-                    } else {
+                    for (let i = 0; i < users.length; i++) {
 
                         searchList.innerHTML += `<a href="profil.php?id=${users[i].user_id}" class="search_list_result">
                         <img style="float: left; width: 20px; height: 20px; border-radius: 999px; margin-right: 15px;" src="database/profile_pictures/${users[i].user_profile_picture}" alt="">
@@ -149,6 +187,10 @@ function searchEngine(input) {
                     }
                 }
 
+                if (videos.length == 0 && users.length == 0 && defis.length == 0) {
+                    searchList.innerHTML += `<p style="padding-left:10px;"> Aucun résultat </p>`;
+
+                }
             });
         });
 
@@ -316,15 +358,15 @@ function saveFilm(element) {
         let fetch_url = `assets/php/actions.php?action=save&video=${video_id}`;
 
         fetch(fetch_url).then(response => {
-        //     response.text().then(text => {
-        //         let final_count = Number(text);
-        //         console.log(`final_count = ${final_count}`);
+            //     response.text().then(text => {
+            //         let final_count = Number(text);
+            //         console.log(`final_count = ${final_count}`);
 
-        //         let target = $(element).parent().children('.pop_corn_number');
-        //         console.log(element);
-        //         console.log(target);
-        //         $(target).text(`${final_count} J'aime`);
-        //     });
+            //         let target = $(element).parent().children('.pop_corn_number');
+            //         console.log(element);
+            //         console.log(target);
+            //         $(target).text(`${final_count} J'aime`);
+            //     });
         });
 
         $(element).attr('src', 'sources/img/film_saved_icon_click.svg');
@@ -334,15 +376,15 @@ function saveFilm(element) {
         let fetch_url = `assets/php/actions.php?action=unsave&video=${video_id}`;
 
         fetch(fetch_url).then(response => {
-        //     response.text().then(text => {
-        //         let final_count = Number(text);
-        //         console.log(`final_count = ${final_count}`);
+            //     response.text().then(text => {
+            //         let final_count = Number(text);
+            //         console.log(`final_count = ${final_count}`);
 
-        //         let target = $(element).parent().children('.pop_corn_number');
-        //         console.log(element);
-        //         console.log(target);
-        //         $(target).text(`${final_count} J'aime`);
-        //     });
+            //         let target = $(element).parent().children('.pop_corn_number');
+            //         console.log(element);
+            //         console.log(target);
+            //         $(target).text(`${final_count} J'aime`);
+            //     });
         });
 
         $(element).attr('src', 'sources/img/film_saved_icon.svg');
@@ -615,20 +657,21 @@ function closePopupSubscription() {
     $(".main_content").removeClass("scroll_none");
 }
 
-    // Pop up to modify film
-   function popupEditFilm() {
-        $(".modify_film_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
-        $(".dark_filter").addClass("show fixed");
-        $(".main_content").addClass("scroll_none")
-    }
-    function closePopupEditFilm() {
-        $(".modify_film_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
-        $(".dark_filter").removeClass("show");
-        $(".main_content").removeClass("scroll_none")
-    }
+// Pop up to modify film
+function popupEditFilm() {
+    $(".modify_film_container").fadeIn(500).addClass("film_container_open").removeClass("film_container_close");
+    $(".dark_filter").addClass("show fixed");
+    $(".main_content").addClass("scroll_none")
+}
+
+function closePopupEditFilm() {
+    $(".modify_film_container").fadeOut().addClass("film_container_close").removeClass("film_container_open");
+    $(".dark_filter").removeClass("show");
+    $(".main_content").removeClass("scroll_none")
+}
 
 
 
- function posterHide(e){
-        $(e).hide();
-    }
+function posterHide(e) {
+    $(e).hide();
+}

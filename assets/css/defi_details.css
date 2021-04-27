@@ -79,6 +79,9 @@ form {
     font-weight: bold;
     margin-right: 15px;
 }
+#time {
+    font-weight: 500;
+}
 
 .menu_profile {
     min-width: 200px;

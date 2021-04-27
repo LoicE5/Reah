@@ -203,6 +203,11 @@ if (isset($_GET['id'])) {
                         value="<?php echo $row['defi_timestamp'];?>">
                 </div>
 
+                <div class="input_container">
+                    <label for="date_end">Date de fin</label>
+                    <input type="text" class="input_connexion" id="date_end" name="date_end"
+                        value="<?php echo $row['defi_date_end'];?>">
+                </div>
                 
                 <div class="input_container">
                     <label for="user">Utilisateur </label>

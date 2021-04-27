@@ -6,7 +6,7 @@
 
 .menu_category {
     /* margin-left: 10%; */
-    min-width: 500px;
+    min-width: 350px;
 }
 
 .underline {
@@ -54,6 +54,8 @@
     height: auto;
     margin-bottom: 50px;
 }
+
+
 
 .second_category,
 .third_category {
@@ -116,12 +118,12 @@
     font-size: 1rem;
     font-weight: bold;
     text-align: center;
-    color: white;
+    color: #D60036;
     text-decoration: none !important;
     position: absolute;
     bottom: 5%;
     width: 100%;
-    text-shadow: rgba(0, 0, 0, 0.734) 0px 0px 5px;
+    /* text-shadow: #D60035 0px 0px 5px; */
     margin: 0;
 }
 

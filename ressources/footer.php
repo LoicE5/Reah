@@ -25,8 +25,8 @@
 <!-- Navigation -->
     <div class="nav">
         <p><b>Navigation</b></p>
-        <a href="#top">Accueil</a>
-        <a href="#top">Fil d'actualité</a>
+        <a href="fil_actu.php">Accueil</a>
+        <a href="fil_actu.php?accueil=true">Fil d'actualité</a>
         <a href="defis.php">Défis</a>
         <a href="settings.php">Paramètres</a>
         <a href="login.php">Connexion</a>

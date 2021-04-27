@@ -109,11 +109,11 @@
             <ul>
                 <li>vendre, concéder sous licence, altérer, modifier ou utiliser de toute autre façon tout ou partie du
                     Service ou du Contenu sauf si le service vous y a explicitement autorisé, par écrit</li>
-                <li>Usurper l’identité d’autrui</li>
+                <li>usurper l’identité d’autrui</li>
                 <li>accéder au Service par le biais de procédés automatisés (robots)</li>
                 <li>recueillir ou utiliser toute information permettant d’identifier une personne</li>
-                <li>Abuser des options de rapports (signalements, accusations)</li>
-                <li>Utiliser le Service pour vendre de la publicité.</li>
+                <li>abuser des options de rapports (signalements, accusations)</li>
+                <li>utiliser le Service pour vendre de la publicité.</li>
             </ul>
 
             <p>Les conditions générales d’utilisation rappellent aux internautes que les éléments du site :</p>

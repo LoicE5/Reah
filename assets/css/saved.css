@@ -13,10 +13,13 @@ body{
     /* padding-top: 60px; */
 }
 
-nav {
+/* nav {
     position: unset;
-}
+} */
 
+h2{
+    margin-top: 100px;
+}
 .result>iframe {
     width: 200px;
     height: auto;
@@ -109,7 +112,11 @@ iframe{
     width: 100%;
     height: 100%;
 } */
+.defi_img{
+    height: 80px;
+    margin: 15px;
 
+}
 @media screen and (max-width:700px) {
 .result {
 flex-wrap:wrap;

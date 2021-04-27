@@ -155,8 +155,12 @@ if (isset($_GET['defi_verified_true'])) {
     $message_true='Le défi '.$row['defi_name'].' a bien été dévalidé.';
 }
 
+// $current_date = new Date();
+$date_end = date('Y-m-d', strtotime($current_date. ' + 1 month'));
 // Ajouter le défi aux défis actuels
 if (isset($_GET['defi_current'])) {
+
+    // Date de fin du défi
 
     $defi_id = $_GET['defi_current'];
 
@@ -166,7 +170,7 @@ if (isset($_GET['defi_current'])) {
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
     
-    $query = "UPDATE defis SET defi_current='1' WHERE defi_id = '$defi_id';";
+    $query = "UPDATE defis SET defi_current='1', defi_date_end='$date_end'  WHERE defi_id = '$defi_id';";
     $stmt = $db->prepare($query);
     $stmt->execute();
     
@@ -305,6 +309,7 @@ if (isset($_GET['comment_delete'])) {
     <!-- Menu -->
     <?php
             require("ressources/menu.php");
+            
         ?>
 
     <main class="main_content">
@@ -356,6 +361,7 @@ if (isset($_GET['comment_delete'])) {
 
         foreach ($rows as $row){
             echo'
+            
             <tr id="'.$row['user_id'].'">
            
                         <td>'.$row['user_id'].'</td>
@@ -408,6 +414,7 @@ if (isset($_GET['comment_delete'])) {
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
         
         echo '('.$row['nbr'].')'
+        
         ?>
         </h1>
 
@@ -511,6 +518,7 @@ if (isset($_GET['comment_delete'])) {
                     <th>Consignes</th>
                     <th>Date</th>
                     <th>Temps restant</th>
+                    <th>Date de fin</th>
                     <th>Utilisateur</th>
                     <th>Validé</th>
                     <th>Du moment</th>
@@ -520,6 +528,7 @@ if (isset($_GET['comment_delete'])) {
             <tbody>
 
                 <?php
+
                 $query = "SELECT * FROM users, defis WHERE defi_user_id = user_id;";
         $stmt = $db->prepare($query);
         $stmt->execute();
@@ -534,7 +543,8 @@ if (isset($_GET['comment_delete'])) {
                         <td>'.$row['defi_name'].'</td>
                         <td>'.nl2br($row['defi_description']).'</td>
                         <td>'.date('d/m/Y à H\hm\ms\s', strtotime($row['defi_timestamp'])).'</td>
-                        <td>'.date('d/m/Y à H\hm\ms\s', strtotime($row['defi_timestamp'])).'</td>
+                        <td id="time" time="'.$row['defi_date_end'].'">'.date('d/m/Y à H\hm\ms\s', strtotime($row['defi_timestamp'])).'</td>
+                        <td>'.date('d/m/Y à H\hm\ms\s', strtotime($row['defi_date_end'])).'</td>
                         <td> <a href="profil.php?id='.$row['user_id'].'">'.$row['user_username'].' </a></td>
                         <td>'.$row['defi_verified'].'</td>
                         <td>'.$row['defi_current'].'</td>
@@ -607,6 +617,7 @@ if (isset($_GET['comment_delete'])) {
             <tbody>
 
                 <?php
+
                 $query = "SELECT * FROM comments, videos, users WHERE video_id = comment_video_id AND comment_user_id = user_id;";
         $stmt = $db->prepare($query);
         $stmt->execute();

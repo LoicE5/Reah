@@ -30,6 +30,20 @@ if($parameter == 'research'){
     $json = json_encode($results);
 
     echo $json;
+
+    echo 'splitter';
+
+
+    $query = "SELECT * FROM defis WHERE defi_verified = '1' AND defi_name LIKE '%$research%'";
+
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $json = json_encode($results);
+
+    echo $json;
     
 } else if($parameter == 'addLike'){
 

@@ -105,6 +105,15 @@ if (isset($_GET['delete_comment'])) {
         $stmt->execute($attributes);
     
 }
+
+if (isset($_GET["defi"])) {
+
+    $query = "SELECT defi_name FROM defis WHERE defi_id= " . $_GET["defi"] . "";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -112,7 +121,14 @@ if (isset($_GET['delete_comment'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>REAH | Défi</title>
+    <title>>REAH | <?php echo $row['defi_name']?></title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/sources/img/favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/sources/img/favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/sources/img/favicon/favicon-16x16.png">
+<link rel="manifest" href="/sources/img/favicon/site.webmanifest">
+<link rel="mask-icon" href="/sources/img/favicon/safari-pinned-tab.svg" color="#d60036">
+<meta name="msapplication-TileColor" content="#2b5797">
+<meta name="theme-color" content="#ffffff">
     <link rel="stylesheet" href="assets/css/dark_mode.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
@@ -313,13 +329,13 @@ if (isset($_GET['delete_comment'])) {
                         <?php
                         if (isset($_GET["defi"])) {
 
-                            $query = "SELECT COUNT(video_id) as defi_number FROM defis, videos WHERE defi_id=video_defi_id AND defi_id=" . $_GET["defi"] . "";
+                            $query = "SELECT COUNT(video_id) as defi_number, defi_date_end FROM defis, videos WHERE defi_id=video_defi_id AND defi_id=" . $_GET["defi"] . "";
                             $stmt = $db->prepare($query);
                             $stmt->execute();
 
                             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                            echo " <p><span>Temps restant</span> 14 heures et 30 minutes</p>";
+                            echo " <p><span>Temps restant</span><span id='time' time=".$row['defi_date_end']."></span></p>";
                             echo " <p><span>Nombre de courts-métrages déposés</span>" . $row['defi_number'] . "</p>";
                         }
                         ?>
