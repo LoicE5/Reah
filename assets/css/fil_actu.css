@@ -265,7 +265,7 @@ box-shadow: 0px 2px 15px #d60035a9;
     position: relative;
     flex-direction: column;
     width: 100%;
-    /* min-height: 300px; */
+    min-height: 300px;
 }
 
 h1 {
@@ -1034,6 +1034,48 @@ line-height: unset;
 .pop_corn_icon_click {
     animation: pop_corn_icon_click 0.5s ease forwards;
 }
+
+.modify_file_banner,
+.modify_file_profile_photo {
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    background-color: #d60036;
+    border-radius: 5px;
+    width: 250px;
+}
+
+
+.modify_file_banner:hover,
+.modify_file_profile_photo:hover {
+    background-color: #af002c;
+    transition: 0.1s ease;
+    overflow: hidden;
+}
+
+.modify_file_profile_photo input[type=file],
+.modify_file_banner input[type=file] {
+    left: 0;
+    top: 0;
+    opacity: 0;
+    position: absolute;
+    font-size: 90px;
+    cursor: pointer;
+}
+
+
+.modify_btn_profile_photo,
+.modify_btn_banner {
+    height: 30px;
+    width: 230px;
+    line-height: unset;
+    background-color: transparent;
+}
+
+.input_container label {
+    height:unset;
+}
+
 
 @keyframes comment_space_container_open {
     0% {

@@ -51,8 +51,8 @@ function countdownTimer() {
                 return `${parts[part]}${part}`;
             }).join(" ");
 
-            timeAttrList[i].innerHTML = remaining;
         } 
+        timeAttrList[i].innerHTML = remaining;
         i++
     }
 }

@@ -53,12 +53,12 @@ if(isset($_POST['email']))
                 // Connecter avec son username
                 if($row['user_id'] > 0){ # If the user's form fields data matches the database informations
 
-                    // mail($email, 'Réinitialisation du mot de passe', "Voici le lien de réinitialisation de ton mot de passe :\n\n http://localhost:8888/Reah/mdp_chgmt.php?id={$email}");
-                    mail('reahapp.fr@gmail.com', 'Réinitialisation du mot de passe', 'oui');
+                    mail($email, 'Réinitialisation de mot de passe', "Voici le lien de réinitialisation de ton mot de passe :\n\n https://reah.fr/mdp_chgmt.php?email={$email}");
+                    // mail($email, 'Réinitialisation du mot de passe', 'oui');
                    
                     $message_true = 'Un mail a été envoyé à '.$email;
 
-                    redirect("mdp_chgmt.php?email={$email}");
+                    // redirect("mdp_chgmt.php?email={$email}");
                     // var_dump(mail($email, 'Réinitialisation du mot de passe', "Voici le lien de réinitialisation de ton mot de passe :\n\n http://localhost:8888/Reah/mdp_chgmt.php?id={$email}"));
 
                 } else { 

@@ -17,28 +17,59 @@
 
 $user_email = $_GET['email'];
 
+$query = "SELECT * FROM users WHERE user_email = '$user_email';";
+
+$stmt = $db->prepare($query);
+$stmt->execute();
+
+$row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if(!isset($_GET['email'])){
+    redirect('mdp_oublie.php');
+} else {
+    if(count($row['user_email']) < 1){
+        redirect('mdp_oublie.php');
+    }
+    
+}
+
+// var_dump(count($row['user_email']));
+
 // Changer son mdp
-if(isset($_GET["change_mdp_btn"])){
+if(isset($_POST["change_mdp_btn"])){
     
         
         
-        if($_GET['new_mdp'] == $_GET['confirm_mdp']){
+        if($_POST['new_mdp'] == $_POST['confirm_mdp']){
             
             
-            if (check_mdp_format($_GET['new_mdp']) == true){
+            if (check_mdp_format($_POST['new_mdp']) == true){
+
+   
                     
+    if(password_verify($_POST["new_mdp"], $row['user_password']) == false){
+
+
+
+        $password = password_hash($_POST['new_mdp'], PASSWORD_DEFAULT);
+    
+        $sql = "UPDATE users SET user_password='$password' WHERE user_email='$user_email'";
+    
+    
+        $stmt = $db->prepare($sql);
+    
+        $stmt->execute();
+    
+    // var_dump($_POST['new_mdp']);
+    // var_dump($_POST['confirm_mdp']);
+    // var_dump($user_email);
+    // var_dump($row['user_password']);
+        header("Location: login.php?mdp=true");
+    } else {
+        $message_false = 'Vous avez utilisé ce mot de passe récemment. Veuillez en choisir un autre.';
+
+    }
         
-                    $password = password_hash($_GET['new_mdp'], PASSWORD_DEFAULT);
-                    $sql = "UPDATE users SET user_password='$password' WHERE user_email='$user_email'";
-                
-                
-                    $stmt = $db->prepare($sql);
-                
-                    $stmt->execute($attributes);
-                
-                    $db = null;
-                
-                    header("Location: login.php?mdp=true");
                 
                 } else{
                     $message_false = 'Votre mot de passe doit contenir au moins 8 caractères dont 1 majuscule et 1 minuscule';
@@ -83,7 +114,7 @@ if(isset($_GET["change_mdp_btn"])){
         </video>
 
         <!-- Form -->
-        <form class="form_container" action="mdp_chgmt.php" method="GET">
+        <form class="form_container" action="" method="POST">
 
             <!-- Back arrow -->
             <a href="mdp_oublie.php" class="btn_prev_mdp_oublie">

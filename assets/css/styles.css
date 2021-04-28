@@ -748,6 +748,8 @@ nav,.nav_footer{
     padding: 5px;
 }
 
+
+
 @keyframes message{
     0%{
         transform: translateY(0px);

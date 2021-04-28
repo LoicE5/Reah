@@ -18,6 +18,7 @@ include('assets/php/comments.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <meta http-equiv= »Content-Type » content= »text/html; charset=utf-8″ /> -->
     <title>REAH | Fil d'actualité</title>
+    <link rel="stylesheet" href="assets/css/profil.css">
     <link rel="stylesheet" href="assets/css/defis.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">

@@ -37,6 +37,7 @@ if (isset($_POST['modify_btn'])) {
     $date = addslashes($_POST['date']);
     // $image = addslashes($_POST['image']);
     $user = addslashes($_POST['user']);
+    $date_end = addslashes($_POST['date_end']);
     
 
 
@@ -54,10 +55,10 @@ if (isset($_POST['modify_btn'])) {
             $message_false = "Impossible de copier le fichier dans notre dossier.";
         }
 
-        $query = "UPDATE defis SET defi_name='$name', defi_description='$description', defi_timestamp='$date', defi_image='$name_file_image', defi_user_id='$user' WHERE defi_id = '$defi_id';";
+        $query = "UPDATE defis SET defi_name='$name', defi_description='$description', defi_timestamp='$date', defi_date_end='$date_end', defi_image='$name_file_image', defi_user_id='$user' WHERE defi_id = '$defi_id';";
 
     } else {
-        $query = "UPDATE defis SET defi_name='$name', defi_description='$description', defi_timestamp='$date', defi_user_id='$user' WHERE defi_id = '$defi_id';";
+        $query = "UPDATE defis SET defi_name='$name', defi_description='$description', defi_timestamp='$date', defi_date_end='$date_end', defi_user_id='$user' WHERE defi_id = '$defi_id';";
         
     }
     
@@ -76,7 +77,7 @@ if (isset($_POST['modify_btn'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>REAH | Profil</title>
+    <title>REAH | Profil</title>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
     <link rel="stylesheet" href="assets/css/admin.css">

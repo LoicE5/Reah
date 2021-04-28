@@ -133,6 +133,7 @@ form{
 .defi_img{
     width: 500px;
 }
+
 @media screen and (max-width: 1200px){
 .menu_category{
     min-width: 120px;

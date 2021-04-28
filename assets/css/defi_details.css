@@ -180,6 +180,7 @@ form {
     margin-top: 80px;
     margin-bottom: 20px;
     align-self: center;
+    min-height: 350px;
 }
 
 .upload_container {
@@ -300,6 +301,10 @@ form {
 
 .nav_footer_category .defi_icon {
     margin-right: 0;
+}
+
+.modify_film_container .input_synopsis{
+    max-width : unset;
 }
 
 @media screen and (max-width:1130px) {

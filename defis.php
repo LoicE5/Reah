@@ -43,7 +43,7 @@ if (isset($_POST['send']) && isset($_POST['title']) && isset($_POST['constraints
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>REAH | Défis</title>
+    <title>REAH | Défis</title>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
     <link rel="stylesheet" href="assets/css/defis.css">

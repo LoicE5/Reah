@@ -121,7 +121,7 @@ if (isset($_GET["defi"])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>REAH | <?php echo $row['defi_name']?></title>
+    <title>REAH | <?php echo $row['defi_name']?></title>
     <link rel="apple-touch-icon" sizes="180x180" href="/sources/img/favicon/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/sources/img/favicon/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/sources/img/favicon/favicon-16x16.png">
@@ -152,12 +152,19 @@ if (isset($_GET["defi"])) {
                 '.$message_true.'
         </p>';
     }
-    if (isset($_GET['upload'])) {
+    if (isset($_GET['upload']) == 'true') {
         echo '
         <p class="message_true_container">
                 Ton court-métrage a bien été déposé.
         </p>';
     }
+    if (isset($_GET['upload']) == 'false') {
+        echo '
+        <p class="message_false_container">
+        La vidéo est trop lourde.
+        </p>';
+    }
+
     if (isset($message_false)) {
         echo '
         <p class="message_false_container">'
@@ -310,11 +317,14 @@ if (isset($_GET["defi"])) {
                     <div class="defi_information">
                         <?php
                         if (func::checkLoginState($db)) { # If the user is connected
-                            echo '
-                    <div href="depot.php" class="btn depot_btn" onclick="popupAddFilm()">
-                        <img class="depot_icon" src="sources/img/depot_icon.svg" alt="">
-                        Déposer un court-métrage
-                    </div>';
+                                if($row['defi_current'] == 1){
+
+                                    echo '
+                            <div href="depot.php" class="btn depot_btn" onclick="popupAddFilm()">
+                                <img class="depot_icon" src="sources/img/depot_icon.svg" alt="">
+                                Déposer un court-métrage
+                            </div>';
+                                }
                         } else { # If the user is an asshole
                             echo '
                         <div href="depot.php" class="btn depot_btn" onclick="popupConnexion()">
@@ -1088,6 +1098,7 @@ if (isset($_GET["defi"])) {
                         <input type="file" name="video" class="" accept="video/*" required>
                     </div>
 
+<p style="color: #d60036;">Compressez votre vidéo avant de la déposer. <u>100Mo max.</u></p>
                     <!-- Video preview -->
                     <div class="preview_video"></div>
 

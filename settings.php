@@ -101,6 +101,9 @@ if(isset($_GET["change_mdp_btn"])){
             // if(checkPassword($_GET['new_mdp'])){
 
                 if (check_mdp_format($_GET['new_mdp']) == true){
+
+    if(password_verify($_GET["new_mdp"], $row['user_password']) == false){
+
     
                 $password = password_hash($_GET['new_mdp'], PASSWORD_DEFAULT);
                 $sql = "UPDATE users SET user_password='$password' WHERE user_id='$user_id'";
@@ -118,6 +121,9 @@ if(isset($_GET["change_mdp_btn"])){
             
                 header("Location: settings.php?success=true");
             
+    }else {
+        $message_false = 'Vous avez utilisé ce mot de passe récemment. Veuillez en choisir un autre.';
+    }
             } else{
                 $message_false = 'Votre mot de passe doit contenir au moins 8 caractères dont 1 majuscule et 1 minuscule';
             }
@@ -192,7 +198,7 @@ if (isset($_GET['delete_account'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>>REAH | Paramètres</title>
+    <title>REAH | Paramètres</title>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/fil_actu.css">
     <link rel="stylesheet" href="assets/css/profil.css">
