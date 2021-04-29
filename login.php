@@ -59,7 +59,7 @@
     
                         // echo 'error';
                     makeVisible('main.main_content',true);
-                    $message_false = 'Le pseudo ou l\'email est incorrect.';
+                    $message_false = 'Le pseudo ou l\'e-mail est incorrect.';
     
                     }
                 } else {
@@ -73,6 +73,14 @@
         } else { # If the user is logged in, we redirect him to the index.php
             redirect('fil_actu.php?accueil=true');
         }
+
+
+            // Si l'adresse mail n'est pas confirmée
+            $sql = "DELETE FROM users WHERE user_status='0'";
+
+            $stmt = $db->prepare($sql);
+        
+            $stmt->execute();
     ?>
     <main class="main_content" style="visibility: hidden;">
 
@@ -80,6 +88,11 @@
     if (isset($_GET['mdp'])) {
       echo '<p class="message_true_container">Votre mot de passe a bien été modifié.</p>';
   }
+
+  if (isset($_GET['signup'])) {
+    echo '<p class="message_true_container">Votre inscription est un succès ! Veuillez vous connectez.</p>';
+}
+
     if (isset($message_false)) {
         echo '<p class="message_false_container">'.$message_false.'</p>';
     }

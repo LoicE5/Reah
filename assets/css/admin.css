@@ -110,6 +110,10 @@ form{
     margin-bottom: 20px;
 }
 
+.input_synopsis{
+    max-width: unset;
+}
+
 .input_container label{
     height: unset;
     margin-right: 20px;

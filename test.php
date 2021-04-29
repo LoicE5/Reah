@@ -15,6 +15,8 @@ require_once('assets/getid3/getid3.php');
         " / Filesize: ".$file['filesize']." bytes<br />");
 
     }
+
+    var_dump(random_int(100000, 999999));
     ?>
 
 
@@ -36,7 +38,7 @@ require_once('assets/getid3/getid3.php');
 <script>
     function countdownTimer() {
     const difference = +new Date("2021-05-01") - +new Date();
-    console.log(difference)
+    // console.log(difference)
 
     let remaining = "Time's up!";
   
@@ -50,7 +52,7 @@ require_once('assets/getid3/getid3.php');
       return `${parts[part]}${part}`;
       }).join(" ");
     } else {
-        console.log("coucou")
+        // console.log("coucou")
 
     }
   
@@ -60,5 +62,6 @@ require_once('assets/getid3/getid3.php');
 //   console.log(countDownTimer());
   setInterval(countdownTimer, 1000);
 </script>
+<!-- <script src="assets/js/test.js"></script> -->
 </body>
 </html>

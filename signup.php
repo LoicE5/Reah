@@ -1,4 +1,12 @@
-<?php include('assets/php/config.php'); ?>
+<?php 
+include('assets/php/config.php'); 
+include("assets/PHPMailer/src/PHPmailer.php");
+include("assets/PHPMailer/src/SMTP.php");
+include("assets/PHPMailer/src/Exception.php");
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -21,6 +29,14 @@
     </a>
     
     <?php
+
+        // Si l'adresse mail n'est pas confirmée
+         $sql = "DELETE FROM users WHERE user_status='0'";
+
+            $stmt = $db->prepare($sql);
+        
+            $stmt->execute();
+
         if( !func::checkLoginState($db) ){
             if( isset($_POST['last_name']) && isset($_POST['first_name']) && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['pswd']) && isset($_POST['pswd_confirm']) ) {
         
@@ -42,37 +58,35 @@
                     redirect('signup.php');
                 } else {
                     // $email=$_POST['email'];
-                    $query = "SELECT COUNT(*) AS nbr FROM users WHERE user_email = '$email'";
+                    $query = "SELECT * FROM users WHERE user_email = '$email'";
                     $stmt = $db->prepare($query);
                     $stmt->execute();
 
                     $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                     // Si l'email est déjà pris
-                    if($row['nbr'] >= 1){
+                    if(count($row['user_email']) > 0){
                         redirect("signup.php?email=false");
 
                     }else {
 
                         // Si le pseudo est déjà pris
-                        $query = "SELECT COUNT(*) AS nbr FROM users WHERE user_username = '$username'";
-                        $stmt = $db->prepare($query);
-                        $stmt->execute();
     
-                        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-    
-    
-                        if($row['nbr'] >= 1){
+                        if(count($row['user_username']) > 0){
                             redirect("signup.php?pseudo=false");
         
 
                         }else{
-                            $query = "INSERT INTO users (user_lastname,user_firstname,user_username,user_email,user_password,user_birthday,user_status,user_CGU,user_profile_picture) VALUES ('$last_name','$first_name','$username','$email','$hashed_password','$birthday',0,1,'default.jpg')";
+
+                            $code = random_int(100000, 999999);
+                            $query = "INSERT INTO users (user_lastname,user_firstname,user_username,user_email,user_password,user_birthday,user_status,user_CGU,user_email_verify) VALUES ('$last_name','$first_name','$username','$email','$hashed_password','$birthday',0,1,'$code')";
                             $stmt = $db->prepare($query);
                             $stmt->execute();
+
+                            mail($email, 'Confirmation de l\'adresse e-mail', "Voici le code pour confirmer ton adresse e-mail : ".$code);
+
                             
                             redirect("email_verify.php?client_email=$email");
-
                         }
                     }
         
@@ -84,6 +98,8 @@
         } else {
             redirect('index.php');
         }
+
+    
     ?>
 
     <main class="main_content" style="visibility:hidden;">
@@ -94,11 +110,18 @@
 
     if (isset($_GET['email'])) {
         echo'<p class="message_false_container">L\'email saisi est déjà utilisé.</p>';
-    }
+    } 
+    // else {
+
+    //     echo'<p class="message_true_container">Un mail a été envoyé à '.$_GET['email'].' afin de vérifier que vous en êtes le titulaire.</p>';
+
+    // }
 
     if (isset($_GET['pseudo'])) {
         echo'<p class="message_false_container">Le pseudo saisi est déjà pris.</p>';
     }
+
+   
     ?>
         <!-- Background video -->
         <video class="background_video" poster="" autoplay loop muted>

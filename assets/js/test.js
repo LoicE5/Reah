@@ -7,11 +7,17 @@
 // alert("coc");
 
 
-$(document).ready(function(){
-    $("a").click(function(event){
-        console.log("coucou")
-    // event.preventDefault();
+// $(document).ready(function(){
+//     $("a").click(function(event){
+//         console.log("coucou")
+//     // event.preventDefault();
 
-    // alert("coucou");
-    })
-})
+//     // alert("coucou");
+//     })
+// })
+
+function coucou() {
+    return Math.floor(Math.random() * 1000000);
+} 
+alert(coucou());
+console.log(coucou());

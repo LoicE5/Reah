@@ -46,6 +46,11 @@
     padding-left: 0;
 }
 
+nav{
+    background-color: var(--nav-color);
+
+}
+
 .profile_container {
     display: flex;
     background: none;
@@ -174,10 +179,6 @@
 
 .modify_icon2 {
     display: none;
-}
-
-.menu_nav {
-    background-color: var(--nav-color);
 }
 
 .realisation_number_container {

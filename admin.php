@@ -543,7 +543,7 @@ if (isset($_GET['comment_delete'])) {
                         <td>'.$row['defi_name'].'</td>
                         <td>'.nl2br($row['defi_description']).'</td>
                         <td>'.date('d/m/Y à H\hm\ms\s', strtotime($row['defi_timestamp'])).'</td>
-                        <td id="time" time="'.$row['defi_date_end'].'">'.date('d/m/Y à H\hm\ms\s', strtotime($row['defi_timestamp'])).'</td>
+                        <td id="time2" time="'.$row['defi_date_end'].'"></td>
                         <td>'.date('d/m/Y à H\hm\ms\s', strtotime($row['defi_date_end'])).'</td>
                         <td> <a href="profil.php?id='.$row['user_id'].'">'.$row['user_username'].' </a></td>
                         <td>'.$row['defi_verified'].'</td>
@@ -649,6 +649,10 @@ if (isset($_GET['comment_delete'])) {
             </tbody>
         </table>
     </main>
+
+    <script>
+        
+    </script>
 
     <script type="text/javascript" src="assets/js/libraries/jquery/jquery.min.js"></script>
     <script src="assets/js/app2.js"></script>

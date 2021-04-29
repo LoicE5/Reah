@@ -118,7 +118,16 @@ body {
 
 .input_connexion {
     color: var(--text);
+    border-bottom: 1px solid var(--text);
 }
+
+.input_container{
+    margin-top: 20px;
+}
+.input_container label>span {
+    color: var(--text);
+    text-align: center;
+    }
 
 .main_content {
     display: block;
@@ -410,6 +419,7 @@ video:focus {
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
+    margin-left: 0;
 }
 
 .description_container>p {
@@ -469,6 +479,7 @@ video:focus {
     align-items: center;
     justify-content: space-between;
     min-width: 230px;
+    width: unset;
 }
 
 .reaction_container>* {

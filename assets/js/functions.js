@@ -37,7 +37,7 @@ function countdownTimer() {
     for (let i in timeAttrList) {
 
         const difference = +new Date(timeAttrList[i].getAttribute('time')) - +new Date();
-    // console.log(difference);
+    // console.log(timeAttrList[i].getAttribute('time'));
 
         let remaining = "Défi terminé";
 
