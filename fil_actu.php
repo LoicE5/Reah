@@ -54,11 +54,12 @@ include('assets/php/comments.php');
         <img src="sources/img/accueil_img.png" class="accueil_img" alt="">
 
         <div class="accueil_text">
-            <p class="h1">Bienvenue sur <nobr> REAH !</nobr>
+            <p class="h1"><span>R</span>EAH
             </p>
             <p>Stimule ton esprit créatif en participant aux défis avec tes <nobr> courts-métrages.</nobr> <br>
                 Tente ta chance de te faire connaître ou contribue au succès des autres. <br> <br> <b> Réalisateurs,
                     amateurs ou <nobr> débutants ? </nobr> <br> À vos marques, prêt·e·s, <span>tournez !</span> </b></p>
+
             <div class="btn_container">
                 <a href="login.php" class="btn btn_connexion">Se connecter</a>
                 <a href="signup.php" class="btn btn_connexion">S\'inscrire</a>

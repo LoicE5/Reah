@@ -53,9 +53,21 @@ body {
     margin-bottom: 30px;
     margin-left: 0;
     line-height: 50px;
-    font-weight: bold;
+    font-weight: 800;
+    color: var(--text);
+    margin-top: 0;
+    letter-spacing: 4px;
+}
+
+.accueil_text>.h1 span {
+    font-size: 3rem;
+    margin-bottom: 30px;
+    margin-left: 0;
+    line-height: 50px;
+    font-weight: 800;
     color: #d60035;
     margin-top: 0;
+    letter-spacing: 4px;
 }
 
 .accueil_text>p>b {
@@ -345,7 +357,7 @@ h1 {
     justify-content: space-evenly;
     /* height: 100%; */
     flex-direction: column;
-    margin-right: 100px;
+    padding-right: 100px;
 }
 
 .video_poster{
