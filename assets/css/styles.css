@@ -862,6 +862,9 @@ nav,.nav_footer{
         padding-right: 20px;
     }
 
+    .upload_container{
+        height: unset !important;
+    }
     
     
 }

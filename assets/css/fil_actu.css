@@ -1172,6 +1172,7 @@ line-height: unset;
 
     .video_container {
         min-width: 426px;
+        margin-right: 30px;
     }
 
     .all_video_container {
@@ -1515,7 +1516,7 @@ line-height: unset;
         bottom: -1px;
         z-index: 300;
         font-size: 0.7rem;
-        height: 90px;
+        height: 80px;
         padding: 15px;
         padding-bottom: 35px;
         padding-left: 15px;

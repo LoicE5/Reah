@@ -46,7 +46,7 @@
     padding-left: 0;
 }
 
-nav{
+nav {
     background-color: var(--nav-color);
 
 }
@@ -266,16 +266,17 @@ nav{
     margin-right: 0;
     margin-bottom: 50px;
     width: 700px;
+    padding-right: 0px;
 }
 
 .description_container {
     width: 640px;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
 }
 
-.description_container .fb_c_jsb{
+.description_container .fb_c_jsb {
     width: 100%;
 }
 
@@ -442,18 +443,21 @@ nav{
 .subscription_content::-webkit-scrollbar {
     background: transparent;
     width: 4px;
-    }
+}
+
 .subscription_content::-webkit-scrollbar-thumb {
     background: #d60036;
     width: 4px;
-    }
-    .subscription_content::-webkit-scrollbar-thumb:hover {
-        background: #d6003573;
-        width: 4px;
-        }
+}
+
+.subscription_content::-webkit-scrollbar-thumb:hover {
+    background: #d6003573;
+    width: 4px;
+}
+
 .subscription_content::-webkit-scrollbar-track {
     width: 4px;
-    }
+}
 
 .subscription_title_container {
     margin-top: 20px;
@@ -598,11 +602,12 @@ nav{
     text-decoration: none;
     display: inline-block;
 }
+
 .user_settings_container>a:hover {
     background-color: #af002c;
 }
 
-.unfollow_btn{
+.unfollow_btn {
     display: block;
 }
 
@@ -874,179 +879,186 @@ nav{
         min-width: unset;
     }
 
-    @media screen and (max-width:600px) {
-        .profile_bio_container {
-            min-width: 0;
-        }
-
-        .profile_content2 {
-            min-width: 0;
-        }
-    }
-
-    @media screen and (max-width:850px) {
-        .menu_profile {
-            min-width: 150px;
-        }
-
-    }
-
-    @media screen and (max-width:550px) {
-
-        .modify_profile_photo {
-            height: 100px;
-            width: 100px;
-            top: 0px;
-        }
-
-        .modify_container {
-            min-width: 100%;
-        }
-
-        .modify_profile_photo {
-            margin-right: 20px;
-        }
-
-        .input_bio {
-            width: unset;
-            min-width: unset;
-        }
-
-        .subscription_container {
-            width: 100%;
-            height: 100%;
-        }
-
-        @keyframes subscriber_click {
-            0% {
-                transform: translateX(0px);
-            }
-
-            100% {
-                transform: translateX(-130%);
-
-            }
-        }
-
-        @keyframes subscriber_click2 {
-            0% {
-                transform: translateX(-130%);
-            }
-
-            100% {
-                transform: translateX(0);
-
-            }
-        }
-
-    }
-
-    @media screen and (max-width:450px) {
-        .all_video_container {
-            flex-direction: column;
-            align-items: center;
-            padding-left: 0;
-        }
-
-        .video_container {
-            margin-bottom: 40px;
-            margin-right: 0px;
-            min-width: unset;
-        }
-
-        .video_content {
-            width: 100%;
-            height: 200px;
-            min-width: 100%;
-        }
-
-        .profile_comment_title {
-            display: none;
-        }
-
-        .comment_icon {
-            margin-right: 20px;
-            margin-left: 20px;
-        }
-
-        .reaction_container {
-            justify-content: start;
-            margin-top: 10px;
-            margin-bottom: 10px;
-        }
-
-        .description_container {
-            width: 90%;
-        }
-
-        .all_category_container {
-            display: flex;
-            overflow: auto;
-        }
-
-        .first_category,
-        .second_category,
-        .third_category {
-            min-width: 100%;
-            margin-top: 80px;
-            align-items: unset;
-            margin-bottom: 0;
-        }
-
-        .second_category,
-        .third_category {
-            display: none;
-        }
-
-        .banner_container {
-            height: 230px;
-        }
-
-        .profile_subscription_number {
-            font-size: 2rem;
-        }
-
-        .profile_subscription_container {
-            min-width: 210px;
-        }
-
-        .profile_photo {
-            height: 100px;
-            min-width: 100px;
-            top: 0px;
-        }
-
-        .profile_content1 {
-            min-width: unset;
-        }
-
-        .modify_icon {
-            display: none;
-        }
-
-        .subscribe_btn_container {
-            display: flex;
-        }
-
-        .modify_icon2 {
-            display: flex;
-            margin: 0;
-        }
-
-        .profile_line {
-            left: -100px;
-            width: unset;
-        }
-
-        .subscribe_btn {
-            margin-left: 0px;
-        }
-
-        .form_search_bar {
-            margin-right: 20px;
-        }
+    .banner_flou_left,
+    .banner_flou_right {
+        width: 100px;
     }
 }
+
+@media screen and (max-width:600px) {
+    .profile_bio_container {
+        min-width: 0;
+    }
+
+    .profile_content2 {
+        min-width: 0;
+    }
+}
+
+@media screen and (max-width:850px) {
+    .menu_profile {
+        min-width: 150px;
+    }
+
+}
+
+@media screen and (max-width:550px) {
+
+    .modify_profile_photo {
+        height: 100px;
+        width: 100px;
+        top: 0px;
+    }
+
+    .modify_container {
+        min-width: 100%;
+    }
+
+    .modify_profile_photo {
+        margin-right: 20px;
+    }
+
+    .input_bio {
+        width: unset;
+        min-width: unset;
+    }
+
+    .subscription_container {
+        width: 100%;
+        height: 100%;
+    }
+
+    @keyframes subscriber_click {
+        0% {
+            transform: translateX(0px);
+        }
+
+        100% {
+            transform: translateX(-130%);
+
+        }
+    }
+
+    @keyframes subscriber_click2 {
+        0% {
+            transform: translateX(-130%);
+        }
+
+        100% {
+            transform: translateX(0);
+
+        }
+    }
+
+}
+
+@media screen and (max-width:450px) {
+    .all_video_container {
+        flex-direction: column;
+        align-items: center;
+        padding-left: 0;
+    }
+
+    .video_container {
+        margin-bottom: 40px;
+        margin-right: 0px;
+        min-width: unset;
+        padding-right: 0px;
+    }
+
+    .video_content {
+        width: 100%;
+        height: 200px;
+        min-width: 100%;
+    }
+
+    .profile_comment_title {
+        display: none;
+    }
+
+    .comment_icon {
+        margin-right: 20px;
+        margin-left: 20px;
+    }
+
+    .reaction_container {
+        justify-content: start;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .description_container {
+        width: 90%;
+    }
+
+    .all_category_container {
+        display: flex;
+        overflow: auto;
+    }
+
+    .first_category,
+    .second_category,
+    .third_category {
+        min-width: 100%;
+        margin-top: 80px;
+        align-items: unset;
+        margin-bottom: 0;
+    }
+
+    .second_category,
+    .third_category {
+        display: none;
+    }
+
+    .banner_container {
+        height: 230px;
+    }
+
+    .profile_subscription_number {
+        font-size: 2rem;
+    }
+
+    .profile_subscription_container {
+        min-width: 210px;
+    }
+
+    .profile_photo {
+        height: 100px;
+        min-width: 100px;
+        top: 0px;
+    }
+
+    .profile_content1 {
+        min-width: unset;
+    }
+
+    .modify_icon {
+        display: none;
+    }
+
+    .subscribe_btn_container {
+        display: flex;
+    }
+
+    .modify_icon2 {
+        display: flex;
+        margin: 0;
+    }
+
+    .profile_line {
+        left: -100px;
+        width: unset;
+    }
+
+    .subscribe_btn {
+        margin-left: 0px;
+    }
+
+    .form_search_bar {
+        margin-right: 20px;
+    }
+}
+
 
 @media (prefers-color-scheme: light) {
     :root {
