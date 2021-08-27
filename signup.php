@@ -1,11 +1,83 @@
 <?php 
 include('assets/php/config.php'); 
-include("assets/PHPMailer/src/PHPmailer.php");
-include("assets/PHPMailer/src/SMTP.php");
-include("assets/PHPMailer/src/Exception.php");
+// include("assets/PHPMailer/src/PHPmailer.php");
+// include("assets/PHPMailer/src/SMTP.php");
+// include("assets/PHPMailer/src/Exception.php");
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
+// use PHPMailer\PHPMailer\PHPMailer;
+// use PHPMailer\PHPMailer\Exception;
+?>
+<?php
+    // Si l'adresse mail n'est pas confirmée
+    $sql = "DELETE FROM users WHERE user_status='0'";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->execute();
+
+    if( !func::checkLoginState($db) ){
+        if( isset($_POST['last_name']) && isset($_POST['first_name']) && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['pswd']) && isset($_POST['pswd_confirm']) ) {
+
+            $last_name = htmlspecialchars($_POST['last_name']);
+            $first_name = htmlspecialchars($_POST['first_name']);
+            $username = htmlspecialchars($_POST['username']);
+            $email = htmlspecialchars($_POST['email']);
+            $birth_day = htmlspecialchars($_POST['birth_day']);
+            $birth_month = htmlspecialchars($_POST['birth_month']);
+            $birth_year = htmlspecialchars($_POST['birth_year']);
+            $birthday = $birth_day.'/'.$birth_month.'/'.$birth_year;
+            $password = htmlspecialchars($_POST['pswd']);
+            $password_repeat = htmlspecialchars($_POST['pswd_confirm']);
+
+            $hashed_password = password_hash($password,PASSWORD_DEFAULT);
+
+
+            if($password != $password_repeat){
+                redirect('signup.php');
+            } else {
+                // $email=$_POST['email'];
+                $query = "SELECT * FROM users WHERE user_email = '$email'";
+                $stmt = $db->prepare($query);
+                $stmt->execute();
+
+                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // Si l'email est déjà pris
+
+                if(!!$row){
+                    redirect("signup.php?email=false");
+
+                } else {
+
+                    // Si le pseudo est déjà pris
+
+                    if(!!$row){
+                        redirect("signup.php?pseudo=false");
+
+
+                    }else{
+
+                        $code = random_int(100000, 999999);
+                        $query = "INSERT INTO users (user_lastname,user_firstname,user_username,user_email,user_password,user_birthday,user_status,user_CGU,user_email_verify) VALUES ('$last_name','$first_name','$username','$email','$hashed_password','$birthday',0,1,'$code')";
+                        $stmt = $db->prepare($query);
+                        $stmt->execute();
+
+                        // mail($email, 'Confirmation de l\'adresse e-mail', "Voici le code pour confirmer ton adresse e-mail : ".$code);
+
+                        
+                        redirect("email_verify.php?client_email=$email");
+                    }
+                }
+
+            }
+            
+        } else {
+            makeVisible('main.main_content',true);
+        }
+    } else {
+        redirect('index.php');
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -17,7 +89,11 @@ use PHPMailer\PHPMailer\Exception;
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/inscription.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-
+    <style>
+        body {
+            background: black;
+        }
+    </style>
 </head>
 
 <body>
@@ -28,79 +104,6 @@ use PHPMailer\PHPMailer\Exception;
         <img src="sources/img/dark_reah_logo.png" alt="">
     </a>
     
-    <?php
-
-        // Si l'adresse mail n'est pas confirmée
-         $sql = "DELETE FROM users WHERE user_status='0'";
-
-            $stmt = $db->prepare($sql);
-        
-            $stmt->execute();
-
-        if( !func::checkLoginState($db) ){
-            if( isset($_POST['last_name']) && isset($_POST['first_name']) && isset($_POST['email']) && isset($_POST['username']) && isset($_POST['pswd']) && isset($_POST['pswd_confirm']) ) {
-        
-                $last_name = htmlspecialchars($_POST['last_name']);
-                $first_name = htmlspecialchars($_POST['first_name']);
-                $username = htmlspecialchars($_POST['username']);
-                $email = htmlspecialchars($_POST['email']);
-                $birth_day = htmlspecialchars($_POST['birth_day']);
-                $birth_month = htmlspecialchars($_POST['birth_month']);
-                $birth_year = htmlspecialchars($_POST['birth_year']);
-                $birthday = $birth_day.'/'.$birth_month.'/'.$birth_year;
-                $password = htmlspecialchars($_POST['pswd']);
-                $password_repeat = htmlspecialchars($_POST['pswd_confirm']);
-
-                $hashed_password = password_hash($password,PASSWORD_DEFAULT);
-        
-        
-                if($password != $password_repeat){
-                    redirect('signup.php');
-                } else {
-                    // $email=$_POST['email'];
-                    $query = "SELECT * FROM users WHERE user_email = '$email'";
-                    $stmt = $db->prepare($query);
-                    $stmt->execute();
-
-                    $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                    // Si l'email est déjà pris
-                    if(count($row['user_email']) > 0){
-                        redirect("signup.php?email=false");
-
-                    }else {
-
-                        // Si le pseudo est déjà pris
-    
-                        if(count($row['user_username']) > 0){
-                            redirect("signup.php?pseudo=false");
-        
-
-                        }else{
-
-                            $code = random_int(100000, 999999);
-                            $query = "INSERT INTO users (user_lastname,user_firstname,user_username,user_email,user_password,user_birthday,user_status,user_CGU,user_email_verify) VALUES ('$last_name','$first_name','$username','$email','$hashed_password','$birthday',0,1,'$code')";
-                            $stmt = $db->prepare($query);
-                            $stmt->execute();
-
-                            mail($email, 'Confirmation de l\'adresse e-mail', "Voici le code pour confirmer ton adresse e-mail : ".$code);
-
-                            
-                            redirect("email_verify.php?client_email=$email");
-                        }
-                    }
-        
-                }
-                
-            } else {
-                makeVisible('main.main_content',true);
-            }
-        } else {
-            redirect('index.php');
-        }
-
-    
-    ?>
 
     <main class="main_content" style="visibility:hidden;">
 

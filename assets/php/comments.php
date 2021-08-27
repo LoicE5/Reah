@@ -109,7 +109,7 @@ if (isset($_POST['modify_film_btn'])) {
     $tmp_file_poster = $_FILES['poster']['tmp_name'];
     $name_file_poster = basename($_FILES['poster']['name']);
 
-    $message_true = 'Ton court-métrage a bien été modifié.';
+    $message_true = 'Ton court-métrage '. $video_title .' a bien été modifié.';
 
 
     if ($_FILES["poster"]['error'] == 0 ) {

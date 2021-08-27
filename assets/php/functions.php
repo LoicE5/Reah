@@ -35,7 +35,7 @@ class func {
 
                     } else {
                         func::createSession($_COOKIE['username'],$_COOKIE['userid'],$_COOKIE['token'],$_COOKIE['serial']);
-                        return true;
+                        return false;
                     }
                 }
             }
