@@ -48,7 +48,7 @@
     <!-- Contact -->
     <div class="contact">
         <p><b>Contactez-nous !</b></p>
-        <p><a href="mailto:reahapp.fr@gmail.com" class="not_a_link">reahapp.fr@gmail.com</a></p>
+        <p><a href="mailto:contact@reah.fr" class="not_a_link">contact@reah.fr</a></p>
     </div>
 
 </div>

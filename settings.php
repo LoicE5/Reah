@@ -550,8 +550,8 @@ if (isset($_GET['delete_account'])) {
                         d’informations sur vos droits.</p>
                     <p>Pour exercer ces droits ou pour toute question sur le traitement de vos données dans ce
                         dispositif, vous
-                        pouvez contacter <a target="_blank" href="mailto:reahapp.fr@gmail.com"
-                            class="not_a_link">reahapp.fr@gmail.com</a>.</p>
+                        pouvez contacter <a target="_blank" href="mailto:contact@reah.fr"
+                            class="not_a_link">contact@reah.fr</a>.</p>
 
                     <p>Si vous estimez, après nous avoir contactés, que vos droits « Informatique et Libertés » ne sont
                         pas
